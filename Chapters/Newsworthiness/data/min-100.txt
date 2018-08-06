@@ -1,0 +1,153 @@
+-------   EVENTS   -------
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 202 were detected.
+ - Of 5112 clusters, 617 could be matched back to an event.
+
+Event Recall:		0.399
+Cluster Precision:	0.121
+Overall F-Measure:	0.185
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Disasters & Accidents             9/29	(0.310)
+Arts, Culture & Entertainement   25/53	(0.472)
+Armed Conflicts & Attacks        11/98	(0.112)
+Science & Technology              7/16	(0.438)
+Miscellaneous                     6/21	(0.286)
+Sports                           91/126	(0.722)
+Business & Economy               10/23	(0.435)
+Law, Politics & Scandals         43/140	(0.307)
+
+
+====== 0
+-------   EVENTS   -------
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 179 were detected.
+ - Of 2499 clusters, 551 could be matched back to an event.
+
+Event Recall:		0.354
+Cluster Precision:	0.220
+Overall F-Measure:	0.272
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Disasters & Accidents             9/29	(0.310)
+Arts, Culture & Entertainement   11/53	(0.208)
+Armed Conflicts & Attacks        11/98	(0.112)
+Science & Technology              6/16	(0.375)
+Miscellaneous                     5/21	(0.238)
+Sports                           84/126	(0.667)
+Business & Economy               10/23	(0.435)
+Law, Politics & Scandals         43/140	(0.307)
+
+
+
+
+======= 1
+-------   EVENTS   -------
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 165 were detected.
+ - Of 1936 clusters, 492 could be matched back to an event.
+
+Event Recall:		0.326
+Cluster Precision:	0.254
+Overall F-Measure:	0.286
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Disasters & Accidents             9/29	(0.310)
+Arts, Culture & Entertainement   10/53	(0.189)
+Armed Conflicts & Attacks        11/98	(0.112)
+Science & Technology              5/16	(0.312)
+Miscellaneous                     4/21	(0.190)
+Sports                           73/126	(0.579)
+Business & Economy               10/23	(0.435)
+Law, Politics & Scandals         43/140	(0.307)
+
+
+
+
+
+===== 2
+-------   EVENTS   -------
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 123 were detected.
+ - Of 1076 clusters, 312 could be matched back to an event.
+
+Event Recall:		0.243
+Cluster Precision:	0.290
+Overall F-Measure:	0.264
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Disasters & Accidents             5/29	(0.172)
+Arts, Culture & Entertainement    6/53	(0.113)
+Armed Conflicts & Attacks        10/98	(0.102)
+Science & Technology              5/16	(0.312)
+Miscellaneous                     3/21	(0.143)
+Sports                           44/126	(0.349)
+Business & Economy                8/23	(0.348)
+Law, Politics & Scandals         42/140	(0.300)
+
+
+
+
+
+====== 3
+
+-------   EVENTS   -------
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 69 were detected.
+ - Of 382 clusters, 140 could be matched back to an event.
+
+Event Recall:		0.136
+Cluster Precision:	0.366
+Overall F-Measure:	0.199
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Disasters & Accidents             3/29	(0.103)
+Arts, Culture & Entertainement    4/53	(0.075)
+Armed Conflicts & Attacks         9/98	(0.092)
+Science & Technology              4/16	(0.250)
+Miscellaneous                     1/21	(0.048)
+Sports                            8/126	(0.063)
+Business & Economy                8/23	(0.348)
+Law, Politics & Scandals         32/140	(0.229)
+
+
+
+===== 4
+-------   EVENTS   -------
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 10 were detected.
+ - Of 41 clusters, 24 could be matched back to an event.
+
+Event Recall:		0.020
+Cluster Precision:	0.585
+Overall F-Measure:	0.038
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Business & Economy                2/23	(0.087)
+Law, Politics & Scandals          6/140	(0.043)
+Science & Technology              1/16	(0.062)
+Sports                            1/126	(0.008)

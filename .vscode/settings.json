@@ -1,0 +1,55 @@
+{
+
+		"editor.lineHeight": 20,
+		"editor.letterSpacing": 0,
+
+		"editor.minimap.enabled": false,
+		"editor.minimap.renderCharacters": false,
+
+		"editor.wordWrapColumn": 80,
+		"editor.wrappingIndent": "same",
+		"editor.wordWrap": "wordWrapColumn",
+
+		"editor.tabSize": 2,
+		"editor.insertSpaces": false,
+		"editor.renderIndentGuides": false,
+		"editor.folding": false,
+
+		"editor.cursorBlinking": "solid",
+
+		"explorer.openEditors.visible": 0,
+
+		"workbench.editor.enablePreview": false,
+		"workbench.editor.enablePreviewFromQuickOpen": false,
+
+		"workbench.colorTheme": "Bluloco Light",
+
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true,
+			"**/*.aux": true,
+			"**/*.log": true,
+			"**/*.fdb_latexmk": true,
+			"**/*.fls": true,
+			"**/*.out": true,
+			"**/*.blg": true,
+			"**/*.bbl": true,
+			"**/*.toc": true,
+			"**/*.gz": true
+		},
+		"zenMode.restore": true,
+		"latex-workshop.latex.clean.enabled": false,
+		"editor.lineNumbers": "off",
+		"editor.renderWhitespace": "none",
+		"editor.trimAutoWhitespace": true,
+		"files.trimTrailingWhitespace": true,
+		"spellright.language": "en_US",
+		"spellright.documentTypes": [
+			"markdown",
+			"latex",
+			"plaintext"
+		]
+	}

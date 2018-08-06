@@ -1,0 +1,158 @@
+-------   EVENTS   -------	
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 382 were detected.
+ - Of 229870 clusters, 2206 could be matched back to an event.
+
+Event Recall:		0.755
+Cluster Precision:	0.010
+Overall F-Measure:	0.019
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Disasters & Accidents            22/29	(0.759)
+Arts, Culture & Entertainement   33/53	(0.623)
+Armed Conflicts & Attacks        72/98	(0.735)
+Science & Technology             12/16	(0.750)
+Miscellaneous                    11/21	(0.524)
+Sports                          107/126	(0.849)
+Business & Economy               20/23	(0.870)
+Law, Politics & Scandals        105/140	(0.750)
+
+
+
+
+======== 0
+-------   EVENTS   -------	
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 362 were detected.
+ - Of 128945 clusters, 2069 could be matched back to an event.
+
+Event Recall:		0.715
+Cluster Precision:	0.016
+Overall F-Measure:	0.031
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Disasters & Accidents            21/29	(0.724)
+Arts, Culture & Entertainement   20/53	(0.377)
+Armed Conflicts & Attacks        72/98	(0.735)
+Science & Technology             11/16	(0.688)
+Miscellaneous                    10/21	(0.476)
+Sports                          103/126	(0.817)
+Business & Economy               20/23	(0.870)
+Law, Politics & Scandals        105/140	(0.750)
+
+
+
+
+
+========== 1
+-------   EVENTS   -------	
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 349 were detected.
+ - Of 100661 clusters, 1955 could be matched back to an event.
+
+Event Recall:		0.690
+Cluster Precision:	0.019
+Overall F-Measure:	0.038
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Disasters & Accidents            21/29	(0.724)
+Arts, Culture & Entertainement   20/53	(0.377)
+Armed Conflicts & Attacks        72/98	(0.735)
+Science & Technology             11/16	(0.688)
+Miscellaneous                     9/21	(0.429)
+Sports                           91/126	(0.722)
+Business & Economy               20/23	(0.870)
+Law, Politics & Scandals        105/140	(0.750)
+
+
+
+
+
+======== 2
+
+-------   EVENTS   -------	
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 307 were detected.
+ - Of 69911 clusters, 1628 could be matched back to an event.
+
+Event Recall:		0.607
+Cluster Precision:	0.023
+Overall F-Measure:	0.045
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Disasters & Accidents            17/29	(0.586)
+Arts, Culture & Entertainement   16/53	(0.302)
+Armed Conflicts & Attacks        71/98	(0.724)
+Science & Technology              9/16	(0.562)
+Miscellaneous                     6/21	(0.286)
+Sports                           64/126	(0.508)
+Business & Economy               20/23	(0.870)
+Law, Politics & Scandals        104/140	(0.743)
+
+
+======= 3
+-------   EVENTS   -------	
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 236 were detected.
+ - Of 31042 clusters, 1022 could be matched back to an event.
+
+Event Recall:		0.466
+Cluster Precision:	0.033
+Overall F-Measure:	0.062
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Disasters & Accidents            15/29	(0.517)
+Arts, Culture & Entertainement   11/53	(0.208)
+Armed Conflicts & Attacks        62/98	(0.633)
+Science & Technology              8/16	(0.500)
+Miscellaneous                     3/21	(0.143)
+Sports                           27/126	(0.214)
+Business & Economy               19/23	(0.826)
+Law, Politics & Scandals         91/140	(0.650)
+
+
+
+
+======= 4
+-------   EVENTS   -------	
+
+EVENTS / CLUSTER STATISTICS:
+ - Of 506 events, 67 were detected.
+ - Of 4270 clusters, 171 could be matched back to an event.
+
+Event Recall:		0.132
+Cluster Precision:	0.040
+Overall F-Measure:	0.061
+
+
+----- CATEGORIES  -----
+
+CATEGORY NAME                     RECALL
+Disasters & Accidents             3/29	(0.103)
+Arts, Culture & Entertainement    3/53	(0.057)
+Armed Conflicts & Attacks        14/98	(0.143)
+Science & Technology              4/16	(0.250)
+Miscellaneous                     1/21	(0.048)
+Sports                            5/126	(0.040)
+Business & Economy                6/23	(0.261)
+Law, Politics & Scandals         31/140	(0.221)

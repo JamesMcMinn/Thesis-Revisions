@@ -1,0 +1,147 @@
+%!TEX root = ../../main.tex
+
+\section{Heuristic Labelling and Quality Classification}
+\label{scoring:sec:labelling}
+We propose an automatic labelling approach using a set of heuristics to label high quality (newsworthy) and low quality (noisy) content.
+Content is labelled in streaming fashion to simulate real-world conditions, and is used as training data for our newsworthiness scoring model.
+Note that our labelling approach is specifically designed not to label the majority of content.
+Instead, we want to identify exceptional content which we can compare to the `random' background corpus, allowing the model to learn specific newsworthy and noisy features.
+
+The use of heuristics has a number of advantages over the use of existing datasets and requires only minimal effort in comparison to creating a labelled dataset specifically for this task.
+Many existing datasets that could be used for newsworthiness prediction are extremely small, or focus on a single large event or topic \citep{Kang12, Madhawa15}, making them useful only for training a newsworthiness classifier for those specific events, and unfeasible for training a broad and event-agnostic newsworthiness classifier.
+
+Even large datasets with relevance judgements, such as the Events 2012 corpus from chapter \ref{chapter:collection}, covering 506 events with more than 100,000 relevance judgements, are not suitable for supervised training.
+Datasets of this size, although useful for evaluation, make no claims of completeness. Despite having relevance judgements  for a large number of events and tweets, the Events 2012 corpus covers only covers a tiny fraction of the many thousands of newsworthy events that take place every day, so training specifically on these events will likely result in over-fitting and decreased effectiveness on other datasets.
+
+The use of heuristic labelling, rather than manual labelling, allows for training data to be label in real-time and fed into the scoring approaches that follow.
+This allows our approach to learn new features in real-time, as described in section \ref{scoring:sec:scoring}.
+
+\cite{Madhawa15} used heuristic labelling to generate training data for newsworthiness classification.
+They developed a classifier capable of classifying documents as either objective (high quality, newsworthy), or subjective (low quality, noise) as a filtering step before summarization.
+However, their approach used only a small, manually curated lists of accounts as newsworthy sources, and labelled any tweet containing an emoticon or emoji as noise.
+Instead, we use a broader set of heuristics that place fewer restrictions on what constitutes newsworthy and noisy sources, allowing for a broader range of sources and more training data.
+
+As the inclusion of `conversational' or non-newsworthy posts has been shown to have a negative effect on credibility assessments \citep{Noyunsan17,Sikdar13-2}, many credibility assessment approaches use features that attempt to capture the newsworthiness of a post before assessment.
+We base many of the heuristics that follow on those shown to be effective for credibility assessment \citep{Sikdar13, Kang12, Castillo11, Madhawa15}.
+
+
+% This also allows the model to react and reflect Newsworthiness Scores based on events as they happen, something that would be impossible using a pre-trained model.
+% This prevents over-fitting and should allow the approach to be considerably more generalisable -- often the rarest events are the most newsworthy, and the use of manually labelled training data would likely prevent these rarest from being scored appropriately unless an extraordinary volume of training data was used.
+
+Although these heuristics form an important part of this work, as we demonstrate in section \ref{scoring:sec:eval}, the exact choice of features and weights is almost inconsequential, as we use a very simple score cut-off to determine quality. As long as the heuristics can be used to provide a reasonable level of accuracy, the performance of the Newsworthiness Scorer is only mildly affected by changes to the heuristics or their weights.
+
+\subsection{Features}
+We define a number of weighted heuristics designed to identify exceptionally high or low quality content. Weights are multiplicative, and we take the product of the weights from each feature as the overall Quality Score, \(Q_d\).
+
+\subsubsection{User Description: \(W_{desc}\)}
+We manually created a list of keywords and phrases commonly used by news broadcasters, journalists and financial traders in their User Description on Twitter. The full list of these terms and their weights can be found in Table \ref{scoring:table:authorKeywordsWeights}.
+
+\begin{table}[h!]
+
+	\caption{Terms and weights assigned to each term for scoring a user's profile description. }
+
+	\begin{tabulary}{\textwidth}{l c L}
+	\toprule
+	\textbf{Type} &\textbf{Weight} & \textbf{Terms} \\
+	\midrule
+
+	News \& Journalism & 2.0 & news, report, journal, write, editor, analyst, analysis, media, updates, stories \\
+
+	Finance \& Trading & 2.0 & trader, investor, forex, stock, finance, market \\
+
+	Spam & 0.1 & ebay, review, shopping, deal, sales, marketing, promot, discount, products, store, diet, weight, porn, follow back, followback \\
+
+	\bottomrule
+	\end{tabulary}
+	\label{scoring:table:authorKeywordsWeights}
+
+\end{table}
+
+Positive terms were identified manually based on common terms used by news organizations, journalists, and financial traders on Twitter. The list of spam terms was also created manually based on common types of low quality marketing spam that is often found on Twitter. The `follow back' terms are commonly associated with users who artificially inflate their follower count by `following back' anyone who follows them. We penalise them here to correct for any boost given by the Number of Followers feature described later in this section.
+
+Rather than match whole words, we match on a prefix basis. For example, `report' matches \emph{report}, as well as \emph{report}er and \emph{report}s. Note that this is similar, but not identical to, matching on stemmed terms. This helps to keep the list of terms short whilst giving high coverage. The overall feature score is a product of weights for any matching terms.
+
+\subsubsection{Account Age: \(W_{age}\)}
+Young accounts are generally viewed as less credible than accounts that have been active for longer periods of time \citep{Sikdar13}, so we give accounts created within the last 90 days a lower weight.
+
+\begin{table}[ht]
+	\centering
+
+	\caption{Follower ranges and weights assigned to accounts who have followers between the range defined.}
+
+	\begin{tabulary}{\textwidth}{l c}
+
+	\toprule
+	\textbf{Account Age (days)} & \textbf{Weight} \\
+	\midrule
+		< 1 day & 0.05 \\
+		< 30 days & 0.10 \\
+		< 90 days & 0.25 \\
+		90+ days & 1.00 \\
+	\bottomrule
+	\end{tabulary}
+
+	\label{scoring:table:accountAge}
+
+\end{table}
+
+\subsubsection{Number of Followers: \(W_{followers}\)}
+It is often the case that something becomes news not because of what was said, but who said it. A head of state or public figure expressing sympathy for victims of an accident is considerably more newsworthy than the average person doing the same.
+
+The number of followers a users has can infer how influential or newsworthy the user is, and thus how newsworthy the user's tweets are likely to be, and is a commonly used feature used for automatic credibility assessment \citep{Kang12, Sikdar13, Gun14, Madhawa15}.
+Given this, we assign higher weights to users with more followers, and a lower weight to users with very few followers, as shown in Table \ref{scoring:table:followersWeight}.
+
+The vast majority of tweets (83.81\%) are posted by users who  have between 50 and 4,999 followers, and are unaffected by this feature. The aim is to affect only the extremes: users with very few, or very many followers.
+
+\begin{table}[ht]
+	\centering
+
+	\caption{Follower ranges and weights assigned to accounts who have followers between the range defined.}
+
+	\begin{tabulary}{\textwidth}{l c}
+
+	\toprule
+	\textbf{Number of Followers} & \textbf{Weight} \\
+	\midrule
+	0 - 49 & 0.5 \\
+	50 - 4,999 & 1.0 \\
+	5,000 - 9,999 & 1.5 \\
+	10,000 - 99,999 & 2.0 \\
+	100,000 - 999,999 & 2.5 \\
+	1,000,000+ & 3.0 \\
+	\bottomrule
+	\end{tabulary}
+
+	\label{scoring:table:followersWeight}
+
+\end{table}
+
+\subsubsection{User Verified Status: \(W_{verified}\)}
+Politicians, organizations, celebrities, journalists and other public figures can request that Twitter `verify' their identity by marking their account as verified and displaying a blue badge near to their name or display picture \footnote{\texttt{https://help.twitter.com/en/managing-your-account/about-twitter-\\verified-accounts}}. Although the exact requirements for verification are undocumented, verification is often seen as a sign of authenticity and significance.
+
+At the time of writing, approximately 290,000 accounts have been verified by Twitter, a full list of which can be obtained by examining the list of accounts followed by Twitter's \texttt{@verified}\footnote{\texttt{https://twitter.com/verified/following}} account. A survey of Verified accounts in 2015 found that approximately 41\% of account are related to news, journalism, politics or government\footnote{\texttt{https://medium.com/three-pipe-vc/who-are-twitter-s-verified-users-\\af976fc1b032}}. This supports our hypothesis that verified accounts are a good source of high quality, newsworthy content, so we give Verified users a weight of 1.5. Unverified users as unaffected by this feature (i.e. given weight of 1.0).
+
+\subsubsection{Posts Per Day: \(W_{ppd}\)}
+Quality and quantity often have an inverse correlation, especially on social media.
+Accounts which produce an extremely high volume of posts are often automated accounts repeating content from other sources with the aim of acquiring followers, advertising a product or service, and more recently, for the purpose of propaganda and misinformation \citep{Forelle15, Howard16}.
+
+Accounts that post more than 50 times per day are often considered to be heavily automated \citep{Howard16}. For this reason, we penalize any account that posts more than 50 times per day on average (weight of 0.5), and apply a more severe penalty for accounts which more than 100 times per day on average (weight of 0.25).
+
+We note, however, that many heavily automated accounts are in fact prominent news and media organizations. To prevent these legitimate accounts from being penalized, we do no apply any penalty to Verified accounts.
+
+\subsubsection{Has Default Profile Image: \(W_{image}\)}
+Twitter users who do not provide a custom profile image (often nicknamed ``eggs'' due to Twitter's historic use of a egg as the default profile image) are generally considered less trustworthy and credible \citep{Castillo11,Sikdar13, Gun14} than users who have taken the time to provide a custom image.
+Twitter themselves noted that users who create `throwaway' accounts, often for the purpose of spamming or to post abuse, tend not to personalize their accounts.
+The association between the default egg image and low quality accounts has been noted in published work previously \citep{Sikdar13}, and the public association was one of the key reasons noted by Twitter for changes to their default profile image in March 2017\footnote{\texttt{https://blog.twitter.com/en\_us/topics/product/2017/rethinking-our-\\default-profile-photo.html}}.
+
+We assign user accounts that have not specified a custom profile image a weight of 0.5.
+
+\subsection{Labelling}
+As described earlier, document \(d\) is assigned an overall Quality Score, \(Q_d\), taken as the product of scores from each feature:
+\begin{displaymath}
+	Q_d = W_{desc} \times W_{age} \times W_{followers} \times W_{verified} \times W_{ppd} \times W_{image}
+\end{displaymath}
+For example, a tweet \(d\) with weights 2.0 for \(W_{desc}\), 1.5 for \(W_{followers}\), and 1.0 for the all other features would have an overall Quality Score, \(
+	Q_d =  2.0 \times 1.0 \times 1.5 \times 1.0 \times 1.0  \times 1.0 = 3.0 \).
+
+Cut-off  values are used to determine quality labels from \(Q_s\). We examine how various cut-off values affect performance in section \ref{scoring:sec:eval}, however unless otherwise stated, we label tweets with \(Q_d \geq 4.0\) as High Quality, and \(Q_d \leq 0.25\) as Low Quality. Documents between this range are unlabelled.

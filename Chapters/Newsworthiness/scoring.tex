@@ -1,0 +1,117 @@
+%!TEX root = ../../main.tex
+
+\section{Newsworthiness Scoring}
+\label{scoring:sec:scoring}
+
+As documents are processed in order, they are added to a background model containing all documents.
+In addition, documents labelled either High or Low Quality are also added to corresponding quality specific models: documents labelled High Quality are added to the HQ model, and documents labelled Low Quality are added to the LQ model.
+
+The background model serves as a `random' distribution that we can compare against to identify terms that are more likely to appear in newsworthy content than at random, and conversely, terms that are more likely to appear in noise than at random.
+This concept is somewhat similar to the intuition behind the Divergence From Randomness (DFR) Framework and its associated models \citep{Amati02}: where the more a term's frequency within the HQ or LQ models differs from the term frequency of the collection as a whole, the more weight a term carries.
+
+\subsection{Term-Based Likelihood Ratio Scoring}
+\label{sec:scoring:likelihoodRatio}
+The likelihood ratio for term \(t\), \(R(t)\), gives us an indication of the relative importance of the term in the particular quality model when compared to the `random' background model.
+A likelihood ratio greater than 1.0 means that the term is more common in the model than random, whereas a ratio less than 1.0 means that the term is less common in the model than random.
+We believe that this can be used to identify terms that indicate newsworthiness (or lack thereof).
+
+The likelihood ratio for a term is calculated for both the High Quality (\(R_{HQ}(t)\)) and Low Quality (\(R_{LQ}(t)\)) models as:
+\begin{displaymath}
+	R_{HQ}(t) =
+	\frac{
+		P(t|HQ)
+	}{
+		P(t|BG)
+	} =
+	\frac{
+		\frac{tf_{t,HQ}}{F_{HQ}}
+	}{
+		\frac{tf_{t,BG}}{F_{BG}}
+	} =
+	\frac{
+		tf_{t,HQ} \times F_{BG}
+	} {
+		tf_{t,BG} \times F_{HQ}
+	}
+\end{displaymath}
+\begin{displaymath}
+	R_{LQ}(t) =
+	\frac{
+		P(t|LQ)
+	}{
+		P(t|BG)
+	} =
+	\frac{
+		\frac{tf_{t,LQ}}{F_{LQ}}
+	}{
+		\frac{tf_{t,BG}}{F_{BG}}
+	} =
+	\frac{
+		tf_{t,LQ} \times F_{BG}
+	} {
+		tf_{t,BG} \times F_{LQ}
+	}
+\end{displaymath}
+where \(HQ\), \(LQ\) and \(BG\) correspond to the High Quality, Low Quality and Background models respectively. \(tf_t\) is the raw frequency of term  \(t\) in the given model, and F is the raw frequency of all terms in the model (i.e.  \(F = \sum{f_t}\)). Since documents are added to each model as they are labelled, but before scoring, we can guarantee that division by 0 will never happen.
+
+For each term \(t\), we define an score \(S_t\) for each of the High and Low quality models. The aim is to use the HQ likelihood ratio to boost scores for documents containing terms associated with newsworthy content, and the LQ likelihood ratio to dampen scores for documents containing terms associated with noise.
+Note that we do not assign scores for every term.
+Instead, we only use the likelihood ratio for terms with ratios of at least 2.0 in one of the two models, and instead assign a score of 0 where the term has a ratio of less than 2.0 for both the HQ and LQ models.
+This prevents terms which have no clear association with either high or low quality content from affecting the overall score of a document.
+
+\begin{displaymath}
+	S_{HQ}(t) =
+	\begin{cases}
+    R_{HQ}(t) ,& \text{if } R_{HQ}(t) \text{ or } R_{LQ}(t) \geq 2.0\\
+    0,              & \text{otherwise}
+	\end{cases}
+\end{displaymath}
+
+\begin{displaymath}
+	S_{LQ}(t) =
+	\begin{cases}
+    R_{LQ}(t),& \text{if } R_{HQ}(t) \text{ or } R_{LQ}(t) \geq 2.0\\
+    0,              & \text{otherwise}
+	\end{cases}
+\end{displaymath}
+
+\subsubsection{Combining Terms Scores}
+We calculate the overall Newsworthiness Score \(N_d\) of a document \(d\) as follows:
+\begin{displaymath}
+	N_d =
+	\log_2\Bigg({\frac{
+		\frac{
+			1 + \sum_{t \in d}{S_{HQ}(t)}
+		}{
+			D
+		}
+	}{
+		\frac{
+			1 + \sum_{t \in d}{S_{LQ}(t)}
+		}{
+			D
+		}
+	}}\Bigg)
+	=
+	\log_2\bigg({\frac{
+		1 + \sum_{t \in d}{S_{HQ}(t)}
+	}{
+		1 + \sum_{t \in d}{S_{LQ}(t)}
+	}}\bigg)
+\end{displaymath}
+where \(t\) refers to a term in document \(d\) which contains \(D\) number of terms. As \(D\) is constant, it can be ignored, simplifying the calculation.
+
+We calculate the average term score \(S(t)\) (as described earlier) against both the high and low quality models.
+By taking the ratio of these scores, we can estimate how newsworthy the terms used in the document are overall.
+Documents where the average high quality term score is greater than that of low quality terms (i.e. \( \sum_{t \in d}{S_{HQ}(t)} > \sum_{t \in d}{S_{LQ}(t)} \)) are considered newsworthy, whilst documents where the average low quality term score is greater are considered noise.
+
+We add 1 to both the numerator and denominator which has a number of benefits.
+Firstly, it smooths the value, dampening the effect of high or low quality terms.
+This has a larger effect when the number of terms is small (i.e. when there is less evidence), and a smaller effect when there are more terms (i.e. more evidence).
+Secondly, it prevents division by 0 and \(log(0)\), both of which are undefined.
+In cases where there was no evidence for or against newsworthiness (i.e. no high or low quality terms are found), this ensures that the score \(N_d\) is \(log(1) = 0 \).
+
+Finally, we take \(log_2\) of the score ratio.
+This ensures that scores are smoothed, dampening the effect of outliers.
+Using \(log\) ensures that scores are centred around 0: tweets with a ratio greater than 1 are given a positive score, whilst tweets with a ratio less than 1 are given a negative score.
+Although it may seem counter intuitive for a tweet to have a negative Newsworthiness Score, a negative score helps to better represent that the tweet is both non-newsworthy, and is likely to be of very low quality or spam. In other-words, it highlights that the tweet is noise.

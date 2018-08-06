@@ -1,0 +1,333 @@
+Unigram
+[STATUS]     Relevant:     29990  Base: 0.9525   Topic: 1.2226                                                                                       
+[STATUS] Non-Relevant:  19614541  Base: 0.7565   Topic: -0.8208                                                                                      
+[STATUS] Armed Conflicts & Attacks        Relevant:  3442    Average: 2.2301  
+[STATUS] Arts, Culture & Entertainement   Relevant:  2965    Average: -0.1604                                                                        
+[STATUS] Business & Economy               Relevant:  1243    Average: 2.6670                                                                         
+[STATUS] Disasters & Accidents            Relevant:   962    Average: 0.3984                                                                         
+[STATUS] Law, Politics & Scandals         Relevant: 10027    Average: 1.5943                                                                         
+[STATUS] Miscellaneous                    Relevant:  2673    Average: 0.3409                                                                         
+[STATUS] Sports                           Relevant:  7598    Average: 0.8602                                                                         
+[STATUS] Science & Technology             Relevant:  1080    Average: 2.1611                                                                         
+
+Bigram (Any Term Risk)
+[STATUS]     Relevant:     29990  Base: 0.9525   Topic: 1.9512                                                                                       
+[STATUS] Non-Relevant:  19615251  Base: 0.7565   Topic: -1.1115                                                                                      
+[STATUS] Armed Conflicts & Attacks        Relevant:  3442    Average: 3.2073                                                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  2965    Average: 0.7443 
+[STATUS] Business & Economy               Relevant:  1243    Average: 3.9539                                                                         
+[STATUS] Disasters & Accidents            Relevant:   962    Average: 0.6786                                                                         
+[STATUS] Law, Politics & Scandals         Relevant: 10027    Average: 2.4075                                                                         
+[STATUS] Miscellaneous                    Relevant:  2673    Average: 0.7106                                                                         
+[STATUS] Sports                           Relevant:  7598    Average: 1.3070                                                                         
+[STATUS] Science & Technology             Relevant:  1080    Average: 3.4573                                                                         
+
+Bigram (Risk >= 1.0 for either)
+[STATUS]     Relevant:     29990  Base: 0.9525   Topic: 1.9514                                                                                       
+[STATUS] Non-Relevant:  19615371  Base: 0.7565   Topic: -1.1115                                                                                      
+[STATUS] Armed Conflicts & Attacks        Relevant:  3442    Average: 3.2060                                                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  2965    Average: 0.7470                                                                         
+[STATUS] Business & Economy               Relevant:  1243    Average: 3.9562                                                                         
+[STATUS] Disasters & Accidents            Relevant:   962    Average: 0.6791                                                                         
+[STATUS] Law, Politics & Scandals         Relevant: 10027    Average: 2.4075                                                                         
+[STATUS] Miscellaneous                    Relevant:  2673    Average: 0.7103 
+[STATUS] Sports                           Relevant:  7598    Average: 1.3068                                                                         
+[STATUS] Science & Technology             Relevant:  1080    Average: 3.4569                                  
+
+Bigram (Risk >= 2.0 for either)
+[STATUS]     Relevant:     29990  Base: 0.9525   Topic: 2.2984                                                                                       
+[STATUS] Non-Relevant:  19615104  Base: 0.7565   Topic: -1.3293                                                                                      
+[STATUS] Armed Conflicts & Attacks        Relevant:  3442    Average: 3.5857                                                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  2965    Average: 0.8382                                                                         
+[STATUS] Business & Economy               Relevant:  1243    Average: 4.3389                                                                         
+[STATUS] Disasters & Accidents            Relevant:   962    Average: 0.7688                                                                         
+[STATUS] Law, Politics & Scandals         Relevant: 10027    Average: 2.8933 
+[STATUS] Miscellaneous                    Relevant:  2673    Average: 0.9084                                                                         
+[STATUS] Sports                           Relevant:  7598    Average: 1.6233                                                                         
+[STATUS] Science & Technology             Relevant:  1080    Average: 3.8845                                                                         
+
+Bigram (Risk >= 3.0 for either)
+[STATUS]     Relevant:     29990  Base: 0.9525   Topic: 2.5160                                                                                       
+[STATUS] Non-Relevant:  19615414  Base: 0.7565   Topic: -1.2995                                                                                      
+[STATUS] Science & Technology             Relevant:  1080    Average: 4.0725                                                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  3442    Average: 3.7589                                                                         
+[STATUS] Miscellaneous                    Relevant:  2673    Average: 1.0410                                                                         
+[STATUS] Business & Economy               Relevant:  1243    Average: 4.4832                                                                         
+[STATUS] Sports                           Relevant:  7598    Average: 1.8160                                                                         
+[STATUS] Disasters & Accidents            Relevant:   962    Average: 0.8842                                                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  2965    Average: 1.0698                                                                         
+[STATUS] Law, Politics & Scandals         Relevant: 10027    Average: 3.1858   
+
+Bigrams (Risk >= 2.0 for either) - no entity requriement
+[STATUS]     Relevant:     29990  Base: 0.9525   Topic: 2.0235                                                                                       
+[STATUS] Non-Relevant:  19615259  Base: 0.7565   Topic: -0.7311                                                                                      
+[STATUS] Armed Conflicts & Attacks        Relevant:  3442    Average: 2.9574                                                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  2965    Average: 0.2714                                                                         
+[STATUS] Business & Economy               Relevant:  1243    Average: 3.5182                                                                         
+[STATUS] Disasters & Accidents            Relevant:   962    Average: 1.0142                                                                         
+[STATUS] Law, Politics & Scandals         Relevant: 10027    Average: 2.5455                                                                         
+[STATUS] Miscellaneous                    Relevant:  2673    Average: 1.4398     
+[STATUS] Sports                           Relevant:  7598    Average: 1.4906                                                                         
+[STATUS] Science & Technology             Relevant:  1080    Average: 3.3825                                                                         
+
+
+Testing: 1.25 / 0.75 (no entity requirement, bigrams)
+[STATUS]     Relevant:     99239  Base: 1.0478   Topic: 1.7024                                                                                       
+[STATUS] Non-Relevant:  75030457  Base: 0.8324   Topic: -0.3519                                                                                      
+[STATUS] BG:  99241  HQ:  12252   LQ:  31798                                                                                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 2.4492 BG:   8631 HQ   1562 LQ:   4053  
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.7808 BG:   8258 HQ    692 LQ:   2626                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 3.1223 BG:   3955 HQ    872 LQ:   1434                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 2.1748 BG:   4928 HQ    852 LQ:   1744                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.0679 BG:  37042 HQ   5453 LQ:  12133                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.6741 BG:   3732 HQ    323 LQ:   1148                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 2.2698 BG:   2362 HQ    350 LQ:    986                                         
+[STATUS] Sports                           Relevant: 30333    Average: 1.1148 BG:  30333 HQ   2148 LQ:   7674                                         
+
+Meow: 1.25 / 0.5 (No entity requirement, bigrams)
+[STATUS]     Relevant:     99240  Base: 1.0478   Topic: 1.7104                                                                                       
+[STATUS] Non-Relevant:  75060213  Base: 0.8324   Topic: -0.3511                                                                                      
+[STATUS] BG:  99241  HQ:  12252   LQ:  31472                                                                                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 2.4791 BG:   8631 HQ   1562 LQ:   3960                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.6787 BG:   3732 HQ    323 LQ:   1138                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 3.1334 BG:   3955 HQ    872 LQ:   1410                                         
+[STATUS] Sports                           Relevant: 30333    Average: 1.1155 BG:  30333 HQ   2148 LQ:   7641                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 2.1875 BG:   4928 HQ    852 LQ:   1726                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.7832 BG:   8258 HQ    692 LQ:   2604                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.0777 BG:  37042 HQ   5453 LQ:  12016                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 2.2760 BG:   2362 HQ    350 LQ:    977 
+
+Meow: 1.25 / 0.25 (No entity requirement, bigrams)
+[STATUS]     Relevant:     99241  Base: 1.0478   Topic: 1.9196                                                                                       
+[STATUS] Non-Relevant:  75062440  Base: 0.8324   Topic: -0.3665                                                                                      
+[STATUS] BG:  99241  HQ:  12252   LQ:  15241                                                                                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 2.6164 BG:   8631 HQ   1562 LQ:   2027                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.8694 BG:   8258 HQ    692 LQ:   1408                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 3.1934 BG:   3955 HQ    872 LQ:    752                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 2.4316 BG:   4928 HQ    852 LQ:    880                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.3426 BG:  37042 HQ   5453 LQ:   5583                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 1.0957 BG:   3732 HQ    323 LQ:    503                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 2.5708 BG:   2362 HQ    350 LQ:    437                                         
+[STATUS] Sports                           Relevant: 30333    Average: 1.2919 BG:  30333 HQ   2148 LQ:   3651    
+
+Testing: 1.5 / 0.25 (No entity requirement, bigrams)
+[STATUS]     Relevant:     99240  Base: 1.0478   Topic: 1.9199                                                                                       
+[STATUS] Non-Relevant:  75052942  Base: 0.8324   Topic: -0.3677                                                                                      
+[STATUS] BG:  99241  HQ:  12220   LQ:  15241                                                                                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 2.4379 BG:   4928 HQ    851 LQ:    880                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.8768 BG:   8258 HQ    692 LQ:   1408                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.3432 BG:  37042 HQ   5444 LQ:   5583                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 2.5692 BG:   2362 HQ    350 LQ:    437                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 2.6105 BG:   8631 HQ   1554 LQ:   2027                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 1.0956 BG:   3732 HQ    322 LQ:    503                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 3.1984 BG:   3955 HQ    872 LQ:    752                                         
+[STATUS] Sports                           Relevant: 30333    Average: 1.2904 BG:  30333 HQ   2135 LQ:   3651    
+
+Meow: 2.0 / 0.25 (No entity requirement, bigrams)
+[STATUS]     Relevant:     99240  Base: 1.0478   Topic: 1.9914                                                                                       
+[STATUS] Non-Relevant:  75043095  Base: 0.8324   Topic: -0.4180                                                                                      
+[STATUS] BG:  99241  HQ:  11418   LQ:  15241                                                                                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 2.5240 BG:   4928 HQ    794 LQ:    880                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.9184 BG:   8258 HQ    649 LQ:   1408                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.4184 BG:  37042 HQ   5093 LQ:   5583                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 2.7030 BG:   2362 HQ    328 LQ:    437                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 2.7017 BG:   8631 HQ   1450 LQ:   2027                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 1.1546 BG:   3732 HQ    300 LQ:    503                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 3.2938 BG:   3955 HQ    823 LQ:    752                                         
+[STATUS] Sports                           Relevant: 30333    Average: 1.3511 BG:  30333 HQ   1981 LQ:   3651
+
+Testing: 4.0 / 0.25 (No entity requirement, bigrams)
+[STATUS]     Relevant:     99240  Base: 1.0478   Topic: 2.3888                                                                                       
+[STATUS] Non-Relevant:  75030515  Base: 0.8325   Topic: -1.0467                                                                                      
+[STATUS] BG:  99241  HQ:   3320   LQ:  15241                                                                                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 3.6697 BG:   8631 HQ    455 LQ:   2027  
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 1.1293 BG:   8258 HQ    168 LQ:   1408                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 4.0978 BG:   3955 HQ    239 LQ:    752                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 3.0056 BG:   4928 HQ    237 LQ:    880                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.8099 BG:  37042 HQ   1556 LQ:   5583                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 1.0792 BG:   3732 HQ     64 LQ:    503                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 3.3623 BG:   2362 HQ    103 LQ:    437                                         
+[STATUS] Sports                           Relevant: 30333    Average: 1.6152 BG:  30333 HQ    498 LQ:   3651                                         
+
+Testing: 8.0 / 0.25 (No entity requirement, bigrams)
+[STATUS]     Relevant:     99239  Base: 1.0478   Topic: 2.4542                                                                                       
+[STATUS] Non-Relevant:  75033297  Base: 0.8324   Topic: -1.0402                                                                                      
+[STATUS] BG:  99241  HQ:    766   LQ:  15241                                                                                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 3.9280 BG:   8631 HQ    114 LQ:   2027 
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 1.2926 BG:   8258 HQ     33 LQ:   1408                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 4.4239 BG:   3955 HQ     73 LQ:    752                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 3.3365 BG:   4928 HQ     67 LQ:    880                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.9441 BG:  37042 HQ    374 LQ:   5583                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.9989 BG:   3732 HQ      8 LQ:    503                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 3.3360 BG:   2362 HQ     15 LQ:    437                                         
+[STATUS] Sports                           Relevant: 30333    Average: 1.4628 BG:  30333 HQ     82 LQ:   3651                                         
+
+Testing: 16 / 0.25  (No entity requirement, bigrams)
+[STATUS]     Relevant:     99240  Base: 1.0478   Topic: 2.0891                                                                                       
+[STATUS] Non-Relevant:  75033096  Base: 0.8324   Topic: -0.6231                                                                                      
+[STATUS] BG:  99241  HQ:    148   LQ:  15241                                                                                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 3.4203 BG:   8631 HQ     22 LQ:   2027                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.9369 BG:   8258 HQ      7 LQ:   1408                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 4.1233 BG:   3955 HQ     11 LQ:    752                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 3.1226 BG:   4928 HQ      8 LQ:    880                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.6561 BG:  37042 HQ     81 LQ:   5583                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.7600 BG:   3732 HQ      2 LQ:    503                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 2.6894 BG:   2362 HQ      3 LQ:    437                                         
+[STATUS] Sports                           Relevant: 30333    Average: 1.0156 BG:  30333 HQ     14 LQ:   3651  
+
+4.0 / 0.25 - Unigrams, no entity requriement.
+[STATUS]     Relevant:     99240  Base: 1.0478   Topic: 1.9594                                                                                       
+[STATUS] Non-Relevant:  75045703  Base: 0.8324   Topic: -0.8927                                                                                      
+[STATUS] BG:  99241  HQ:   3320   LQ:  15241                                                                                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 3.3175 BG:   8631 HQ    455 LQ:   2027                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.4270 BG:   8258 HQ    168 LQ:   1408                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 3.2603 BG:   3955 HQ    239 LQ:    752 
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 2.3288 BG:   4928 HQ    237 LQ:    880                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.6205 BG:  37042 HQ   1556 LQ:   5583                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.8028 BG:   3732 HQ     64 LQ:    503                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 2.6135 BG:   2362 HQ    103 LQ:    437                                         
+[STATUS] Sports                           Relevant: 30333    Average: 1.0444 BG:  30333 HQ    498 LQ:   3651                                         
+
+4.0 / 0.25 - Bigrams, no entity requriement.
+[STATUS]     Relevant:     99240  Base: 1.0478   Topic: 2.3888                                                                                       
+[STATUS] Non-Relevant:  75030515  Base: 0.8325   Topic: -1.0467                                                                                      
+[STATUS] BG:  99241  HQ:   3320   LQ:  15241                                                                                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 3.6697 BG:   8631 HQ    455 LQ:   2027  
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 1.1293 BG:   8258 HQ    168 LQ:   1408                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 4.0978 BG:   3955 HQ    239 LQ:    752                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 3.0056 BG:   4928 HQ    237 LQ:    880                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.8099 BG:  37042 HQ   1556 LQ:   5583                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 1.0792 BG:   3732 HQ     64 LQ:    503                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 3.3623 BG:   2362 HQ    103 LQ:    437                                         
+[STATUS] Sports                           Relevant: 30333    Average: 1.6152 BG:  30333 HQ    498 LQ:   3651                                         
+
+4.0 / 0.25 - Trigram, no entity requirement
+[STATUS]     Relevant:     99241  Base: 1.0478   Topic: 1.8707                                                                                       
+[STATUS] Non-Relevant:  75060674  Base: 0.8324   Topic: -0.5116                                                                                      
+[STATUS] BG:  99241  HQ:   3320   LQ:  15241                                                                                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 2.3354 BG:   8631 HQ    455 LQ:   2027                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 1.0423 BG:   8258 HQ    168 LQ:   1408                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 3.2951 BG:   3955 HQ    239 LQ:    752                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 2.5641 BG:   4928 HQ    237 LQ:    880                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.2328 BG:  37042 HQ   1556 LQ:   5583                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.9552 BG:   3732 HQ     64 LQ:    503                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 2.6630 BG:   2362 HQ    103 LQ:    437  
+[STATUS] Sports                           Relevant: 30333    Average: 1.2745 BG:  30333 HQ    498 LQ:   3651                                         
+
+4.0 / 0.25 / Bigram, entity for HQ only
+[STATUS]     Relevant:     99241  Base: 1.0478   Topic: 2.5727                                                                                       
+[STATUS] Non-Relevant:  75040530  Base: 0.8324   Topic: -1.5516                                                                                      
+[STATUS] BG:  99241  HQ:   3320   LQ:  15241                                                                                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 3.4966 BG:   2362 HQ    103 LQ:    437                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 4.1116 BG:   8631 HQ    455 LQ:   2027                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.7257 BG:   3732 HQ     64 LQ:    503                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 4.4136 BG:   3955 HQ    239 LQ:    752                                         
+[STATUS] Sports                           Relevant: 30333    Average: 1.7941 BG:  30333 HQ    498 LQ:   3651                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 3.2099 BG:   4928 HQ    237 LQ:    880                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 1.4373 BG:   8258 HQ    168 LQ:   1408                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.9508 BG:  37042 HQ   1556 LQ:   5583   
+
+4.0 / 0.25 / Bigram, entity for both
+[STATUS]     Relevant:     99240  Base: 1.0478   Topic: 1.6167                                                                                       
+[STATUS] Non-Relevant:  75066015  Base: 0.8324   Topic: -0.9125                                                                                      
+[STATUS] BG:  99241  HQ:   3320   LQ:  15241                                                                                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 1.9650 BG:  37042 HQ   1556 LQ:   5583                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 2.4053 BG:   2362 HQ    103 LQ:    437                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 2.5733 BG:   8631 HQ    455 LQ:   2027                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.4363 BG:   3732 HQ     64 LQ:    503                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 3.1837 BG:   3955 HQ    239 LQ:    752                                         
+[STATUS] Sports                           Relevant: 30333    Average: 0.9515 BG:  30333 HQ    498 LQ:   3651                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 2.2776 BG:   4928 HQ    237 LQ:    880                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.6615 BG:   8258 HQ    168 LQ:   1408 
+
+1.25 / 0.75 Unigram (no entity)
+[STATUS]     Relevant:     99240  Base: 1.0478   Topic: 1.0434                                                                                       
+[STATUS] Non-Relevant:  75056112  Base: 0.8324   Topic: -0.2081                                                                                      
+[STATUS] BG:  99241  HQ:  12252   LQ:  31798                                                                                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 1.5223 BG:  37042 HQ   5453 LQ:  12133                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 1.4045 BG:   2362 HQ    350 LQ:    986                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 1.5989 BG:   8631 HQ   1562 LQ:   4053                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.3320 BG:   3732 HQ    323 LQ:   1148                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 2.1657 BG:   3955 HQ    872 LQ:   1434                                         
+[STATUS] Sports                           Relevant: 30333    Average: 0.4370 BG:  30333 HQ   2148 LQ:   7674                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 1.0117 BG:   4928 HQ    852 LQ:   1744                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.2417 BG:   8258 HQ    692 LQ:   2626  
+
+1.25 / 0.5 Unigram (no entity)
+[STATUS]     Relevant:     99240  Base: 1.0478   Topic: 1.0592                                                                                       
+[STATUS] Non-Relevant:  75055836  Base: 0.8324   Topic: -0.2067                                                                                      
+[STATUS] BG:  99241  HQ:  12252   LQ:  31472                                                                                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 1.0243 BG:   4928 HQ    852 LQ:   1726                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.2453 BG:   8258 HQ    692 LQ:   2604                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 1.5473 BG:  37042 HQ   5453 LQ:  12016                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 1.4092 BG:   2362 HQ    350 LQ:    977                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 1.6410 BG:   8631 HQ   1562 LQ:   3960                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.3376 BG:   3732 HQ    323 LQ:   1138                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 2.1814 BG:   3955 HQ    872 LQ:   1410                                         
+[STATUS] Sports                           Relevant: 30333    Average: 0.4400 BG:  30333 HQ   2148 LQ:   7641    
+
+1.25 / 0.25 Unigram (no entity)
+[STATUS]     Relevant:     99241  Base: 1.0478   Topic: 1.4348                                                                                       
+[STATUS] Non-Relevant:  75064223  Base: 0.8324   Topic: -0.1759                                                                                      
+[STATUS] BG:  99241  HQ:  12252   LQ:  15241                                                                                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 1.4244 BG:   4928 HQ    852 LQ:    880                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.3737 BG:   8258 HQ    692 LQ:   1408                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.0043 BG:  37042 HQ   5453 LQ:   5583                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 1.7603 BG:   2362 HQ    350 LQ:    437                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 2.1656 BG:   8631 HQ   1562 LQ:   2027                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.9583 BG:   3732 HQ    323 LQ:    503                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 2.2945 BG:   3955 HQ    872 LQ:    752                                         
+[STATUS] Sports                           Relevant: 30333    Average: 0.7432 BG:  30333 HQ   2148 LQ:   3651 
+
+2.0 / 0.25 Unigram (no entity)
+[STATUS]     Relevant:     99240  Base: 1.0478   Topic: 1.5123                                                                                       
+[STATUS] Non-Relevant:  75042609  Base: 0.8324   Topic: -0.2120                                                                                      
+[STATUS] BG:  99241  HQ:  11418   LQ:  15241                                                                                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 1.0715 BG:   3732 HQ    300 LQ:    503                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 2.4134 BG:   3955 HQ    823 LQ:    752                                         
+[STATUS] Sports                           Relevant: 30333    Average: 0.7976 BG:  30333 HQ   1981 LQ:   3651                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 1.5033 BG:   4928 HQ    794 LQ:    880                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.3832 BG:   8258 HQ    649 LQ:   1408                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.0942 BG:  37042 HQ   5093 LQ:   5583                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 1.8841 BG:   2362 HQ    328 LQ:    437                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 2.2884 BG:   8631 HQ   1450 LQ:   2027  
+
+1.5 / 0.25 Unigram (no entity)
+[STATUS]     Relevant:     99241  Base: 1.0478   Topic: 1.4356                                                                                       
+[STATUS] Non-Relevant:  75049301  Base: 0.8324   Topic: -0.1754                                                                                      
+[STATUS] BG:  99241  HQ:  12220   LQ:  15241                                                                                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 1.4261 BG:   4928 HQ    851 LQ:    880                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.3746 BG:   8258 HQ    692 LQ:   1408                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.0050 BG:  37042 HQ   5444 LQ:   5583                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 1.7638 BG:   2362 HQ    350 LQ:    437                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 2.1648 BG:   8631 HQ   1554 LQ:   2027                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.9665 BG:   3732 HQ    322 LQ:    503                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 2.2966 BG:   3955 HQ    872 LQ:    752                                         
+[STATUS] Sports                           Relevant: 30333    Average: 0.7431 BG:  30333 HQ   2135 LQ:   3651 
+
+8.0 / 0.25 Unigram (no entity)
+[STATUS]     Relevant:     99241  Base: 1.0478   Topic: 1.9026                                                                                       
+[STATUS] Non-Relevant:  75045057  Base: 0.8324   Topic: -1.4573                                                                                      
+[STATUS] BG:  99241  HQ:    766   LQ:  15241                                                                                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 2.4479 BG:   4928 HQ     67 LQ:    880                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.7315 BG:   8258 HQ     33 LQ:   1408                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.5475 BG:  37042 HQ    374 LQ:   5583                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 2.6682 BG:   2362 HQ     15 LQ:    437                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 3.6636 BG:   8631 HQ    114 LQ:   2027                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.8353 BG:   3732 HQ      8 LQ:    503                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 3.6740 BG:   3955 HQ     73 LQ:    752                                         
+[STATUS] Sports                           Relevant: 30333    Average: 0.6850 BG:  30333 HQ     82 LQ:   3651  
+
+16.0 / 0.25 Unigram (no entity)
+[STATUS]     Relevant:     99241  Base: 1.0478   Topic: 1.6645                                                                                       
+[STATUS] Non-Relevant:  75059764  Base: 0.8324   Topic: -1.5480                                                                                      
+[STATUS] BG:  99241  HQ:    148   LQ:  15241                                                                                                         
+[STATUS] Sports                           Relevant: 30333    Average: 0.1294 BG:  30333 HQ     14 LQ:   3651                                         
+[STATUS] Disasters & Accidents            Relevant:  4928    Average: 2.5269 BG:   4928 HQ      8 LQ:    880                                         
+[STATUS] Arts, Culture & Entertainement   Relevant:  8258    Average: 0.3654 BG:   8258 HQ      7 LQ:   1408                                         
+[STATUS] Law, Politics & Scandals         Relevant: 37042    Average: 2.4015 BG:  37042 HQ     81 LQ:   5583                                         
+[STATUS] Science & Technology             Relevant:  2362    Average: 2.7904 BG:   2362 HQ      3 LQ:    437                                         
+[STATUS] Armed Conflicts & Attacks        Relevant:  8631    Average: 3.7640 BG:   8631 HQ     22 LQ:   2027                                         
+[STATUS] Miscellaneous                    Relevant:  3732    Average: 0.7690 BG:   3732 HQ      2 LQ:    503                                         
+[STATUS] Business & Economy               Relevant:  3955    Average: 3.7640 BG:   3955 HQ     11 LQ:    752        
+

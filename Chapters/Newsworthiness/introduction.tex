@@ -1,0 +1,44 @@
+%!TEX root = ../../main.tex
+
+\label{sec:scoring:introduction}
+The unpredictable nature of news, combined with the limited length and unstructured nature of Twitter makes it very difficult to predict the newsworthiness of an individual tweet, especially in real-time.
+Classifying tweets as newsworthy or noise is a common step in credibility scoring, where the aim is to determine if a tweet is newsworthy, and then to decide how credible information contained in the tweet is.
+However, the newsworthiness of an individual tweets is often ignored in event detection, where clusters of documents or terms are examined, rather than individual tweets.
+
+In this chapter, we examine how newsworthiness can be predicated at a more fine-grained tweet level, and attempt to predict the newsworthiness of individual tweets, which we then use as feature for event detection.
+The aim of this work is to enable event detection approaches to more easily separate signal (newsworthy tweets) from noise (general discussion and chatter), and to demonstrate that event detection approaches can move away from existing cluster or graph based significance measures, such as the volume of tweets mentioning a specific term or the size of a cluster.
+We aim to show that event detection approaches can instead rely on latent features that allow for the higher precision while requiring fewer tweets.
+
+For the purpose of this work, we say that a tweet is newsworthy if it discusses a topic that is of interest to the news media.
+For example, a tweet describing an apartment fire would be considered newsworthy, whereas a tweet describing a user's breakfast would not.
+Note that the concept of newsworthiness with regards to an individual tweet is very similar to the definition of \emph{significant} in the context of events, defined in chapter \ref{DefiningEvent}, however applied at a tweet level rather than over an event as a whole.
+Although still subjective, a topic is either considered significant enough to be an event, or it is not.
+Newsworthiness, on the other hand, can be measured on a scale.
+Whilst a tweet asking others to ``pray for those involved'' in the aforementioned apartment fire is relevant to a newsworthy event because it mentions the apartment fire, it is considerably less newsworthy than a tweet providing information about the fire or the people involved.
+The aim of this work is to determine whether an individual tweet is newsworthy (its \emph{direction}), and assign a relative score (its \emph{magnitude}).
+
+Given the above, we define 3 key characteristics that we want our Newsworthiness Scorer to satisfy:
+\begin{itemize}
+	\item \textbf{Generalizability:} as specified in chapter \ref{chapter:introduction}, the scoring system should be able to score a tweet about any event or event type, even if it has never encountered a similar event before. It should not, for example, only be able to score tweets about sports events or earthquakes, rather it should be general enough to accurately score tweets about anything that could be reported by the media (i.e., anything \emph{significant}).
+	\item \textbf{Real-time:} also specified in chapter \ref{chapter:introduction}, the real-time characteristic means that tweets should be scored as soon as received, and there be should be no delay to wait for new information (i.e., no batch processing). This ensures that the scoring is useful for real-time event detection systems.
+	\item \textbf{Responsive:} it should be possible to update the model and incorporate new information as it is found. For example, as an event detection system discovers new events or tweets related to ongoing events, it should be able incorporate new information into the scoring model, allowing subsequent tweets to be more accurately scored.
+\end{itemize}
+
+To meet these characteristics, we propose a novel newsworthiness scoring approach which boosts or reduces a tweet's Newsworthiness Score based on the likelihood ratio of a term with regards to term distributions across different tweet qualities.
+This approach requires no manually annotated training data and instead relies on a small set of heuristics to identify training data in real-time. We can then bolster the models by feeding exceptional tweets, identified either through event detection or using their Newsworthiness Score, back into the models.
+This allows the scoring model to quickly adapt to new events and information in real-time, giving it a significant advantage over approaches which use only manually labelled training data.
+
+The intuition here is that by identifying high and low quality tweets, we can compare term usage statistics to the corpus as a whole, giving us an insight into which terms are newsworthy, or which add noise.
+By identifying terms (or groups of terms) that appear more commonly in newsworthy tweets when compared to the background corpus, and measuring their significance using likelihood ratios, we can assign a Newsworthiness Scores to a tweet by combining individual term scores.
+
+\newpage
+In this chapter, we aim to answer the following research questions:
+\begin{itemize}
+	\item Can heuristics be used to automatically train newsworthiness scoring models?
+	\item Can an automatic approach identify the newsworthiness and magnitude of a tweet?
+	\item Can newsworthiness be used as a feature to improve event detection approaches?
+\end{itemize}
+
+In section \ref{scoring:sec:labelling} we describe a set of heuristics for automatically classifying content into high and low quality sets, which can then be used to train models for newsworthiness scoring.
+We then use these models to identify and score newsworthy content, evaluating the effectiveness of our proposed approach in section \ref{scoring:sec:eval}.
+Finally, in section \ref{scoring:sec:detection}, we demonstrate how our newsworthiness scoring approach can be used to improve upon a simple cluster-based event detection approach and outperform current state of the art event detection approaches.

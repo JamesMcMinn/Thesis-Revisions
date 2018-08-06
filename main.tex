@@ -1,0 +1,58 @@
+% !TEX program = xelatex
+
+\documentclass[
+	%twoside,
+	oneside,
+	12pt,
+]{thesis}
+
+\begin{document}
+
+\include{FrontBackMatter/Titlepage}
+\leavevmode\thispagestyle{empty}\newpage
+
+\pagenumbering{Roman}
+\newpage
+\include{FrontBackMatter/Abstract}
+
+% \newpage
+% \include{FrontBackMatter/Acknowledgments}
+
+% \newpage
+% \include{FrontBackMatter/Dedication}
+
+\newpage
+\include{FrontBackMatter/Declaration}
+
+\leavevmode\thispagestyle{empty}\newpage
+\newpage
+\include{FrontBackMatter/Contents}
+
+\newpage
+\include{FrontBackMatter/Publication}
+\leavevmode\thispagestyle{empty}\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\include{Chapters/Introduction/main}
+
+\leavevmode\thispagestyle{empty}\newpage
+\include{Chapters/Background/main}
+
+\leavevmode\thispagestyle{empty}\newpage
+\include{Chapters/Collection/main}
+
+\leavevmode\thispagestyle{empty}\newpage
+\include{Chapters/EntityDetection/main}
+
+\leavevmode\thispagestyle{empty}\newpage
+\include{Chapters/Newsworthiness/main}
+
+\leavevmode\thispagestyle{empty}\newpage
+\include{Chapters/Conclusion/main}
+
+\leavevmode\thispagestyle{empty}\newpage
+\include{FrontBackMatter/Bibliography}
+
+\end{document}

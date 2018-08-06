@@ -1,0 +1,130 @@
+%!TEX root = ../../main.tex
+
+\newpage
+\chapter{Background}
+\label{chapter:background}
+
+In this chapter, we review the background information required to understand the remainder of this thesis.
+We draw on several areas of research, such as Information Retrieval (IR) and Natural Language Processing (NLP), and describe how documents are represented and compared, and detail a number of IR measures.
+We then give a brief overview of the Topic Detection and Tracking project, and how it related to modern approaches for event detection on Twitter.
+Finally, we give a survey of related work in the area of event detection Twitter and describe how it relates to the work presented in this thesis.
+
+
+\section{Information Retrieval}
+Fist we discuss the area of Information Retrieval, and describe some of the most common concepts that we use throughout this thesis.
+In a traditional IR task, the goal is to take a query describing some information need, and return a ranked list of documents that are relevant to that query.
+In the remainder of this section, we examine some of the basic techniques used to complete this task, and describe how they relate to event detection on Twitter.
+
+\subsection{Document Representation}
+
+One of the most commonly used document and query representations is the Vector Space model \citep{salton1975vector}. The Vector Space model represents both queries and documents as a vector, where each term in the document corresponds to a dimension in the vector.
+Terms that occur in a document will have a non-zero value in the vector, while terms that do not appear will have a value of 0.
+The Vector Space model is used throughout this thesis to represent documents (tweets).
+
+\subsubsection{TF-IDF}
+One of the most common ways of calculating the weight a term has in a vector is known as the Term Frequency-Inverse Document Frequency model, or TF-IDF.
+TF-IDF attempts to estimate the importance of a term with regards to both the collection as a whole and document itself.
+
+The TF component is concerned with the weight of the term in relation to the document, the basic premise being that the more frequently a term occurs in a document, the more weight it should carry.
+The IFD component, on the other hand, is concerned with the weight of the term in relation to the corpus as a whole.
+The IDF component attempts to estimate the amount of information that a term carries on the basis that rare terms should be given more weight as their presence in a document is more likely to be an indication of topic, whilst common terms should be given less weight as they are less topically specific.
+TF-IDF is calculated as so:
+\begin{displaymath}
+	w_{t,d} = \mathrm{tf}_{t,d} \cdot \log{\frac{|D|}{|\{d' \in D \, | \, t \in d'\}|}}
+\end{displaymath}
+where \(\mathrm{tf}_{t,d}\) is the term frequency of term \(t\) in document \(d\), \(|D|\) is the total number of documents in the collection, and \(|\{d' \in D \, | \, t \in d'\}|\) is the number of documents contain term \(t\).
+Note that for retrieval tasks on Twitter, the TF component is often ignored as tweets are very short, and generally do not contain repeated terms.
+
+\subsubsection{Cosine}
+
+Many IR tasks, including event detection, are concerned with the the notion of similarity.
+One such similarity measure is cosine similarity, which measures the cosine of the angle between two documents in vector space:
+\begin{displaymath}
+	\cos{\theta} = \frac{\mathbf{d_1} \cdot \mathbf{d_2}}{\left\| \mathbf{d_1} \right\| \left \| \mathbf{d_2} \right\|}
+\end{displaymath}
+where \(\mathbf{d_1} \cdot \mathbf{d_2}\) is the dot product of term weighted vectors for the documents, and the norm for vector \(\mathbf{d}\) is calculated as such:
+\begin{displaymath}
+	\left\| \mathbf{d} \right\| = \sqrt{\sum_{i=1}^n d_i^2}
+\end{displaymath}
+
+\subsection{Evaluation Measures}
+Throughout this thesis, we use a number of IR standard evaluation metrics, commonly used in IR evaluations.
+These measures as based on the concept of relevance.
+In IR, relevance is determined based on some information need, usually represented as a textual query.
+In event detection, there is no query.
+Instead, relevance is defined in relation to an event, either by subjectively evaluating if a cluster of tweets meets some definition of `event', or by matching tweets in the cluster to a pre-determined event in the relevance judgements (represented by a set of tweets).
+We discuss this further is chapter \ref{chapter:detection}.
+
+\subsubsection{Recall}
+
+Recall is measured as the fraction of relevant documents that at retrieved from all possible relevant documents. Recall is give as:
+
+\begin{displaymath}
+	\text{recall}=\frac{|\{\text{relevant documents}\}\cap\{\text{retrieved documents}\}|}{|\{\text{relevant documents}\}|}
+\end{displaymath}
+
+\subsubsection{Precision}
+In a traditional IR setting, precision is measured as the fraction of retrieved documents that are relevant to a given query.
+For the purpose of evaluating event detection approaches, the lack of a query means that we must consider relevance differently; either in terms of meeting some definition of `event', or by matching back to some event from the relevance judgements.
+How this is done is examined in chapters \ref{chapter:collection} and \ref{chapter:detection}.
+
+In a standard IR setting, precision is given as:
+\begin{displaymath}
+	\text{precision}=\frac{|\{\text{relevant documents}\}\cap\{\text{retrieved documents}\}|}{|\{\text{retrieved documents}\}|}
+\end{displaymath}
+
+\subsubsection{F-measure}
+Individually, precision and recall show only one aspect of performance.
+Perfect recall can be achieved by returning every document in the collection,
+whilst perfect precision can be achieved by returning none of them.
+
+F-measure takes both precision and recall into consideration, and combines them into a single score. F-measure ranges between 1 at best (a perfect systems) and 0 at worst. Although it is possible to weight F-measure to prefer precision or recall, the most commonly used F-measure gives equal weight to both, and is the harmonic mean of precision and recall. This is usually called F1 score, and is used throughout this thesis:
+
+\begin{displaymath}
+	F_1 = 2 \cdot \frac{1}{\tfrac{1}{\mathrm{recall}} + \tfrac{1}{\mathrm{precision}}} = 2 \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{\mathrm{precision} + \mathrm{recall}}
+\end{displaymath}
+
+\section{Topic Detection and Tracking}
+The Topic Detection and Tracking (TDT) project began in 1997, and was a body of research and an evaluation paradigm that addressed the event-based organization of broadcast news \citep{Allan:2002:ITD:772260.772262}. The motivation behind the project was a system which was capable of monitoring broadcast news and could produce an alert when a new event occurred. The project was split into a number of tasks, with the First Story Detection (event detection) task considered the most difficult \citep{Allan:2000:FSD:354756.354843}. At a high level, almost all of the approaches proposed by the TDT project followed the same model. For each new document, compare it to every other document using some similarity measure. If one or more similar documents is found, add the new document to cluster containing the closest match. If no similar documents are found, then a new event has been detected, and a new cluster is formed~\citep{Allan:2000:FSD:354756.354843}. This basic model persisted throughout the TDT project, and variations of this model (with efficiency optimizations) are commonly found in event detection approaches for social media \citep{becker2011beyond,Petrovic:2010:SFS:1857999.1858020,aggarwalevent,conf/asunam/OzdikisSO12}.
+
+The TDT project produced some reasonably effective systems \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}, however performance was still far below that required for systems to be considered adequate for complete automation \citep{Allan:2000:FSD:354756.354843}. When the TDT project ended in 2004, research in event detection slowed. It is believed that a plateau had been reached, and that without a radically different approach, the performance of these systems was unlikely to ever improve significantly \citep{Allan:2000:FSD:354756.354843}. This belief has remained true in the context of newswire documents, and many state-of-the-art systems are now over a decade old \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}. The TDT project was a cornerstone in the development of event detection approaches and is responsible for much of the foundation on which many state-of-the-art event detection approaches for Twitter are based.
+
+\section{Event Detection on Social Media}
+In recent years, interest in event detection has been rekindled as social media data has become available for research. However social media posts introduce their own unique challenges which require novel approaches to overcome. The massive volume of data means that traditional event detection techniques are too slow for real-time applications. One of the requirements of an effective event detection system is the ability to monitor events in real-time. In addition, with high volume data streams, as is the case with Twitter, efficiency is crucial to an effective system.
+
+Analysis of social media has received a lot of attention from the research community in recent years. However, much of this work has focused on blog and email streams  \citep{Zhao:2007:TIF:1619797.1619886,Jurgens:2009:EDB:1859650.1859652,Becker:2010:LSM:1718487.1718524,Nguyen:2011:ERR:2186701.2186707}, using datasets such as the Enron email dataset \cite{citeulike:7616867} or the BlogLines dataset \citep{Sia:2008:ECP:1401890.1401967}. More recently, focus has moved towards Twitter due to its popularity with individuals and organizations as a method of broadcast communication.
+
+\cite{Hu:2012:BNT:2208636.2208672} demonstrated the effectiveness of Twitter as a medium for breaking news by examining how the news of Osama bin Laden's death broke on Twitter. They found that Twitter had broken the news, and as a result, millions already knew of his death before the official announcement.
+
+\cite{Kwak:2010:TSN:1772690.1772751} analyzed the top trending topics to show that the majority of topics (over 85\%) are related to headline news or persistent news. They also found that once a tweet is retweeted, it can be expected to reach an average of 1,000 users.
+
+\cite{WRN2012:osbornebieber} measured the delay between a new event appearing on Twitter, and the time taken for the same event to be updated on Wikipedia. Their results show that Twitter appears to be around 2 hours ahead of Wikipedia. They suggest that Wikipedia could be used as a filter, decreasing the number of spurious events, however at the cost of greatly increased latency. They demonstrate its effectiveness as a filter for their First Story Detection approach \citep{Petrovic:2010:SFS:1857999.1858020}, significantly decreasing the number of spurious events.
+
+\section{Event Detection on Twitter}
+A number of excellent survey papers covering Event Detection on Twitter have been published in recent years, including \cite{Hasan17}, \cite{Goswami2016}, and \cite{Atefeh2015}. Rather than replicate their work here, we invite interested readers to refer to these papers for a full survey all event detection approaches for Twitter.
+Instead, we survey only the most novel and relevant work in this section.
+
+\cite{sankaranarayanan2009twitterstand} proposed one of the first systems which aimed to detect breaking news and events from tweets. In conjunction with the Twitter garden-hose, they utilize a set of 2,000 handpicked \emph{seeds} -- twitter accounts who primarily post news-related tweets -- that they used as a trusted source of news.
+An initial layer of filtering is performed on all incoming tweets, excluding those from the seeds, using naive Bayes classifier trained on a corpus of news and ``junk'' tweets. Next they use an online clustering approach that maintains a list of active clusters, along with an associated TF-IDF \citep{Salton:1988:TAA:54259.54260} feature-vector of the terms used by tweets in the cluster. An incoming tweet is added to a cluster if its similarity with the cluster's feature-vector is above a set threshold, measured using a time-decayed cosine similarity function. An inverted index is maintained so that only active clusters which contain at least some of the terms from the incoming tweet are used for comparison, and clusters with a time centroid greater than 3 days old are marked as inactive and removed from the index.
+To further reduce the number of noisy clusters, \cite{sankaranarayanan2009twitterstand} impose an interesting restriction, in that for a cluster to remain active after \(k\) tweets have been added, one of the tweets must come from a seed account.
+Despite a number of efficiency optimizations, their approach is unable to scale, or produce results in real-time. Unfortunately, no attempt is made to evaluate the effectiveness of their system other than a small number of empirical observations.
+
+\cite{aggarwalevent} use a fixed number of clusters and cluster summaries to reduce the number of comparisons required for document clustering. Each cluster summary contains (i) a node-summary, which is a set of users and their frequencies and (ii) a content-summary, which is a set of words and their TF-IDF \cite{Salton:1988:TAA:54259.54260} weighted frequencies. By combining these two summaries, they suggest a novel similarity score which exploits the underlying structure of the social network, and improves upon content-only measures. Each incoming document is assigned to its closest cluster unless its similarity score is significantly lower than that of other documents, in which case, the oldest cluster is replaced with a new cluster containing  the new document. A sketch-based approximation technique is used to maintain node statistics and to calculate structural similarity, greatly increasing the efficiency of their approach. The rate of growth of each cluster is measured, and clusters which grow past a certain rate are said to be events. Unfortunately, evaluation of this approach is lacking in a number of areas. Although they rigorously evaluate the effectiveness of their proposed similarity measure, an evaluation of the detection capability of this approach is lacking as they considers spam to be an event, and does not present how many false-positive events were detected.
+
+\cite{Petrovic:2010:SFS:1857999.1858020} were perhaps the first to propose a scalable, real-time, event detection system. Their system uses Locality Sensitive Hashing (LSH), which places similar documents into the same bucket of a hash table. Using this method it is possible to reduce the size of the candidate set to a fixed size which contains the nearest neighbour with a high probability. Clustering can then be performed in a fixed time, using a variance reduction technique \cite{Petrovic:2010:SFS:1857999.1858020} to improve clustering performance if no neighbour is found within a certain distance. Shannon entropy\citep{Shannon:2001:MTC:584091.584093} is used to measure the amount of information in each cluster, and clusters with small entropies (\(\le\) 2.5) are moved to the back of the list of possible events. When ranking events, they found that ranking by the number of unique users, gives better performance than other measures, such as number of tweets. Due to the lack of Twitter corpora, \cite{Petrovic:2010:SFS:1857999.1858020} chose to evaluate their approach using the TDT-5 corpus. Despite their approach very slightly under-performing the baseline \citep{UMASS}, they achieve over an order of magnitude speedup in processing time, allowing their approach to scale to Twitter sized corpora, while the baseline could not.
+
+\cite{becker2011beyond} use the clustering approach proposed by \cite{Yang98} as part of the TDT project, and a filtering layer similar to \cite{sankaranarayanan2009twitterstand}. However, filtering is performed after clustering has taken place, and they attempt to identify likely event clusters, rather than event tweets. They use a number of features, such as top terms, and number of retweets, to classify clusters as either event or non-event. Although evaluation of their approach seems to show that it is very effective, it is still based on a model designed for much lower volume streams, and is simply too slow to scale past very small corpora.
+
+\cite{Sakaki:2010:EST:1772690.1772777} were concerned with the detection of specific types of event, in particular, earthquakes and typhoons, with the aim of issuing alerts to those in the path of these disasters. Their approach, although simple, is very effective. They specify a set of predefined keywords which are associated with the type of events they are trying to detect (e.g. earthquake, shake, cyclone, typhoon, etc.,). They monitor an incoming stream of tweets for these keywords, and for each tweet found, they classify it using a Support Vector Machine (SVM) as either event-related or not. If they find enough event-related tweets in a short period of time, then their systems decides that the event is real, and issues alerts to those who could be affected. Despite the effectiveness of their approach, there are obvious drawbacks. Firstly, it can only detect specific types of event, and secondly, it requires training data for each of the types of event we want to detect.
+
+\cite{Choudhury11extractingsemantic} examined how linguistic features and background knowledge could be used to detect specific types of sports events with high precision. However their approach requires significant domain knowledge of the sporting events and large amounts of manual labelling to prepare a classifier for each specific type of event, making it difficult and time-consuming to generalize.
+
+\cite{Ritter:2012:ODE:2339530.2339704} used named entities, ``event phrases'' and temporal expressions to extract a calendar of significant events from Twitter.
+However, their approach requires that tweets contain temporal resolution phrases, such as ``tomorrow'' or ``Wednesday'' for their approach to resolve between an entity and a specific time.
+This means that smaller events, which do no generate much discussion before they happen, are unlikely to be detected. Additionally unexpected events, which are often the events which are of most interest, are unlikely to be detected as they will be discussed as they happen, and without any temporal resolution phrases.
+
+Most similar to our work is that of \cite{Reuters2017}, who use a partitioning technique to efficiently cluster documents by splitting the tweet term space into groups they call `semantic categories', such as named entities, mentions, hashtags, nouns and verbs.
+To ensure that only novel events are reported, they compare each new event to old events, filtering out any events that have already been reported.
+They merge events by comparing the top 20\% of entity terms, based on term frequency, which reduces event fragmentation.
+They evaluate their approach using the Events 2012 corpus we create in chapter \ref{chapter:collection}, finding that their approach outperforms the LSH approach when measured using NMI and B-Cubed cluster performance metrics.
+Although this approach outperforms their baseline approach, the LSH approach of \cite{Petrovic:2010:SFS:1857999.1858020} using their chosen evaluation metrics, they do not report precision or recall values, making it difficult to compare directly.

@@ -1,0 +1,135 @@
+%!TEX root = ../../main.tex
+
+\section{Combining Events from Multiple Sources}
+\label{sec:merge}
+Each of the methods produces a different set of events, however these are not disjoint sets in terms of both the events they cover and the tweets they contain.
+For example, all three approaches independently had an event for the third U.S. Presidential Debate, and unless they are combined, we will have at least three separate `events' in our relevance judgements, all of which discuss the same seminal event.
+Additionally, each method can produce multiple results for the same event.
+For example, the LSH approach produced no fewer than 40 clusters which discuss the third U.S. Presidential Debate. Although each cluster could potentially be mapped down to specific sub-events within the Debate (such as individual questions or memorable quotes), they would better suit our definition of event if they were combined into a single event (i.e. the Debate as a whole).
+Given this, we attempt to cluster events together, both from different sources (e.g. the LSH and CS algorithms) and the same sources (i.e. two events from the LSH algorithm), such that they fit our definition of event as closely as possible.
+
+\subsection{Clustering Features}
+There are a number of features which could be used for the clustering of events.
+This section describes the features and the possible issues surrounding their use.
+
+\subsubsection{Category Features}
+Categorization is somewhat problematic for the detection approaches as there was a large amount of disagreement between annotators (discussed in detail in section~\ref{collection:sec:results}).
+Going back to our example of the third U.S. Presidential Debate, we noted that the LSH approach produced over 40 clusters for the discussing various sub-events and topics within the debate.
+Many of the subjects of the debate were related to economics, business and international relations.
+This is an issue because annotators often categorized results based upon the topic of discussion (e.g. New Laws, Political and Diplomatic Meetings), rather than based on the event which caused the debate to take place (the Election).
+Despite it being clear at a higher level that the debate should be categorized as Election, it is not so clear at the level of sub-events and specific moments within the debate --- the categorization changes as we change the level of granularity.
+%This makes the use of categorization difficult for clustering as it is not immediately clear how \emph{War and Conflicts} could be related to \emph{Election}, however we cannot simply take the different categories as meaning that the results discuss distinct events.
+
+Additionally, because Wikipedia defines its own set of categories, we must create a mapping between the TDT categories and Wikipedia categories if we wish to measure category similarity.
+Creating a direct mapping between TDT categories and Wikipedia categories would solve the mapping problem but not increase agreement between the detection approaches.
+Thus, we created a new set of categories, each of which covers a much broader range than either the TDT or Wikipedia categories.
+Table~\ref{collection:table:catTable} shows the new categories and the corresponding categories from the TDT project and Wikipedia.
+These categories greatly increase agreement, which is discussed in detail in section~\ref{sec:agreement}.
+
+\subsubsection{Temporal Features}
+Clearly, temporal features are extremely important in the clustering of events -- results which have a significant period of time between them are unlikely to be related to the same seminal event.
+For example, the three U.S. Presidential Debates are all likely to be very similar in terms of category features, and potentially content-based features.
+The largest defining factor is the specific time when the events took place.
+
+On the other hand, events which share similar characteristics in terms of both category and content-based features are still relatively common in the same temporal region.
+Sports events is the best example of this type of event --- it is not uncommon for two football matches to occur simultaneously, such as World Cup qualifying matches.
+These share the same category, the same temporal region, and very similar temporal features, making them particular difficult to distinguish.
+
+We found that by using temporal proximity as a feature for measuring similarity was harmful, and resulted in a very large number of false groupings, a very undesirable property (this is demonstrated in section~\ref{sec:clustering}).
+Given this, rather than using temporal proximity as an indication of a relationship, we do the converse, and say that events which are temporally dissimilar are unlikely to be related.
+
+\subsubsection{Content-based Features}
+Content based features are some of the most distinguishing features of each result, which can make them difficult to use for event clustering.
+This problem is most pronounced between results from the same detection approach, where content based features are already used to perform clustering.
+This means that each of the clusters are generally dissimilar in terms of content, even when discussing the same event, and often contain a very specific set of terms.
+This makes the use of similarity measures based solely on the content of tweets  ineffective when clustering events from the LSH approach.
+For example, again using the presidential debate as an example, the quote ``Well, Governor, we also have fewer horses and bayonets, because the nature of our military's changed.'' was extremely popular and relevant to the debate, however, matching this back to the election is very difficult if the context is not known, and using only tweet content based features to match it to other clusters is very difficult.
+This means that we cannot rely only on tweet content features when performing event clustering.
+
+Fortunately, we also have event descriptions written by workers from the crowdsourced evaluation.
+These tend to be more generic, and seem to offer a more viable method of clustering results together, as they often mention the specific entities involved in an event (such as people and places), and a high level description of the event than cannot be determined using the content of tweets alone.
+
+\subsection{Clustering Algorithm}
+\label{sec:clusteringalg}
+For each candidate event \(e\), our algorithm calculates its similarity against every other event \(e'\) within a time window \(T_{time}\). The similarity is calculated as so:
+\[
+S_{con} = max(escore(e, e'), dscore(e, e'))
+\]
+\[
+S_{cat} = cscore(e, e')
+\]
+\[
+S_{tweet} = tscore(e, e')
+\]
+\[
+S_{full} = 0.3 * S_{cat} + 0.4 * S_{con} + 0.3 * S_{tweet}
+\]
+where \(dscore\) gives the similarity between event descriptions as given by annotators, and \(escore\) gives the similarity between named entities extracted from descriptions. \(cscore\) gives the similarity between the categories assigned to the event, and \(tscore\) gives the similarity between the top 10 most frequent terms in relevant tweets for both events.
+In every case, cosine similarity is used.
+The weighting parameters were chosen such that no one feature would be enough to cause a match, reducing the chance of a false match.
+However, annotator descriptions were given slightly more weight than other features because of their high-level nature and specificity.
+
+If two events are found to have an \(S_{full}\) value above threshold \(T_{sim}\) then they are clustered together. If both \(e\) and \(e'\) already have clusters then the two clusters are merged.
+The pseudo-code for our clustering approach is shown in Algorithm~\ref{alg:one}.
+
+\begin{algorithm}
+$clustered$ = $\emptyset$\;
+\ForEach{event e in candidates} {
+	add $e$ to $clustered$\;
+	\ForEach{event e' in candidates but not in clustered} {
+
+		$S_{con}$ = $max\{escore(e, e'), dscore(e, e')\}$\;
+		$S_{cat}$ = $cscore(e, e')$\;
+		$S_{tweet}$ = $tscore(e, e')$\;
+		$S_{full}$ = $0.3 * S_{cat} + 0.4 * S_{con} + 0.3 * S_{tweet}$\;
+		\If{$S_{full}$ \(\ge\) $T_{sim}$ and $time\_diff(e, e')$ \(\le\) $T_{time}$} {
+			\uIf{neither e nor e' in cluster}{
+				create new cluster containing e and e'\;
+			} \eIf{both e and e' have clusters}{
+				merge cluster(e) and cluster(e')\;
+			}{
+				add e or e' to existing cluster\;
+			}
+		}
+	}
+}
+\caption{Event Clustering Approach}
+\label{alg:one}
+\end{algorithm}
+
+\subsection{Event Statistics}
+
+Candidates from the detection approaches are considered to be an event if more than 50\% of annotators marked it as so and greater than 90\% of judged tweets were marked as relevant.
+This resulted in 382 events for the LSH approach, and 53 for the CS approach.
+Candidates from the curated approach are considered an event if they produced at least 1 relevant tweet, resulting in 361 events and 7 non-events (i.e. candidates where no tweets were marked as relevant).
+In total, this resulted in 796 events before clustering.
+
+Individual tweets are regarded as relevant if more than 50\% of annotators agreed.
+Table~\ref{table:eventsByTweets} shows the distribution of tweets broken down by both approach used and type (implicit and explicit).
+Explicit judgements are those made by human annotators, whereas implicit judgements are  tweets from events with high precision (\textgreater 0.9) which are extremely likely to be relevant, however have not been judged by human annotators.
+This gave 4,009 explicit and 93,398 implicit judged tweets for the LSH approach, 465 explicit and 15,098 implicit judgements for the CS approach, and 39,980 explicit judgements (with no implicit judgements) for the curated approach.
+Although the use of implicit judgements will have introduced some noise to the relevance judgements, because we remove candidates with low precision we are able to minimize noise whilst increasing the number of judgements by over 200\%.
+
+\begin{table}[h!]
+	\centering
+	\caption[Distribution of relevance judgements across the different approaches.]{The distribution of relevance judgements across the different approaches. Explicit judgements are made by human annotators, implicit judgements are taken from events with high precision (\textgreater 0.9) but not judged by human annotators individually.}
+	\label{table:eventsByTweets}
+
+	\begin{tabulary}{\textwidth}{l r r r}
+	\toprule
+	\textbf{Approach} & \textbf{Explicit} & \textbf{Implicit} & \textbf{Total} \\
+	\midrule
+	LSH 		& 4,009 	& 93,398 	&  97,407 \\
+	CS 			& 465 		& 15,098 	&  15,563 \\
+	Wikipedia 	& 39,980 	& 0 		&  39,980  \\
+	\midrule
+	\textbf{Total} 	& \textbf{44,454} & \textbf{108,496} & \textbf{152,950}\\
+	\bottomrule
+	\end{tabulary}
+
+\end{table}
+
+We then ran the clustering algorithm using a maximum time difference of 6 hours, which was picked specifically to allow for a reasonably lag between the 2 events, whilst still giving a reasonable guarantee that the events generated will fit our definition of event.
+Categories are assigned to events based on the combined categories defined in Table~\ref{collection:table:catTable}.
+For events where multiple categories are given, the category with the highest frequency was used.
+In cases where there was a tie between the categories, an author was used to give the deciding vote.

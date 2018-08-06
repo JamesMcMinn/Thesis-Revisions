@@ -1,0 +1,47 @@
+%!TEX root = ../../main.tex
+
+\section{Experimentation}
+\label{detection:sec:experimentation}
+In order to evaluate our approach, we make use of the Events 2012 collection we created in chapter \ref{chapter:collection}.
+Although the collection contains 150,000 relevance judgements for 506 events, we note that it does not cover all events that happened during the 28 days it covers, or even that all tweets relevant to events it does cover have been identified.
+Whilst this does not prevent us from using the collection for comparison purposes, it means that event precision and recall values can only be estimated.
+Whilst this is an issue in many IR collections, we note that the effect is more pronounced when dealing with event detection as, unlike most IR tasks, there is no query.
+This makes it likely that we will detect events that are not in the judgements.
+We verify this hypothesis and show that we detect a large number of events which are not in the relevance judgements by performing a crowdsourced evaluation, described in sections \ref{detection:sec:crowd} and \ref{detection:sec:results}.
+
+We ran our entity-based approach on the collection, treating it as a stream of tweets ordered by creation time. Named Entities and Part of Speech Tagging was performed using the Stanford POS Tagger\footnote{http://www-nlp.stanford.edu/software/tagger.shtml} 3.2.0.
+Unless otherwise stated, all runs were performed using the top 10 IDF-weighted terms per tweet, a maximum of 500 tweets were retrieved per term, and a minimum cosine similarity of 0.5.
+Evaluations were performed on all events with more than 30 tweets, using a 5\% threshold and/or minimum of 15 matching tweets, with full descriptions of these thresholds and the rationale for their choices described in section \ref{detection:sec:measures}.
+Any variation from these thresholds is noted alongside the results presented in section \ref{detection:sec:results}.
+
+We believe that results presented here, when first published in 2015, were the first in-depth and comparable evaluation of an event detection approach for Twitter.
+
+\subsection{Crowdsourced Evaluation}
+\label{sec:baseline}
+Given that no event detection technique for Twitter has been robustly evaluated against a publicly available Twitter collection, the only options available to us as a baseline are the LSH \citep{Petrovic10} and CS \citep{Aggarwal12} approaches used to generate the collection in chapter \ref{chapter:collection}.
+This means that the results are extremely biased towards these approaches, and only a crowdsourced evaluation will allow for a direct comparison between our entity-based approach and the baselines.
+
+As we use the results from the crowdsourced evaluation, baseline parameters have not changed from those used in chapter \ref{collection:chapter}, however for completeness we include them here.
+The LSH approach used 13 bits per key, 70 hash tables, and a minimum cosine similarity values of 0.55. Events were extracted every 100,000 tweets, and only clusters with entropy values inside the optimal range (3.5 - 4.25) were used \citep{Petrovic10}.
+The CS approach was run with an input size of 1200 clusters. An \(\alpha\) value of 12 was used to prevent slow growing clusters from being included in the results \citep{Aggarwal12}.
+Neither baseline used retweets as empirical manual investigations before the crowdsourced evaluation found them to have a significant negative impact on precision.
+
+\label{detection:sec:crowd}
+In order to keep the comparison between the baselines and our approach as fair as possible, we use the same methodology here as we did in chapter \ref{chapter:collection} to gather relevance judgements for the baseline approaches.
+
+Since resources were limited, and our approach generates a large number of candidate events, we use a random sample of 250 events from the 1210 candidate events identified by our approach.
+For each event, we asked 5 annotators to answer a questionnaire.
+Each annotator was asked to read 13 tweets (selected at random however kept constant between evaluations) from a single candidate event.
+They were then asked: \blockquote{Do the majority of tweets discuss the same real-life topic?}.
+If they responded `no' then the evaluation was complete and they were allowed to submit the evaluation.
+If they answered `yes', then a further question was posed:
+\blockquote{Do the tweets discuss an event?}.
+At this point, they were also reminded of the our definition of event, as given in chapter \ref{chapter:collection}.
+Again, annotators who answered ``no'' were allowed to submit the evaluation.
+However, if they answered ``yes'' (signalling that the candidate is an event), then they were asked to re-read the tweets and mark any non-relevant tweets as so.
+They were then asked to briefly describe the event and select the category which best fit the event.
+They were allowed to submit the evaluation.
+Candidate events were considered to be an event if the majority (3/5) of annotators marked them as so.
+
+To keep category classification fair, we used the same 13 categories defined by the Topic Detection and Tracking project \citep{Allan:2002:ITD:772260.772262} as they were used to evaluate events produced by the two baseline approaches in chapter \ref{chapter:collection}. We mapped the TDT categories back to the categories used by the collection.
+A number of spam and quality control measures were used, identical to those described in chapter \ref{chapter:collection}.

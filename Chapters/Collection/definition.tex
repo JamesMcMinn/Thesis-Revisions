@@ -1,0 +1,48 @@
+%!TEX root = ../../main.tex
+
+\section{Definition of Event}
+\label{DefiningEvent}
+Despite the significant interest in events, there is little consensus on the exact definition of \textit{event}.
+This leads to issues when evaluating and comparing event-based systems.
+
+The \emph{Topic Detection and Tracking} (TDT) project defines an \emph{event} as `something that happens at some specific time and place, and the unavoidable consequences'~\citep{Allan:2002:ITD:772260.772262}.
+Specific elections, accidents, crimes and natural disasters are examples of events under the TDT definition.
+They also define an \emph{activity} as a connected set of actions that have a common focus or purpose.
+Specific campaigns, investigations, and disaster relief efforts are examples of activities.
+Furthermore, a \emph{topic} is defined as a seminal event or activity, along with all directly related events and activities.
+The TDT project dealt with newswire documents, implying a level of significance to the topics being discussed -- it was reasonable to assume that the vast majority of topics in the TDT datasets were significant events.
+However this is not the case in Twitter, where a very large portion of documents discuss insignificant personal matters, such as the song a user is listening to.
+The TDT project was concerned with the detection of \emph{topics}, the US Presidential Elections is considered a single topic, and stories about the candidates' campaigns, debates, election results, and reactions to the election are all part of the same topic.
+There is no distinction made between each of the events within a topic, even though they could occur several days apart.
+We believe that this does not make sense in the context of Twitter as discussion moves very quickly and is fixated on the present, unlike newswire documents, which often summarize several days worth of events into a single article.
+
+\cite{aggarwalevent} define a \emph{news event} as being any event (something happening at a specific time and place) of interest to the media.
+They also consider any such event (e.g. a speech or rally) as being a single episode in a larger story arc (i.e. a presidential campaign).
+They use the term \emph{episode} to mean any such event, and \emph{saga} to refer to the collection of events related within a broader context.
+
+\cite{Becker_beyondtrending} go as far as to define an event in a much more formal, but still subjective manner.
+They define an event as a real-world occurrence \(e\) with (1) an associated time period \(T_e\) and (2) a time-ordered stream of Twitter messages, of substantial volume, discussing the occurrence and published during time \(T_e\).
+Other definitions, such as that used by~\cite{weng2011event}, define an event simply as a burst in the usage of a related group of terms.
+
+Clearly there is a consensus that events are temporal, as time is a reoccurring theme within all definitions.
+However, the consensus appears to end there.
+Whilst~\cite{aggarwalevent} and the TDT definition~\citep{Allan:2002:ITD:772260.772262} show a parallel in their hierarchical organization of events (events and topics, news events and sagas), this is less common in other definitions where a distinction between events and topics is not made.
+This makes comparisons very difficult; one definition may break an election into many events, while another could consider the election as a single event, or not as an event at all.
+
+To solve these issues, we take the most basic definition of event (something that happens at a particular time and place), and introduce the requirement that an event should be \textit{significant}.
+By requiring that an event is significant, we are able to filter out every-day personal and trivial events which are extremely common on Twitter (such as getting a phone call or going to the gym).
+
+\begin{description}
+\item[Event:] An event is a \emph{significant} thing that happens at some specific time and place.
+\end{description}
+
+As discussed previously, it was reasonable to assume that all events in the TDT datasets were significant events due to the use of newswire documents, something which is not true in the case of Twitter.
+Given this, we attempt to model our definition of significance so that an event under our definition would would be of a similar level of significance to those found in the TDT datasets, given the disparity between the 2 sources.
+
+\begin{description}
+\item[Significant:] Something is significant if it may be discussed in the media. For example, you may read a news article or watch a news report about it.
+\end{description}
+
+It is important to note that something does not necessarily have to be discussed by the media in order for it to be an event, we simply use this as an indication of the level of significance required for something to be considered an event.
+Whilst this is still somewhat subjective, we believe that it is impossible to further restrict significance whilst keeping our definition of event generalizable.
+Given this definition of event, our aim is to create a collection of significant events which have been discussed on Twitter, and set of relevance judgements for tweets which discuss the events.
