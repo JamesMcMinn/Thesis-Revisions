@@ -5,21 +5,22 @@ This document outlines a plan for revisions and corrections that are needed in o
 ## General
 - [ ] Add equation numbers
 - [ ] Convert Tables to Graphs where appropriate
+- [ ] List of equations
 
 ## 0. Front Matter
 - [ ] Add Acknowledgments
 - [ ] Add Dedication
 - [ ] Avoid copying from Introduction for Abstract.
 - [ ] Add conclusions to abstract
-- [X] Sort publications chronologically
+- [X] [Sort publications chronologically](https://github.com/JamesMcMinn/Thesis-Revisions/commit/86dd56d1416622f636946cfc42a91152f44533f7)
 
 
 ## 1. Introduction
-- [X] Clarify RQ2
+- [X] [Clarify RQ2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1a71367f5092d7747f35deed64964f25f71b790e)
 - [ ] Update to clarify RQ3: Need to be clear what "automatic" evaluation is.
 	- Might be best discussing evaluation briefly earlier in the chapter?
 - [ ] Expand on contribution description relating to definition of event
-- [X] Remove references to unsupervised
+- [X] [Remove references to unsupervised](https://github.com/JamesMcMinn/Thesis-Revisions/commit/92b213136746bf2c4b527fad22b7870af5201afb)
 - [ ] Expand
 
 ## 2. Background
