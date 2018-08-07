@@ -19,6 +19,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [ ] Update to clarify RQ3: Need to be clear what "automatic" evaluation is.
 	- Might be best discussing evaluation briefly earlier in the chapter?
 - [ ] Expand on contribution description relating to definition of event
+- [X] Remove references to unsupervised
 - [ ] Expand
 
 ## 2. Background
