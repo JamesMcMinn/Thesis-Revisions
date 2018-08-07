@@ -11,7 +11,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [ ] Add Dedication
 - [ ] Avoid copying from Introduction for Abstract.
 - [ ] Add conclusions to abstract
-- [ ] Sort publications chronologically
+- [X] Sort publications chronologically
 
 
 ## 1. Introduction
