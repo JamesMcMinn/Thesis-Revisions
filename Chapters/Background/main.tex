@@ -47,6 +47,11 @@ where \(\mathbf{d_1} \cdot \mathbf{d_2}\) is the dot product of term weighted ve
 	\left\| \mathbf{d} \right\| = \sqrt{\sum_{i=1}^n d_i^2}
 \end{displaymath}
 
+The novelty of a document is often taken as 1 minus the maximum (cosine) similarity of document \(d\) compared to all documents in the collection \(D\):
+\begin{displaymath}
+	\text{novelty}(d) = 1 - \max_{d' \in D} \cos(d, d')
+\end{displaymath}
+
 \subsection{Evaluation Measures}
 Throughout this thesis, we use a number of IR standard evaluation metrics, commonly used in IR evaluations.
 These measures as based on the concept of relevance.
