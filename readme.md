@@ -29,19 +29,18 @@ This document outlines a plan for revisions and corrections that are needed in o
   - [X] Detail basic model, UMASS approach in particular since it is used as basis for LSH approach.
 - [ ] Find suitable place to detail BCubed metric
 - [ ] Re-write and expand section on Event Detection on Twitter.
-  - [ ] More detailed analysis of existing event detection approaches
-  - [ ] Describe issues with clustering (wrt Twitter data)
   - [ ] Describe LSH approach in detail
   - [ ] Describe CS approach in detail
+  - [ ] More detailed analysis of existing event detection approaches
+  - [ ] Describe issues with clustering (wrt Twitter data)
   - [ ] Talk a bit about burst detection techniques for Twitter: trend analysis, etc.
-  - [ ] Describe gaps and issues with event detection on Twitter
 - [ ] Move background from Event Collection here. Expand.
 - [ ] Move background from Newsworthiness here. Expand.
 
 
 ## 3. Building an Event Collection
 - [ ] Move background to Chapter 2
-- [ ] Add explanation that "significant" allows definition to be adapted to different scenarios.
+- [X] Add explanation that "significant" allows definition to be adapted to different scenarios.
   - Only interested in finance news, or emergency events? Define significant to reflect this.
 - [ ] Split relevance judgment gathering so that Detection / Wiki is separate and less confusing
 - [ ] Explain and motivate clustering features
