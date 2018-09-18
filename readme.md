@@ -24,8 +24,9 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [ ] Expand
 
 ## 2. Background
-- [ ] More detailed description of TDT Project
-  - [ ] Detail basic model, UMASS approach in particular since it is used as basis for LSH approach.
+- [X] More detailed description of TDT Project
+  - [X] Detail the individual TDT tasks
+  - [X] Detail basic model, UMASS approach in particular since it is used as basis for LSH approach.
 - [ ] Find suitable place to detail BCubed metric
 - [ ] Re-write and expand section on Event Detection on Twitter.
   - [ ] More detailed analysis of existing event detection approaches

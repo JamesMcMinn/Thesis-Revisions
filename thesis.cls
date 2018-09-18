@@ -50,7 +50,7 @@ right=30mm
 \usepackage{amsfonts}
 \usepackage{csquotes}
 
-\usepackage[lined,ruled]{algorithm2e}
+\usepackage[linesnumbered,lined,ruled]{algorithm2e}
 \renewcommand{\algorithmcfname}{ALGORITHM}
 \SetAlFnt{\small}
 \SetAlCapFnt{\small}

@@ -110,20 +110,59 @@ Of the 5 tasks, First Story Detection (FSD, although often called New Event Dete
 Story Segmentation differs in nature from the others as it pertains specifically to a pre-processing step that must be performed before the other tasks can be carried out. All other tasks work with stories, however the aim of the Story Segmentation task is to detect boundaries between stories automatically using transcripts from the spoken audio of broadcast news shows. Of all the tasks of the TDT project, Story Segmentation is the least relevant to event detection on Twitter as tweets almost always discuss only a single topic due to their short length.
 
 \subsection{Approaches to TDT}
-At a high level, almost all of the approaches proposed by the TDT project follow the same nearest-neighbour clustering approach.
-As documents appear in the stream, they are compared to every document that has been seen before, and the similarity between the new document and every other document in the Corpus is calculated.
-If one or more similar documents is found (based on some pre-defined threshold), add the new document to cluster containing the closest match.
+\begin{algorithm}
+	\DontPrintSemicolon
+	\KwIn{Minimum similarity threshold $m$}
+	index $\gets []$ \\
+	clusters $\gets$ [] \\
+
+	\ForEach{document d in the stream} {
+		$S(d) \gets \emptyset$ \tcp*{set of documents that share a term with $d$}
+
+		\ForEach{term t in d}{
+			\ForEach{document d' in index[t]} {
+				$S(d) \gets S(d) \cup d'$ \\
+			}
+			index[$t$] $\gets$ index[$t$] $\cup$ $d$ \\
+		}
+
+		$c_{max} \gets 0$ \tcp*{maximum cosine between $d$ and documents in $S(d)$}
+		$n_{d} \gets nil$ \tcp*{document with maximum cosine to $d$}
+		\ForEach{document d' in S(d)}{
+			$c$ := cosine($d$, $d'$) \\
+			\If{$c > c_{max}$}{
+				$c_{max} \gets c$ \\
+				$n_d \gets d'$
+			}
+		}
+
+		\eIf{$c_{max} \geq m$}{
+			clusters[$d$] $\gets$ cluster[$n_d$]	\tcp*{Add to exisitng event}
+		} {
+			clusters[$d$] $\gets$ new cluster() \tcp*{Report a new event}
+		}
+
+	}
+	\caption{A basic TDT approach, similar to that used by UMass and other TDT participants}
+	\label{background:alg:tdt}
+\end{algorithm}
+
+At a high level, almost all of the approaches proposed by the TDT project follow the same nearest-neighbour clustering approach shown in algorithm \ref{background:alg:tdt}.
+As documents appear in the stream, they are compared to every document that has been seen before (or, if an inverted index is used, than all documents they share a term with), and the similarity between the new document and every other document in the Corpus is calculated.
+If one or more similar documents is found (based on some pre-defined threshold), add the new document to cluster containing the closest match, signaling that they discuss the same event.
 If no similar documents are found, then a new event has been detected, and a new cluster is formed~\citep{Allan:2000:FSD:354756.354843}.
+
+Unfortunately, the approach shown in algorithm \ref{background:alg:tdt} does not scale to extremely high volume streams.
+The approach has $O(|D_t|)$ time to compute in the worst case, and although the use of an inverted index helps to reduce the average case, it continues to take increasingly longer to process new documents as new data is seen.
+This has obvious drawbacks when the volume of data is increased from a few thousand documents, to many hundreds of millions of documents per day.
 
 This basic model persisted throughout the TDT project, and variations of this model (with efficiency optimizations) are commonly found in event detection approaches for social media \citep{becker2011beyond,Petrovic:2010:SFS:1857999.1858020,aggarwalevent,conf/asunam/OzdikisSO12}.
 
-\subsubsection{UMass TDT System}
+\subsection{Performance of TDT Systems}
+The TDT project produced some reasonably effective systems \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}, however performance was still far below that required for systems to be considered adequate for complete automation \citep{Allan:2000:FSD:354756.354843}. When the TDT project ended in 2004, research in event detection slowed. It is believed that a plateau had been reached, and that without a radically different approach, the performance of these systems was unlikely to ever improve significantly \citep{Allan:2000:FSD:354756.354843}. This belief has remained true in the context of newswire documents, and many state-of-the-art systems are now over a decade old \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}. The TDT project was a cornerstone in the development of event detection approaches and is responsible for much of the foundation on which many state-of-the-art event detection approaches for Twitter are based.
 
 \subsection{Differences between Event Detection and other IR Tasks}
 Despite being viewed as an IR task, Event Detection has a number of characteristics that differ from more common IR tasks. The most obvious of these is the lack of a user-provided query. Rather than searching for documents relevant to a specific query, event detection systems first must detect new events and track which documents belong to the same topic. This means that the notion of relevance is more ambiguous, and
-
-\subsection{Performance of TDT Systems}
-The TDT project produced some reasonably effective systems \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}, however performance was still far below that required for systems to be considered adequate for complete automation \citep{Allan:2000:FSD:354756.354843}. When the TDT project ended in 2004, research in event detection slowed. It is believed that a plateau had been reached, and that without a radically different approach, the performance of these systems was unlikely to ever improve significantly \citep{Allan:2000:FSD:354756.354843}. This belief has remained true in the context of newswire documents, and many state-of-the-art systems are now over a decade old \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}. The TDT project was a cornerstone in the development of event detection approaches and is responsible for much of the foundation on which many state-of-the-art event detection approaches for Twitter are based.
 
 \section{Event Detection on Social Media}
 In recent years, interest in event detection has been rekindled as social media data has become available for research. However social media posts introduce their own unique challenges which require novel approaches to overcome. The massive volume of data means that traditional event detection techniques are too slow for real-time applications. One of the requirements of an effective event detection system is the ability to monitor events in real-time. In addition, with high volume data streams, as is the case with Twitter, efficiency is crucial to an effective system.
