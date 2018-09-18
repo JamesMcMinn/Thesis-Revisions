@@ -47,11 +47,6 @@ where \(\mathbf{d_1} \cdot \mathbf{d_2}\) is the dot product of term weighted ve
 	\left\| \mathbf{d} \right\| = \sqrt{\sum_{i=1}^n d_i^2}
 \end{displaymath}
 
-The novelty of a document is often taken as 1 minus the maximum (cosine) similarity of document \(d\) compared to all documents in the collection \(D\):
-\begin{displaymath}
-	\text{novelty}(d) = 1 - \max_{d' \in D} \cos(d, d')
-\end{displaymath}
-
 \subsection{Evaluation Measures}
 Throughout this thesis, we use a number of IR standard evaluation metrics, commonly used in IR evaluations.
 These measures as based on the concept of relevance.
@@ -89,9 +84,45 @@ F-measure takes both precision and recall into consideration, and combines them 
 	F_1 = 2 \cdot \frac{1}{\tfrac{1}{\mathrm{recall}} + \tfrac{1}{\mathrm{precision}}} = 2 \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{\mathrm{precision} + \mathrm{recall}}
 \end{displaymath}
 
-\section{Topic Detection and Tracking}
-The Topic Detection and Tracking (TDT) project began in 1997, and was a body of research and an evaluation paradigm that addressed the event-based organization of broadcast news \citep{Allan:2002:ITD:772260.772262}. The motivation behind the project was a system which was capable of monitoring broadcast news and could produce an alert when a new event occurred. The project was split into a number of tasks, with the First Story Detection (event detection) task considered the most difficult \citep{Allan:2000:FSD:354756.354843}. At a high level, almost all of the approaches proposed by the TDT project followed the same model. For each new document, compare it to every other document using some similarity measure. If one or more similar documents is found, add the new document to cluster containing the closest match. If no similar documents are found, then a new event has been detected, and a new cluster is formed~\citep{Allan:2000:FSD:354756.354843}. This basic model persisted throughout the TDT project, and variations of this model (with efficiency optimizations) are commonly found in event detection approaches for social media \citep{becker2011beyond,Petrovic:2010:SFS:1857999.1858020,aggarwalevent,conf/asunam/OzdikisSO12}.
+\subsubsection{B Cubed}
 
+
+\section{Topic Detection and Tracking}
+The Topic Detection and Tracking (TDT) project began in 1997, and was a body of research and an evaluation paradigm that addressed the event-based organization of broadcast news \citep{Allan:2002:ITD:772260.772262}. The motivation behind the project was a system which was capable of monitoring broadcast news and could produce an alert when a new event occurred.
+
+The project was split into five distinct subtasks \citep{Allan:2002:ITD:772260.772262}:
+
+\begin{itemize}
+\item \textbf{Story Segmentation} was the task of dividing audio transcripts taken from news shows into individual stories.
+
+\item \textbf{First Story Detection} was the task of recognizing the onset of a new topic (event) in the stream of news stories.
+
+\item \textbf{Cluster Detection} was the task of grouping all stories as they arrived, based on the topics they discuss.
+
+\item \textbf{Tracking} was a task that required systems to identify news stories  discussing the same topic as a set of sample stories, by monitoring the stream of news stories as they appeared.
+
+\item \textbf{Story Link Detection} was the task of deciding whether two randomly selected stories discussed the same topic (event).
+\end{itemize}
+
+With the exception of Story Segmentation, the tasks focus on various aspects of document clustering, with the main difference between each task being how it is evaluated.
+Of the 5 tasks, First Story Detection (FSD, although often called New Event Detection, NED) was considered the most difficult \citep{Allan:2000:FSD:354756.354843} as an effective FSD system must be effective across all of the tasks to perform well.
+
+Story Segmentation differs in nature from the others as it pertains specifically to a pre-processing step that must be performed before the other tasks can be carried out. All other tasks work with stories, however the aim of the Story Segmentation task is to detect boundaries between stories automatically using transcripts from the spoken audio of broadcast news shows. Of all the tasks of the TDT project, Story Segmentation is the least relevant to event detection on Twitter as tweets almost always discuss only a single topic due to their short length.
+
+\subsection{Approaches to TDT}
+At a high level, almost all of the approaches proposed by the TDT project follow the same nearest-neighbour clustering approach.
+As documents appear in the stream, they are compared to every document that has been seen before, and the similarity between the new document and every other document in the Corpus is calculated.
+If one or more similar documents is found (based on some pre-defined threshold), add the new document to cluster containing the closest match.
+If no similar documents are found, then a new event has been detected, and a new cluster is formed~\citep{Allan:2000:FSD:354756.354843}.
+
+This basic model persisted throughout the TDT project, and variations of this model (with efficiency optimizations) are commonly found in event detection approaches for social media \citep{becker2011beyond,Petrovic:2010:SFS:1857999.1858020,aggarwalevent,conf/asunam/OzdikisSO12}.
+
+\subsubsection{UMass TDT System}
+
+\subsection{Differences between Event Detection and other IR Tasks}
+Despite being viewed as an IR task, Event Detection has a number of characteristics that differ from more common IR tasks. The most obvious of these is the lack of a user-provided query. Rather than searching for documents relevant to a specific query, event detection systems first must detect new events and track which documents belong to the same topic. This means that the notion of relevance is more ambiguous, and
+
+\subsection{Performance of TDT Systems}
 The TDT project produced some reasonably effective systems \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}, however performance was still far below that required for systems to be considered adequate for complete automation \citep{Allan:2000:FSD:354756.354843}. When the TDT project ended in 2004, research in event detection slowed. It is believed that a plateau had been reached, and that without a radically different approach, the performance of these systems was unlikely to ever improve significantly \citep{Allan:2000:FSD:354756.354843}. This belief has remained true in the context of newswire documents, and many state-of-the-art systems are now over a decade old \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}. The TDT project was a cornerstone in the development of event detection approaches and is responsible for much of the foundation on which many state-of-the-art event detection approaches for Twitter are based.
 
 \section{Event Detection on Social Media}
@@ -114,8 +145,10 @@ An initial layer of filtering is performed on all incoming tweets, excluding tho
 To further reduce the number of noisy clusters, \cite{sankaranarayanan2009twitterstand} impose an interesting restriction, in that for a cluster to remain active after \(k\) tweets have been added, one of the tweets must come from a seed account.
 Despite a number of efficiency optimizations, their approach is unable to scale, or produce results in real-time. Unfortunately, no attempt is made to evaluate the effectiveness of their system other than a small number of empirical observations.
 
+\subsection{Cluster Summerization Approach}
 \cite{aggarwalevent} use a fixed number of clusters and cluster summaries to reduce the number of comparisons required for document clustering. Each cluster summary contains (i) a node-summary, which is a set of users and their frequencies and (ii) a content-summary, which is a set of words and their TF-IDF \cite{Salton:1988:TAA:54259.54260} weighted frequencies. By combining these two summaries, they suggest a novel similarity score which exploits the underlying structure of the social network, and improves upon content-only measures. Each incoming document is assigned to its closest cluster unless its similarity score is significantly lower than that of other documents, in which case, the oldest cluster is replaced with a new cluster containing  the new document. A sketch-based approximation technique is used to maintain node statistics and to calculate structural similarity, greatly increasing the efficiency of their approach. The rate of growth of each cluster is measured, and clusters which grow past a certain rate are said to be events. Unfortunately, evaluation of this approach is lacking in a number of areas. Although they rigorously evaluate the effectiveness of their proposed similarity measure, an evaluation of the detection capability of this approach is lacking as they considers spam to be an event, and does not present how many false-positive events were detected.
 
+\subsection{Locality Sensitive Hashing Approach}
 \cite{Petrovic:2010:SFS:1857999.1858020} were perhaps the first to propose a scalable, real-time, event detection system. Their system uses Locality Sensitive Hashing (LSH), which places similar documents into the same bucket of a hash table. Using this method it is possible to reduce the size of the candidate set to a fixed size which contains the nearest neighbour with a high probability. Clustering can then be performed in a fixed time, using a variance reduction technique \cite{Petrovic:2010:SFS:1857999.1858020} to improve clustering performance if no neighbour is found within a certain distance. Shannon entropy\citep{Shannon:2001:MTC:584091.584093} is used to measure the amount of information in each cluster, and clusters with small entropies (\(\le\) 2.5) are moved to the back of the list of possible events. When ranking events, they found that ranking by the number of unique users, gives better performance than other measures, such as number of tweets. Due to the lack of Twitter corpora, \cite{Petrovic:2010:SFS:1857999.1858020} chose to evaluate their approach using the TDT-5 corpus. Despite their approach very slightly under-performing the baseline \citep{UMASS}, they achieve over an order of magnitude speedup in processing time, allowing their approach to scale to Twitter sized corpora, while the baseline could not.
 
 \cite{becker2011beyond} use the clustering approach proposed by \cite{Yang98} as part of the TDT project, and a filtering layer similar to \cite{sankaranarayanan2009twitterstand}. However, filtering is performed after clustering has taken place, and they attempt to identify likely event clusters, rather than event tweets. They use a number of features, such as top terms, and number of retweets, to classify clusters as either event or non-event. Although evaluation of their approach seems to show that it is very effective, it is still based on a model designed for much lower volume streams, and is simply too slow to scale past very small corpora.
