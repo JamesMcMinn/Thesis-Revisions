@@ -25,8 +25,8 @@ This document outlines a plan for revisions and corrections that are needed in o
 
 ## 2. Background
 - [X] More detailed description of TDT Project
-  - [X] Detail the individual TDT tasks
-  - [X] Detail basic model, UMASS approach in particular since it is used as basis for LSH approach.
+  - [X] [Detail the individual TDT tasks](https://github.com/JamesMcMinn/Thesis-Revisions/commit/ce5358332ff8c0d1b76125abdb85d0cd9ab6cf32)
+  - [X] [Detail basic model, UMASS approach in particular since it is used as basis for LSH approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/e7b6504878dce517a723f25b9c3d984391803c8e)
 - [ ] Find suitable place to detail BCubed metric
 - [ ] Re-write and expand section on Event Detection on Twitter.
   - [ ] Describe LSH approach in detail
@@ -40,8 +40,8 @@ This document outlines a plan for revisions and corrections that are needed in o
 
 ## 3. Building an Event Collection
 - [ ] Move background to Chapter 2
-- [X] Add explanation that "significant" allows definition to be adapted to different scenarios.
-  - Only interested in finance news, or emergency events? Define significant to reflect this.
+- [X] [Add explanation that "significant" allows definition to be adapted to different scenarios.
+  - Only interested in finance news, or emergency events? Define significant to reflect this.](https://github.com/JamesMcMinn/Thesis-Revisions/commit/9aa7a767171e7a557af0afc6871ecd32532a9373)
 - [ ] Split relevance judgment gathering so that Detection / Wiki is separate and less confusing
 - [ ] Explain and motivate clustering features
 - [ ] Reorganize event-clustering evaluation and explain how features were weighted

@@ -26,7 +26,7 @@ One of the most common ways of calculating the weight a term has in a vector is 
 TF-IDF attempts to estimate the importance of a term with regards to both the collection as a whole and document itself.
 
 The TF component is concerned with the weight of the term in relation to the document, the basic premise being that the more frequently a term occurs in a document, the more weight it should carry.
-The IFD component, on the other hand, is concerned with the weight of the term in relation to the corpus as a whole.
+The IDF component, on the other hand, is concerned with the weight of the term in relation to the corpus as a whole.
 The IDF component attempts to estimate the amount of information that a term carries on the basis that rare terms should be given more weight as their presence in a document is more likely to be an indication of topic, whilst common terms should be given less weight as they are less topically specific.
 TF-IDF is calculated as so:
 \begin{displaymath}
@@ -110,6 +110,7 @@ Of the 5 tasks, First Story Detection (FSD, although often called New Event Dete
 Story Segmentation differs in nature from the others as it pertains specifically to a pre-processing step that must be performed before the other tasks can be carried out. All other tasks work with stories, however the aim of the Story Segmentation task is to detect boundaries between stories automatically using transcripts from the spoken audio of broadcast news shows. Of all the tasks of the TDT project, Story Segmentation is the least relevant to event detection on Twitter as tweets almost always discuss only a single topic due to their short length.
 
 \subsection{Approaches to TDT}
+\label{background:sec:tdt}
 \begin{algorithm}
 	\DontPrintSemicolon
 	\KwIn{Minimum similarity threshold $m$}
@@ -153,16 +154,15 @@ If one or more similar documents is found (based on some pre-defined threshold),
 If no similar documents are found, then a new event has been detected, and a new cluster is formed~\citep{Allan:2000:FSD:354756.354843}.
 
 Unfortunately, the approach shown in algorithm \ref{background:alg:tdt} does not scale to extremely high volume streams.
-The approach has $O(|D_t|)$ time to compute in the worst case, and although the use of an inverted index helps to reduce the average case, it continues to take increasingly longer to process new documents as new data is seen.
-This has obvious drawbacks when the volume of data is increased from a few thousand documents, to many hundreds of millions of documents per day.
+The approach takes $O(|D_t|)$ time to compute in the worst case, and although the use of an inverted index helps to reduce the average case, it continues to take increasingly longer to process new documents as new data is seen.
+This has obvious drawbacks when the volume of data is increased from a few thousand documents, to many hundreds of millions of documents per day, which quickly makes this approach computationally infeasible.
 
-This basic model persisted throughout the TDT project, and variations of this model (with efficiency optimizations) are commonly found in event detection approaches for social media \citep{becker2011beyond,Petrovic:2010:SFS:1857999.1858020,aggarwalevent,conf/asunam/OzdikisSO12}.
+This basic model persisted throughout the TDT project, and variations of this model (with efficiency optimizations) are commonly found in event detection approaches for social media \citep{becker2011beyond,Petrovic:2010:SFS:1857999.1858020,Aggarwal12,conf/asunam/OzdikisSO12}.
 
 \subsection{Performance of TDT Systems}
-The TDT project produced some reasonably effective systems \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}, however performance was still far below that required for systems to be considered adequate for complete automation \citep{Allan:2000:FSD:354756.354843}. When the TDT project ended in 2004, research in event detection slowed. It is believed that a plateau had been reached, and that without a radically different approach, the performance of these systems was unlikely to ever improve significantly \citep{Allan:2000:FSD:354756.354843}. This belief has remained true in the context of newswire documents, and many state-of-the-art systems are now over a decade old \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}. The TDT project was a cornerstone in the development of event detection approaches and is responsible for much of the foundation on which many state-of-the-art event detection approaches for Twitter are based.
-
-\subsection{Differences between Event Detection and other IR Tasks}
-Despite being viewed as an IR task, Event Detection has a number of characteristics that differ from more common IR tasks. The most obvious of these is the lack of a user-provided query. Rather than searching for documents relevant to a specific query, event detection systems first must detect new events and track which documents belong to the same topic. This means that the notion of relevance is more ambiguous, and
+The TDT project produced some reasonably effective systems \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}, however performance was still far below that required for systems to be considered adequate for complete automation \citep{Allan:2000:FSD:354756.354843}.
+When the TDT project ended in 2004, research in event detection slowed. It is believed that a plateau had been reached, and that without a radically different approach, the performance of these systems was unlikely to ever improve significantly \citep{Allan:2000:FSD:354756.354843}. This belief has remained true in the context of newswire documents, and many state-of-the-art systems are now over a decade old \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}.
+The TDT project was a cornerstone in the development of event detection approaches and is responsible for much of the foundation on which many state-of-the-art event detection approaches for Twitter are based.
 
 \section{Event Detection on Social Media}
 In recent years, interest in event detection has been rekindled as social media data has become available for research. However social media posts introduce their own unique challenges which require novel approaches to overcome. The massive volume of data means that traditional event detection techniques are too slow for real-time applications. One of the requirements of an effective event detection system is the ability to monitor events in real-time. In addition, with high volume data streams, as is the case with Twitter, efficiency is crucial to an effective system.
@@ -184,16 +184,69 @@ An initial layer of filtering is performed on all incoming tweets, excluding tho
 To further reduce the number of noisy clusters, \cite{sankaranarayanan2009twitterstand} impose an interesting restriction, in that for a cluster to remain active after \(k\) tweets have been added, one of the tweets must come from a seed account.
 Despite a number of efficiency optimizations, their approach is unable to scale, or produce results in real-time. Unfortunately, no attempt is made to evaluate the effectiveness of their system other than a small number of empirical observations.
 
+\cite{becker2011beyond} use the clustering approach proposed by \cite{Yang98} as part of the TDT project, and a filtering layer similar to \cite{sankaranarayanan2009twitterstand}.
+However, filtering is performed after clustering has taken place, and they attempt to identify likely event clusters, rather than event tweets.
+They use a number of features, such as top terms, and number of retweets, to classify clusters as either event or non-event.
+Although evaluation of their approach seems to show that it is very effective, it is still based on a model designed for much lower volume streams, and is simply too slow to scale past very small corpora.
+
 \subsection{Cluster Summerization Approach}
-\cite{aggarwalevent} use a fixed number of clusters and cluster summaries to reduce the number of comparisons required for document clustering. Each cluster summary contains (i) a node-summary, which is a set of users and their frequencies and (ii) a content-summary, which is a set of words and their TF-IDF \cite{Salton:1988:TAA:54259.54260} weighted frequencies. By combining these two summaries, they suggest a novel similarity score which exploits the underlying structure of the social network, and improves upon content-only measures. Each incoming document is assigned to its closest cluster unless its similarity score is significantly lower than that of other documents, in which case, the oldest cluster is replaced with a new cluster containing  the new document. A sketch-based approximation technique is used to maintain node statistics and to calculate structural similarity, greatly increasing the efficiency of their approach. The rate of growth of each cluster is measured, and clusters which grow past a certain rate are said to be events. Unfortunately, evaluation of this approach is lacking in a number of areas. Although they rigorously evaluate the effectiveness of their proposed similarity measure, an evaluation of the detection capability of this approach is lacking as they considers spam to be an event, and does not present how many false-positive events were detected.
+\cite{Aggarwal12} use a fixed number of clusters and cluster summaries to reduce the number of comparisons required for document clustering. Each cluster summary contains (i) a node-summary, which is a set of users and their frequencies and (ii) a content-summary, which is a set of words and their TF-IDF \cite{Salton:1988:TAA:54259.54260} weighted frequencies.
+By combining these two summaries, they suggest a novel similarity score which exploits the underlying structure of the social network, and improves upon content-only measures.
+Each incoming document is assigned to its closest cluster unless its similarity score is significantly lower than that of other documents, in which case, the oldest cluster is replaced with a new cluster containing  the new document.
+A sketch-based approximation technique is used to maintain node statistics and to calculate structural similarity, greatly increasing the efficiency of their approach.
+The rate of growth of each cluster is measured, and clusters which grow past a certain rate are said to be events. Unfortunately, evaluation of this approach is lacking in a number of areas.
+Although they rigorously evaluate the effectiveness of their proposed similarity measure, an evaluation of the detection capability of this approach is lacking as they considers spam to be an event, and does not present how many false-positive events were detected.
 
-\subsection{Locality Sensitive Hashing Approach}
-\cite{Petrovic:2010:SFS:1857999.1858020} were perhaps the first to propose a scalable, real-time, event detection system. Their system uses Locality Sensitive Hashing (LSH), which places similar documents into the same bucket of a hash table. Using this method it is possible to reduce the size of the candidate set to a fixed size which contains the nearest neighbour with a high probability. Clustering can then be performed in a fixed time, using a variance reduction technique \cite{Petrovic:2010:SFS:1857999.1858020} to improve clustering performance if no neighbour is found within a certain distance. Shannon entropy\citep{Shannon:2001:MTC:584091.584093} is used to measure the amount of information in each cluster, and clusters with small entropies (\(\le\) 2.5) are moved to the back of the list of possible events. When ranking events, they found that ranking by the number of unique users, gives better performance than other measures, such as number of tweets. Due to the lack of Twitter corpora, \cite{Petrovic:2010:SFS:1857999.1858020} chose to evaluate their approach using the TDT-5 corpus. Despite their approach very slightly under-performing the baseline \citep{UMASS}, they achieve over an order of magnitude speedup in processing time, allowing their approach to scale to Twitter sized corpora, while the baseline could not.
+\subsection{Locality Sensitive Hashing (LSH) using Random Hyperplanes}
+Earlier we discussed how the basic TDT approach as described in Section \ref{background:sec:tdt} could not scale to extremely high volume streams (even with the aid of an inverted index), making it infeasible to use for event detection on Twitter.
+\cite{Petrovic:2010:SFS:1857999.1858020} proposed a solution to this using a technique called Locality Sensitive Hashing (LSH).
+LSH uses a special hash functions that produce the same hash for documents that are similar, but not necessarily completely identical, allowing for documents that are close in vector space to be placed into the same bucket.
+Using a set of random hyperplanes and a family of hash functions proposed by \cite{Charikar2002}, the buckets are defined by the subspaces between hyperplanes, such that the probability of similar documents being placed into the same bucket of a hash table is proportional to their similarity.
 
-\cite{becker2011beyond} use the clustering approach proposed by \cite{Yang98} as part of the TDT project, and a filtering layer similar to \cite{sankaranarayanan2009twitterstand}. However, filtering is performed after clustering has taken place, and they attempt to identify likely event clusters, rather than event tweets. They use a number of features, such as top terms, and number of retweets, to classify clusters as either event or non-event. Although evaluation of their approach seems to show that it is very effective, it is still based on a model designed for much lower volume streams, and is simply too slow to scale past very small corpora.
+By using multiple hash tables, each with independently chosen random hyperplanes, the probability of the true nearest neighbour colliding in at least one table can be increased to any desired probability (at the cost of additional computations).
+The number of hash tables $L$ needed to give the desired probability of \emph{missing} a nearest neighbour $\delta$ can be computed as:
+\begin{displaymath}
+	L = log_{1-P^k_{coll}} \delta
+\end{displaymath}
+where $k$ is the number the number of hyperplanes, $P_{coll} = 1-\frac{\theta(x,y)}{\pi}$ where $\theta(x,y)$ is the expected angle between similar documents $x$ and $y$.
+Petrivic et al. use values of $k = 13$, $\theta(x,y) = 0.2$ and $\delta = 0.025$ to compute $L$, values which we also use when replicating their work in Chapter \ref{chapter:collection}.
 
+\subsubsection{Variance Reduction}
+Although the use of LSH improves computational efficiency, it proves to be considerably less effective than the standard TDT approach.
+This is because LSH is most effective when the true nearest neighbour is very close (i.e. has a high similarity) to the query document.
+If the nearest neighbour is far from the query document, then LSH often fails to find it.
+To overcome this, \cite{Petrovic:2010:SFS:1857999.1858020} use a `variance reduction' strategy when a nearest neighbour is not found using LSH.
+In these instances, the approach falls back the traditional TDT model, and uses an inverted index to retrieve a list of documents to search for a nearest neighbour.
+However, unlike the basic TDT model, a limit is placed on the number of documents searched, and only the most recent 2000 documents returned from the inverted index are compared.
+This helps to improve the effectiveness, and brings it inline with that of the basic model, whilst still being considerably more efficient.
+
+\subsubsection{Additional Efficiency Enhancements}
+Since the number of buckets is limited, in a streaming scenario where the number of documents in unbounded, the number of documents in each bucket will continue to grow as new documents are processed.
+This would require an unbounded amount of space and the number of comparisons made would also grow for each new document, eventually making even the LSH approach infeasible.
+To overcome this, \cite{Petrovic:2010:SFS:1857999.1858020} limit the number of documents in a bucket to a fixed number based on the expected number of collisions, which can be computed as $n/2^k$ where $n$ is the total number of documents and $k$ is the number of hyperplanes used.
+When a bucket is full, the oldest document in the bucket is removed from that bucket (and only that bucket) to make room for new documents.
+Due to the use of multiple independent hash tables, the removal of the document from a bucket does not prevent it from being retrieved from other hash tables, although eventually all documents are removed from all hash tables.
+
+To keep the number of comparisons per document fixed, similarity comparisons are performed for at most $3L$ documents (where $L$ is the number of hash tables).
+The documents are selected by counting the number of times a document collides across the $L$ hash tables, and taking the top $3L$ documents with the most collisions.
+
+\subsubsection{Noise Removal}
+Although the use of LSH improves computational efficiency and allows the application of a TDT approaches on Twitter-scale data, it does not address the issue of noise and spam, which is found in excess on Twitter but is not present in the TDT datasets.
+
+\cite{Petrovic:2010:SFS:1857999.1858020} investigated a number of ranking approaches for ranking clusters produced by their system.
+They found that ranking clusters by the number unique users was more effective than the raw number of tweets.
+They also found that the amount of information contained in the thread, measured using Shannon entropy \citep{Shannon:2001:MTC:584091.584093}, was a good indicator of quality.
+Shannon entropy, $H$, is measured as:
+\begin{displaymath}
+	H = -\sum_i{\frac{n_i}{N} \log \frac{n_i}{N}}
+\end{displaymath}
+where $n_i$ is the number of times term $i$ appears in a cluster,	and $N = \sum_i{n_i}$ is the same of all term occurrences in the cluster.
+Clusters with a low entropy, defined as $H < 3.5$ by Petrović et al., are moved to the bottom of the ranking -- effectively marking them as noise.
+
+\subsection{Supervised Approaches to Event Detection}
 \cite{Sakaki:2010:EST:1772690.1772777} were concerned with the detection of specific types of event, in particular, earthquakes and typhoons, with the aim of issuing alerts to those in the path of these disasters. Their approach, although simple, is very effective. They specify a set of predefined keywords which are associated with the type of events they are trying to detect (e.g. earthquake, shake, cyclone, typhoon, etc.,). They monitor an incoming stream of tweets for these keywords, and for each tweet found, they classify it using a Support Vector Machine (SVM) as either event-related or not. If they find enough event-related tweets in a short period of time, then their systems decides that the event is real, and issues alerts to those who could be affected. Despite the effectiveness of their approach, there are obvious drawbacks. Firstly, it can only detect specific types of event, and secondly, it requires training data for each of the types of event we want to detect.
 
+\subsection{Natural Language Approaches}
 \cite{Choudhury11extractingsemantic} examined how linguistic features and background knowledge could be used to detect specific types of sports events with high precision. However their approach requires significant domain knowledge of the sporting events and large amounts of manual labelling to prepare a classifier for each specific type of event, making it difficult and time-consuming to generalize.
 
 \cite{Ritter:2012:ODE:2339530.2339704} used named entities, ``event phrases'' and temporal expressions to extract a calendar of significant events from Twitter.
@@ -205,3 +258,10 @@ To ensure that only novel events are reported, they compare each new event to ol
 They merge events by comparing the top 20\% of entity terms, based on term frequency, which reduces event fragmentation.
 They evaluate their approach using the Events 2012 corpus we create in chapter \ref{chapter:collection}, finding that their approach outperforms the LSH approach when measured using NMI and B-Cubed cluster performance metrics.
 Although this approach outperforms their baseline approach, the LSH approach of \cite{Petrovic:2010:SFS:1857999.1858020} using their chosen evaluation metrics, they do not report precision or recall values, making it difficult to compare directly.
+
+\subsection{Burst and Trend Analysis}
+
+\section{Differences between Event Detection and other IR Tasks}
+Despite being viewed as an IR task, Event Detection has a number of characteristics that differ from more common IR tasks. The most obvious of these is the lack of a user-provided query.
+Rather than searching for documents relevant to a specific query, event detection systems first must detect new events and track which documents belong to the same topic.
+This means that the notion of relevance is much more ambiguous, and creates a number of issues with the evaluation of event detection approaches.
