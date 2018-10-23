@@ -29,8 +29,8 @@ This document outlines a plan for revisions and corrections that are needed in o
   - [X] [Detail basic model, UMASS approach in particular since it is used as basis for LSH approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/e7b6504878dce517a723f25b9c3d984391803c8e)
 - [ ] Find suitable place to detail BCubed metric
 - [ ] Re-write and expand section on Event Detection on Twitter.
-  - [ ] Describe LSH approach in detail
-  - [ ] Describe CS approach in detail
+  - [X] Describe LSH approach in detail
+  - [X] Describe CS approach in detail
   - [ ] More detailed analysis of existing event detection approaches
   - [ ] Describe issues with clustering (wrt Twitter data)
   - [ ] Talk a bit about burst detection techniques for Twitter: trend analysis, etc.

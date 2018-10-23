@@ -88,7 +88,8 @@ F-measure takes both precision and recall into consideration, and combines them 
 
 
 \section{Topic Detection and Tracking}
-The Topic Detection and Tracking (TDT) project began in 1997, and was a body of research and an evaluation paradigm that addressed the event-based organization of broadcast news \citep{Allan:2002:ITD:772260.772262}. The motivation behind the project was a system which was capable of monitoring broadcast news and could produce an alert when a new event occurred.
+The Topic Detection and Tracking (TDT) project began in 1997, and was a body of research and an evaluation paradigm that addressed the event-based organization of broadcast news \citep{Allan:2002:ITD:772260.772262}.
+The motivation behind the project was a system which was capable of monitoring broadcast news and could produce an alert when a new event occurred.
 
 The project was split into five distinct subtasks \citep{Allan:2002:ITD:772260.772262}:
 
@@ -107,7 +108,9 @@ The project was split into five distinct subtasks \citep{Allan:2002:ITD:772260.7
 With the exception of Story Segmentation, the tasks focus on various aspects of document clustering, with the main difference between each task being how it is evaluated.
 Of the 5 tasks, First Story Detection (FSD, although often called New Event Detection, NED) was considered the most difficult \citep{Allan:2000:FSD:354756.354843} as an effective FSD system must be effective across all of the tasks to perform well.
 
-Story Segmentation differs in nature from the others as it pertains specifically to a pre-processing step that must be performed before the other tasks can be carried out. All other tasks work with stories, however the aim of the Story Segmentation task is to detect boundaries between stories automatically using transcripts from the spoken audio of broadcast news shows. Of all the tasks of the TDT project, Story Segmentation is the least relevant to event detection on Twitter as tweets almost always discuss only a single topic due to their short length.
+Story Segmentation differs in nature from the others as it pertains specifically to a pre-processing step that must be performed before the other tasks can be carried out.
+All other tasks work with stories, however the aim of the Story Segmentation task is to detect boundaries between stories automatically using transcripts from the spoken audio of broadcast news shows.
+Of all the tasks of the TDT project, Story Segmentation is the least relevant to event detection on Twitter as tweets almost always discuss only a single topic due to their short length.
 
 \subsection{Approaches to TDT}
 \label{background:sec:tdt}
@@ -138,9 +141,9 @@ Story Segmentation differs in nature from the others as it pertains specifically
 		}
 
 		\eIf{$c_{max} \geq m$}{
-			clusters[$d$] $\gets$ cluster[$n_d$]	\tcp*{Add to exisitng event}
+			add $d$ to clusters[$n_d$]
 		} {
-			clusters[$d$] $\gets$ new cluster() \tcp*{Report a new event}
+			clusters[d] $\gets$ new cluster($d$) \tcp*{Report d as a new event}
 		}
 
 	}
@@ -189,18 +192,12 @@ However, filtering is performed after clustering has taken place, and they attem
 They use a number of features, such as top terms, and number of retweets, to classify clusters as either event or non-event.
 Although evaluation of their approach seems to show that it is very effective, it is still based on a model designed for much lower volume streams, and is simply too slow to scale past very small corpora.
 
-\subsection{Cluster Summerization Approach}
-\cite{Aggarwal12} use a fixed number of clusters and cluster summaries to reduce the number of comparisons required for document clustering. Each cluster summary contains (i) a node-summary, which is a set of users and their frequencies and (ii) a content-summary, which is a set of words and their TF-IDF \cite{Salton:1988:TAA:54259.54260} weighted frequencies.
-By combining these two summaries, they suggest a novel similarity score which exploits the underlying structure of the social network, and improves upon content-only measures.
-Each incoming document is assigned to its closest cluster unless its similarity score is significantly lower than that of other documents, in which case, the oldest cluster is replaced with a new cluster containing  the new document.
-A sketch-based approximation technique is used to maintain node statistics and to calculate structural similarity, greatly increasing the efficiency of their approach.
-The rate of growth of each cluster is measured, and clusters which grow past a certain rate are said to be events. Unfortunately, evaluation of this approach is lacking in a number of areas.
-Although they rigorously evaluate the effectiveness of their proposed similarity measure, an evaluation of the detection capability of this approach is lacking as they considers spam to be an event, and does not present how many false-positive events were detected.
+
 
 \subsection{Locality Sensitive Hashing (LSH) using Random Hyperplanes}
 Earlier we discussed how the basic TDT approach as described in Section \ref{background:sec:tdt} could not scale to extremely high volume streams (even with the aid of an inverted index), making it infeasible to use for event detection on Twitter.
 \cite{Petrovic:2010:SFS:1857999.1858020} proposed a solution to this using a technique called Locality Sensitive Hashing (LSH).
-LSH uses a special hash functions that produce the same hash for documents that are similar, but not necessarily completely identical, allowing for documents that are close in vector space to be placed into the same bucket.
+LSH uses a special hash functions that produce the same hash for documents that are similar, but not necessarily completely identical, allowing documents that are close in vector space to be placed into the same bucket.
 Using a set of random hyperplanes and a family of hash functions proposed by \cite{Charikar2002}, the buckets are defined by the subspaces between hyperplanes, such that the probability of similar documents being placed into the same bucket of a hash table is proportional to their similarity.
 
 By using multiple hash tables, each with independently chosen random hyperplanes, the probability of the true nearest neighbour colliding in at least one table can be increased to any desired probability (at the cost of additional computations).
@@ -230,7 +227,7 @@ Due to the use of multiple independent hash tables, the removal of the document 
 To keep the number of comparisons per document fixed, similarity comparisons are performed for at most $3L$ documents (where $L$ is the number of hash tables).
 The documents are selected by counting the number of times a document collides across the $L$ hash tables, and taking the top $3L$ documents with the most collisions.
 
-\subsubsection{Noise Removal}
+\subsubsection{Cluster Ranking}
 Although the use of LSH improves computational efficiency and allows the application of a TDT approaches on Twitter-scale data, it does not address the issue of noise and spam, which is found in excess on Twitter but is not present in the TDT datasets.
 
 \cite{Petrovic:2010:SFS:1857999.1858020} investigated a number of ranking approaches for ranking clusters produced by their system.
@@ -240,14 +237,86 @@ Shannon entropy, $H$, is measured as:
 \begin{displaymath}
 	H = -\sum_i{\frac{n_i}{N} \log \frac{n_i}{N}}
 \end{displaymath}
-where $n_i$ is the number of times term $i$ appears in a cluster,	and $N = \sum_i{n_i}$ is the same of all term occurrences in the cluster.
+where $n_i$ is the number of occurrences of term $i$ in a cluster,	and $N = \sum_i{n_i}$ is the total number of all term occurrences in the cluster.
 Clusters with a low entropy, defined as $H < 3.5$ by Petrović et al., are moved to the bottom of the ranking -- effectively marking them as noise.
+
+Note that this ranking approach requires either a fixed period to have elapsed or a set number of tweets to be processed before the ranking can be made.
+For example, the ranking may be updated once per hour, or once every 100,000 tweets.
+This takes away from the usefulness of the approach in a real-time scenario, making it more batch-based than real-time.
+
+\subsection{Efficient Clustering Using a Fixed Number of Clusters}
+If documents are restricted to a single cluster, an easy efficiency gain can be found by comparing new documents to existing clusters (rather than every other document).
+Since the number of clusters will always be smaller than the number of documents, fewer comparisons are needed to find the nearest neighbour cluster.
+This approach was used by \cite{Aggarwal12}, with the additional constraint that the number of clusters (usually several hundred) is kept constant, ensuring linear complexity (i.e., the time taken to process each new document is a constant).
+An overview of their clustering approach is given in Algorithm \ref{background:alg:sbs}.
+
+\begin{algorithm}
+	\DontPrintSemicolon
+	\KwIn{Number of clusters $k$}
+	clusters $\gets$ [$k$] \\
+	$i, \mu, \sigma, M_0, M_1, M_2 \gets$ 0 \\
+
+	\ForEach{document d in the stream} {
+		$s_{max} \gets 0$ \tcp*{maximum similarity between $d$ and all clusters}
+		$n_{c} \gets nil$ \tcp*{cluster with maximum similarity to $d$}
+		\ForEach{cluster c in clusters}{
+			$s$ $\gets$ similarity($d$, $c$) \\
+			\If{$s > s_{max}$}{
+				$s_{max} \gets s$ \\
+				$n_c \gets c$
+			}
+		}
+
+		\eIf{$s_{max} < \mu -3 \cdot \sigma$}{
+			replace most stale cluster with new cluster containing $d$
+		} {
+			add $d$ to clusters[$n_c$]
+		}
+
+	update $M_0, M_1, M_2$ additive \\
+	$\mu$ $\gets$ $M_1/M_0$ \\
+	$\sigma$ $\gets$ $\sqrt{M_2/M_0-\mu^2}$
+
+	}
+	\caption{A clustering approach as given by \cite{Aggarwal12} with a fixed number of clusters}
+	\label{background:alg:sbs}
+\end{algorithm}
+
+\subsubsection{Identifying Event Clusters}
+\cite{Aggarwal12} define two ways that a new event can occur using their clustering approach:
+\begin{itemize}
+	\item \emph{novel} events, which are caused by the creation of a new cluster containing only a single document (thus, also requiring the removal of a ``stale'' cluster)
+	\item \emph{evolution} events, where a cluster experiences a rapid increase in the relative volume of documents it receives due to the emergence of a new topic
+\end{itemize}
+
+New clusters (\emph{novel} events) are created when a nearest neighbour cluster cannot be found among the existing clusters.
+Unlike most event detection and TDT systems, \cite{Aggarwal12} use an adaptive similarity threshold based on the Three Sigma rule \citep{Pukelsheim94}, which states that the expected similarity value should be within 3 standard deviations of the mean similarity across all previously seem documents.
+For use as a minimum threshold for similarity, only the lower bound is used:
+\begin{displaymath}
+	threshold = \mu - 3 \cdot \sigma
+\end{displaymath}
+where $\mu$ is the mean and $\sigma$ is the standard deviation of all similarity measures that have been seen before.
+
+To compute the $\mu$ and $\sigma$ values efficiently, \cite{Aggarwal12} use the first 3 moments of the set of highest similarity scores $S$ (i.e., the set of  similarity score of each document to its nearest neighbour cluster):
+\begin{align*}
+	M_0 &= \sum_{i = 0}^{|S|}{S_i^0} & M_1 &= \sum_{i = 0}^{|S|}{S_i^1} & M_2 &= \sum_{i = 0}^{|S|}{S_{i}^2}
+\end{align*}
+These values can be updated as each new document is clustered, and used to calculate the $\mu$ and $\sigma$ as show in Algorithm \ref{background:alg:sbs}.
+
+An \emph{evolution} event is said to have occurred when the fraction of documents added to a cluster during time $t_{i}$ is greater than the fraction added during period $t_{i-1}$ by a factor of $\alpha$.
+For a cluster $c$, during time periods $t_i$ and $t_{i-1}$, an evolution event occurs if:
+\begin{displaymath}
+	\frac{F(c, t_i)}{F(c, t_{i-1})} \geq \alpha
+\end{displaymath}
+where $F$ gives the fraction of all documents during time $t$ that were added to cluster $c$.
+Evolution events are necessary to capture real-world events that are similar enough to an existing cluster that they do not cause a new cluster to be created.
+The change in relative volume of documents represents a change in behavior which can be seen as an indicator of a new event.
 
 \subsection{Supervised Approaches to Event Detection}
 \cite{Sakaki:2010:EST:1772690.1772777} were concerned with the detection of specific types of event, in particular, earthquakes and typhoons, with the aim of issuing alerts to those in the path of these disasters. Their approach, although simple, is very effective. They specify a set of predefined keywords which are associated with the type of events they are trying to detect (e.g. earthquake, shake, cyclone, typhoon, etc.,). They monitor an incoming stream of tweets for these keywords, and for each tweet found, they classify it using a Support Vector Machine (SVM) as either event-related or not. If they find enough event-related tweets in a short period of time, then their systems decides that the event is real, and issues alerts to those who could be affected. Despite the effectiveness of their approach, there are obvious drawbacks. Firstly, it can only detect specific types of event, and secondly, it requires training data for each of the types of event we want to detect.
 
 \subsection{Natural Language Approaches}
-\cite{Choudhury11extractingsemantic} examined how linguistic features and background knowledge could be used to detect specific types of sports events with high precision. However their approach requires significant domain knowledge of the sporting events and large amounts of manual labelling to prepare a classifier for each specific type of event, making it difficult and time-consuming to generalize.
+\cite{Choudhury11extractingsemantic} examined how linguistic features and background knowledge could be used to detect specific types of sports events with high precision. However their approach requires significant domain knowledge of the sporting events and large amounts of manual labeling to prepare a classifier for each specific type of event, making it difficult and time-consuming to generalize.
 
 \cite{Ritter:2012:ODE:2339530.2339704} used named entities, ``event phrases'' and temporal expressions to extract a calendar of significant events from Twitter.
 However, their approach requires that tweets contain temporal resolution phrases, such as ``tomorrow'' or ``Wednesday'' for their approach to resolve between an entity and a specific time.
