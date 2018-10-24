@@ -29,18 +29,19 @@ This document outlines a plan for revisions and corrections that are needed in o
   - [X] [Detail basic model, UMASS approach in particular since it is used as basis for LSH approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/e7b6504878dce517a723f25b9c3d984391803c8e)
 - [ ] Find suitable place to detail BCubed metric
 - [ ] Re-write and expand section on Event Detection on Twitter.
-  - [X] Describe LSH approach in detail
-  - [X] Describe CS approach in detail
+  - [X] [Describe LSH approach in detail](https://github.com/JamesMcMinn/Thesis-Revisions/commit/cc9b2e738611ffab97a1f23446bfd164d1d95344)
+  - [X] [Describe CS approach in detail](https://github.com/JamesMcMinn/Thesis-Revisions/commit/186c4b495b76802d887c9be26e5dff9b65b2e80f)
+      - [ ] Talk about use of network for similarity calculations
   - [ ] More detailed analysis of existing event detection approaches
   - [ ] Describe issues with clustering (wrt Twitter data)
   - [ ] Talk a bit about burst detection techniques for Twitter: trend analysis, etc.
-- [X] Move background from Event Collection here. Expand.
+- [X] [Move background from Event Collection here. Expand.](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f3b311acb8c65c1805e10a7925052051bc9af84e)
 - [ ] Move background from Newsworthiness here. Expand.
 
 
 ## 3. Building an Event Collection
 - [ ] Re-write introduction wrt. previous chapter
-- [X] Move background to Chapter 2
+- [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f3b311acb8c65c1805e10a7925052051bc9af84e)
 - [X] [Add explanation that "significant" allows definition to be adapted to different scenarios.
   - Only interested in finance news, or emergency events? Define significant to reflect this.](https://github.com/JamesMcMinn/Thesis-Revisions/commit/9aa7a767171e7a557af0afc6871ecd32532a9373)
 - [ ] Split relevance judgment gathering so that Detection / Wiki is separate and less confusing
