@@ -42,8 +42,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 ## 3. Building an Event Collection
 - [ ] Re-write introduction wrt. previous chapter
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f3b311acb8c65c1805e10a7925052051bc9af84e)
-- [X] [Add explanation that "significant" allows definition to be adapted to different scenarios.
-  - Only interested in finance news, or emergency events? Define significant to reflect this.](https://github.com/JamesMcMinn/Thesis-Revisions/commit/9aa7a767171e7a557af0afc6871ecd32532a9373)
+- [X] [Add explanation that "significant" allows definition to be adapted to different scenarios](https://github.com/JamesMcMinn/Thesis-Revisions/commit/9aa7a767171e7a557af0afc6871ecd32532a9373)
 - [ ] Split relevance judgment gathering so that Detection / Wiki is separate and less confusing
 - [ ] Explain and motivate clustering features
 - [ ] Reorganize event-clustering evaluation and explain how features were weighted
