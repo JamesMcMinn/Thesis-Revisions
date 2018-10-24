@@ -303,6 +303,10 @@ To compute the $\mu$ and $\sigma$ values efficiently, \cite{Aggarwal12} use the 
 \end{align*}
 These values can be updated as each new document is clustered, and used to calculate the $\mu$ and $\sigma$ as show in Algorithm \ref{background:alg:sbs}.
 
+If a document has a highest similarity score below $\mu - 3 \cdot \sigma$ then a new cluster is created and the document is added to it.
+Since this approach requires a constant number of clusters for linear time complexity, the creation of a new cluster requires the removal of an existing cluster.
+\cite{Aggarwal12} opt for the simplest approach in this case, and remove the cluster which has not had a document added for the longest period of time.
+
 An \emph{evolution} event is said to have occurred when the fraction of documents added to a cluster during time $t_{i}$ is greater than the fraction added during period $t_{i-1}$ by a factor of $\alpha$.
 For a cluster $c$, during time periods $t_i$ and $t_{i-1}$, an evolution event occurs if:
 \begin{displaymath}
@@ -331,6 +335,90 @@ Although this approach outperforms their baseline approach, the LSH approach of 
 \subsection{Burst and Trend Analysis}
 
 \section{Differences between Event Detection and other IR Tasks}
-Despite being viewed as an IR task, Event Detection has a number of characteristics that differ from more common IR tasks. The most obvious of these is the lack of a user-provided query.
+\label{background:sec:diffs}
+Despite being viewed as an IR task, Event Detection has a number of characteristics that differ from more common IR tasks.
+The most obvious of these is the lack of a user-provided query.
 Rather than searching for documents relevant to a specific query, event detection systems first must detect new events and track which documents belong to the same topic.
 This means that the notion of relevance is much more ambiguous, and creates a number of issues with the evaluation of event detection approaches.
+
+\section{Test Collections}
+Ir order to fairly and accurately evaluate Information Retrieval systems of any kind, a standard test collection and set of relevance judgements are required.
+The majority of modern test collections are created using a pooling approach, where a set of topics or queries are selected and used to retrieve documents from a number of different systems.
+The union of the top \(n\) documents per topic, taken from each system systems, is then used create a pool of documents for each topic.
+Each document in the pool is then judged to be relevant or non-relevant to the topic, and documents which are not in the pool are assumed to be non-relevant.
+
+This pooling  approach is commonly used to generate relevance judgements for collections provided to researchers participating in conferences such as the Text REtrieval Conference (TREC), which is sponsored by the National Institute of Stands and Technology (NIST) in the United States.
+Researchers are first given the test collections with a set of pre-selected topics, and are asked to submit the results from their retrieval systems to experts who then perform the pooling and annotate the documents.
+Given the scale of modern test collections, this can be a slow and expensive undertaking, which restricts the number of ``tracks'' (a set of tasks focused on some facet of a retrieval problem) that can be run each year, and thus limits how many test collections and relevance judgments can be created this way.
+
+More recently, crowdsourcing has become a popular method of cheaply and quickly generating relevance judgements since it does not rely on the timing of particular conferences or and does not require experts to gather relevance judgements.
+\cite{Alonso:2008:CRE:1480506.1480508} describe how crowdsourcing can be used to gather relevance judgements and discuss their crowdsourcing methodology called `TERC', which they find provides fast turnarounds whilst being low cost and producing high quality results.
+However, they also describe some of the issues and limitations which need to be addressed, such as the need for strict quality control and the `artificiality' of the task.
+Whilst they propose some solutions to these issues, they recognize that many of the solutions are domain specific, and not applicable in all situations.
+
+Issues remain with the pooling method itself.
+\cite{Buckley:2007:BLP:1298708.1298735} highlighted a number of issues associated with pooling when dealing with large collections, and showed that standard pooling techniques can introduce bias when dealing with large collections.
+They make a number of suggestions, such as engineering the topics or forming pools differently, that could reduce bias and allow for the creation of large unbiased test collections using pooling.
+However, the use of pooling to create a test collection for event detection poses additional challenges which require more substantial changes to the TREC-style pooling methodology than those proposed by \cite{Buckley:2007:BLP:1298708.1298735}.
+
+\subsection{The Pooling Approach and Event Detection}
+As discussed in section \ref{background:sec:diffs}, there are no pre-defined topics or queries for event detection systems to use.
+Rather, systems aim to automatically \emph{discover} a sub-set all all topics being discussed in the collection that meet the criteria for being an \emph{event} (as we will discuss in Chapter \ref{chapter:collection}, defining these criteria is not straightforward).
+A perfect system would detect all documents for each event being discussed, however in practice, different event detection approaches discover different events.
+This makes it impossible to pool the results from event detection approaches using a TREC-style pooling methodology since it is not obvious what the various topics are or how they should be merged to create the pools for judgment.
+
+Even if it was possible to identify and pool tweets for each of the topics, event detection systems generally do not produce a rank for each tweet, instead relying on their temporal order.
+Temporal order is a natural and useful way of ordering tweets that discuss real-world events, as events are often discussed in real-time.
+Since the rank does not infer any sort of quality or usefulness score from the system, there is no way of identifying the top $n$ documents from each topic from each system, making it difficult to pool them effectively.
+
+\subsection{Twitter Corpora}
+\label{background:sec:twittercorpora}
+
+\begin{table}[hb]
+	\centering
+
+	\caption[A comparison of the different Twitter corpora available prior to Events 2012 corpus.]{A comparison of the different Twitter corpora available prior to this collection. Values marked with * are estimates as exact numbers are not given. A question mark (?) indicates that the number of events is not clear.}
+	\label{table:collectionsCompared}
+
+	\begin{tabulary}{\textwidth}{lccccc}
+
+	\toprule
+	\textbf{Collection} & \textbf{Period} & \textbf{Tweets} & \textbf{Event based} & \textbf{Events} & \textbf{Unbiased} \\
+	\midrule
+
+	\cite{McCreadie:2012:BRT:2348283.2348495} & 14 days & 16M & No & - & - \\
+	\cite{Becker:2012:ICP:2124295.2124360} & 28 days* & 2.6M & Yes & ? & No \\
+	\cite{Petrovic:2012:UPI:2382029.2382072} & 75 days* & 50M & Yes & 27 & No \\
+	\textbf{This Work} 	& 28 days & 120M & Yes & 506 & Yes \\
+
+	\bottomrule
+	\end{tabulary}
+
+\end{table}
+
+\label{sec:corproa}
+In this section, we examine publicly available Twitter corpora, paying particular attention to their suitability for the evaluation of event-based systems and analysis.
+We also discuss some of the challenges associated with the creation of a Twitter-sized corpus.
+
+TREC ran the Microblog Track in 2011 with an ad-hoc retrieval task, and again in 2012 with ad-hoc retrieval and filtering tasks.
+The Tweets2011 corpus~\cite{McCreadie:2012:BRT:2348283.2348495} was used both years, with new relevance judgements being generated each year.
+The collection was the first publicly available large-scale Twitter corpus, containing 16 million tweets which cover a period of 2 weeks.
+However, the corpus contains tweets in all languages and only around 4 million tweets remain after non-English tweets are removed.
+Furthermore, the corpus is designed specifically for ad-hoc retrieval, and as such, the topics and relevance judgements are unsuitable for event-based analysis.
+The TREC Microblog Track also ran in 2013, however the track moved to an experimental track-as-a-service approach, where the corpus was hosted by TREC and participants had to be queried using an API.  Once again, the set of topics used were designed specifically for ad-hoc retrieval, making them unsuitable for event-based analysis.
+
+\cite{Becker:2012:ICP:2124295.2124360} produced what we believe was the first Twitter collection of events, however it only contains tweets posted by users in New York.
+This clearly introduces geographical bias and restricts the type of events available.
+The collection itself is also relatively tiny, containing only 2.6 million tweets.
+
+\cite{Petrovic:2012:UPI:2382029.2382072} created a corpus aimed at First Story Detection, and while their collection contains a relatively high 50 million tweets from the beginning of July until mid-September 2011, they identified only 27 events.
+This means that large scale comparisons are difficult as there is not a large sample of events (less than 1 event per day) and failure to detect only a small number of these could result in unsubstantiated and misleading results.
+
+Although these collections have been made available, albeit in a limited fashion, none appear suitable for the analysis of events and comparison of event detection approaches.
+The collection produced by~\citeauthor{Becker:2012:ICP:2124295.2124360} is simply too small to be of practical use for event detection, while the collection created by~\citeauthor{Petrovic:2012:UPI:2382029.2382072} covers too few events for a fair comparison to be made.
+One reason for the lack of comparative corpora may be the difficulty and expense of creating one.
+A reasonable sized Twitter corpus will contain tens of millions of documents -- performing a manual search on corpus of that magnitude is simply impossible.
+To overcome this,~\citeauthor{Petrovic:2012:UPI:2382029.2382072} used a procedure similar to NIST, where expert annotators (primarily the authors of the paper) read the description of an event and used keywords to search for relevant documents.
+However, this approach means that events (i) must be carefully identified in advance (potentially introducing bias) (ii) annotation requires expensive and slow experts, and (iii) it does not scale well past a certain size (\citeauthor{Petrovic:2012:UPI:2382029.2382072} were only able to create judgements for 27 events). This demonstrates the need for a methodology of creating unbiased large-scale and real-world corpora which can be used for the comparison of event detection techniques.
+
+Issues with both TREC-style pooling and crowdsourcing highlight the need for a new methodology which can be used for the creation of large-scale test collections for event detection on microblogs. A new type of pooling is needed in order to cope with the lack of predefined topics and document ranking, whilst new crowdsourcing techniques are needed which maintain the fast turnarounds and low-cost associated with crowdsourcing, whilst ensuring high-quality results.

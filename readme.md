@@ -34,12 +34,13 @@ This document outlines a plan for revisions and corrections that are needed in o
   - [ ] More detailed analysis of existing event detection approaches
   - [ ] Describe issues with clustering (wrt Twitter data)
   - [ ] Talk a bit about burst detection techniques for Twitter: trend analysis, etc.
-- [ ] Move background from Event Collection here. Expand.
+- [X] Move background from Event Collection here. Expand.
 - [ ] Move background from Newsworthiness here. Expand.
 
 
 ## 3. Building an Event Collection
-- [ ] Move background to Chapter 2
+- [ ] Re-write introduction wrt. previous chapter
+- [X] Move background to Chapter 2
 - [X] [Add explanation that "significant" allows definition to be adapted to different scenarios.
   - Only interested in finance news, or emergency events? Define significant to reflect this.](https://github.com/JamesMcMinn/Thesis-Revisions/commit/9aa7a767171e7a557af0afc6871ecd32532a9373)
 - [ ] Split relevance judgment gathering so that Detection / Wiki is separate and less confusing
