@@ -26,6 +26,43 @@ Thus, we created a new set of categories, each of which covers a much broader ra
 Table~\ref{collection:table:catTable} shows the new categories and the corresponding categories from the TDT project and Wikipedia.
 These categories greatly increase agreement, which is discussed in detail in section~\ref{sec:agreement}.
 
+\subsubsection{Defining a set of Categories}
+In additional to gathering relevance judgements, we wanted to gather descriptive and category information for each of the events.
+Although the Wikipedia Current Events Portal does assign categories, there is a very large number of categories, each of which is very specific (e.g. `History', `Literature', and `Spirituality' categories).
+Rather than ask the annotators to choose between a large number of categories, we chose to use the categories defined and used by the Topic Detection and Tracking (TDT) project~\cite{Allan:2002:ITD:772260.772262}.
+The 13 categories defined cover a wide range of topics, with a Miscellaneous category for topics which do not fit elsewhere.
+The full list of TDT categories are shown in Table~\ref{collection:table:catTable}.
+
+\begin{table}[h]
+	\centering
+	\caption{Combined categories with their corresponding TDT and Wikipedia categories.}
+	\label{collection:table:catTable}
+
+	\footnotesize
+	\begin{tabulary}{\textwidth}{lLL}
+	\toprule
+	\textbf{Combined} & \textbf{TDT Categories} & \textbf{Wikipedia Categories}  \\
+	\midrule
+	Armed Conflicts and Attacks & Acts of Violence or War & Armed conflicts, Attacks \\
+	\midrule
+	Arts, Culture and Entertainment & Celebrity and Human Interest News & Arts, Culture, Literature, Religion, Spirituality \\
+	\midrule
+	Business and Economy & Financial News & Business, Economics \\
+	\midrule
+	Disasters and Accidents & Accidents, Natural Disaster & Accidents, Disasters \\
+	\midrule
+	Law, Politics and Scandals & Elections, Political and Diplomatic Meetings, Legal / Criminal Cases, New Laws, Scandals / Hearings & International relations, Human rights, Law, Crime, Politics, Elections \\
+	\midrule
+	Sports & Sports News & Sports \\
+	\midrule
+	Science and Technology & Science and Discovery News & Exploration, Innovation, Science, Technology \\
+	\midrule
+	Miscellaneous & Miscellaneous News & \emph{Anything not listed above.\ e.g. Heath, Transport}  \\
+	\bottomrule
+	\end{tabulary}
+
+\end{table}
+
 \subsubsection{Temporal Features}
 Clearly, temporal features are extremely important in the clustering of events -- results which have a significant period of time between them are unlikely to be related to the same seminal event.
 For example, the three U.S. Presidential Debates are all likely to be very similar in terms of category features, and potentially content-based features.
@@ -47,7 +84,7 @@ For example, again using the presidential debate as an example, the quote ``Well
 This means that we cannot rely only on tweet content features when performing event clustering.
 
 Fortunately, we also have event descriptions written by workers from the crowdsourced evaluation.
-These tend to be more generic, and seem to offer a more viable method of clustering results together, as they often mention the specific entities involved in an event (such as people and places), and a high level description of the event than cannot be determined using the content of tweets alone.
+These tend to be more generic, and seem to offer a more viable method of clustering results together, as they often mention the specific entities involved in an event (such as people and places), and a high level description of the event that cannot be determined using the content of tweets alone.
 
 \subsection{Clustering Algorithm}
 \label{sec:clusteringalg}
