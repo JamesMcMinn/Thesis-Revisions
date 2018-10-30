@@ -127,6 +127,12 @@ Of all the tasks of the TDT project, Story Segmentation is the least relevant to
 
 \subsection{Approaches to TDT}
 \label{background:sec:tdt}
+
+At a high level, almost all of the approaches proposed by the TDT project follow the same nearest-neighbour clustering approach shown in algorithm \ref{background:alg:tdt}.
+As documents appear in the stream, they are compared to every document that has been seen before (or, if an inverted index is used, than all documents they share a term with), and the similarity between the new document and every other document in the Corpus is calculated.
+If one or more similar documents is found (based on some pre-defined threshold), add the new document to cluster containing the closest match, signaling that they discuss the same event.
+If no similar documents are found, then a new event has been detected, and a new cluster is formed~\citep{Allan:2000:FSD:354756.354843}.
+
 \begin{algorithm}
 	\DontPrintSemicolon
 	\KwIn{Minimum similarity threshold $m$}
@@ -164,13 +170,8 @@ Of all the tasks of the TDT project, Story Segmentation is the least relevant to
 	\label{background:alg:tdt}
 \end{algorithm}
 
-At a high level, almost all of the approaches proposed by the TDT project follow the same nearest-neighbour clustering approach shown in algorithm \ref{background:alg:tdt}.
-As documents appear in the stream, they are compared to every document that has been seen before (or, if an inverted index is used, than all documents they share a term with), and the similarity between the new document and every other document in the Corpus is calculated.
-If one or more similar documents is found (based on some pre-defined threshold), add the new document to cluster containing the closest match, signaling that they discuss the same event.
-If no similar documents are found, then a new event has been detected, and a new cluster is formed~\citep{Allan:2000:FSD:354756.354843}.
-
-Unfortunately, the approach shown in algorithm \ref{background:alg:tdt} does not scale to extremely high volume streams.
-The approach takes $O(|D_t|)$ time to compute in the worst case, and although the use of an inverted index helps to reduce the average case, it continues to take increasingly longer to process new documents as new data is seen.
+Unfortunately, the approach shown in Algorithm \ref{background:alg:tdt} does not scale to extremely high volume streams.
+The approach takes $O(|D_t|)$ to compute in the worst case, and although the use of an inverted index helps to reduce the average case, it continues to take increasingly longer to process new documents as they are seen.
 This has obvious drawbacks when the volume of data is increased from a few thousand documents, to many hundreds of millions of documents per day, which quickly makes this approach computationally infeasible.
 
 This basic model persisted throughout the TDT project, and variations of this model (with efficiency optimizations) are commonly found in event detection approaches for social media \citep{becker2011beyond,Petrovic:2010:SFS:1857999.1858020,Aggarwal12,conf/asunam/OzdikisSO12}.
@@ -180,10 +181,43 @@ The TDT project produced some reasonably effective systems \citep{UMASS,Yang98,A
 When the TDT project ended in 2004, research in event detection slowed. It is believed that a plateau had been reached, and that without a radically different approach, the performance of these systems was unlikely to ever improve significantly \citep{Allan:2000:FSD:354756.354843}. This belief has remained true in the context of newswire documents, and many state-of-the-art systems are now over a decade old \citep{UMASS,Yang98,Allan:2005:TTD:1042435.1042899}.
 The TDT project was a cornerstone in the development of event detection approaches and is responsible for much of the foundation on which many state-of-the-art event detection approaches for Twitter are based.
 
-\section{Event Detection on Social Media}
-In recent years, interest in event detection has been rekindled as social media data has become available for research. However social media posts introduce their own unique challenges which require novel approaches to overcome. The massive volume of data means that traditional event detection techniques are too slow for real-time applications. One of the requirements of an effective event detection system is the ability to monitor events in real-time. In addition, with high volume data streams, as is the case with Twitter, efficiency is crucial to an effective system.
+\section{Defining an Event}
+\label{background:event}
+Despite the significant interest and body of work covering the detection and tracking of events, there is little consensus on the exact definition of \textit{event}.
+This leads to obvious issues when evaluating and comparing event-based systems, as differences in what is considered an event can make it difficult, or even impossible to compare two systems.
 
-Analysis of social media has received a lot of attention from the research community in recent years. However, much of this work has focused on blog and email streams  \citep{Zhao:2007:TIF:1619797.1619886,Jurgens:2009:EDB:1859650.1859652,Becker:2010:LSM:1718487.1718524,Nguyen:2011:ERR:2186701.2186707}, using datasets such as the Enron email dataset \cite{citeulike:7616867} or the BlogLines dataset \citep{Sia:2008:ECP:1401890.1401967}. More recently, focus has moved towards Twitter due to its popularity with individuals and organizations as a method of broadcast communication.
+The TDT project defines an \emph{event} as `something that happens at some specific time and place, and the unavoidable consequences'~\citep{Allan:2002:ITD:772260.772262}.
+Specific elections, accidents, crimes and natural disasters are examples of events under the TDT definition.
+They also define an \emph{activity} as a connected set of actions that have a common focus or purpose.
+Specific campaigns, investigations, and disaster relief efforts are examples of activities.
+Furthermore, a \emph{topic} is defined as a seminal event or activity, along with all directly related events and activities.
+The TDT project dealt with newswire documents, implying a level of significance to the topics being discussed -- it was reasonable to assume that the vast majority of topics in the TDT datasets were significant events.
+However this is not the case in Twitter, where a very large portion of documents discuss insignificant personal matters, such as the song a user is listening to.
+The TDT project was concerned with the detection of \emph{topics}, the US Presidential Elections is considered a single topic, and stories about the candidates' campaigns, debates, election results, and reactions to the election are all part of the same topic.
+There is no distinction made between each of the events within a topic, even though they could occur several days apart.
+We believe that this does not make sense in the context of Twitter as discussion moves very quickly and is fixated on the present, unlike newswire documents, which often summarize several days worth of events into a single article.
+
+\cite{Aggarwal12} define a \emph{news event} as being any event (something happening at a specific time and place) of interest to the media.
+They also consider any such event (e.g. a speech or rally) as being a single episode in a larger story arc (i.e. a presidential campaign).
+They use the term \emph{episode} to mean any such event, and \emph{saga} to refer to the collection of events related within a broader context.
+
+\cite{Becker_beyondtrending} go as far as to define an event in a much more formal, but still subjective manner.
+They define an event as a real-world occurrence \(e\) with (1) an associated time period \(T_e\) and (2) a time-ordered stream of Twitter messages, of substantial volume, discussing the occurrence and published during time \(T_e\).
+Other definitions, such as that used by~\cite{weng2011event}, define an event simply as a burst in the usage of a related group of terms.
+
+Clearly there is a consensus that events are temporal, as time is a reoccurring theme within all definitions.
+However, the consensus appears to end there.
+Whilst~\cite{Aggarwal12} and the TDT definition~\citep{Allan:2002:ITD:772260.772262} show a parallel in their hierarchical organization of events (events and topics, news events and sagas), this is less common in other definitions where a distinction between events and topics is not made.
+This makes comparisons very difficult; one definition may break an election into many events, while another could consider the election as a single event, or not as an event at all.
+Issues are also caused by the subjective nature of what is considered newsworthy.
+For example, the definitions used by \cite{weng2011event} and \cite{Becker_beyondtrending} require a substantial number of tweets to discuss a topic before that topic can be considered an event.
+This limits the types of topic that can be considered an event to those that generate a substantial volume of tweets, creating a bias towards larger events at the expense of smaller events or those that generate less discussion, such as business or financial news. In Chapter \ref{DefiningEvent} we propose a new definition for `event' that tries to overcome some of these issues.
+
+\section{Event Detection on Social Media}
+
+Analysis of social media has received a lot of attention from the research community in recent years.
+However, much of this work focused on blog and email streams  \citep{Zhao:2007:TIF:1619797.1619886,Jurgens:2009:EDB:1859650.1859652,Becker:2010:LSM:1718487.1718524,Nguyen:2011:ERR:2186701.2186707}, using datasets such as the Enron email dataset \citep{citeulike:7616867} or the BlogLines dataset \citep{Sia:2008:ECP:1401890.1401967}.
+More recently, the focus has moved towards Twitter due to its popularity with individuals and organizations as a method of real-time broadcast communication, making it interesting to study as a source of information about ongoing real-world events.
 
 \cite{Hu:2012:BNT:2208636.2208672} demonstrated the effectiveness of Twitter as a medium for breaking news by examining how the news of Osama bin Laden's death broke on Twitter. They found that Twitter had broken the news, and as a result, millions already knew of his death before the official announcement.
 
@@ -252,6 +286,9 @@ Shannon entropy, $H$, is measured as:
 \end{displaymath}
 where $n_i$ is the number of occurrences of term $i$ in a cluster,	and $N = \sum_i{n_i}$ is the total number of all term occurrences in the cluster.
 Clusters with a low entropy, defined as $H < 3.5$ by Petrović et al., are moved to the bottom of the ranking -- effectively marking them as noise.
+This entropy based approach to removing noise and spam works because it helps to filter out automated ``bot'' content, where the same message is published by many different accounts in an automated manner.
+Clusters where the content shows very little or no variation will have a relatively low entropy (information content), whereas clusters that show more variation (due to having different sources and authors) will have a higher entropy and contain more information.
+By combining both the unique user counts and entropy based filters, \cite{Petrovic:2010:SFS:1857999.1858020} are effectively requiring a topic to be discussed by a broad range of users for it to be considered an event.
 
 Note that this ranking approach requires either a fixed period to have elapsed or a set number of tweets to be processed before the ranking can be made.
 For example, the ranking may be updated once per hour, or once every 100,000 tweets.
@@ -333,7 +370,7 @@ The change in relative volume of documents represents a change in behavior which
 \cite{Sakaki:2010:EST:1772690.1772777} were concerned with the detection of specific types of event, in particular, earthquakes and typhoons, with the aim of issuing alerts to those in the path of these disasters. Their approach, although simple, is very effective. They specify a set of predefined keywords which are associated with the type of events they are trying to detect (e.g. earthquake, shake, cyclone, typhoon, etc.,). They monitor an incoming stream of tweets for these keywords, and for each tweet found, they classify it using a Support Vector Machine (SVM) as either event-related or not. If they find enough event-related tweets in a short period of time, then their systems decides that the event is real, and issues alerts to those who could be affected. Despite the effectiveness of their approach, there are obvious drawbacks. Firstly, it can only detect specific types of event, and secondly, it requires training data for each of the types of event we want to detect.
 
 \subsection{Natural Language Approaches}
-\cite{Choudhury11extractingsemantic} examined how linguistic features and background knowledge could be used to detect specific types of sports events with high precision. However their approach requires significant domain knowledge of the sporting events and large amounts of manual labeling to prepare a classifier for each specific type of event, making it difficult and time-consuming to generalize.
+\cite{Choudhury11extractingsemantic} examined how linguistic features and  background knowledge could be used to detect specific types of sports events with high precision. However their approach requires significant domain knowledge of the sporting events and large amounts of manual labeling to prepare a classifier for each specific type of event, making it difficult and time-consuming to generalize.
 
 \cite{Ritter:2012:ODE:2339530.2339704} used named entities, ``event phrases'' and temporal expressions to extract a calendar of significant events from Twitter.
 However, their approach requires that tweets contain temporal resolution phrases, such as ``tomorrow'' or ``Wednesday'' for their approach to resolve between an entity and a specific time.
@@ -409,14 +446,16 @@ Since this does not infer any sort of quality or usefulness score from the syste
 
 \end{table}
 
-A wide range of tweet collections have been created, however the majority of these lack relevance judgements or are simply collections of tweets that contain specific words or hashtags.
+A broad range of Twitter collections have been created for various tasks, however the majority of these lack relevance judgements or are simply collections of tweets that contain specific words or hashtags.
 There have been very few attempts to create large-scale, robust test collections containing a wide range of topics with relevance judgments.
-TREC utilized the pooling approach to gather relevance judgements 2011 and 2012 as part of the Microblog Track.
-They ran an ad-hoc retrieval task both years on the Tweets2011~\cite{McCreadie:2012:BRT:2348283.2348495} collection with 50 different queries for each year the task was run.
-The collection was the first publicly available large-scale Twitter corpus, containing a random sample of 16 million tweets which cover a period of 2 weeks.
+Table \ref{table:collectionsCompared} shows the most noteworthy and relevant Twitter corpora, compared to the collection we describe the creation of in Chapter \ref{chapter:collection}.
 
-The corpus contains tweets in all languages, however queries and judgements were only made using English language tweets, of which there were approximately only 4 million in the corpus.
-Furthermore, the topics and relevance judgments  were designed specifically for ad-hoc retrieval (with an example query being `fishing guidebooks'), meaning that the relevance judgements are unsuitable for event-based analysis.
+TREC utilized the pooling approach to gather relevance judgements in 2011 and 2012 as part of the Microblog Track.
+An ad-hoc retrieval task was used both years on the Tweets2011 \citep{McCreadie:2012:BRT:2348283.2348495} collection, across 100 queries (50 each year).
+The collection was the first publicly available, large-scale, Twitter corpus, consisting of a random sample of 16 million tweets collected over a period of 2 weeks in 2011.
+
+The Tweets2011 corpus contains tweets in all languages, however queries and judgements were only made using English language tweets, of which there are approximately only 4 million in the corpus.
+Furthermore, the topics and relevance judgments  were designed specifically for ad-hoc retrieval (one example query being `fishing guidebooks'), meaning that the relevance judgements are unsuitable for event-based analysis.
 The TREC Microblog Track also ran in 2013, however the track moved to an experimental track-as-a-service approach, where the corpus was hosted by TREC and participants had to be queried using an API.
 The only way to obtain tweets from the collection was to query the API for specific keywords, making it impossible to process the corpus as a time-ordered stream.
 Once again, the set of topics used were designed specifically for ad-hoc retrieval, making them unsuitable for event-based analysis.
@@ -438,6 +477,8 @@ One reason for the lack of comparative corpora may be the difficulty and expense
 A reasonable sized Twitter corpus will contain tens of millions of documents -- performing a manual search on corpus of that magnitude is simply impossible.
 To overcome this,~\citeauthor{Petrovic:2012:UPI:2382029.2382072} used a procedure similar to NIST, where expert annotators (primarily the authors of the paper) read the description of an event and used keywords to search for relevant documents.
 However, this approach means that events (i) must be carefully identified in advance (potentially introducing bias) (ii) annotation requires expensive and slow experts, and (iii) it does not scale well past a certain size (\citeauthor{Petrovic:2012:UPI:2382029.2382072} were only able to create judgements for 27 events).
-This demonstrates the need for a methodology of creating unbiased large-scale and real-world corpora which can be used for the comparison of event detection techniques.
 
-Issues with both TREC-style pooling and crowdsourcing highlight the need for a new methodology which can be used for the creation of large-scale test collections for event detection on microblogs. A new type of pooling is needed in order to cope with the lack of predefined topics and document ranking, whilst new crowdsourcing techniques are needed which maintain the fast turnarounds and low-cost associated with crowdsourcing, whilst ensuring high-quality results.
+\subsection{A New Approach}
+Issues with both TREC-style pooling and crowdsourcing, as well as the lack of an unbiased and comparable test collections for event detection, highlights the need for a new methodology that can be used for the creation of large-scale test collections for event detection on Twitter.
+A new pooling approach is needed to cope with the lack of predefined topics and document ranking, whilst new crowdsourcing techniques are needed which maintain the fast turnarounds and low-cost associated with crowdsourcing, but ensure high-quality results.
+
