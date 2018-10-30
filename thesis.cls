@@ -10,8 +10,8 @@
 \geometry{
 a4paper,
 headsep=12mm,
-top=24mm,
-bottom=24mm,
+top=25mm,
+bottom=25mm,
 left=45mm,
 right=30mm
 }
@@ -36,7 +36,7 @@ right=30mm
 \usepackage{moresize}
 \usepackage{fontspec}
 \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
-\setmainfont{Tiempos Text}[SizeFeatures={Size=12}]
+\setmainfont{Tiempos Text}
 \newfontfamily\headingfont[]{Tiempos Headline}
 \newfontfamily\sansfont[]{Adelle Sans}
 

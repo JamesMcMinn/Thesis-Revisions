@@ -27,7 +27,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] More detailed description of TDT Project
   - [X] [Detail the individual TDT tasks](https://github.com/JamesMcMinn/Thesis-Revisions/commit/ce5358332ff8c0d1b76125abdb85d0cd9ab6cf32)
   - [X] [Detail basic model, UMASS approach in particular since it is used as basis for LSH approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/e7b6504878dce517a723f25b9c3d984391803c8e)
-- [X] Find suitable place to detail BCubed metric
+- [X] [Find suitable place to detail BCubed metric](https://github.com/JamesMcMinn/Thesis-Revisions/commit/d73fb5374786b05c0d3c221302c2fe171da4d112)
 - [ ] Re-write and expand section on Event Detection on Twitter.
   - [X] [Describe LSH approach in detail](https://github.com/JamesMcMinn/Thesis-Revisions/commit/cc9b2e738611ffab97a1f23446bfd164d1d95344)
   - [X] [Describe CS approach in detail](https://github.com/JamesMcMinn/Thesis-Revisions/commit/186c4b495b76802d887c9be26e5dff9b65b2e80f)
@@ -41,14 +41,21 @@ This document outlines a plan for revisions and corrections that are needed in o
 
 
 ## 3. Building an Event Collection
-- [ ] Re-write introduction wrt. previous chapter
+- [X] [Re-write introduction wrt. previous chapter](https://github.com/JamesMcMinn/Thesis-Revisions/commit/4aeed608888e1b4b48ee650d874e52b3c8fb42b1)
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f3b311acb8c65c1805e10a7925052051bc9af84e)
+- [X] [Move background on event definition to background](https://github.com/JamesMcMinn/Thesis-Revisions/commit/64a75c7f3ea16e5da16ae87dcc012827b1f02495)
 - [X] [Add explanation that "significant" allows definition to be adapted to different scenarios](https://github.com/JamesMcMinn/Thesis-Revisions/commit/9aa7a767171e7a557af0afc6871ecd32532a9373)
-- [ ] Split relevance judgment gathering so that Detection / Wiki is separate and less confusing
-- [ ] Explain and motivate clustering features
-- [ ] Reorganize event-clustering evaluation and explain how features were weighted
-- [ ] Clarify most of the chapter...
-- [ ] Add a range of statistics describing final collection characteristics.
+- [ ] Clarify relevance judgment gathering
+  - [ ] Split relevance judgment gathering so that Detection / Wiki is separate and less confusing
+  - [ ] Clarify that for Detection Evaluations, users were asked to select from the TDT categories
+  - [X] [Sort Table 3.2 Alphabetically](https://github.com/JamesMcMinn/Thesis-Revisions/commit/b711cb7b130e2bdfaabe40ffe49262787d3c2ab9)
+- [ ] Clarify clustering
+  - [ ] Detail how names entities were extracted
+  - [ ] Swap order to describe clustering eval before clustering approach
+  - [ ] Explain and motivate clustering features
+  - [ ] Reorganize event-clustering evaluation and explain how features were weighted
+  - [ ] Clarify that the temporal limit prevented events from being merged if they were far apart
+- [ ] Add a range of statistics describing final collection characteristics
 
 ## 4. Entity-Based Event Detection
 - [ ] Move background to Chapter 2
