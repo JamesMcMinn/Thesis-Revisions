@@ -1,38 +1,35 @@
 %!TEX root = ../../main.tex
-Event Detection is one of the most commonly studied tasks on Twitter \citep{aggarwalevent,Becker:2012:ICP:2124295.2124360,Zhao:2007:TIF:1619797.1619886,weng2011event,Becker_beyondtrending,Petrovic:2010:SFS:1857999.1858020,10.1109}.
-Twitter provides a real-time stream of updates, opinions, and first-hand reports of what is happening, all of which are difficult or impossible for the traditional newswire to match.
-This makes it very desirable to develop systems which are able to detect and track events from Twitter streams.
-However, creating a system which is able to detect events in real-time is hard, not just because of the difficulty of the task \citep{Allan:2000:FSD:354756.354843}, but also due to the speed and efficiency needed to process such high-volume data streams.
-There is also disagreement on the definition of `event', which makes comparisons of different event detection approaches very difficult -- one system may consider something to be a single event, while others may break it down into multiple events, or may not regard it as an event at all.
-For example, a football game could be considered a single event or broken into individual plays -- either is reasonable depending on the type of event you are trying to detect.
-Additionally, there is no standard corpus for the evaluation of different event detection approaches, and most works require the creation of a bespoke corpus, which is often not made available.
-This results in wasted time and resources, motivating the need for a new methodology and a corpus which can be used for the evaluation and comparison of event detection approaches.
+The lack of a large-scale Twitter corpus makes the evaluation and comparison of event detection approaches incredibly difficult.
+Indeed, it is not uncommon for researchers to create a bespoke dataset and carry out a time-consuming and potentially biased manual evaluation of their event detection approach, for which the dataset and judgements are often not made publicly available.
 
-Despite the interest in Twitter, there are only a small number of corpora available, none of which are suitable for the large-scale evaluation of event detection approaches due to their small size or number of topics.
+A small number of Twitter corpora with relevance judgements have been made available (these are detailed in Section \ref{background:sec:collections}), however none are suitable for the large-scale evaluation of event detection approaches due to their small size or number of topics.
 This is partially due to the massive scale of Twitter, which makes the creation of corpora difficult, time-consuming and expensive, but also due to disagreement on the definition of event, which can often make comparisons difficult or impossible.
 Furthermore, the Twitter Terms of Service restrict the distribution of tweets, and do not allow the content of tweets to be distributed as part of a corpus.
-As a result, there are very few publicly available Twitter corpora, and in some cases, corpora from other medium are used in place of a Twitter corpus \citep{aggarwalevent,Petrovic:2010:SFS:1857999.1858020,Petrovic:2012:UPI:2382029.2382072}.
-However, it is not clear that effectiveness of event detection approaches on a non-Twitter corpus is comparable to effectiveness on a Twitter corpus, with some evidence suggesting that this is not the case \citep{Petrovic:2012:UPI:2382029.2382072}. This scenario leads to a situation in which event detection techniques are not properly benchmarked.
+As a result, there are very few publicly available Twitter corpora, and in some cases, corpora from other medium are used in place of a Twitter corpus \citep{Aggarwal12,Petrovic:2010:SFS:1857999.1858020,Petrovic:2012:UPI:2382029.2382072}.
+However, it is not clear that effectiveness of event detection approaches on a non-Twitter corpus is comparable to effectiveness on a Twitter corpus, with some evidence suggesting that this is not the case \citep{Petrovic:2012:UPI:2382029.2382072}.
+This scenario leads to a situation in which event detection techniques are not properly benchmarked.
 
-To solve this, we propose a new, Twitter centric, definition of event which we believe better fits how users perceive events and how events are discussed on Twitter.
-Then, using this new definition, we study the problem of creating a set of relevance judgements for the evaluation of event detection approaches.
-To do so, we use two existing event detection approaches and the Wikipedia Current Events Portal to generate a set of candidate events and associated tweets.
-We then use crowdsourcing to evaluate if a candidate event fits our definition of event, and create relevance judgements for each of the events.
-We then merge events from each of the sources which discuss the same real-world event, and extending our original work \citep{McMinn2013}, examine the quality of the clustering.
-Finally, we make the corpus and judgements available for research and further development.
+As we discussed in Section \ref{background:sec:collections}, there are a number of issues that make it impossible to use a standard pooling approach to create a collection for the evaluation of event detection approaches on Twitter.
+This motivates the need for a new methodology to create large-scale test collections for the evaluation of event detection approaches.
+
+In this chapter, we propose a new, Twitter centric, definition of event which we believe better fits how users perceive events and how events are discussed on Twitter.
+Then, using this new definition, we then propose a new methodology for creating a set of relevance judgements for the evaluation of event detection approaches on Twitter.
+
+To do so, we create a collection of 120 million tweets, and by implement two existing event detection approaches, we extract a set of candidate events and their associated tweets.
+We use crowdsourcing to evaluate each candidate event using our definition of event, and gather tweet-level relevance judgements for each event.
+We also extract a list of significant events from Wikipedia's Current Events Portal, and for each event, extract potentially relevant tweets and use crowdsourcing to gather relevance judgements.
+We then use a clustering approach to merge events from each approach so that each event discusses the same real-world event.
+We make this corpus available for other researchers to use at \texttt{http://mir.dcs.gla.ac.uk/resources/}.
+
+% To do so, we use two existing event detection approaches and the Wikipedia Current Events Portal to generate a set of candidate events and associated tweets.
+% We then use crowdsourcing to evaluate if a candidate event fits our definition of event, and create relevance judgements for each of the events.
+% We then merge events from each of the sources which discuss the same real-world event, and extending our original work \citep{McMinn2013}, examine the quality of the clustering.
+% Finally, we make the corpus and judgements available for research and further development.
 
 This chapter has a number of novel contributions:
 \begin{itemize}
 \item We create the first test collection of this scale for event detection on Twitter
-\item We examine existing definitions of ``event'', and propose more robust definition that deals with the nuances of events on Twitter
-\item We propose a novel methodology for the creation of relevance judgements using two state-of-the-art event detection approaches, Wikipedia, and Mechanical Turk
+\item We propose a new and robust definition of `event' that deals with the nuances of events on Twitter
+\item We propose a novel methodology for the creation of relevance judgements using two state-of-the-art event detection approaches, Wikipedia, and Amazon Mechanical Turk
 \item We study the quality and characteristics of the corpus and the relevance judgements
 \end{itemize}
-
-
-The remainder of the chapter is as follows. In section~\ref{collection:sec:background}, we describe the existing Twitter corpora and discuss why they are unsuitable for the large scale evaluation of event detection approaches on Twitter.
-We also propose a concrete definition for ``event'', and describe the event detection task.
-In Section~\ref{collection:sec:methodology}, we describe the methodology used for the creation of the corpus and the corresponding events and relevant judgements.
-In Section~\ref{collection:sec:eval} we describe the characteristics of the corpus.
-We also evaluate the effectiveness of our methodology and examine the quality of the results.
-Finally, in Section~\ref{collection:sec:conclusion} we conclude and discuss further work.
