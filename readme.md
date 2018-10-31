@@ -51,12 +51,13 @@ This document outlines a plan for revisions and corrections that are needed in o
   - [X] [Sort Table 3.2 Alphabetically](https://github.com/JamesMcMinn/Thesis-Revisions/commit/b711cb7b130e2bdfaabe40ffe49262787d3c2ab9)
   - [X] Add hardware details when discussing hardware used
   - [X] Clarify 72 hour window
-  - [ ] Cite Free-marginal multirater kappa when it is first used
+  - [X] Cite Free-marginal multirater kappa when it is first used
+  - [ ] Add note describing how users were banned during wiki evaluation
 - [ ] Clarify clustering
-  - [ ] Detail how names entities were extracted
   - [ ] Swap order to describe clustering eval before clustering approach
   - [ ] Explain and motivate clustering features
-  - [ ] Reorganize event-clustering evaluation and explain how features were weighted
+  - [ ] Detail how names entities were extracted
+  - [ ] Explain how features were weighted
   - [ ] Clarify that the temporal limit prevented events from being merged if they were far apart
   - [ ] Explain that main focus of clustering is correctness of final dataset - not necessarily picking more
 - [ ] Add a range of statistics describing final collection characteristics
