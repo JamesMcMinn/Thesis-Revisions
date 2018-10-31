@@ -153,7 +153,7 @@ Of those evaluations submitted as events, only 1000 (4.5\% of the 22,114 total e
 Each candidate event was considered to be a true event if more than 50\% of annotators marked it as so, and greater than 90\% of judged tweets for the event were found to be relevant by a majority of annotators.
 This resulted in a total of 435 true events: 382 (of 1340) true events for the LSH approach, and 53 (of 1097) for the CS approach.
 
-\section{Curated Events Using the Wikipedia Current Events Portal}
+\section{The Wikipedia Current Events Portal (CEP)}
 Although the use of two different event detection approaches should give us a reasonable sample of events, using events from those systems alone would result in a biased towards easily detectable events.
 Wikipedia maintains a Current Events Portal\footnote{http://en.wikipedia.org/wiki/Portal:Current\_events}, which offers a curated set of significant and noteworthy events from the around the world.
 The use of Wikipedia offers a number of advantages over the use of additional detection approaches.
@@ -163,8 +163,8 @@ Secondly, much of the work has already been done for us by unpaid editors and is
 This means that we do not have to pay workers to evaluate non-event clusters, reducing the cost and time taken to produce judgements.
 In addition, Wikipedia provides complimentary results to the detection approaches thanks to its wide coverage and diversity.
 
-\subsection{Extracting Events using the Wikipedia Current Events Portal (CEP)}
-Each event listed on the Current Events Portal (CEP) is represented by a description (at most a few sentences), a category, and a link (or links) to relevant news article.
+\subsection{Extracting Events using the Wikipedia Current Events Portal}
+Each event listed on the Current Events Portal is represented by a description (at most a few sentences), a category, and a link (or links) to relevant news article.
 An example event may look similar to:
 
 {
@@ -190,6 +190,8 @@ Furthermore, terms used as links to other pages were given double weighting as t
 Divergence from Randomness using Inverse Document Frequency as the basic randomness model was used for retrieval, as experimentation using the TREC11 corpus showed that, of the retrieval models included with Lucene 4.2, it gives the best retrieval performance.
 
 For each of the 367 events on the Wikipedia Current Events Portal listed between the dates covered by the corpus, we retrieved the top 2000 tweets from a window of 72 hours, centred around the day of the event (i.e. for an event on the 16th of October, retrieval was restricted to tweets posted between the 15th and 17th of October inclusively).
+The window was used to reduce the probability that tweets discussing similar events would be retrieved, whilst still being long enough to capture any run-up to the event, and at least 24 hours worth of discussion after the event.
+
 Since we only need to gather relevance judgements for tweets, we are able to have more tweets annotated within our desired 1 minute time limit, allowing us to have each worker annotate 30 tweets per HIT.
 Additionally, since we know that every worker will annotate the tweets, we can reduce the number of workers per event from 5 to 3, incurring additional savings.
 
