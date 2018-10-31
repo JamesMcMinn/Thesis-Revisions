@@ -45,13 +45,12 @@ More precisely, 13 bits per key, a maximum distance of 0.45 and 70 hash tables.
 However, we chose to measure the fastest growing clusters on a hourly basis, rather than every 100,000 tweets as used in the original paper.
 We made this decision due the fact that 100,000 tweet covers only a short period of time in our collection (approximately 30 minutes) due to its high volume.
 Since the LSH approach keeps several hours worth of tweets in memory at all times, this would have generated twice as many candidate events without necessarily increasing the number of real-world events detected, making it prohibitively more expensive to generate judgements.
-
-Simply taking the list of candidate events every hour would have yielded a prohibitively high number of clusters (in the hundreds of thousands).
-However by removing clusters outside the optimal entropy range (3.5 - 4.25)~\citep{Petrovic:2010:SFS:1857999.1858020}, and by removing clusters with fewer than 30 tweets (which ensures the cluster contains enough tweets for effective evaluation), we are left with a final set of 1340 candidate events.
+Simply taking the list of candidate events every hour would still have yielded a prohibitively high number of clusters (in the hundreds of thousands).
+However by removing clusters outside the optimal entropy range of 3.5 to 4.25~\citep{Petrovic:2010:SFS:1857999.1858020}, and by removing clusters with fewer than 30 tweets (which ensures the cluster contains enough tweets for effective evaluation), we are left with a final set of 1340 candidate events and a run-time of approximately 2 days (using desktop class machine with an Intel i5 2500S and 16Gb RAM).
 
 \subsubsection{Cluster Summarization (CS)}
 We ran the CS approach~\citep{Aggarwal12}, fixing it at 1200 clusters, slightly more than used by \cite{Aggarwal12}, however due to the increased volume of tweets in the collection, we opted to increase the number of clusters so that more topics could kept in memory.
-This gave a reasonable runtime of approximately 4 days for the entire collection on the hardware available to us.
+This gave a reasonable runtime of approximately 4 on the hardware available to us.
 Retweets were not used as input to the algorithm as we found that they tended to cause more spam and noise clusters to form and be identified as events.
 We used a \(\lambda\) value of 0.0 (i.e. full weight was given to text when calculating similarity) as this greatly decreased the runtime whilst having only a small effect on cluster performance~\citep{Aggarwal12}.
 

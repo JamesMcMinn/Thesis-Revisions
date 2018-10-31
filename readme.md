@@ -16,9 +16,10 @@ This document outlines a plan for revisions and corrections that are needed in o
 
 
 ## 1. Introduction
-- [X] [Clarify RQ2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1a71367f5092d7747f35deed64964f25f71b790e)
-- [ ] Update to clarify RQ3: Need to be clear what "automatic" evaluation is.
-	- Might be best discussing evaluation briefly earlier in the chapter?
+- [ ] Verify that research questions are falsifiable hypotheses
+  - [X] [Clarify RQ2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1a71367f5092d7747f35deed64964f25f71b790e)
+  - [ ] Update to clarify RQ3: Need to be clear what "automatic" evaluation is.
+    - Might be best discussing evaluation briefly earlier in the chapter?
 - [ ] Expand on contribution description relating to definition of event
 - [X] [Remove references to unsupervised](https://github.com/JamesMcMinn/Thesis-Revisions/commit/92b213136746bf2c4b527fad22b7870af5201afb)
 - [ ] Expand
@@ -48,12 +49,16 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Clarify relevance judgment gathering](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3ce773366ed2d42f0d0f6f5110dd5212cf6687fc)
   - [X] [Split relevance judgment gathering so that Detection / Wiki is separate and less confusing](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3ce773366ed2d42f0d0f6f5110dd5212cf6687fc)
   - [X] [Sort Table 3.2 Alphabetically](https://github.com/JamesMcMinn/Thesis-Revisions/commit/b711cb7b130e2bdfaabe40ffe49262787d3c2ab9)
+  - [X] Add hardware details when discussing hardware used
+  - [X] Clarify 72 hour window
+  - [ ] Cite Free-marginal multirater kappa when it is first used
 - [ ] Clarify clustering
   - [ ] Detail how names entities were extracted
   - [ ] Swap order to describe clustering eval before clustering approach
   - [ ] Explain and motivate clustering features
   - [ ] Reorganize event-clustering evaluation and explain how features were weighted
   - [ ] Clarify that the temporal limit prevented events from being merged if they were far apart
+  - [ ] Explain that main focus of clustering is correctness of final dataset - not necessarily picking more
 - [ ] Add a range of statistics describing final collection characteristics
 
 ## 4. Entity-Based Event Detection
