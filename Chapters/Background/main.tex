@@ -392,6 +392,7 @@ Rather than searching for documents relevant to a specific query, event detectio
 This means that the notion of relevance is much more ambiguous, and creates a number of issues with the evaluation of event detection approaches.
 
 \section{Test Collections}
+\label{background:sec:collections}
 Ir order to fairly and accurately evaluate Information Retrieval systems of any kind, a standard test collection and set of relevance judgements are required.
 The majority of modern test collections are created using a pooling approach, where a set of topics or queries are selected and used to retrieve documents from a number of different systems.
 The union of the top \(n\) documents per topic, taken from each system systems, is then used create a pool of documents for each topic.
@@ -409,7 +410,9 @@ Whilst they propose some solutions to these issues, they recognize that many of 
 Issues remain with the pooling method itself.
 \cite{Buckley:2007:BLP:1298708.1298735} highlighted a number of issues associated with pooling when dealing with large collections, and showed that standard pooling techniques can introduce bias when dealing with large collections.
 They make a number of suggestions, such as engineering the topics or forming pools differently, that could reduce bias and allow for the creation of large unbiased test collections using pooling.
-However, the use of pooling to create a test collection for event detection poses additional challenges which require more substantial changes to the TREC-style pooling methodology than those proposed by \cite{Buckley:2007:BLP:1298708.1298735}.
+\cite{Zobel:1998:RRL:290941.291014} found that although TREC-style pooling produced test collections which give reliable measures of relative performance, there are potential issues with the depth of the pool used, meaning that many relevant documents are not found (30\%-50\%), even in smaller collections.
+They suggest that pool sizes for each topic should be increased when it is highly likely that further relevant documents will be found.
+However, the use of pooling to create a test collection for event detection poses additional challenges which require more substantial changes to the TREC-style pooling methodology than those proposed by \cite{Buckley:2007:BLP:1298708.1298735} and \cite{Zobel:1998:RRL:290941.291014}.
 
 \subsection{The Pooling Approach and Event Detection}
 As discussed in section \ref{background:sec:diffs}, there are no pre-defined topics or queries for event detection systems to use.

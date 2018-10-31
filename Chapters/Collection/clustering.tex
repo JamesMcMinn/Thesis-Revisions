@@ -20,18 +20,12 @@ This is an issue because annotators often categorized results based upon the top
 Despite it being clear at a higher level that the debate should be categorized as Election, it is not so clear at the level of sub-events and specific moments within the debate --- the categorization changes as we change the level of granularity.
 %This makes the use of categorization difficult for clustering as it is not immediately clear how \emph{War and Conflicts} could be related to \emph{Election}, however we cannot simply take the different categories as meaning that the results discuss distinct events.
 
+Although the Wikipedia Current Events Portal does assign categories, there is a very large number of categories, each of which is very specific (e.g. `History', `Literature', and `Spirituality' categories).
 Additionally, because Wikipedia defines its own set of categories, we must create a mapping between the TDT categories and Wikipedia categories if we wish to measure category similarity.
 Creating a direct mapping between TDT categories and Wikipedia categories would solve the mapping problem but not increase agreement between the detection approaches.
 Thus, we created a new set of categories, each of which covers a much broader range than either the TDT or Wikipedia categories.
 Table~\ref{collection:table:catTable} shows the new categories and the corresponding categories from the TDT project and Wikipedia.
 These categories greatly increase agreement, which is discussed in detail in section~\ref{sec:agreement}.
-
-\subsubsection{Defining a set of Categories}
-In additional to gathering relevance judgements, we wanted to gather descriptive and category information for each of the events.
-Although the Wikipedia Current Events Portal does assign categories, there is a very large number of categories, each of which is very specific (e.g. `History', `Literature', and `Spirituality' categories).
-Rather than ask the annotators to choose between a large number of categories, we chose to use the categories defined and used by the Topic Detection and Tracking (TDT) project~\cite{Allan:2002:ITD:772260.772262}.
-The 13 categories defined cover a wide range of topics, with a Miscellaneous category for topics which do not fit elsewhere.
-The full list of TDT categories are shown in Table~\ref{collection:table:catTable}.
 
 \begin{table}[h]
 	\centering
