@@ -45,9 +45,8 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f3b311acb8c65c1805e10a7925052051bc9af84e)
 - [X] [Move background on event definition to background](https://github.com/JamesMcMinn/Thesis-Revisions/commit/64a75c7f3ea16e5da16ae87dcc012827b1f02495)
 - [X] [Add explanation that "significant" allows definition to be adapted to different scenarios](https://github.com/JamesMcMinn/Thesis-Revisions/commit/9aa7a767171e7a557af0afc6871ecd32532a9373)
-- [ ] Clarify relevance judgment gathering
-  - [ ] Split relevance judgment gathering so that Detection / Wiki is separate and less confusing
-  - [ ] Clarify that for Detection Evaluations, users were asked to select from the TDT categories
+- [X] [Clarify relevance judgment gathering](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3ce773366ed2d42f0d0f6f5110dd5212cf6687fc)
+  - [X] [Split relevance judgment gathering so that Detection / Wiki is separate and less confusing](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3ce773366ed2d42f0d0f6f5110dd5212cf6687fc)
   - [X] [Sort Table 3.2 Alphabetically](https://github.com/JamesMcMinn/Thesis-Revisions/commit/b711cb7b130e2bdfaabe40ffe49262787d3c2ab9)
 - [ ] Clarify clustering
   - [ ] Detail how names entities were extracted
