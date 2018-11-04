@@ -296,6 +296,7 @@ For example, the ranking may be updated once per hour, or once every 100,000 twe
 This takes away from the usefulness of the approach in a real-time scenario, making it more batch-based than real-time.
 
 \subsection{Efficient Clustering Using a Fixed Number of Clusters}
+\label{background:cs}
 If documents are restricted to a single cluster, an easy efficiency gain can be found by comparing new documents to existing clusters (rather than every other document).
 Since the number of clusters will always be smaller than the number of documents, fewer comparisons are needed to find the nearest neighbour cluster.
 This approach was used by \cite{Aggarwal12}, with the additional constraint that the number of clusters (usually several hundred) is kept constant, ensuring linear complexity (i.e., the time taken to process each new document is a constant).
@@ -382,6 +383,37 @@ To ensure that only novel events are reported, they compare each new event to ol
 They merge events by comparing the top 20\% of entity terms, based on term frequency, which reduces event fragmentation.
 They evaluate their approach using the Events 2012 corpus we create in chapter \ref{chapter:collection}, finding that their approach outperforms the LSH approach when measured using NMI and B-Cubed cluster performance metrics.
 Although this approach outperforms their baseline approach, the LSH approach of \cite{Petrovic:2010:SFS:1857999.1858020} using their chosen evaluation metrics, they do not report precision or recall values, making it difficult to compare directly.
+
+\subsection{Clustering Issues for Event Detection on Twitter}
+Volume is only part of what makes Event Detection, more specifically, clustering, a difficult task on Twitter data.
+Due to the short length of tweets, lexical mismatch is a common issue, where users may describe an event using semantically similar yet different words, such as `bomb' and `explosion' or `crashed' and `rammed'.
+Topic drift is yet another issue.
+As events develop and new sub-topics emerge, it can cause a rapid change in discussion that, to a cluster-based event detection system, can appear as if a new real-world event has occurred.
+
+To address the issue of lexical mismatch, \citep{Petrovic:2012:UPI:2382029.2382072} suggest a method of integrating paraphrasing with their LSH-based approach, which shows improvements when applied to TDT datasets, but fails to show any significant improvement on Twitter data (in fact, it often performs worse).
+Additionally, since Tweets themselves are very short and tend to discuss only a single moment in time, the use of paraphrasing does not address issues such as topic drift or divergence.
+
+Instead of relying on content-only features for clustering, \cite{Aggarwal12} adapt their approach (described in detail in section \ref{background:cs}) to use the structure of the underlying social network to improve clustering.
+Using the graphical structure of Twitter, where each user is a node in a graph, their followers/followees form the vertices.
+Each cluster contains two summaries: (i) a node-summary, which is a set of users and their frequencies and (ii) a content-summary, which is a set of words and their TF-IDF \citep{Salton:1988:TAA:54259.54260} weighted frequencies.
+By combining these two summaries, they suggest a novel similarity score which exploits the underlying structure of the social network, and improves upon content-only measures.
+Similarity between tweet $t$ and cluster $c$ is calculated as:
+\begin{displaymath}
+	Sim(t, c) = \lambda \cdot SimS(t, c) + (1 - \lambda) \cdot SimC(t, c)
+\end{displaymath}
+where $SimS$ and $SimC$ are the structural and content based similarities respectively.
+$\lambda$ can be adjusted to give more or less weigh to the structural similarity.
+
+Although \cite{Aggarwal12} found that is was possible to improve both precision and recall of their detection approach by combining network structure with content similarity, the use of network structure poses a problem when applied to Twitter data.
+Since Twitter do not include full followers information in a standard tweet payload, researchers must instead query Twitter's API separately, which is rate-limited to only a few hundred requests per hour.
+This makes it extremely time-consuming to retrieve large volumes of follower information for network structure calculations.
+The temporal nature of followers also causes a problem.
+Users follow and unfollow each other on a regular basis, meaning that the underlying network structure changes over time.
+This can cause issues even in the short term if a user emerges as good source of information, spurring many other users to follow them, and poses a particular problem for researchers who may be using a datatset which is several years old as their current follower network is unlikely to bear any resemblance to their network from several years ago.
+
+Indeed, nearest neighbour clustering alone seems inadequate as a method of tracking the discussion of complex or evolving events.
+The limited length of a tweet restricts discussion to a very narrow topic, however discussion around an ongoing event may quickly jump from one sub-topic to another, making it difficult to find links.
+The use of network structure is a possible solution, but as we have discussed, is unlikely to be feasible unless the network is known in advance.
 
 \subsection{Burst and Trend Analysis}
 

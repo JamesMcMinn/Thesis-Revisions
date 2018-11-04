@@ -35,7 +35,7 @@ This document outlines a plan for revisions and corrections that are needed in o
   - [X] [Describe CS approach in detail](https://github.com/JamesMcMinn/Thesis-Revisions/commit/186c4b495b76802d887c9be26e5dff9b65b2e80f)
       - [ ] Talk about use of network for similarity calculations
   - [ ] More detailed analysis of existing event detection approaches
-  - [ ] Describe issues with clustering (wrt Twitter data)
+  - [X] Describe issues with clustering (wrt Twitter data)
   - [ ] Talk a bit about burst detection techniques for Twitter: trend analysis, etc.
 - [X] [Move background from Event Collection here. Expand.](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f3b311acb8c65c1805e10a7925052051bc9af84e)
 - [ ] Move background for Event Detection here. Expand.
