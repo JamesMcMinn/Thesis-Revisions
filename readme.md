@@ -5,7 +5,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 ## General
 - [ ] Add equation numbers
 - [ ] Convert Tables to Graphs where appropriate
-- [X] List of algorithms
+- [X] [List of algorithms](https://github.com/JamesMcMinn/Thesis-Revisions/commit/28d74ba136a2db3593fa7a318ee905c430cd94b4)
 
 ## 0. Front Matter
 - [ ] Add Acknowledgments
@@ -56,10 +56,11 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Swap order to describe clustering eval before clustering approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c)
 - [X] [Detail how names entities were extracted](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-00ae86d2fc569b2e7406e379e494ea4bR40)
 - [X] [Clarify that the temporal limit prevented events from being merged if they were far apart](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-00ae86d2fc569b2e7406e379e494ea4bR95)
-- [X] [Explain and motivate clustering features](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c)
+- [X] [Explain and motivate clustering features](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c) - [Amended here](https://github.com/JamesMcMinn/Thesis-Revisions/commit/db029cd018892b255402971a8392a0ce4e271ef6#diff-00ae86d2fc569b2e7406e379e494ea4b)
 - [X] [Explain how features were weighted](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-00ae86d2fc569b2e7406e379e494ea4bR150)
 - [X] [Explain that main focus of clustering is correctness of final dataset - not necessarily creating the best clustering approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-61be0110122c012884c4e5df3433b005R13)
-- [ ] Add a range of statistics describing final collection characteristics
+- [X] Add a range of statistics describing final collection characteristics
+  - [ ] Covert category table to graph
 
 ## 4. Entity-Based Event Detection
 - [ ] Move background to Chapter 2
@@ -75,6 +76,24 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [ ] Explain 3 classes v single class in Table 4.9 and end of section 4.4: make it clear that disambiguation is done by Stanford NER in the form of NER classes
 - [ ] Discuss ability to scale wrt current hardware
 - [ ] Various small clarifications requested in annotated copy
+
+Chapter 4
+Why can the previous approach not cope with the twitter data? P 46?
+Need comparison with the more recent work on page 48?
+Used stanford ner -- is the model good enough on tweets?
+Justify the named entity filter on page 49.  Did you sample the tossed out tweets? How much is lost? Ner may miss things.
+Page 50 -- need more justification for why algorithms don’t scale.  What algorithms?
+Describe the clustering algorithm - bottom-up single-link? P51
+How do you evaluate the burst detection effectiveness? p52/53
+Why not use tweet entity links - e.g. tagme on tweets. P55 obama example
+How does this compare with the latest work on the collection - p57
+Are the results based on b-cubed p57? Unclear to me
+What about the other 50% -- is this really high recall?
+No train/test split?  No system parameters need to be tuned?
+Significance testing?
+What about supervised baselines?
+
+
 
 
 ## 5. Newsworthiness

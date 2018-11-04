@@ -1,23 +1,56 @@
-\section{Results \& Discussion}
-\label{collection:sec:results}
-In this section, we describe the results of our evaluation.
-We being by describing the characteristics of the generated corpus, and discuss the effectiveness of the different approaches.
-We then discuss the annotator agreement, and discuss possible reasons for differences in agreement between the two approaches.
+\section{Corpus Statistics}
+Candidates from the detection approaches are considered to be an event if more than 50\% of annotators marked it as so and greater than 90\% of judged tweets were marked as relevant.
+This resulted in 382 events for the LSH approach, and 53 for the CS approach.
+Candidates from the Wikipedia approach are considered an event if they produced at least 1 relevant tweet, resulting in 361 events and 7 non-events (i.e. candidates where no tweets were marked as relevant).
+In total, this resulted in 796 events \emph{before} merging.
 
-\subsection{Corpus Characteristics}
-After clustering, 506 \emph{top-level events} (i.e. events created by combining events from different sources) were produced.
-In total, 367 events were clustered to create 77 top-level events, and a further 429 top-level events were created using individual events.
-
-As expected, the detection approach seems to closely reflect to the types of events most commonly discussed on Twitter~\cite{zhao2011empirical}, while the Wikipedia approach gives a more realistic representation of real-world events.
-As shown in Table~\ref{table:eventsByCat}, both approaches produced very different distributions of results, however seem to complement each other, and the combined results show much less variation.
-For example, the detection approach contributes a large number of \emph{Sports} events, something which is lacking from the Wikipedia approach.
-Likewise, the Wikipedia approach contributes a large number of events from \emph{Armed Conflicts and Attacks}, and \emph{Business and Economy}, both categories where the detection approach produces less results.
-This could be due to the volume of discussion associated with each of these topics.
-\emph{Law, Politics and Scandals} have very few tweets per event in comparison with Sports, meaning that restricting the detection approaches to clusters with at least 30 tweets could have removed many which were discussing these events.
-Since we did not put this restriction in place for the Wikipedia approach, it would not have
-Table~\ref{table:eventsByCat} shows the events broken down by category and the type of approach used to generate the event.
+Individual tweets are regarded as relevant if more than 50\% of annotators agreed.
+Table~\ref{table:eventsByTweets} shows the distribution of tweets broken down by both approach and judgment type (explicit or implicit).
+Explicit judgements are those made by human annotators, whereas implicit judgements are tweets from events with high precision (\textgreater 0.9)  however that were not judged by human annotators directly.
+This gave 4,009 explicit and 93,398 implicit judged tweets for the LSH approach, 465 explicit and 15,098 implicit judgements for the CS approach, and 39,980 explicit judgements (with no implicit judgements) for the Wikipedia approach.
+Although the use of implicit judgements will have introduced some noise to the relevance judgements, because we remove candidates with low precision we are able to minimize noise whilst increasing the number of judgements by over 200\%.
 
 \begin{table}[h!]
+	\centering
+	\caption[Distribution of relevance judgements across the different approaches.]{The distribution of relevance judgements across the different approaches. Explicit judgements are made by human annotators, implicit judgements are taken from events with high precision (\textgreater 0.9) but not judged by human annotators individually.}
+	\label{table:eventsByTweets}
+
+	\begin{tabulary}{\textwidth}{l r r r}
+	\toprule
+	\textbf{Approach} & \textbf{Explicit} & \textbf{Implicit} & \textbf{Total} \\
+	\midrule
+	LSH 		& 4,009 	& 93,398 	&  97,407 \\
+	CS 			& 465 		& 15,098 	&  15,563 \\
+	Wikipedia 	& 39,980 	& 0 		&  39,980  \\
+	\midrule
+	\textbf{Total} 	& \textbf{44,454} & \textbf{108,496} & \textbf{152,950}\\
+	\bottomrule
+	\end{tabulary}
+
+\end{table}
+
+\subsection{Events After Merging}
+After merging, 506 events remain.
+In total, 367 events were merged down to 77 events, and a further 429 events were not merged.
+The detection approaches contributed to 186 events after merging, while the Wikipedia approach contributed 342, almost double that of the detection method.
+However, the detection approaches contribute over 110,000 of the ~150,000 relevance judgements in the corpus, with an average of 259 tweets per event (before merging).
+The Wikipedia approach contributes just 39,980 of the relevance judgements, at an average of 85 tweets per event.
+This is presumably because of the different types of event identified by each of the methods.
+While the detection approaches rely on the volume of tweets to identify events, the Wikipedia approach does not, meaning that it was able to product a much larger set of small events.
+The combination of the two approaches allows their different characteristics to complement each other, producing a much more robust corpus than would have been produced had a single approach been used.
+If only one approach had been used, then the results would have been unevenly skewed towards large-scale events that are discussed by huge volumes of people, such as sports events or election debates, where as the use of both approaches smooth this out, to better reflect the distribution of events that occur in the real world, rather than what is discussed by more users on Twitter.
+
+It is interesting to note that, although we could have used the number of shared tweets as a feature for clustering, it would have made no difference to the resulting clusters.
+Out of 41 cases where events share more than 10 tweets, there is only a single case where they do not have a similarity score above our threshold, and the events are subsequently clustered through shared similarity to a 3rd event.
+This helps to demonstrate the effectiveness and robustness of our event merging approach.
+
+
+\subsection{Event Categories}
+Categories are assigned to events based on the combined categories defined in Table~\ref{collection:table:catTable}.
+For events where multiple categories where given by annotators (particularly common after events have been merged), the category with the highest frequency was used.
+In cases where there was a tie between the categories, an author was used to give the deciding vote.
+
+\begin{table}[]
 	\centering
 
 	\caption{The distribution of events across the 8 different categories, broken down by method used. The LSH, CS and Wiki columns show numbers of events \emph{before} clustering, while the Clustered column shows the number of events \emph{after} clustering has been performed. }
@@ -25,7 +58,7 @@ Table~\ref{table:eventsByCat} shows the events broken down by category and the t
 
 	\begin{tabulary}{\textwidth}{l c c c c}
 	\toprule
-	\textbf{Category} & \textbf{Clustered} & \textbf{LSH} & \textbf{CS} & \textbf{Wiki}  \\
+	\textbf{Category} & \textbf{Merged} & \textbf{LSH} & \textbf{CS} & \textbf{Wiki}  \\
 	\midrule
 
 	Armed Conflicts \& Attacks 			& 98 	& 3 	& 1 	& 95 \\
@@ -42,10 +75,14 @@ Table~\ref{table:eventsByCat} shows the events broken down by category and the t
 
 \end{table}
 
-The detection method contributed to 186 top-level events, while the Wikipedia approach contributed 342, almost double that of the detection method.
-However, the detection approaches contribute over 110,000 of the ~150,000 relevance judgements in the corpus, with an average of 259 tweets per event cluster.
-The Wikipedia approach contributes just 39,980 of the relevance judgements, at an average of 85 tweets per event.
-This is presumably because of the different types of event identified by each of the methods.
-While the detection approaches rely on the volume of tweets to identify events, the Wikipedia approach does not, meaning that it produces a much larger number of smaller events.
-The combination of the two approaches allows their different characteristics to complement each other, producing a much more robust corpus than would have been produced had a single approach been used.
-If only one approach had been used, then the results would have been unevenly skewed towards either sports or Law and Political discussion, where as the use of both approaches smooths these out to be reflect both the types of event which are happening in the world, as well as what is being discussed on Twitter.
+Table~\ref{table:eventsByCat} gives a breakdown of the number of events per category before and after merging.
+Both the detection approaches and the Wikipedia approach produced very different category distributions, however seem to complement each other, and the combined results show much less variation than if only one approach had been used.
+As expected, the detection approaches (LSH and CS) seems to closely reflect to the types of events most commonly discussed on Twitter~\cite{zhao2011empirical}, while the Wikipedia approach gives a more realistic representation of real-world events and news.
+
+For example, the detection approach contributes a large number of \emph{Sports} events, something which is lacking from the Wikipedia approach.
+Likewise, the Wikipedia approach contributes a large number of events from \emph{Armed Conflicts and Attacks}, and \emph{Business and Economy}, both categories where the detection approach produces less results.
+This could be due to the volume of discussion associated with each of these topics.
+\emph{Law, Politics and Scandals} have very few tweets per event in comparison with Sports, meaning that restricting the detection approaches to clusters with at least 30 tweets may have removed many which were discussing these types of event.
+Since we did not put this restriction in place for the Wikipedia approach, it was not affected by the low volume of discussion, so is able to produce more events of this type.
+
+

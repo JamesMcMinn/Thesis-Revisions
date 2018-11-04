@@ -104,7 +104,6 @@ These share the same category, will have similar content, and overlap in time, m
 
 Taking this into consideration, we chose not to use temporal proximity as a measure of similarity.
 Rather, we use it as a filter, and say that events which are more than $T$ hours apart cannot be merged.
-In our clustering experiments, $T$ is set to 6 hours, measure by the average tweet timestamp.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./Chapters/Collection/images/times}
@@ -152,45 +151,3 @@ Parameter weights were optimized by varying between 0.0 and 1.0 in steps of 0.1,
 The weights given in equation \ref{eq:simcluster} gave the highest BCubed precision (0.92) and recall (0.86) values (F1 = 0.86).
 The maximum time difference, $T$, was set to 6 hours  as only a 3.4\% of events were matched outside of a 6 hour window, as show in Figure~\ref{fig:dif_diff}.
 This allows for a reasonably lag between the 2 events, whilst still giving a reasonable guarantee that the events generated will fit our definition of event as there is unlikely to be a significant gap between the merged events.
-
-
-\subsection{Event Statistics}
-
-Candidates from the detection approaches are considered to be an event if more than 50\% of annotators marked it as so and greater than 90\% of judged tweets were marked as relevant.
-This resulted in 382 events for the LSH approach, and 53 for the CS approach.
-Candidates from the curated approach are considered an event if they produced at least 1 relevant tweet, resulting in 361 events and 7 non-events (i.e. candidates where no tweets were marked as relevant).
-In total, this resulted in 796 events before clustering.
-
-Individual tweets are regarded as relevant if more than 50\% of annotators agreed.
-Table~\ref{table:eventsByTweets} shows the distribution of tweets broken down by both approach used and type (implicit and explicit).
-Explicit judgements are those made by human annotators, whereas implicit judgements are  tweets from events with high precision (\textgreater 0.9) which are extremely likely to be relevant, however have not been judged by human annotators.
-This gave 4,009 explicit and 93,398 implicit judged tweets for the LSH approach, 465 explicit and 15,098 implicit judgements for the CS approach, and 39,980 explicit judgements (with no implicit judgements) for the curated approach.
-Although the use of implicit judgements will have introduced some noise to the relevance judgements, because we remove candidates with low precision we are able to minimize noise whilst increasing the number of judgements by over 200\%.
-
-\begin{table}[h!]
-	\centering
-	\caption[Distribution of relevance judgements across the different approaches.]{The distribution of relevance judgements across the different approaches. Explicit judgements are made by human annotators, implicit judgements are taken from events with high precision (\textgreater 0.9) but not judged by human annotators individually.}
-	\label{table:eventsByTweets}
-
-	\begin{tabulary}{\textwidth}{l r r r}
-	\toprule
-	\textbf{Approach} & \textbf{Explicit} & \textbf{Implicit} & \textbf{Total} \\
-	\midrule
-	LSH 		& 4,009 	& 93,398 	&  97,407 \\
-	CS 			& 465 		& 15,098 	&  15,563 \\
-	Wikipedia 	& 39,980 	& 0 		&  39,980  \\
-	\midrule
-	\textbf{Total} 	& \textbf{44,454} & \textbf{108,496} & \textbf{152,950}\\
-	\bottomrule
-	\end{tabulary}
-
-\end{table}
-
-
-Categories are assigned to events based on the combined categories defined in Table~\ref{collection:table:catTable}.
-For events where multiple categories are given, the category with the highest frequency was used.
-In cases where there was a tie between the categories, an author was used to give the deciding vote.
-
-It is interesting to note that, although we could have used the number of shared tweets as a feature for clustering, it would have made no difference to resulting clusters.
-Out of 41 cases where events share more than 10 tweets, there is only a single case where they do not have a similarity score above our threshold, and the events are subsequently clustered through shared similarity to a 3rd event.
-This helps to demonstrate the effectiveness and robustness of our event clustering technique.
