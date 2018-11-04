@@ -6,6 +6,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [ ] Add equation numbers
 - [ ] Convert Tables to Graphs where appropriate
 - [ ] List of equations
+- [ ] List of algorithms
 
 ## 0. Front Matter
 - [ ] Add Acknowledgments
@@ -49,17 +50,16 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Clarify relevance judgment gathering](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3ce773366ed2d42f0d0f6f5110dd5212cf6687fc)
   - [X] [Split relevance judgment gathering so that Detection / Wiki is separate and less confusing](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3ce773366ed2d42f0d0f6f5110dd5212cf6687fc)
   - [X] [Sort Table 3.2 Alphabetically](https://github.com/JamesMcMinn/Thesis-Revisions/commit/b711cb7b130e2bdfaabe40ffe49262787d3c2ab9)
-  - [X] Add hardware details when discussing hardware used
-  - [X] Clarify 72 hour window
-  - [X] Cite Free-marginal multirater kappa when it is first used
-  - [ ] Add note describing how users were banned during wiki evaluation
-- [ ] Clarify clustering
-  - [ ] Swap order to describe clustering eval before clustering approach
-  - [ ] Explain and motivate clustering features
-  - [ ] Detail how names entities were extracted
-  - [ ] Explain how features were weighted
-  - [ ] Clarify that the temporal limit prevented events from being merged if they were far apart
-  - [ ] Explain that main focus of clustering is correctness of final dataset - not necessarily picking more
+  - [X] [Add hardware details when discussing hardware used](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f3458b5791390449e7d37e1e0231ec9440218af6)
+  - [X] [Clarify 72 hour window](https://github.com/JamesMcMinn/Thesis-Revisions/commit/dfc2e6ecb5856ae954a4768fbb2b515e239e8a90)
+  - [X] [Cite Free-marginal multirater kappa when it is first used](https://github.com/JamesMcMinn/Thesis-Revisions/commit/b929433a86f52c3b3ed76d6ec7c9880e35f2427a)
+  - [X] [Add note describing how users were banned during wiki evaluation](https://github.com/JamesMcMinn/Thesis-Revisions/commit/b17e5b4ece3f80932f7cf13d41dae104fb8d2dc6)
+- [X] Swap order to describe clustering eval before clustering approach
+- [X] Detail how names entities were extracted
+- [X] Clarify that the temporal limit prevented events from being merged if they were far apart
+- [X] Explain and motivate clustering features
+- [X] Explain how features were weighted
+- [X] Explain that main focus of clustering is correctness of final dataset - not necessarily creating the best clustering approach
 - [ ] Add a range of statistics describing final collection characteristics
 
 ## 4. Entity-Based Event Detection

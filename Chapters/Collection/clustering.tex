@@ -1,36 +1,54 @@
 %!TEX root = ../../main.tex
 
-\section{Combining Events from Multiple Sources}
-\label{sec:merge}
-Each of the methods produces a different set of events, however these are not disjoint sets in terms of both the events they cover and the tweets they contain.
-For example, all three approaches independently had an event for the third U.S. Presidential Debate, and unless they are combined, we will have at least three separate `events' in our relevance judgements, all of which discuss the same seminal event.
-Additionally, each method can produce multiple results for the same event.
-For example, the LSH approach produced no fewer than 40 clusters which discuss the third U.S. Presidential Debate. Although each cluster could potentially be mapped down to specific sub-events within the Debate (such as individual questions or memorable quotes), they would better suit our definition of event if they were combined into a single event (i.e. the Debate as a whole).
-Given this, we attempt to cluster events together, both from different sources (e.g. the LSH and CS algorithms) and the same sources (i.e. two events from the LSH algorithm), such that they fit our definition of event as closely as possible.
-
 \subsection{Clustering Features}
+\label{collection:clustering}
 There are a number of features which could be used for the clustering of events.
 This section describes the features and the possible issues surrounding their use.
 
-\subsubsection{Category Features}
-Categorization is somewhat problematic for the detection approaches as there was a large amount of disagreement between annotators (discussed in detail in section~\ref{collection:sec:results}).
-Going back to our example of the third U.S. Presidential Debate, we noted that the LSH approach produced over 40 clusters for the discussing various sub-events and topics within the debate.
+\subsubsection{Content-based Features}
+The content similarity between a target and candidate event is a potentially very useful feature for merging events that discuss the same real-world event.
+Similarly to how many event detection approaches define tweet similarity, we define event content similarity as the cosine of the angle between the term frequency vectors for the target event and candidate event:
+\begin{displaymath}
+	S_t = cos(e_t, e'_t)
+\end{displaymath}
+where the vectors $e_t$ and $e'_t$ contain counts for the top 10 most frequent terms (after stemming and stop word removal) for all tweets in the target and candidate events respectively.
+
+We note that in certain cases, a target and candidate event may have very low content similarity despite discussing the same real-world event.
+This is particularity common for events from the same detection approach, where the tweet text has already been used to perform clustering.
+This can result in several clusters discussing the same real-world event, often with very dissimilar content, making it difficult to identify any relationship based on content alone.
+For example, again using the presidential debate as an example, the quote ``Well, Governor, we also have fewer horses and bayonets, because the nature of our military's changed.'' was extremely popular and relevant to the debate itself, however, matching this back to the election is very difficult if the context is not known, and using only tweet content based features to match it to other clusters is very difficult.
+This means that we cannot rely only on tweet content features when performing event clustering.
+
+Fortunately, for both Event Detection and Wikipedia events, we also have the  descriptions given by annotators for each of the events.
+Since the descriptions are often (but not always) higher level than the tweets, they are more likely to provide useful information for linking two events.
+Thus, we define the description similarity as the cosine of the angle between the term frequency vectors for the descriptions for the target and candidate events:
+\begin{displaymath}
+	S_d = cos(e_d, e'_d)
+\end{displaymath}
+where the vectors $e_d$ and $e'_d$ contain term counts (after stemming and stop word removal) for all descriptions given by the annotators for the target and candidate events respectively.
+
+Manual inspection of the descriptions shows that the vast majority contain at least one named entity (such as a person, location or organization), and many descriptions contain only a name entity with no other descriptive terms.
+We also note that, in cases where the descriptions describe different aspects of the same real-world event, often the only constant is the mention of a named entity or named entities.
+Of the 20 or so events that discuss Felix Baumgartner's record-breaking space jump, many of the descriptions  focus on particular moments before, during or after the jump. For example, one description given for tweets discussing his ascent reads: ``Felix Baumgartner is ready to jump from a height that no one has ever done'', while one given for tweets discussing his successful landing: ``felix baumgartner breaks world record free fall''.
+Although both describe the same real-world event, they are different moments in time, and the descriptions given contain no overlapping terms other than the name of the person involved.
+This is a repeating pattern for events that were followed in real-time, particularity broadcast events watched by many users with many different sub-topics.
+This can make it difficult to use annotator descriptions to measure event similarity, as although they may describe the same real-world event, the descriptions can be quite dissimilar depending on the granularity of the events.
+To solve this, rather than rely purely on description similarity, we also calculated the named entity similarity $S_n$, and taken the maximum value for either $S_n$ or $S_d$ as the annotation similarity, $S_a$:
+\begin{align*}
+	S_n &= cos(e_n, e'_n) & S_a &= max(S_n, S_d)
+\end{align*}
+where $e_n$ ad $e'_n$ are the entity frequency vectors containing counts for each named entity mentioned in the annotator descriptions (extracted using the NLTK Python library) for target event $e$ and candidate event $e'$.
+
+\subsubsection{Categories}
+As described in Section \ref{collection:sec:annotation}, for each event, we asked annotators to select the category that best fit the event from the 13 categories used by the TDT project.
+Annotator agreement across categories was substantial (\(k = 0.76\)), however closer examination of the annotations raises a number of potential issues that could effect the usefulness of categories for clustering.
+Using the third U.S. Presidential Debate as an example of a large event with many different sub-topics, we note that the LSH approach produced over 40 clusters discussing various sub-events and topics within the debate.
 Many of the subjects of the debate were related to economics, business and international relations.
-This is an issue because annotators often categorized results based upon the topic of discussion (e.g. New Laws, Political and Diplomatic Meetings), rather than based on the event which caused the debate to take place (the Election).
-Despite it being clear at a higher level that the debate should be categorized as Election, it is not so clear at the level of sub-events and specific moments within the debate --- the categorization changes as we change the level of granularity.
-%This makes the use of categorization difficult for clustering as it is not immediately clear how \emph{War and Conflicts} could be related to \emph{Election}, however we cannot simply take the different categories as meaning that the results discuss distinct events.
+This is an issue because annotators often categorized events using only the topic of discussion (e.g. New Laws, Political or Diplomatic Meetings), rather than the the specific real world event, in this case, the debate as part of the U.S Presidential Election (which would fall under the TDT category Elections).
+Despite it being clear at a high level that the debate should be categorized as Election, it is not as clear when looking at the specific sub-topics within the debate --- the categorization changes as the level of granularity is changed.
+Similarly, the Wikipedia Current Events Portal assigns a category to each event, however these categories are often very low-level and specific, such as `History', `Literature', and `Spirituality'.
 
-Although the Wikipedia Current Events Portal does assign categories, there is a very large number of categories, each of which is very specific (e.g. `History', `Literature', and `Spirituality' categories).
-Additionally, because Wikipedia defines its own set of categories, we must create a mapping between the TDT categories and Wikipedia categories if we wish to measure category similarity.
-Creating a direct mapping between TDT categories and Wikipedia categories would solve the mapping problem but not increase agreement between the detection approaches.
-Thus, we created a new set of categories, each of which covers a much broader range than either the TDT or Wikipedia categories.
-Table~\ref{collection:table:catTable} shows the new categories and the corresponding categories from the TDT project and Wikipedia.
-
-\todo{Update to clarify wrt gathering the jugements}
-Annotator agreement was substantial across the TDT categories (\(k = 0.76\)). Agreement was further improved when the combined categories were used, giving near-perfect agreement (0.81).
-This shows that our combined categories not only helped to create a category mapping between the different approaches, but also helped to improve agreement, and thus the categorization of events.
-
-\begin{table}[h]
+\begin{table}
 	\centering
 	\caption{Combined categories with their corresponding TDT and Wikipedia categories.}
 	\label{collection:table:catTable}
@@ -54,70 +72,68 @@ This shows that our combined categories not only helped to create a category map
 	\midrule
 	Science and Technology & Science and Discovery News & Exploration, Innovation, Science, Technology \\
 	\midrule
-	Miscellaneous & Miscellaneous News & \emph{Anything not listed above.\ e.g. Heath, Transport}  \\
+	Miscellaneous & Miscellaneous News & \emph{Anything not listed above. e.g. Heath, Transport}  \\
 	\bottomrule
 	\end{tabulary}
 
 \end{table}
 
-\subsubsection{Temporal Features}
-Clearly, temporal features are extremely important in the clustering of events -- results which have a significant period of time between them are unlikely to be related to the same seminal event.
-For example, the three U.S. Presidential Debates are all likely to be very similar in terms of category features, and potentially content-based features.
-The largest defining factor is the specific time when the events took place.
+Before we can use the TDT and Wikipedia categories as a feature for clustering, we must create a mapping between them.
+However, simply creating a direct mapping between TDT categories and Wikipedia categories would solve the mapping problem but not increase agreement between the annotations from the event detection approaches.
+Thus, we created a new set of categories, each of which covers a much broader range than either the TDT or Wikipedia categories.
+Table~\ref{collection:table:catTable} shows the new categories and the corresponding categories from the TDT project and Wikipedia.
+Re-computing annotator agreement for the event detection event annotation after mapping the TDT categories to the combined categories shows an improvement from  $k = 0.76$ to $k = 0.81$.
+This is a good indication that our combined categories improve categorization and should help to make categories a more effective feature for clustering.
+
+We compute the category similarity $S_c$ between events $e$ and $e'$ as as the cosine of the angle in vector space between their category frequency vectors ($e_c$ and $e'_c$ respectively):
+\begin{displaymath}
+	S_c = cos(e_c, e'_c)
+\end{displaymath}
+Category frequency vectors $e_c$ and $e'_c$ are counts of how frequently a category was selected by annotators for a given event (after mapping to combined categories). For events from Wikipedia, the vector simply contained a 1 for the category given by Wikipedia (after mapping to the combined categories).
+Since cosine is already length normalized, it is not necessary to perform any sort of length or weight adjustments to the vectors.
+
+\subsubsection{Temporal Proximity}
+Temporal proximity is extremely important in the clustering of events -- events which have a significant period of time between them are unlikely to be related to the same real-world event.
+For example, the three U.S. Presidential Debates are all likely to be very similar in terms of category features content-based features.
+The largest differentiating factor is the specific time when the events took place.
 
 On the other hand, events which share similar characteristics in terms of both category and content-based features are still relatively common in the same temporal region.
-Sports events is the best example of this type of event --- it is not uncommon for two football matches to occur simultaneously, such as World Cup qualifying matches.
-These share the same category, the same temporal region, and very similar temporal features, making them particular difficult to distinguish.
+Sports events are an example of this type of event --- it is not uncommon for two football matches to occur simultaneously, such as World Cup qualifying matches.
+These share the same category, will have similar content, and overlap in time, making them particular difficult to distinguish.
 
-We found that by using temporal proximity as a feature for measuring similarity was harmful, and resulted in a very large number of false groupings, a very undesirable property (this is demonstrated in section~\ref{sec:clustering}).
-Given this, rather than using temporal proximity as an indication of a relationship, we do the converse, and say that events which are temporally dissimilar are unlikely to be related.
+Taking this into consideration, we chose not to use temporal proximity as a measure of similarity.
+Rather, we use it as a filter, and say that events which are more than $T$ hours apart cannot be merged.
+In our clustering experiments, $T$ is set to 6 hours, measure by the average tweet timestamp.
 
-\subsubsection{Content-based Features}
-Content based features are some of the most distinguishing features of each result, which can make them difficult to use for event clustering.
-This problem is most pronounced between results from the same detection approach, where content based features are already used to perform clustering.
-This means that each of the clusters are generally dissimilar in terms of content, even when discussing the same event, and often contain a very specific set of terms.
-This makes the use of similarity measures based solely on the content of tweets  ineffective when clustering events from the LSH approach.
-For example, again using the presidential debate as an example, the quote ``Well, Governor, we also have fewer horses and bayonets, because the nature of our military's changed.'' was extremely popular and relevant to the debate, however, matching this back to the election is very difficult if the context is not known, and using only tweet content based features to match it to other clusters is very difficult.
-This means that we cannot rely only on tweet content features when performing event clustering.
-
-Fortunately, we also have event descriptions written by workers from the crowdsourced evaluation.
-These tend to be more generic, and seem to offer a more viable method of clustering results together, as they often mention the specific entities involved in an event (such as people and places), and a high level description of the event that cannot be determined using the content of tweets alone.
+\begin{figure}
+	\includegraphics[width=\textwidth]{./Chapters/Collection/images/times}
+	\caption{The distribution of times between matched events, based upon the number of hours between the centroid times of the events.}
+	\label{fig:dif_diff}
+\end{figure}
 
 \subsection{Clustering Algorithm}
 \label{sec:clusteringalg}
-For each candidate event \(e\), our algorithm calculates its similarity against every other event \(e'\) within a time window \(T_{time}\). The similarity is calculated as so:
-\[
-S_{con} = max(escore(e, e'), dscore(e, e'))
-\]
-\[
-S_{cat} = cscore(e, e')
-\]
-\[
-S_{tweet} = tscore(e, e')
-\]
-\[
-S_{full} = 0.3 * S_{cat} + 0.4 * S_{con} + 0.3 * S_{tweet}
-\]
-where \(dscore\) gives the similarity between event descriptions as given by annotators, and \(escore\) gives the similarity between named entities extracted from descriptions. \(cscore\) gives the similarity between the categories assigned to the event, and \(tscore\) gives the similarity between the top 10 most frequent terms in relevant tweets for both events.
-In every case, cosine similarity is used.
-The weighting parameters were chosen such that no one feature would be enough to cause a match, reducing the chance of a false match.
-However, annotator descriptions were given slightly more weight than other features because of their high-level nature and specificity.
-
-If two events are found to have an \(S_{full}\) value above threshold \(T_{sim}\) then they are clustered together. If both \(e\) and \(e'\) already have clusters then the two clusters are merged.
-The pseudo-code for our clustering approach is shown in Algorithm~\ref{alg:one}.
+For each event \(e\), our algorithm calculates its similarity $S_f$ against every candidate event \(e'\) within a time window of 6 hours.
+The similarity is calculated as so:
+\begin{equation} \label{eq:simcluster}
+S_{f} = (0.3 * S_{t}) + (0.3 * S_{c}) + (0.4 * S_{a})
+\end{equation}
+If two events are found to have an \(S_{f}\) value above 0.5 then they are clustered together (merged).
+If both \(e\) and \(e'\) already have clusters then the two clusters are merged.
+The pseudo-code for our clustering approach is shown in Algorithm~\ref{alg:clustering}.
 
 \begin{algorithm}
 $clustered$ = $\emptyset$\;
-\ForEach{event e in candidates} {
+\ForEach{event e in targets} {
 	add $e$ to $clustered$\;
-	\ForEach{event e' in candidates but not in clustered} {
+	\ForEach{event e' in candidates} {
 
-		$S_{con}$ = $max\{escore(e, e'), dscore(e, e')\}$\;
-		$S_{cat}$ = $cscore(e, e')$\;
-		$S_{tweet}$ = $tscore(e, e')$\;
-		$S_{full}$ = $0.3 * S_{cat} + 0.4 * S_{con} + 0.3 * S_{tweet}$\;
-		\If{$S_{full}$ \(\ge\) $T_{sim}$ and $time\_diff(e, e')$ \(\le\) $T_{time}$} {
-			\uIf{neither e nor e' in cluster}{
+		$S_{a}$ = $max\{cos(e_d, e'_d), cos(e_n, e'_n)\}$\;
+		$S_{c}$ = $cos(e_c, e'_c)$\;
+		$S_{t}$ = $cos(e_t, e'_t)$\;
+		$S_{f}$ = $(0.3 * S_{t}) + (0.c * S_{c}) + (0.4 * S_{a})$\;
+		\If{$S_{f}$ \(\ge\) 0.5 and $time\_diff(e, e')$ \(\le\) $T$} {
+			\uIf{neither e nor e' have clusters}{
 				create new cluster containing e and e'\;
 			} \eIf{both e and e' have clusters}{
 				merge cluster(e) and cluster(e')\;
@@ -128,8 +144,14 @@ $clustered$ = $\emptyset$\;
 	}
 }
 \caption{Event Clustering Approach}
-\label{alg:one}
+\label{alg:clustering}
 \end{algorithm}
+
+Parameter weights were optimized by varying between 0.0 and 1.0 in steps of 0.1, such that the sum of all weights was 1.0.
+The weights given in equation \ref{eq:simcluster} gave the highest BCubed precision (0.92) and recall (0.86) values (F1 = 0.86).
+The maximum time difference, $T$, was set to 6 hours  as only a 3.4\% of events were matched outside of a 6 hour window, as show in Figure~\ref{fig:dif_diff}.
+This allows for a reasonably lag between the 2 events, whilst still giving a reasonable guarantee that the events generated will fit our definition of event as there is unlikely to be a significant gap between the merged events.
+
 
 \subsection{Event Statistics}
 
@@ -163,7 +185,11 @@ Although the use of implicit judgements will have introduced some noise to the r
 
 \end{table}
 
-We then ran the clustering algorithm using a maximum time difference of 6 hours, which was picked specifically to allow for a reasonably lag between the 2 events, whilst still giving a reasonable guarantee that the events generated will fit our definition of event.
+
 Categories are assigned to events based on the combined categories defined in Table~\ref{collection:table:catTable}.
 For events where multiple categories are given, the category with the highest frequency was used.
 In cases where there was a tie between the categories, an author was used to give the deciding vote.
+
+It is interesting to note that, although we could have used the number of shared tweets as a feature for clustering, it would have made no difference to resulting clusters.
+Out of 41 cases where events share more than 10 tweets, there is only a single case where they do not have a similarity score above our threshold, and the events are subsequently clustered through shared similarity to a 3rd event.
+This helps to demonstrate the effectiveness and robustness of our event clustering technique.

@@ -1,0 +1,51 @@
+\section{Results \& Discussion}
+\label{collection:sec:results}
+In this section, we describe the results of our evaluation.
+We being by describing the characteristics of the generated corpus, and discuss the effectiveness of the different approaches.
+We then discuss the annotator agreement, and discuss possible reasons for differences in agreement between the two approaches.
+
+\subsection{Corpus Characteristics}
+After clustering, 506 \emph{top-level events} (i.e. events created by combining events from different sources) were produced.
+In total, 367 events were clustered to create 77 top-level events, and a further 429 top-level events were created using individual events.
+
+As expected, the detection approach seems to closely reflect to the types of events most commonly discussed on Twitter~\cite{zhao2011empirical}, while the Wikipedia approach gives a more realistic representation of real-world events.
+As shown in Table~\ref{table:eventsByCat}, both approaches produced very different distributions of results, however seem to complement each other, and the combined results show much less variation.
+For example, the detection approach contributes a large number of \emph{Sports} events, something which is lacking from the Wikipedia approach.
+Likewise, the Wikipedia approach contributes a large number of events from \emph{Armed Conflicts and Attacks}, and \emph{Business and Economy}, both categories where the detection approach produces less results.
+This could be due to the volume of discussion associated with each of these topics.
+\emph{Law, Politics and Scandals} have very few tweets per event in comparison with Sports, meaning that restricting the detection approaches to clusters with at least 30 tweets could have removed many which were discussing these events.
+Since we did not put this restriction in place for the Wikipedia approach, it would not have
+Table~\ref{table:eventsByCat} shows the events broken down by category and the type of approach used to generate the event.
+
+\begin{table}[h!]
+	\centering
+
+	\caption{The distribution of events across the 8 different categories, broken down by method used. The LSH, CS and Wiki columns show numbers of events \emph{before} clustering, while the Clustered column shows the number of events \emph{after} clustering has been performed. }
+	\label{table:eventsByCat}
+
+	\begin{tabulary}{\textwidth}{l c c c c}
+	\toprule
+	\textbf{Category} & \textbf{Clustered} & \textbf{LSH} & \textbf{CS} & \textbf{Wiki}  \\
+	\midrule
+
+	Armed Conflicts \& Attacks 			& 98 	& 3 	& 1 	& 95 \\
+	Arts, Culture \& Entertainment 		& 53 	& 26 	& 3 	& 34 \\
+	Business \& Economy 				& 23 	& 2 	& 1 	& 22 \\
+	Disasters \& Accidents 				& 29 	& 16 	& 4 	& 23 \\
+	Law, Politics and Scandals 			& 140 	& 124 	& 12 	& 128 \\
+	Miscellaneous 						& 21	& 26 	& 6 	& 3 \\
+	Science and Technology 				& 16 	& 10 	& 2 	& 11 \\
+	Sports 								& 126 	& 175 	& 24 	& 26 \\
+
+	\bottomrule
+	\end{tabulary}
+
+\end{table}
+
+The detection method contributed to 186 top-level events, while the Wikipedia approach contributed 342, almost double that of the detection method.
+However, the detection approaches contribute over 110,000 of the ~150,000 relevance judgements in the corpus, with an average of 259 tweets per event cluster.
+The Wikipedia approach contributes just 39,980 of the relevance judgements, at an average of 85 tweets per event.
+This is presumably because of the different types of event identified by each of the methods.
+While the detection approaches rely on the volume of tweets to identify events, the Wikipedia approach does not, meaning that it produces a much larger number of smaller events.
+The combination of the two approaches allows their different characteristics to complement each other, producing a much more robust corpus than would have been produced had a single approach been used.
+If only one approach had been used, then the results would have been unevenly skewed towards either sports or Law and Political discussion, where as the use of both approaches smooths these out to be reflect both the types of event which are happening in the world, as well as what is being discussed on Twitter.
