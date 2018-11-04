@@ -24,7 +24,7 @@ This means that the results are extremely biased towards these approaches, and o
 As we use the results from the crowdsourced evaluation, baseline parameters have not changed from those used in chapter \ref{collection:chapter}, however for completeness we include them here.
 The LSH approach used 13 bits per key, 70 hash tables, and a minimum cosine similarity values of 0.55. Events were extracted every 100,000 tweets, and only clusters with entropy values inside the optimal range (3.5 - 4.25) were used \citep{Petrovic10}.
 The CS approach was run with an input size of 1200 clusters. An \(\alpha\) value of 12 was used to prevent slow growing clusters from being included in the results \citep{Aggarwal12}.
-Neither baseline used retweets as empirical manual investigations before the crowdsourced evaluation found them to have a significant negative impact on precision.
+Neither baseline used retweets as empirical manual investigations before the crowdsourced evaluation found them to have a negative impact on precision.
 
 \label{detection:sec:crowd}
 In order to keep the comparison between the baselines and our approach as fair as possible, we use the same methodology here as we did in chapter \ref{chapter:collection} to gather relevance judgements for the baseline approaches.

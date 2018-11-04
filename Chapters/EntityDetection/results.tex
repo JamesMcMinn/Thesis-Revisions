@@ -31,7 +31,7 @@ We present results for our best performing automatic evaluation, which filtered 
 
 Automatic evaluation gives our entity-based approach an estimated Precision of 0.348 and recall of 0.292 for events with 100 or more tweets.
 This gives the highest F1 measure (0.306) across all automatic runs tested.
-Precision beats that of the LSH baseline significantly, despite being disadvantaged due to the partial relevance judgements.
+Precision beats that of the LSH baseline, despite being disadvantaged due to the partial relevance judgements.
 Recall is slightly lower than that of the LSH approach, although by only a small margin (0.016).
 At a minimum event size of 75, automatic evaluation shows that our entity-based approach outperforms the LSH approach in both precision (0.302) and recall (0.310).
 A detailed investigation of performance across a range of minimum event sizes is given in section \ref{detection:sec:eventSize}
@@ -60,7 +60,7 @@ Our approach seems to be most effective at detecting events categorized as  `Arm
 This is extremely promising as these are the types of event that are most likely to benefit from eye-witness accounts and the use of social media as the event unfolds.
 The ability to find information about these types of event in real-time can be useful for law enforcement and emergency services, and serves as one of main motivations for event detection and tracking on Twitter.
 
-Our approach also appears to effective at detecting events in the `Business \& Economy' ($R=0.391$), `Sports' ($R=0.373$), and `Law, Politics \& Scandals' ($R=0.386$) categories.
+Our approach also appears to be effective at detecting events in the `Business \& Economy' ($R=0.391$), `Sports' ($R=0.373$), and `Law, Politics \& Scandals' ($R=0.386$) categories.
 Law, Politics \& Scandals, as well as the Sports events make up over 50\% of the total events in the collection, so given our approach's overall high recall, it is not surprising to find that it performs well on events in these categories.
 This is most likely due to a number of factors. Firstly, these types of event tend to focus on a small number of easily identified entities, such as sports teams, politicians, or company names.
 Secondly, these types of event are of interest to a large number of people, making them more likely to burst and be detectable, with sports events in particular being well suited to discussion on social media, something we examine later in this section.
@@ -256,7 +256,7 @@ This could be caused by the reduced maximum burst length with 6 windows causing 
 \end{table}
 
 Table \ref{detection:table:signalLength} shows how limiting the amount of historic data used to calculate mean and standard deviation values for burst detection affects the overall performance.
-Although the performance differences between 6 and 24 periods is small, and there does not appear to be a single best history length across the range of event sizes, there is a clear and significant difference between limited and unlimited historical data.
+Although the performance differences between 6 and 24 periods is small, and there does not appear to be a single best history length across the range of event sizes, there is a clear difference between limited and unlimited historical data.
 
 By limiting the amount of historic data used at each window size, we remove a type of smoothing.
 Placing no limits on historic data means that we capture the change in usage of each entity, but also changes in how the entity is used through the day as people wake up, go to work, return home, and go to sleep.
@@ -308,10 +308,10 @@ This means more clusters can be added to events, and results in more events over
 This is reflected by the number of events at varying levels of similarity and across the two minimum event sizes.
 
 Table \ref{detection:table:minClusterSize} shows the effect of different minimum cluster sizes on the effectiveness of our approach.
-Clusters are only added to an event if they contain more the minimum number of tweets, so the minimum cluster size has a significant effect on the overall performance, particularity at lower minimum event sizes.
+Clusters are only added to an event if they contain more the minimum number of tweets, so the minimum cluster size has an effect on the overall performance, particularity at lower minimum event sizes.
 The effect on overall performance (F1 score) is less pronounced for larger events as these events have much higher volumes of discussion, so the number of large clusters that can to be added to the event is much higher.
 
-Increasing the minimum cluster size has a significant effect on precision at both minimum event sizes.
+Increasing the minimum cluster size has an effect on precision at both minimum event sizes.
 There is a distinct jump in precision when the minimum cluster size is increased from 5 to 10 tweets, but with only a very small impact on recall, motivating our use of 10 as the minimum cluster size in all of our evaluations.
 
 \begin{table}[h!]
@@ -388,7 +388,7 @@ We hypothesis that this is due to the specificity of named entities, and that by
 
 \subsection{Retweets}
 \label{detection:sec:retweetsEval}
-The use of retweets has a significant impact, reducing precision from 0.200 to 0.063. The use of retweets does provide a small, but insignificant increase in recall (from 0.383 to 0.390), and can likely be attributed to a 60\% increase in the average number of tweets per event from 125 to 198, creating many events with more than 30 tweets. This finding is somewhat unsurprising as retweets are commonly  associated with the spread of spam and require little effort to produce.
+The use of retweets has a large impact, reducing precision from 0.200 to 0.063. The use of retweets does provide a small increase in recall (from 0.383 to 0.390), and can likely be attributed to a 60\% increase in the average number of tweets per event from 125 to 198, creating many events with more than 30 tweets. This finding is somewhat unsurprising as retweets are commonly  associated with the spread of spam and require little effort to produce.
 
 \subsection{Named Entities}
 \label{detection:sec:entitiesEval}
