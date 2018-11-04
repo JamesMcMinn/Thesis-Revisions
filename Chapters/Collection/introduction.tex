@@ -4,7 +4,8 @@ Indeed, it is not uncommon for researchers to create a bespoke dataset and carry
 
 A small number of Twitter corpora with relevance judgements have been made available (these are detailed in Section \ref{background:sec:collections}), however none are suitable for the large-scale evaluation of event detection approaches due to their small size or number of topics.
 This is partially due to the massive scale of Twitter, which makes the creation of corpora difficult, time-consuming and expensive, but also due to disagreement on the definition of event, which can often make comparisons difficult or impossible.
-Furthermore, the Twitter Terms of Service restrict the distribution of tweets, and do not allow the content of tweets to be distributed as part of a corpus.
+Furthermore, Twitter's Terms of Service restrict the distribution of tweets, and do not allow the content of tweets to be distributed as part of a corpus.
+Instead, tweet IDs must be released, and those wishing to use a dataset must register for a Twitter developer account and use Twitter's rate-limited API to crawl the tweets.
 As a result, there are very few publicly available Twitter corpora, and in some cases, corpora from other medium are used in place of a Twitter corpus \citep{Aggarwal12,Petrovic:2010:SFS:1857999.1858020,Petrovic:2012:UPI:2382029.2382072}.
 However, it is not clear that effectiveness of event detection approaches on a non-Twitter corpus is comparable to effectiveness on a Twitter corpus, with some evidence suggesting that this is not the case \citep{Petrovic:2012:UPI:2382029.2382072}.
 This scenario leads to a situation in which event detection techniques are not properly benchmarked.
