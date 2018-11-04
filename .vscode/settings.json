@@ -5,8 +5,6 @@
 
 		"editor.minimap.enabled": false,
 		"editor.minimap.renderCharacters": false,
-
-		"editor.wordWrapColumn": 80,
 		"editor.wrappingIndent": "same",
 		"editor.wordWrap": "wordWrapColumn",
 
@@ -22,7 +20,7 @@
 		"workbench.editor.enablePreview": false,
 		"workbench.editor.enablePreviewFromQuickOpen": false,
 
-		"workbench.colorTheme": "Bluloco Light",
+		"workbench.colorTheme": "Arc Dark",
 
 		"files.exclude": {
 			"**/.git": true,

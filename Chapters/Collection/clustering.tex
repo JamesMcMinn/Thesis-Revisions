@@ -21,11 +21,11 @@ This means that we cannot rely only on tweet content features when performing ev
 
 Fortunately, for both Event Detection and Wikipedia events, we also have the  descriptions given by annotators for each of the events.
 Since the descriptions are often (but not always) higher level than the tweets, they are more likely to provide useful information for linking two events.
-Thus, we define the description similarity as the cosine of the angle between the term frequency vectors for the descriptions for the target and candidate events:
+Thus, we define the description similarity, $S_d$, as the cosine of the angle between the term frequency vectors for the descriptions for the target and candidate events:
 \begin{displaymath}
 	S_d = cos(e_d, e'_d)
 \end{displaymath}
-where the vectors $e_d$ and $e'_d$ contain term counts (after stemming and stop word removal) for all descriptions given by the annotators for the target and candidate events respectively.
+where the vectors $e_d$ and $e'_d$ contain term counts (after stemming and stop word removal) for all descriptions given by annotators for the target and candidate events respectively.
 
 Manual inspection of the descriptions shows that the vast majority contain at least one named entity (such as a person, location or organization), and many descriptions contain only a name entity with no other descriptive terms.
 We also note that, in cases where the descriptions describe different aspects of the same real-world event, often the only constant is the mention of a named entity or named entities.
@@ -38,6 +38,7 @@ To solve this, rather than rely purely on description similarity, we also calcul
 	S_n &= cos(e_n, e'_n) & S_a &= max(S_n, S_d)
 \end{align*}
 where $e_n$ ad $e'_n$ are the entity frequency vectors containing counts for each named entity mentioned in the annotator descriptions (extracted using the NLTK Python library) for target event $e$ and candidate event $e'$.
+Taking the maximum similarity of the two allows us to optimize for the two cases: (i) when the descriptions describe an event at the same level of granularity (often the case for events from different sources) the full description can be used, however when events are described at different levels of granularity or at different moments in time, entity similarity can be used.
 
 \subsubsection{Categories}
 As described in Section \ref{collection:sec:annotation}, for each event, we asked annotators to select the category that best fit the event from the 13 categories used by the TDT project.
