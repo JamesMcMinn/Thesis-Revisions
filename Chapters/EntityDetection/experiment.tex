@@ -20,28 +20,11 @@ We believe that results presented here, when first published in 2015, were the f
 \label{sec:baseline}
 Given that no event detection technique for Twitter has been robustly evaluated against a publicly available Twitter collection, the only options available to us as a baseline are the LSH \citep{Petrovic10} and CS \citep{Aggarwal12} approaches used to generate the collection in chapter \ref{chapter:collection}.
 This means that the results are extremely biased towards these approaches, and only a crowdsourced evaluation will allow for a direct comparison between our entity-based approach and the baselines.
-
-As we use the results from the crowdsourced evaluation, baseline parameters have not changed from those used in chapter \ref{collection:chapter}, however for completeness we include them here.
-The LSH approach used 13 bits per key, 70 hash tables, and a minimum cosine similarity values of 0.55. Events were extracted every 100,000 tweets, and only clusters with entropy values inside the optimal range (3.5 - 4.25) were used \citep{Petrovic10}.
-The CS approach was run with an input size of 1200 clusters. An \(\alpha\) value of 12 was used to prevent slow growing clusters from being included in the results \citep{Aggarwal12}.
-Neither baseline used retweets as empirical manual investigations before the crowdsourced evaluation found them to have a negative impact on precision.
+As we use the results from the crowdsourced evaluation, baseline parameters have not changed from those used in chapter \ref{collection:chapter}.
 
 \label{detection:sec:crowd}
 In order to keep the comparison between the baselines and our approach as fair as possible, we use the same methodology here as we did in chapter \ref{chapter:collection} to gather relevance judgements for the baseline approaches.
-
-Since resources were limited, and our approach generates a large number of candidate events, we use a random sample of 250 events from the 1210 candidate events identified by our approach.
-For each event, we asked 5 annotators to answer a questionnaire.
-Each annotator was asked to read 13 tweets (selected at random however kept constant between evaluations) from a single candidate event.
-They were then asked: \blockquote{Do the majority of tweets discuss the same real-life topic?}.
-If they responded `no' then the evaluation was complete and they were allowed to submit the evaluation.
-If they answered `yes', then a further question was posed:
-\blockquote{Do the tweets discuss an event?}.
-At this point, they were also reminded of the our definition of event, as given in chapter \ref{chapter:collection}.
-Again, annotators who answered ``no'' were allowed to submit the evaluation.
-However, if they answered ``yes'' (signalling that the candidate is an event), then they were asked to re-read the tweets and mark any non-relevant tweets as so.
-They were then asked to briefly describe the event and select the category which best fit the event.
-They were allowed to submit the evaluation.
-Candidate events were considered to be an event if the majority (3/5) of annotators marked them as so.
-
-To keep category classification fair, we used the same 13 categories defined by the Topic Detection and Tracking project \citep{Allan:2002:ITD:772260.772262} as they were used to evaluate events produced by the two baseline approaches in chapter \ref{chapter:collection}. We mapped the TDT categories back to the categories used by the collection.
+5 annotators were used per event, and to keep category classification fair, we used the same 13 categories defined by the Topic Detection and Tracking project \citep{Allan:2002:ITD:772260.772262} as they were used to evaluate events produced by the two baseline approaches in chapter \ref{chapter:collection}.
+To generate the results that follow, we mapped the TDT categories back to the 8 categories used by the collection.
 A number of spam and quality control measures were used, identical to those described in chapter \ref{chapter:collection}.
+Since resources were limited, and our approach generates a large number of candidate events, we use a random sample of 250 events from the 1210 candidate events identified by our approach.
