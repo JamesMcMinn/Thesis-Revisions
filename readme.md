@@ -5,13 +5,12 @@ This document outlines a plan for revisions and corrections that are needed in o
 ## General
 - [ ] Add equation numbers
 - [ ] Convert Tables to Graphs where appropriate
-- [ ] List of equations
-- [ ] List of algorithms
+- [X] List of algorithms
 
 ## 0. Front Matter
 - [ ] Add Acknowledgments
-- [ ] Add Dedication
-- [ ] Avoid copying from Introduction for Abstract.
+- [X] Add Dedication
+- [ ] Avoid copying from Introduction for Abstract
 - [ ] Add conclusions to abstract
 - [X] [Sort publications chronologically](https://github.com/JamesMcMinn/Thesis-Revisions/commit/86dd56d1416622f636946cfc42a91152f44533f7)
 

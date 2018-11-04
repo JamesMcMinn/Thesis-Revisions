@@ -136,3 +136,10 @@ right=30mm
     \newpage}
 
 \endinput
+
+
+\let\listofalgorithms\listoftables
+\patchcmd{\listofalgorithms}{\listtablename}{\listalgorithmname}{}{}
+\patchcmd{\listofalgorithms}{\listtablename}{\listalgorithmname}{}{}
+\patchcmd{\listofalgorithms}{\listtablename}{\listalgorithmname}{}{}
+\patchcmd{\listofalgorithms}{lot}{loa}{}{}
