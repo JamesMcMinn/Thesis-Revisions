@@ -70,36 +70,36 @@ Given the role that named entities play in describing real-world events, we beli
 	index $\gets [][]$ \\
 	clusters $\gets$ [][] \\
 
-\ForEach{tweet d in the stream} {
+	\ForEach{tweet d in the stream} {
 
-	\ForEach{entity e in d} {
+		\ForEach{entity e in d} {
 
-		$S(d) \gets \emptyset$ \tcp*{set of documents that share a term with $d$}
-		\ForEach{non-entity term t in d} {
-			\ForEach{tweet d' in index[e][t]} {
-				$S(d) \gets S(d) \cup d'$ \\
+			$S(d) \gets \emptyset$ \tcp*{set of documents that share a term with $d$}
+			\ForEach{non-entity term t in d} {
+				\ForEach{tweet d' in index[e][t]} {
+					$S(d) \gets S(d) \cup d'$ \\
+				}
+				index[$e$][$t$] $\gets$ index[$e$][$t$] $\cup$ $d$ \\
 			}
-			index[$e$][$t$] $\gets$ index[$e$][$t$] $\cup$ $d$ \\
-		}
 
-		$c_{max} \gets 0$ \tcp*{maximum cosine between $d$ and tweets in $S(d)$}
-		$n_{d} \gets nil$ \tcp*{tweet with maximum cosine to $d$}
-		\ForEach{tweet d' in S(d)}{
-			$c$ := cosine($d$, $d'$) \\
-			\If{$c > c_{max}$}{
-				$c_{max} \gets c$ \\
-				$n_d \gets d'$
+			$c_{max} \gets 0$ \tcp*{maximum cosine between $d$ and tweets in $S(d)$}
+			$n_{d} \gets nil$ \tcp*{tweet with maximum cosine to $d$}
+			\ForEach{tweet d' in S(d)}{
+				$c$ := cosine($d$, $d'$) \\
+				\If{$c > c_{max}$}{
+					$c_{max} \gets c$ \\
+					$n_d \gets d'$
+				}
 			}
-		}
 
-		\eIf{$c_{max} \geq m$} {
-			add $d$ to clusters[$e$][$n_d$]
-		}{
-			clusters[$e$][$d$] $\gets$ new cluster($d$) \tcp*{Do not assume the cluster is a new event}
-		}
+			\eIf{$c_{max} \geq m$} {
+				add $d$ to clusters[$e$][$n_d$]
+			}{
+				clusters[$e$][$d$] $\gets$ new cluster($d$) \tcp*{Do not assume the cluster is a new event}
+			}
 
+		}
 	}
-}
 
 \caption{Entity-based method of clustering}
 \label{detection:alg:clustering}
@@ -138,8 +138,43 @@ To model this, we use a set of windows for each entity to capture their frequenc
 We use the Three Sigma Rule as the basis for a light-weight burst detection approach, which states that a value is considered to be statistically unlikely if it is further than 3 standard deviations from the expected value \citep{Pukelsheim94}.
 A similar approach is used by \cite{Aggarwal12} to determine an minimum similarity threshold for their clustering approach described in section \ref{background:cs}.
 
+\begin{algorithm}[t]
+	\caption{Efficient computation of $\mu$ and $\sigma$ values for multiple windows and entities}
+	\label{detection:alg:updatingEntityValues}
+
+	\DontPrintSemicolon
+
+	lengths $\gets$ [5, 10, 20, 40, 80, 160, 320]\\
+	counts $\gets$ [][] \\
+	$M_0$ $\gets$ [][] \\
+	$M_1$ $\gets$ [][] \\
+	$M_2$ $\gets$ [][] \\
+	$\mu \gets$ [][] \\
+	$\sigma \gets$ [][] \\
+
+	\ForEach{tweet d in the stream} {
+
+		\ForEach{entity e in d} {
+
+			\ForEach{window w in lengths} {
+				\If{seconds since last count reset for window $\geq$ lengths[$w$]}{
+					$M_0 \gets M_0 + 1$ \\
+					$M_1 \gets M_1$ + counts[$e$][$w$] \\
+					$M_2 \gets M_2$ + (counts[$e$][$w$] $\cdot$ counts[$e$][$w$]) \\
+					counts[$e$][$w$] $\gets$ 0\\
+
+					$\mu$[$e$][$w$] $\gets M_1 / M_0$ \\
+					$\sigma$[$e$][$w$] $\gets \sqrt{(M_0M_2 - M_1^2) / M_0} $ \\
+				}
+				counts[$e$][$w$] $\gets$ counts[$e$][$w$] + 1\\
+			}
+
+		}
+	}
+\end{algorithm}
+
 For each window, we maintain mean and standard deviation values, updating them periodically with the current entity frequency.
-It is possible to efficiently compute moving mean (\(\mu\)) and standard deviation (\(\sigma\)) values using a set of three power sums \(M_0\), \(M_1\) and \(M_2\), for vector $E$ containing counts of how frequently entity $e$ is mentioned during each window ()
+It is possible to efficiently compute moving mean (\(\mu\)) and standard deviation (\(\sigma\)) values using a set of three power sums \(M_0\), \(M_1\) and \(M_2\), for vector $E$ containing counts of how frequently entity $e$ is mentioned during each window:
 \begin{align*}
 	M_0 &= \sum_{i = 0}^{|E|}{E_i^0} & M_1 &= \sum_{i = 0}^{|E|}{E_i^1} & M_2 &= \sum_{i = 0}^{|E|}{E_{i}^2}
 \end{align*}
@@ -156,12 +191,18 @@ The current mean and standard deviation values (\(\mu\) and \(\sigma\) respectiv
 
 The \(\mu\) and \(\sigma\) values are computed for each named entity and each window length, requiring $|e| \cdot 7 \cdot 3$ integer values to be stored, where $|e|$ is the number of named entities seen by the system, 7 is the number of windows, and 3 represents the $M_0$, $M_1$ and $M_2$ values.
 Entity frequencies are updated periodically based upon the length of the window (i.e., a 5 minute window is updated every 5 minutes).
+Algorithm \ref{detection:alg:updatingEntityValues} gives the pseudocode for this approach.
 
-Once a tweet has been clustered and added to entity indexes (as shown in Algorithm \ref{detection:alg:clustering}), we update the entity statistics, and check if the newly added tweet caused the entity to burst in any of the windows. If the number of tweets in a given window is greater than \(\mu + (3 \cdot \sigma)\), then we say that the given window is bursty, and the entity is part of a new event.
+Once a tweet has been clustered and added to entity indexes, we update the entity statistics, and check if the newly added tweet caused the entity to burst in any of the windows.
+If the number of tweets in a given window is greater than \(\mu + (3 \cdot \sigma)\), then we say that the entity is bursting.
 
-In order to smooth and reduce noise, statistics are not updated while a window is bursting, and windows are kept in a bursting state for \(1.5 \times window\_length\) after the window's statistics suggest that it has stopped bursting. For example, an entity which is marked as bursty in the 80 minute window would remain bursting for 120 minutes after the 80 minute window stops bursting.  The extra time allows for fluctuations in frequency as an event develops, and helps prevent a state of flux where an entity rapidly switches between bursting and normal states.
+In order to smooth and reduce noise, statistics are not updated while a window is bursting, and windows are kept in a bursting state for \(1.5 \times window\_length\) after the window's statistics suggest that it has stopped bursting.
+For example, an entity which is marked as bursty in the 80 minute window would remain bursting for 120 minutes after the 80 minute window stops bursting.
+The extra time allows for fluctuations in frequency as an event develops, and helps prevent a state of flux where an entity rapidly switches between bursting and normal states, particularly in the early stages of an event where the overall volume of discussion may still be quite low.
 
-When a tweet which is no longer covered by the largest window it is removed from all inverted indexes. This helps to reduce the number of comparisons required when calculating the nearest neighbour, and allows resources to be freed for incoming tweets. We do not believe that removing older tweets will affect the effectiveness of the algorithm due to the real-time nature of Twitter, as tweets which are more than a few hours old are generally not relevant to any ongoing real-world events, and those which are will hopefully have already been marked as so by the algorithm, ensuring that they are recorded elsewhere.
+When a tweet which is no longer covered by the largest window it is removed from all inverted indexes.
+This helps to reduce the number of comparisons required when calculating the nearest neighbour, and allows resources to be freed for incoming tweets.
+We do not believe that removing older tweets will affect the effectiveness of the algorithm due to the real-time nature of Twitter, as tweets which are more than a few hours old are unlikely to b relevant to any ongoing real-world events, and those which are will hopefully have already been marked as so by the algorithm, ensuring that they are recorded elsewhere.
 
 \subsection{Event Creation and Cluster Selection}
 \label{detection:sec:eventCreation}

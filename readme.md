@@ -65,9 +65,11 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Re-examine alg. 2 and make sure it's correct (and makes sense)](https://github.com/JamesMcMinn/Thesis-Revisions/commit/47236475eb9a7755ebaf4fe2907e75a4c9b89b90)
 - [X] [Link our clustering approach back to TDT approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/ea981ecca58d9772efa3a36c5845c7f935244139)
 - [X] Link burst detection approach back to that used by CS approach and clarify
-- [ ] Justify choice of 1.5x for window length
 - [ ] 4.2.4 - Clarify that a burst does not mean we have any clusters / tweets yet
 - [ ] Clarify 4.2.5, in particular, disambiguation. Why not use tagme, for example?
+- [ ] Add pseudocode for updating mean and std. dev values for burst detection
+- [ ] Add pseudocode for detecting if burst has occurred
+- [ ] Add pseudocode for entity linking
 - [X] [Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
 - [X] [Remove most of 4.3.1 as it is repetition of Chapter 3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
 - [ ] Define and explain in detail, the automatic evaluation
