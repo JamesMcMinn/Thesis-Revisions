@@ -2,7 +2,9 @@
 
 \section{Entity-based Event Detection Approach}
 \label{detection:sec:approach}
-In this section we describe our entity-based event detection approach. The approach comprises of 6 key stages, as shown in Figure \ref{detection:graphic:pipeline}. Tweets are processed in order using a pipelines architecture that allows for parallel processing, with each component relying only on the output of the previous component to complete its task.
+In this section we describe our entity-based event detection approach.
+The approach comprises of 6 key stages, as shown in Figure \ref{detection:graphic:pipeline}.
+Tweets are processed in order using a pipelines architecture that allows for parallel processing, with each component relying only on the output of the previous component to complete its task.
 
 \vspace{0.5cm}
 \begin{figure}[h!]
@@ -13,17 +15,21 @@ In this section we describe our entity-based event detection approach. The appro
 \end{figure}
 
 \subsection{Tweet Pre-processing}
-Our approach uses a number of pre-processing steps. This helps to filter out unwanted tweets, such as common types of spam, and attempts to provide a noise free stream of tweets which can used to detect events.
+Our approach uses a number of pre-processing steps.
+This helps to filter out unwanted tweets, such as common types of spam, and attempts to provide a noise free stream of tweets which can used to detect events.
 
 \subsubsection{Parsing \& Tagging}
 \label{detection:sec:parsing}
 We use the Stanford CoreNLP Natural Language Toolkit to perform Part of Speech (POS) tagging and Named Entity Recognition (NER) on the text of each tweet.
 We  use the GATE Twitter POS model~\citep{TwitterPOS} for Part of Speech tagging, and the Stanford 3 class model for Named Entity Recognition.
+The GATE Twitter POS model is a Part-of-speech models trained specifically on tweets and tends to provide much high accuracy ($>$ 90\%) that part-of-speech models trained on non-twitter corpora.
 
-We extract all nouns, verbs and named entities (persons, locations, and organizations) from each tweet.
+We extract all nouns, verbs and named entities from each tweet.
 Nouns and verbs are lemmatized, and entities are kept in their longest form to ensure that names are as distinguishing as possible  (i.e. ``Paul Ryan'' rather than ``Paul'' and ``Ryan'').
-Different entity classes of the same name are considered to be different.
-For example, ``Spain'' in the context of the football team (an organization) is different from ``Spain'' the location, as this helps to retain as much distinguishing power as possible.
+
+The Stanford 3 class NER model is able to perform automatic class-based disambiguation such that entity mentions are provided a class (person, location, or organization).
+We use the class information and consider named entities of different classes to be distinct, even if the name itself is identical.
+For example, the entity ``Spain'' in the context of the football team (an \emph{organization} consisting on many people that play football) is conceptually different from ``Spain'' the (the landmass, a \emph{location}), as this helps to retain as much distinguishing power as possible.
 We evaluate and give reasoning for this choice in section \ref{detection:sec:entityTypes}.
 All terms and entities are converted to lowercase and any non-alphanumeric characters are removed (however whitespace is retained in the case of named entities).
 
@@ -51,7 +57,7 @@ Finally, terms under 3 characters in length are removed.
 
 \subsection{Entity-based Online Clustering}
 \label{detection:sec:clustering}
-Clustering is a commonly used method in event detection to find documents which discuss a similar topic or event, however it is also inherently slow when dealing with large numbers of documents, making traditional clustering  infeasible at Twitter scale.
+Nearest-neighbor clustering is a commonly used method in event detection to find documents that discuss a similar topic or event, however it is also inherently slow when dealing with large numbers of documents, making traditional clustering approaches, such as those used by the TDT project described in section \ref{background:alg:tdt}, infeasible at Twitter scale.
 A number of solutions have been proposed to solve this, including the use of Locality Sensitive Hashing~\citep{Petrovic10}, which we implement in chapter \ref{chapter:collection}.
 However, these approaches are general purpose, and do not make use of any domain or task specific information.
 Given the role that named entities play in describing real-world events, we believe it makes sense to use their presence to improve clustering efficiency and effectiveness for the task of event detection.
@@ -61,7 +67,7 @@ Using the premise that tweets discussing an event must contain at least one of t
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=8cm,trim=0cm 1.5cm 0cm 0cm]{Chapters/EntityDetection/images/clustering.pdf}
-	\caption[Entity-based clustering]{Tweets are added to a cluster for each entity the contain. The example shows how a tweet containing both `Obama' and `Romney' would be put into two clusters, one for the entity `Obama' and one for the entity `Romney'.}
+	\caption[Entity-based clustering]{Tweets are added to a cluster for each entity they contain. The example shows how a tweet containing both `Obama' and `Romney' would be put into two clusters, one for the entity `Obama' and one for the entity `Romney'.}
 	\label{detection:graphic:clustering}
 \end{figure}
 
@@ -128,7 +134,7 @@ We cannot simply take all of the tweets posted during the burst as these will co
 We require that the centroid time of a cluster (i.e. the average timestamp associated with all tweets in a cluster) is greater than \(B_e\), where \(B_e\) is the time at which the entity began to burst. This helps to ensure that clusters which discuss background topics are not included as they are likely to have existed for some time before the burst took place. A cluster's centroid time is updated as new tweets are added, ensuring that clusters which initially had a centroid time prior to the burst can still be added to an event. This is important as it allows clusters containing early reports of the event, which often occur before any burst takes places, to be included.
 
 We also require that a cluster meets a minimum size threshold, usually between 5 and 20 tweets (10 is used for our evaluations).
-This is to ensure that the cluster covers a significant portion of the event and to prevent small but noisy clusters from being included. The minimum size has a large effect on the precision of our approach, and large minimum cluster sizes can give a significant increase in precision for a small reduction in recall. We discuss the minimum cluster size in detail in section \ref{detection:sec:simThresholds}.
+This is to ensure that the cluster covers a significant portion of the event and to prevent small but noisy clusters from being included. The minimum size has an effect on the precision of our approach, and large minimum cluster sizes can give a large increase in precision for a small reduction in recall. We discuss the minimum cluster size in detail in section \ref{detection:sec:simThresholds}.
 
 An event is kept alive as long as it has at least one bursting entity associated with it. Once all entities associated with an event have stopped bursting, the event is finalized, and no more clusters or tweets can be added to it.
 
@@ -154,6 +160,11 @@ This helps to capture more information about the event, even after discussion ha
 
 \subsubsection{Entity Normalization}
 \label{sec:entityNorm}
-As described in section \ref{detection:sec:clustering}, entities are kept in their longest form rather than split into individual components (e.g. `Barack Obama', rather than `Barack' and `Obama'). However, this can cause issues as multiple events are created for different forms of the same entity. Using our previous example, it is unlikely that single tweet will mention both `Barck Obama' and `Obama', resulting in two separate events that our entity linking approach is unlikely to merge.
+As described in section \ref{detection:sec:clustering}, entities are kept in their longest form rather than split into individual components (e.g. `Barack Obama', rather than `Barack' and `Obama').
+However, this can cause issues as multiple events are created for different forms of the same entity.
+Using our previous example, it is unlikely that single tweet will mention both `Barck Obama' and `Obama', resulting in two separate events that our entity linking approach is unlikely to merge.
 
-To solve this, we perform a naive entity disambiguation technique. When measuring the frequency of entity mentions within an event, we perform a normalization step, which counts the last term of people and organization names as a separate entity. For example, for event mention of `barack obama', we also increase the count of `obama'. Note that we only do this for People and Organizations, but not Locations, as locations tend to lose much of their meaning when split (e.g. United Kingdom → Kingdom).
+To solve this, we perform a naive entity normalization technique.
+When measuring the frequency of entity mentions within an event, we perform a normalization step, which counts the last term of people and organization names as a separate entity.
+For example, for event mention of `barack obama', we also increase the count of `obama'.
+Note that we only do this for People and Organizations, but not Locations, as locations tend to lose much of their meaning when split (e.g. United Kingdom $\rightarrow$ Kingdom).
