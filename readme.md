@@ -63,33 +63,31 @@ This document outlines a plan for revisions and corrections that are needed in o
   - [ ] Covert category table to graph
 
 ## 4. Entity-Based Event Detection
-- [ ] Move background to Chapter 2
+- [X] Move background to Chapter 2
 - [ ] Re-examine alg. 2 and make sure it's correct (and makes sense)
-- [ ] Discuss potential for semantic linking of events in 4.2
-- [ ] Clarify 4.2.5, in particular, disambiguation
-- [ ] Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead
-- [ ] Discuss and clarify scaling used for crowdsourced evaluation
+- [ ] Link burst detection approach back to that used by CS approach and clarify
+- [ ] Justify choice of 1.5x for window length
+- [ ] 4.2.4 - Clarify that a burst does not mean we have any clusters / tweets yet
+- [ ] Clarify 4.2.5, in particular, disambiguation. Why not use tagme, for example?
+- [X] Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead
+- [X] Remove most of 4.3.1 as it is repetition of Chapter 3
 - [ ] Define and explain in detail, the automatic evaluation
-- [ ] Remove most of 4.3.1 as it is repetition of Chapter 3
+- [ ] Discuss and clarify scaling used for crowdsourced evaluation
 - [ ] Clarify Table 4.4
-- [ ] Remove "significant" where statistical significance not verified
-- [ ] Explain 3 classes v single class in Table 4.9 and end of section 4.4: make it clear that disambiguation is done by Stanford NER in the form of NER classes
+- [X] Remove "significant" where statistical significance not verified
+- [ ] Explain 3 classes v single class in Table 4.9 and end of section 4.4:
+  - [X] make it clear that disambiguation is done by Stanford NER in the form of NER classes
 - [ ] Discuss ability to scale wrt current hardware
 - [ ] Various small clarifications requested in annotated copy
 
 Chapter 4
-Why can the previous approach not cope with the twitter data? P 46?
-Need comparison with the more recent work on page 48?
-Used stanford ner -- is the model good enough on tweets?
-Justify the named entity filter on page 49.  Did you sample the tossed out tweets? How much is lost? Ner may miss things.
-Page 50 -- need more justification for why algorithms don’t scale.  What algorithms?
 Describe the clustering algorithm - bottom-up single-link? P51
 How do you evaluate the burst detection effectiveness? p52/53
-Why not use tweet entity links - e.g. tagme on tweets. P55 obama example
 How does this compare with the latest work on the collection - p57
 Are the results based on b-cubed p57? Unclear to me
 What about the other 50% -- is this really high recall?
-No train/test split?  No system parameters need to be tuned?
+No train/test split?
+No system parameters need to be tuned?
 Significance testing?
 What about supervised baselines?
 
