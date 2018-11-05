@@ -78,14 +78,6 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [ ] Discuss ability to scale wrt. current hardware
 - [ ] Various small clarifications requested in annotated copy
 
-Chapter 4
-How do you evaluate the burst detection effectiveness? p52/53
-How does this compare with the latest work on the collection - p57
-Are the results based on b-cubed p57? Unclear to me
-What about the other 50% -- is this really high recall?
-No train/test split?
-No system parameters need to be tuned?
-
 ## 5. Newsworthiness
 - [ ] Move background to Chapter 3
 - [ ] Discuss user description terms and subjective nature / drift
