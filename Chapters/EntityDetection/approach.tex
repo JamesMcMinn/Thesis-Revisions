@@ -131,31 +131,37 @@ However, the similarities end there, and unlike TDT, we do not assume that the f
 The remainder of this section describes how our approach decides that a new real-world event has occurred, and how clusters relating to those events are identified.
 
 \subsection{Identifying Bursty Entities}
-For an effective event detection approach, it is important to have a method of detecting significant events and filtering the mundane. We do this by looking for temporal bursts in the frequency of an entity, which can occur over periods ranging from a few minutes to several hours. To model this, we use a set of windows for each entity to capture their frequency over time, starting at a 5 minutes, and doubling in length up to 320 minutes (i.e. 5, 10, 20, \ldots, 320).
+For an effective event detection approach, it is important to have a method of detecting significant events and filtering the mundane.
+We do this by looking for temporal bursts in the frequency of an entity, which can occur over periods ranging from a few minutes to several hours.
+To model this, we use a set of windows for each entity to capture their frequency over time, starting at 5 minutes, and doubling in length up to 320 minutes (i.e. 5, 10, 20, \ldots, 320).
 
-We use the Three Sigma Rule as the basis for a light-weight burst detection approach, which states that a value is considered to be practically impossible if it is further than 3 standard deviations from the expected value \citep{Pukelsheim94}. For the windows, we maintain mean and standard deviation values, updating them periodically with the current entity frequency. It is possible to efficiently compute moving mean (\(\mu\)) and standard deviation (\(\sigma\)) values using a set of three power sums \(s_0\), \(s_1\) and \(s_2\), where \(s_j\), \(\mu\) and \(\sigma\) at time period \(n+1\) for data series \(x\) is shown below:
-\[
-s_{jn+1}= s_{jn} + x_{n+1}^j
-\]
+We use the Three Sigma Rule as the basis for a light-weight burst detection approach, which states that a value is considered to be statistically unlikely if it is further than 3 standard deviations from the expected value \citep{Pukelsheim94}.
+A similar approach is used by \cite{Aggarwal12} to determine an minimum similarity threshold for their clustering approach described in section \ref{background:cs}.
+
+For each window, we maintain mean and standard deviation values, updating them periodically with the current entity frequency.
+It is possible to efficiently compute moving mean (\(\mu\)) and standard deviation (\(\sigma\)) values using a set of three power sums \(M_0\), \(M_1\) and \(M_2\), for vector $E$ containing counts of how frequently entity $e$ is mentioned during each window ()
+\begin{align*}
+	M_0 &= \sum_{i = 0}^{|E|}{E_i^0} & M_1 &= \sum_{i = 0}^{|E|}{E_i^1} & M_2 &= \sum_{i = 0}^{|E|}{E_{i}^2}
+\end{align*}
 The current mean and standard deviation values (\(\mu\) and \(\sigma\) respectively), can then calculated as so:
 \begin{equation*}
 	\begin{aligned}[c]
-		\mu = \frac{s_1}{s_0}
+		\mu = \frac{M_1}{M_0}
 	\end{aligned}
 	\qquad\qquad
 	\begin{aligned}[c]
-		\sigma = \sqrt{\frac{s_0 s_2 - s_1^2}{s_0}}
+		\sigma = \sqrt{\frac{M_0 M_2 - M_1^2}{M_0}}
 	\end{aligned}
 \end{equation*}
 
-The \(\mu\) and \(\sigma\) values for each window are updated periodically based upon the length of the window (i.e., a 5 minute window is updated every 5 minutes).
-In our evaluations, we find that using full historic frequency information for each window (section \ref{detection:sec:burstDetection}), and instead use only the past 12 values to calculate mean and standard deviations.
-
-When a tweet which is no longer covered by the largest window it is removed from all inverted indexes. This helps to reduce the number of comparisons required when calculating the nearest neighbour, and allows resources to be freed for incoming tweets. We do not believe that removing older tweets will affect the effectiveness of the algorithm due to the real-time nature of Twitter, as tweets which are more than a few hours old are generally not relevant to any ongoing real-world events, and those which are will hopefully have already been marked as so by the algorithm, ensuring that they are recorded elsewhere.
+The \(\mu\) and \(\sigma\) values are computed for each named entity and each window length, requiring $|e| \cdot 7 \cdot 3$ integer values to be stored, where $|e|$ is the number of named entities seen by the system, 7 is the number of windows, and 3 represents the $M_0$, $M_1$ and $M_2$ values.
+Entity frequencies are updated periodically based upon the length of the window (i.e., a 5 minute window is updated every 5 minutes).
 
 Once a tweet has been clustered and added to entity indexes (as shown in Algorithm \ref{detection:alg:clustering}), we update the entity statistics, and check if the newly added tweet caused the entity to burst in any of the windows. If the number of tweets in a given window is greater than \(\mu + (3 \cdot \sigma)\), then we say that the given window is bursty, and the entity is part of a new event.
 
 In order to smooth and reduce noise, statistics are not updated while a window is bursting, and windows are kept in a bursting state for \(1.5 \times window\_length\) after the window's statistics suggest that it has stopped bursting. For example, an entity which is marked as bursty in the 80 minute window would remain bursting for 120 minutes after the 80 minute window stops bursting.  The extra time allows for fluctuations in frequency as an event develops, and helps prevent a state of flux where an entity rapidly switches between bursting and normal states.
+
+When a tweet which is no longer covered by the largest window it is removed from all inverted indexes. This helps to reduce the number of comparisons required when calculating the nearest neighbour, and allows resources to be freed for incoming tweets. We do not believe that removing older tweets will affect the effectiveness of the algorithm due to the real-time nature of Twitter, as tweets which are more than a few hours old are generally not relevant to any ongoing real-world events, and those which are will hopefully have already been marked as so by the algorithm, ensuring that they are recorded elsewhere.
 
 \subsection{Event Creation and Cluster Selection}
 \label{detection:sec:eventCreation}
