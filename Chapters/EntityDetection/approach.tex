@@ -27,8 +27,8 @@ The GATE Twitter POS model is a Part-of-speech models trained specifically on tw
 We extract all nouns, verbs and named entities from each tweet.
 Nouns and verbs are lemmatized, and entities are kept in their longest form to ensure that names are as distinguishing as possible  (i.e. ``Paul Ryan'' rather than ``Paul'' and ``Ryan'').
 
-The Stanford 3 class NER model is able to perform automatic class-based disambiguation such that entity mentions are provided a class (person, location, or organization).
-We use the class information and consider named entities of different classes to be distinct, even if the name itself is identical.
+The Stanford 3 class NER model is able to perform automatic class-based disambiguation such that entity mentions are also give a class (person, location, or organization).
+We use this class information and consider named entities of different classes to be distinct, even if the name itself is identical.
 For example, the entity ``Spain'' in the context of the football team (an \emph{organization} consisting on many people that play football) is conceptually different from ``Spain'' the (the landmass, a \emph{location}), as this helps to retain as much distinguishing power as possible.
 We evaluate and give reasoning for this choice in section \ref{detection:sec:entityTypes}.
 All terms and entities are converted to lowercase and any non-alphanumeric characters are removed (however whitespace is retained in the case of named entities).
@@ -46,13 +46,14 @@ Furthermore, in order to efficiently cluster tweets, our clustering approach (de
 
 We also remove retweets, which make up approximately 30\% of all tweets and are simply a copy of an existing tweet.
 Retweets require little effort to produce, meaning that they are often associated with the spread of spam, memes and misinformation~\citep{Grier:2010:SUC:1866307.1866311}, and do not provide any new information.
-We examine the effect of removing retweets in section \ref{detection:sec:retweetsEval}, and show that their removal results in a significant increase in precision.
+We examine the effect of removing retweets in section \ref{detection:sec:retweetsEval}, and show that their removal improves precision.
 
 We also use a range of term-level filters that remove terms and entities that are unlikely to be related to an event or that are known to be associated with spam and noise.
 As well as stop words and expletives, we remove terms associated with watching television (``watch'', ``film'',``movie'', ``episode'', etc.) or listening to music (``listen'', ``song'', ``play'', etc.).
 This helps to reduce the number of false positives created by large numbers of users watching a television show while using a ``second screen'' to discuss it, as significant, but fictional events in television shows can often cause reactions that appear similar to real-world events.
 We also remove terms and entities associated with traditional news and broadcast agencies, such as ``bbc news'', ``cnn'', ``fox news'' and ``reuters''.
 Tweets from these agencies often contain their own name, which can cause issues with our entity based clustering and merging approaches (described in sections \ref{detection:sec:clustering} and \ref{detection:sec:entityLinking}) as the same entity can appear to be associated with a large number of events simultaneously.
+Term level filters such as these are likely to require some maintenance as the usage of Twitter continues to evolve and require some domain knowledge to construct, however this small amount of expert work helps to remove vast amounts of noise.
 Finally, terms under 3 characters in length are removed.
 
 \subsection{Entity-based Online Clustering}

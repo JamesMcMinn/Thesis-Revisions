@@ -9,7 +9,8 @@ Whilst this is an issue in many IR collections, we note that the effect is more 
 This makes it likely that we will detect events that are not in the judgements.
 We verify this hypothesis and show that we detect a large number of events which are not in the relevance judgements by performing a crowdsourced evaluation, described in sections \ref{detection:sec:crowd} and \ref{detection:sec:results}.
 
-We ran our entity-based approach on the collection, treating it as a stream of tweets ordered by creation time. Named Entities and Part of Speech Tagging was performed using the Stanford POS Tagger\footnote{http://www-nlp.stanford.edu/software/tagger.shtml} 3.2.0.
+We ran our entity-based approach on the collection, treating it as a stream of tweets ordered by creation time.
+Named Entities and Part of Speech Tagging was performed using the Stanford POS Tagger\footnote{http://www-nlp.stanford.edu/software/tagger.shtml} 3.2.0.
 Unless otherwise stated, all runs were performed using the top 10 IDF-weighted terms per tweet, a maximum of 500 tweets were retrieved per term, and a minimum cosine similarity of 0.5.
 Evaluations were performed on all events with more than 30 tweets, using a 5\% threshold and/or minimum of 15 matching tweets, with full descriptions of these thresholds and the rationale for their choices described in section \ref{detection:sec:measures}.
 Any variation from these thresholds is noted alongside the results presented in section \ref{detection:sec:results}.
