@@ -8,6 +8,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [List of algorithms](https://github.com/JamesMcMinn/Thesis-Revisions/commit/28d74ba136a2db3593fa7a318ee905c430cd94b4)
 
 ## 0. Front Matter
+- [ ] Fix the date
 - [ ] Add Acknowledgments
 - [X] Add Dedication
 - [ ] Avoid copying from Introduction for Abstract
@@ -33,7 +34,7 @@ This document outlines a plan for revisions and corrections that are needed in o
   - [X] [Describe LSH approach in detail](https://github.com/JamesMcMinn/Thesis-Revisions/commit/cc9b2e738611ffab97a1f23446bfd164d1d95344)
   - [X] [Describe CS approach in detail](https://github.com/JamesMcMinn/Thesis-Revisions/commit/186c4b495b76802d887c9be26e5dff9b65b2e80f)
       - [X] [Talk about use of network for similarity calculations](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f934bd3dbd18272f4f7151676c6117b5b8d8950c)
-  - [ ] More detailed analysis of existing event detection approaches
+  - [ ] A bit more detailed analysis of existing event detection approaches
   - [X] [Describe issues with clustering (wrt Twitter data)](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f934bd3dbd18272f4f7151676c6117b5b8d8950c)
   - [ ] Talk a bit about burst detection techniques for Twitter: trend analysis, etc.
 - [X] [Move background from Event Collection here. Expand.](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f3b311acb8c65c1805e10a7925052051bc9af84e)

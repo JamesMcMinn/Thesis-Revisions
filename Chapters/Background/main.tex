@@ -243,6 +243,7 @@ Although evaluation of their approach seems to show that it is very effective, i
 
 
 \subsection{Locality Sensitive Hashing (LSH) using Random Hyperplanes}
+\label{background:sec:lsh}
 Earlier we discussed how the basic TDT approach as described in Section \ref{background:sec:tdt} could not scale to extremely high volume streams (even with the aid of an inverted index), making it infeasible to use for event detection on Twitter.
 \cite{Petrovic:2010:SFS:1857999.1858020} proposed a solution to this using a technique called Locality Sensitive Hashing (LSH).
 LSH uses a special hash functions that produce the same hash for documents that are similar, but not necessarily completely identical, allowing documents that are close in vector space to be placed into the same bucket.

@@ -58,29 +58,13 @@ Finally, terms under 3 characters in length are removed.
 
 \subsection{Entity-based Online Clustering}
 \label{detection:sec:clustering}
-Nearest-neighbor clustering is a commonly used method in event detection to find documents that discuss a similar topic or event, however it is also inherently slow when dealing with large numbers of documents, making traditional clustering approaches, such as those used by the TDT project described in section \ref{background:alg:tdt}, infeasible at Twitter scale.
-A number of solutions have been proposed to solve this, including the use of Locality Sensitive Hashing~\citep{Petrovic10}, which we implement in chapter \ref{chapter:collection}.
+Almost all event detection approaches make use of single pass nearest neighbor clustering to find documents that discuss the same topic or event, similar to those used by the TDT project described in section \ref{background:alg:tdt}.
+As we have already discussed, these approaches get slower as the number of documents grows, eventually causing them to become too slow for high volume streams like \citep{Petrovic10}.
+A number of solutions have been proposed to solve this, including the use of Locality Sensitive Hashing~\citep{Petrovic10}, which we described in section \ref{background:sec:lsh}.
 However, these approaches are general purpose, and do not make use of any domain or task specific information.
 Given the role that named entities play in describing real-world events, we believe it makes sense to use their presence to improve clustering efficiency and effectiveness for the task of event detection.
 
-Using the premise that tweets discussing an event must contain at least one of the named entities involved in the event, we partition tweets based upon the entities they contain, and add a tweet to a cluster for every entity it contains, as show in in Figure \ref{detection:graphic:clustering}.
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=8cm,trim=0cm 1.5cm 0cm 0cm]{Chapters/EntityDetection/images/clustering.pdf}
-	\caption[Entity-based clustering]{Tweets are added to a cluster for each entity they contain. The example shows how a tweet containing both `Obama' and `Romney' would be put into two clusters, one for the entity `Obama' and one for the entity `Romney'.}
-	\label{detection:graphic:clustering}
-\end{figure}
-
-For the purpose of clustering, this can be thought of as having a unique inverted index for every named entity. For each named entity $e$ in tweet $d$, a list of tweets $D$ is retrieved from the inverted index for $e$ (the inverted index for $e$ does not contain a row for $e$) and the maximum TF-IDF weight cosine similarity score is calculated between $d$ and each tweet in $D$.
-
-To ensure that our approach is able to run in real-time, we limit the number of tweets that can be retrieved from an entity's inverted index to a fixed number per term (usually between 100-1000), and use only the top 10 TF-IDF weighed terms per tweet. Less than 1\% of tweets from our test collection contain more than 10 terms, meaning that we lose very little information by enforcing this limit, whilst ensuring an upper bound of \(10N\) comparisons are made, where \(N\) is the maximum number of documents retrieved per term. Nouns, verbs and named entities are used when calculating the cosine similarity between tweets, however the named entity whose inverted index was used to retrieve comparison documents is given a weight of 0 in order to give as much weight as possible to other topical terms.
-
-If the maximum score is above a set threshold (usually in the range \(0.4-0.6\) \citep{Petrovic10}, discussed in section \ref{detection:sec:simThresholds}), then $d$ is added to the same cluster as its nearest neighbour. If the nearest neighbour does not already belong to a cluster, then a new cluster is created containing both tweets and assigned to entity $e$. The new tweet is then added to the inverted index for entity $e$.
-
-It should be noted that unlike traditional event detection approaches, we do not assume that the formation of a new cluster indicates a new event. Algorithm \ref{detection:alg:clustering} shows the pseudocode for our entity based cluster approach.
-
-\begin{algorithm}
+\begin{algorithm}[t]
 	\DontPrintSemicolon
 	\KwIn{Minimum similarity threshold $m$}
 	index $\gets [][]$ \\
@@ -120,6 +104,31 @@ It should be noted that unlike traditional event detection approaches, we do not
 \caption{Entity-based method of clustering}
 \label{detection:alg:clustering}
 \end{algorithm}
+
+Algorithm \ref{detection:alg:clustering} shows the pseudocode for our entity based cluster approach.
+Using the premise that tweets discussing an event must contain at least one of the named entities involved in the event, we partition tweets based upon the entities they contain, and add a tweet to a cluster for every entity it contains, as show in in Figure \ref{detection:graphic:clustering}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=8cm,trim=0cm 1.5cm 0cm 0cm]{Chapters/EntityDetection/images/clustering.pdf}
+	\caption[Entity-based clustering]{Tweets are added to a cluster for each entity they contain. The example shows how a tweet containing both `Obama' and `Romney' would be put into two clusters, one for the entity `Obama' and one for the entity `Romney'.}
+	\label{detection:graphic:clustering}
+\end{figure}
+
+For the purpose of clustering, this can be thought of as having a unique inverted index per named entity that the system has seen.
+For each named entity $e$ in tweet $d$, a list of tweets $D$ is retrieved from the inverted index for $e$ and the maximum TF-IDF weight cosine similarity score is calculated between $d$ and each tweet in $D$.
+The new tweet is then added to the inverted index for entity $e$.
+
+To ensure that our approach is able to run in real-time, we limit the number of tweets that can be retrieved from an entity's inverted index to a fixed number per term (usually between 100-1000), and use only the top 10 TF-IDF weighed terms per tweet.
+Less than 1\% of tweets from our test collection contain more than 10 terms, meaning that we lose very little information by enforcing this limit, whilst ensuring an upper bound of \(10N\) comparisons are made, where \(N\) is the maximum number of documents retrieved per term.
+Nouns, verbs and named entities are used when calculating the cosine similarity between tweets.
+The named entity whose inverted index was used to retrieve comparison documents is given a weight of 0 to give as much weight as possible to other topical terms.
+
+If the maximum score is above a set threshold (usually in the range \(0.4-0.6\) \citep{Petrovic10}, discussed in section \ref{detection:sec:simThresholds}), then $d$ is added to the same cluster as its nearest neighbour, or when a nearest neighbor cannot be found within the threshold, a new cluster is created containing only $d$.
+
+At a very high level, our clustering approach has similarities to those used by many TDT approaches, in that it performs single-pass nearest neighbor clustering and makes use of an inverted index.
+However, the similarities end there, and unlike TDT, we do not assume that the formation of a new cluster indicates a new event.
+The remainder of this section describes how our approach decides that a new real-world event has occurred, and how clusters relating to those events are identified.
 
 \subsection{Identifying Bursty Entities}
 For an effective event detection approach, it is important to have a method of detecting significant events and filtering the mundane. We do this by looking for temporal bursts in the frequency of an entity, which can occur over periods ranging from a few minutes to several hours. To model this, we use a set of windows for each entity to capture their frequency over time, starting at a 5 minutes, and doubling in length up to 320 minutes (i.e. 5, 10, 20, \ldots, 320).
