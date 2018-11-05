@@ -61,7 +61,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 
 ## 4. Entity-Based Event Detection
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3c4e24be6f0276d78de61d478c96bfc1f9cabe0f)
-- [ ] Re-examine alg. 2 and make sure it's correct (and makes sense)
+- [X] [Re-examine alg. 2 and make sure it's correct (and makes sense)](https://github.com/JamesMcMinn/Thesis-Revisions/commit/47236475eb9a7755ebaf4fe2907e75a4c9b89b90)
 - [ ] Link our clustering approach back to TDT approach
 - [ ] Link burst detection approach back to that used by CS approach and clarify
 - [ ] Justify choice of 1.5x for window length
@@ -75,11 +75,10 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Remove "significant" where statistical significance not verified](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c8857e4d187173f2005b0aa0524b5d6447e764ba)
 - [ ] Explain 3 classes v single class in Table 4.9 and end of section 4.4:
   - [X] [make it clear that disambiguation is done by Stanford NER in the form of NER classes](https://github.com/JamesMcMinn/Thesis-Revisions/commit/8d5a4ec5e84828324b8e7129f54031e981987740)
-- [ ] Discuss ability to scale wrt current hardware
+- [ ] Discuss ability to scale wrt. current hardware
 - [ ] Various small clarifications requested in annotated copy
 
 Chapter 4
-Describe the clustering algorithm - bottom-up single-link? P51
 How do you evaluate the burst detection effectiveness? p52/53
 How does this compare with the latest work on the collection - p57
 Are the results based on b-cubed p57? Unclear to me
