@@ -62,6 +62,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 ## 4. Entity-Based Event Detection
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3c4e24be6f0276d78de61d478c96bfc1f9cabe0f)
 - [ ] Re-examine alg. 2 and make sure it's correct (and makes sense)
+- [ ] Link our clustering approach back to TDT approach
 - [ ] Link burst detection approach back to that used by CS approach and clarify
 - [ ] Justify choice of 1.5x for window length
 - [ ] 4.2.4 - Clarify that a burst does not mean we have any clusters / tweets yet

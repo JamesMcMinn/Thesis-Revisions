@@ -81,20 +81,42 @@ If the maximum score is above a set threshold (usually in the range \(0.4-0.6\) 
 It should be noted that unlike traditional event detection approaches, we do not assume that the formation of a new cluster indicates a new event. Algorithm \ref{detection:alg:clustering} shows the pseudocode for our entity based cluster approach.
 
 \begin{algorithm}
-\ForEach{tweet d in corpus} {
+	\DontPrintSemicolon
+	\KwIn{Minimum similarity threshold $m$}
+	index $\gets [][]$ \\
+	clusters $\gets$ [][] \\
+
+\ForEach{tweet d in the stream} {
+
 	\ForEach{entity e in d} {
-		\ForEach{term t in d} {
-			\ForEach{tweet d' in $index_{e}$ that contains t} {
-				update $score(d, d')$\;
+
+		$S(d) \gets \emptyset$ \tcp*{set of documents that share a term with $d$}
+		\ForEach{non-entity term t in d} {
+			\ForEach{tweet d' in index[e][t]} {
+				$S(d) \gets S(d) \cup d'$ \\
+			}
+			index[$e$][$t$] $\gets$ index[$e$][$t$] $\cup$ $d$ \\
+		}
+
+		$c_{max} \gets 0$ \tcp*{maximum cosine between $d$ and tweets in $S(d)$}
+		$n_{d} \gets nil$ \tcp*{tweet with maximum cosine to $d$}
+		\ForEach{tweet d' in S(d)}{
+			$c$ := cosine($d$, $d'$) \\
+			\If{$c > c_{max}$}{
+				$c_{max} \gets c$ \\
+				$n_d \gets d'$
 			}
 		}
-		$score_{max}(d)$ = $max_{d'}\{score(d, d')\}$\;
-		\If{$score_{max}(d)$ >= threshold} {
-			add $d$ to $cluster(d')$\;
+
+		\eIf{$c_{max} \geq m$} {
+			add $d$ to clusters[$e$][$n_d$]
+		}{
+			clusters[$e$][$d$] $\gets$ new cluster($d$) \tcp*{Do not assume the cluster is a new event}
 		}
-		add $d$ to $index_{e}$\;
+
 	}
 }
+
 \caption{Entity-based method of clustering}
 \label{detection:alg:clustering}
 \end{algorithm}
