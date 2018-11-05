@@ -37,9 +37,6 @@ This document outlines a plan for revisions and corrections that are needed in o
   - [X] [Describe issues with clustering (wrt Twitter data)](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f934bd3dbd18272f4f7151676c6117b5b8d8950c)
   - [ ] Talk a bit about burst detection techniques for Twitter: trend analysis, etc.
 - [X] [Move background from Event Collection here. Expand.](https://github.com/JamesMcMinn/Thesis-Revisions/commit/f3b311acb8c65c1805e10a7925052051bc9af84e)
-- [ ] Move background for Event Detection here. Expand.
-- [ ] Move background from Newsworthiness here. Expand.
-
 
 ## 3. Building an Event Collection
 - [X] [Re-write introduction wrt. previous chapter](https://github.com/JamesMcMinn/Thesis-Revisions/commit/4aeed608888e1b4b48ee650d874e52b3c8fb42b1)
@@ -69,14 +66,14 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [ ] Justify choice of 1.5x for window length
 - [ ] 4.2.4 - Clarify that a burst does not mean we have any clusters / tweets yet
 - [ ] Clarify 4.2.5, in particular, disambiguation. Why not use tagme, for example?
-- [X] Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead
-- [X] Remove most of 4.3.1 as it is repetition of Chapter 3
+- [X] [Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
+- [X] [Remove most of 4.3.1 as it is repetition of Chapter 3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
 - [ ] Define and explain in detail, the automatic evaluation
 - [ ] Discuss and clarify scaling used for crowdsourced evaluation
 - [ ] Clarify Table 4.4
-- [X] Remove "significant" where statistical significance not verified
+- [X] [Remove "significant" where statistical significance not verified](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c8857e4d187173f2005b0aa0524b5d6447e764ba)
 - [ ] Explain 3 classes v single class in Table 4.9 and end of section 4.4:
-  - [X] make it clear that disambiguation is done by Stanford NER in the form of NER classes
+  - [X] [make it clear that disambiguation is done by Stanford NER in the form of NER classes](https://github.com/JamesMcMinn/Thesis-Revisions/commit/8d5a4ec5e84828324b8e7129f54031e981987740)
 - [ ] Discuss ability to scale wrt current hardware
 - [ ] Various small clarifications requested in annotated copy
 
@@ -88,11 +85,6 @@ Are the results based on b-cubed p57? Unclear to me
 What about the other 50% -- is this really high recall?
 No train/test split?
 No system parameters need to be tuned?
-Significance testing?
-What about supervised baselines?
-
-
-
 
 ## 5. Newsworthiness
 - [ ] Move background to Chapter 3
