@@ -6,7 +6,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [ ] Add equation numbers
 - [ ] Convert Tables to Graphs where appropriate
 - [X] [List of algorithms](https://github.com/JamesMcMinn/Thesis-Revisions/commit/28d74ba136a2db3593fa7a318ee905c430cd94b4)
-  - [ ] Fix cluster and table captions
+  - [ ] Fix algorithm and table captions
 
 ## 0. Front Matter
 - [X] Fix the date
@@ -24,7 +24,6 @@ This document outlines a plan for revisions and corrections that are needed in o
     - Might be best discussing evaluation briefly earlier in the chapter?
 - [ ] Expand on contribution description relating to definition of event
 - [X] [Remove references to unsupervised](https://github.com/JamesMcMinn/Thesis-Revisions/commit/92b213136746bf2c4b527fad22b7870af5201afb)
-- [ ] Expand
 
 ## 2. Background
 - [X] More detailed description of TDT Project
@@ -68,7 +67,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Link burst detection approach back to that used by CS approach and clarify](https://github.com/JamesMcMinn/Thesis-Revisions/commit/55211834ea84596e2f184ce94c25d09fae037fea)
 - [X] [Add pseudocode for burst detection](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c11731d32a5533784518e6037884dda32b411ff0)
 - [X] [4.2.4 - Clarify that a burst does not mean we have any clusters / tweets yet](https://github.com/JamesMcMinn/Thesis-Revisions/commit/d8896cf95fcf4819f44b18ed35503e5d84b5dd51)
-- [ ] 4.2.5: Disambiguation. Why not use tagme, for example?
+- [X] 4.2.5: Disambiguation. Why not use tagme, for example?
 - [ ] 4.2.5: Formalize algorithm
 - [X] [4.3: Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
 - [X] [Remove most of 4.3.1 as it is repetition of Chapter 3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)

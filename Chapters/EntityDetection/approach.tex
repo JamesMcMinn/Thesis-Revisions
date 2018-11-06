@@ -216,7 +216,7 @@ We do not believe that removing older tweets will affect the effectiveness of th
 \label{detection:sec:eventCreation}
 Once a burst has been detected (lines 20-24 in algorithm \ref{detection:alg:updatingEntityValues}), we have potentially detected an event.
 However, we must first identify a set of clusters that discuss the event before reporting it as a new event.
-We cannot simply take all of the tweets posted during the burst as these will contain background topics about the bursting entity, such as discussion about visiting a location or listening to a particular artist's music.
+We cannot simply take all clusters containing tweets posted during the burst as these will contain background topics about the bursting entity, such as discussion about visiting a location or listening to a particular artist's music.
 To solve this, we propose the use of a number of heuristics to select clusters that are the most likely to be related to the event that caused the burst.
 
 We require that the centroid time of a cluster (i.e. the average timestamp associated with all tweets in a cluster) is greater than \(B_e\), where \(B_e\) is the time at which the entity began to burst.
@@ -238,9 +238,11 @@ New events are related to only a single entity.
 However, most events involve more than one entity, such as a person and a location, or an interaction between two organizations.
 In additional, events are often discussed using a number of synonyms.
 For example ``Barack Obama'' is often shortened to simply ``Obama''.
-These issues mean that there are generally a number of Event objects, each created by separate named entities but of which discuss the same real-world event.
-To solve this, we create links between events which are related to the same real-world event using entity co-occurrence statistics.
-If an entity is mentioned in at least 50\% of tweets in an event, then we say there is a potential link between the event and the entity.
+These issues mean that there are generally a number of events, each created by separate named entities, which discuss the same real-world event.
+Although entity disambiguation tools, such as TagMe, can perform entity disambiguation and may help for in common cases, such as mentions of significant people.
+However, their reliance on existing ontologies such as Wikipedia mean that there will always be a lag between an event occurring and that information being updated \citep{WRN2012:osbornebieber}, which makes them less useful for rapidly developing real-world events.
+Our approach relies on no external sources of information, and is able to generate links between entities in real-time based on the events that discuss them using entity co-occurrence statistics.
+Formally, if an entity is mentioned in at least 50\% of tweets in an event, then we say there is a potential link between the event and the entity.
 
 If such a potential link is found, a number of checks are performed to ensure that the entity is viable and likely to be related to the event. Firstly, we check that the potential entity is bursting and therefore is already associated with an event. Secondly, we verify that the entity has not already been associated with the event. This requirement prevents long-running events from consuming popular or frequently bursting entities. For example, an event which is associated with both ``Obama'' and ``Romney'' would not automatically be merged with `Romney' should it stop bursting and then burst again before the original event had finished. Instead, the Romney entity would form a new event, which may then link itself to the previous event if Obama occurs in more than 50\% of tweets.
 
