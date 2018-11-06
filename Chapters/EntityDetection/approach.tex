@@ -145,28 +145,34 @@ A similar approach is used by \cite{Aggarwal12} to determine an minimum similari
 	\DontPrintSemicolon
 
 	lengths $\gets$ [5, 10, 20, 40, 80, 160, 320]\\
-	counts $\gets$ [][] \\
-	$M_0$ $\gets$ [][] \\
-	$M_1$ $\gets$ [][] \\
-	$M_2$ $\gets$ [][] \\
-	$\mu \gets$ [][] \\
-	$\sigma \gets$ [][] \\
+	$M_0, M_1, M_2 \gets$ [][], [][], [][] \\
+	$\mu, \sigma \gets$ [][], [][] \\
+	bursting $\gets$ [] \\
+	burstUntil $\gets$ [] \\
 
 	\ForEach{tweet d in the stream} {
 
 		\ForEach{entity e in d} {
 
-			\ForEach{window w in lengths} {
-				\If{seconds since last count reset for window $\geq$ lengths[$w$]}{
-					$M_0 \gets M_0 + 1$ \\
-					$M_1 \gets M_1$ + counts[$e$][$w$] \\
-					$M_2 \gets M_2$ + (counts[$e$][$w$] $\cdot$ counts[$e$][$w$]) \\
-					counts[$e$][$w$] $\gets$ 0\\
+			\If{bursting[$e$] is true and burstUntil[$e$] $< t$}{
+				bursting[$e$] $\gets$ false \tcp*{end event and perform any cleanup}
+				burstUntil[$e$] $\gets$ 0\\
+			}
 
+			\ForEach{window w in lengths} {
+				$c \gets$ number of times entity $e$ has appered in last $w$ seconds \\
+				\If{seconds since last statistics update for window $\geq$ lengths[$w$]}{
+					$M_0 \gets M_0 + 1$ \\
+					$M_1 \gets M_1$ + $c$ \\
+					$M_2 \gets M_2$ + $c^2$ \\
 					$\mu$[$e$][$w$] $\gets M_1 / M_0$ \\
 					$\sigma$[$e$][$w$] $\gets \sqrt{(M_0M_2 - M_1^2) / M_0} $ \\
 				}
-				counts[$e$][$w$] $\gets$ counts[$e$][$w$] + 1\\
+
+				\If{$c > \mu[e][w] + (3 \cdot \sigma[e][w])$}{
+					bursting[$e$] $\gets$ true \\
+					burstUntil[$e$] $\gets t + (w \times 1.5)$ \\
+				}
 			}
 
 		}

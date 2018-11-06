@@ -6,6 +6,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [ ] Add equation numbers
 - [ ] Convert Tables to Graphs where appropriate
 - [X] [List of algorithms](https://github.com/JamesMcMinn/Thesis-Revisions/commit/28d74ba136a2db3593fa7a318ee905c430cd94b4)
+  - [ ] Fix cluster and table captions
 
 ## 0. Front Matter
 - [ ] Fix the date
@@ -67,8 +68,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] Link burst detection approach back to that used by CS approach and clarify
 - [ ] 4.2.4 - Clarify that a burst does not mean we have any clusters / tweets yet
 - [ ] Clarify 4.2.5, in particular, disambiguation. Why not use tagme, for example?
-- [ ] Add pseudocode for updating mean and std. dev values for burst detection
-- [ ] Add pseudocode for detecting if burst has occurred
+- [X] Add pseudocode for burst detection
 - [ ] Add pseudocode for entity linking
 - [X] [Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
 - [X] [Remove most of 4.3.1 as it is repetition of Chapter 3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
