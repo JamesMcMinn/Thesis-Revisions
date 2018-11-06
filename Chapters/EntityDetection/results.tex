@@ -113,7 +113,7 @@ Table \ref{detection:table:eventSize} shows how the effectiveness of our entity-
 Overall effectiveness, taken as the F1 score, increases between minimum sizes of 30 and 100 tweets, reaching a maximum F1 score of 0.318.
 Overall effectiveness decreases as the minimum event size is increase above 100 as increases to precision are outweighed by decreases in recall.
 
-\begin{table}[h]
+\begin{table}
 	\centering
 
 	\caption{Effectiveness of our entity-based approach at varies minimum event sizes.}
@@ -144,84 +144,48 @@ Events begin and end based on our burst detection technique, so it is important 
 Table \ref{detection:table:numWindows} shows how decreasing or increasing number of windows affects the performance of our approach at a number of different minimum event sizes.
 Decreasing the number of windows to 6, meaning that windows cover period from 5 minutes up to 160 minutes, results in a slight increase in precision across all event sizes, at the cost of recall.
 The effect is mirrored by increasing the number of windows to 8, so that the maximum period is 640 minutes: recall increases but precision decreases.
-These differences appear to be linked primarily to the number of events returned: as the number of candidate events increases, recall increases but precision decreases; a pattern that is common across a wide range of IR tasks and models.
+These differences appear to be linked primarily to the number of events returned: as the number of candidate events increases, recall increases but precision decreases, a pattern that is common across a wide range of IR tasks and models.
 
 Our default of 7 windows appears to offer the best ratio of precision and recall using a starting window length of 5 minutes, and gives the highest overall F1 measure of 0.318 at a minimum event size of 100 tweets.
 We note, however, that at 30 tweets, 6 windows gives a higher F1 score than 7 windows: although 6 windows detects only 9 fewer events, it producing 170 fewer candidate events.
 This could be caused by the reduced maximum burst length with 6 windows causing events to be ended earlier, and so fewer reach the minimum size of 30.
 
-\begin{table}[t!]
+\begin{table}
 	\centering
 
 	\caption{Effectiveness of our approach with different numbers of windows.}
 
 	\begin{tabulary}{\textwidth}{c c c c}
 		\toprule
-		\textbf{Windows} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
-		\multicolumn{4}{c}{\textbf{30 Tweets}} \\
+		\textbf{Max Window Length} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+		\multicolumn{4}{c}{\textbf{Events with 30+ Tweets}} \\
 			\midrule
-			6      & 225/1040 (0.216)   & 185/506 (0.366)   & 0.272     \\
-			7      & 242/1210 (0.200)   & 194/506 (0.383)   & 0.263     \\
-			8       & 248/1340 (0.185)   & 198/506 (0.391)   & 0.251     \\
+			160 minutes      & 225/1040 (0.216)   & 185/506 (0.366)   & 0.272     \\
+			320 minutes      & 242/1210 (0.200)   & 194/506 (0.383)   & 0.263     \\
+			640 minutes       & 248/1340 (0.185)   & 198/506 (0.391)   & 0.251     \\
 			\midrule
-			\multicolumn{4}{c}{\textbf{100 Tweets}} \\
+			\multicolumn{4}{c}{\textbf{Events with 100+ Tweets}} \\
 			\midrule
-			6    & 141/374  (0.377)   & 126/506 (0.249)   & 0.300     \\
-			7    & 162/465  (0.348)   & 148/506 (0.292)   & 0.318     \\
-			8    & 175/555  (0.315)   & 157/506 (0.310)   & 0.313     \\
+			160 minutes    & 141/374  (0.377)   & 126/506 (0.249)   & 0.300     \\
+			320 minutes    & 162/465  (0.348)   & 148/506 (0.292)   & 0.318     \\
+			640 minutes    & 175/555  (0.315)   & 157/506 (0.310)   & 0.313     \\
 			\midrule
-			\multicolumn{4}{c}{\textbf{300 Tweets}} \\
+			\multicolumn{4}{c}{\textbf{Events with 300+ Tweets}} \\
 			\midrule
-			6     &  66/136  (0.485)   &  74/506 (0.146)   & 0.225     \\
-			7     &  85/178  (0.478)   &  91/506 (0.180)   & 0.261     \\
-			8     & 101/235  (0.430)   & 101/506 (0.200)   & 0.273     \\
+			160 minutes     &  66/136  (0.485)   &  74/506 (0.146)   & 0.225     \\
+			320 minutes     &  85/178  (0.478)   &  91/506 (0.180)   & 0.261     \\
+			640 minutes     & 101/235  (0.430)   & 101/506 (0.200)   & 0.273     \\
 			\bottomrule
 	\end{tabulary}
 \label{detection:table:numWindows}
 \end{table}
 
-% \begin{table}[t]
-% 	\centering
-
-% 	\caption{Effect on performance of different window lengths and number of windows.}
-% 	\label{tab:windowLength}
-
-% 	\begin{tabulary}{\textwidth}{c l c c c}
-% 	\toprule
-% 	\multicolumn{5}{c}{\textbf{30 Tweets}} \\
-% 	\textbf{Windows} & \textbf{1st Period} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
-% 		\midrule
-% 		8 & 2.5 min     & 250/1218 (0.205)   & 198/506 (0.391)   & 0.269     \\
-% 		7 & 2.5 min      & 247/1262 (0.196)   & 191/506 (0.377)   & 0.258     \\
-% 		7 & 5 min      & 242/1210 (0.200)   & 194/506 (0.383)   & 0.263     \\
-% 		7 & 10 min      & 248/1305 (0.190)   & 200/506 (0.395)   & 0.257     \\
-% 		6 & 10 min     & 228/1185 (0.192)   & 191/506 (0.377)   & 0.255     \\
-% 		\midrule
-% 		\multicolumn{5}{c}{\textbf{100 Tweets}} \\
-% 		\midrule
-% 		8 & 2.5 min     & 162/462  (0.351)   & 146/506 (0.289)   & 0.317     \\
-% 		7 & 2.5 min        & 163/465  (0.351)   & 142/506 (0.281)   & 0.312     \\
-% 		7 & 5 min      & 162/465  (0.348)   & 148/506 (0.292)   & 0.318     \\
-% 		7 & 10 min      & 176/554  (0.318)   & 158/506 (0.312)   & 0.315     \\
-% 		6 & 10 min    & 154/463  (0.333)   & 143/506 (0.283)   & 0.306     \\
-% 		\midrule
-% 		\multicolumn{5}{c}{\textbf{300 Tweets}} \\
-% 		\midrule
-% 		8 & 2.5 min      &  87/172  (0.506)   &  93/506 (0.184)   & 0.270     \\
-% 		7 & 2.5 min      &  89/179  (0.497)   &  86/506 (0.170)   & 0.253     \\
-% 		7 & 5 min    &  85/178  (0.478)   &  91/506 (0.180)   & 0.261     \\
-% 		7 & 10 min      & 106/238  (0.445)   & 102/506 (0.202)   & 0.278     \\
-% 		6 & 10 min    &  87/180  (0.483)   &  95/506 (0.188)   & 0.270     \\
-% 		\bottomrule
-
-% 	\end{tabulary}
-% \end{table}
 
 % Table \ref{tab:windowLength} shows the effect of increasing and decreasing the length of the starting period at various window sizes.
 % Rows marked with * have had the number of windows increased or decreased in order to match the period of time covered by our baseline approach of 7 windows starting at 5 minutes.
 % Shorter window lengths have a small but insignificant increase in precision compared to longer window lengths, particularly when normalized to cover the same period of time. The highest F1 measure comes from the 5 minute starting window, however only by an insignificant amount.
 
-
+\subsubsection{Limiting Historical Data for Burst Detection}
 \begin{table}[]
 	\centering
 
@@ -234,29 +198,31 @@ This could be caused by the reduced maximum burst length with 6 windows causing 
 	\multicolumn{4}{c}{\textbf{30 Tweets}} \\
 		\midrule
 		No Limit     & 241/1293 (0.186)   & 190/506 (0.375)   & 0.249     \\
-		6 Periods      & 237/1139 (0.208)   & 192/506 (0.379)   & 0.269     \\
-		12 Periods      & 242/1210 (0.200)   & 194/506 (0.383)   & 0.263     \\
-		24 Periods    & 247/1262 (0.196)   & 191/506 (0.377)   & 0.258     \\
+		6      & 237/1139 (0.208)   & 192/506 (0.379)   & 0.269     \\
+		12      & 242/1210 (0.200)   & 194/506 (0.383)   & 0.263     \\
+		24    & 247/1262 (0.196)   & 191/506 (0.377)   & 0.258     \\
 		\midrule
 		\multicolumn{4}{c}{\textbf{100 Tweets}} \\
 		\midrule
 		No Limit    & 154/476  (0.324)   & 137/506 (0.271)   & 0.295     \\
-		6 Periods     & 159/459  (0.346)   & 146/506 (0.289)   & 0.315     \\
-		12 Periods     & 162/465  (0.348)   & 148/506 (0.292)   & 0.318     \\
-		24 Periods     & 163/465  (0.351)   & 142/506 (0.281)   & 0.312     \\
+		6    & 159/459  (0.346)   & 146/506 (0.289)   & 0.315     \\
+		12     & 162/465  (0.348)   & 148/506 (0.292)   & 0.318     \\
+		24     & 163/465  (0.351)   & 142/506 (0.281)   & 0.312     \\
 		\midrule
 		\multicolumn{4}{c}{\textbf{300 Tweets}} \\
 		\midrule
 		No Limit    &  82/174  (0.471)   &  81/506 (0.160)   & 0.239     \\
-		6 Periods     &  89/174  (0.511)   &  97/506 (0.192)   & 0.279     \\
-		12 Periods     &  85/178  (0.478)   &  91/506 (0.180)   & 0.261     \\
-		24 Periods    &  89/179  (0.497)   &  86/506 (0.170)   & 0.253     \\
+		6     &  89/174  (0.511)   &  97/506 (0.192)   & 0.279     \\
+		12     &  85/178  (0.478)   &  91/506 (0.180)   & 0.261     \\
+		24    &  89/179  (0.497)   &  86/506 (0.170)   & 0.253     \\
 		\bottomrule
 	\end{tabulary}
 \end{table}
 
 Table \ref{detection:table:signalLength} shows how limiting the amount of historic data used to calculate mean and standard deviation values for burst detection affects the overall performance.
-Although the performance differences between 6 and 24 periods is small, and there does not appear to be a single best history length across the range of event sizes, there is a clear difference between limited and unlimited historical data.
+Assuming 7 windows, with the smallest period of 5 minutes, and using only 6 historic values, our shortest window uses data from the past 6 \(\times\) 5 = 30 minutes, whilst our longest window covers a period of 6 \(\times\) 320 = 1920 minutes, or 32 hours.
+Limiting the amount of data used to calculate $\mu$ and $\sigma$ values has an effect of the overall performance.
+Although the performance differences between 6 and 24 is small, and there does not appear to be a single best history length across the range of event sizes, there is a clear difference between limited and unlimited historical data.
 
 By limiting the amount of historic data used at each window size, we remove a type of smoothing.
 Placing no limits on historic data means that we capture the change in usage of each entity, but also changes in how the entity is used through the day as people wake up, go to work, return home, and go to sleep.
@@ -265,13 +231,19 @@ No limits of historic data also means that events which build slowly, such as di
 By limiting the amount of historic data used, we ensure that the statistics reflect how the entity is discussed recently, not historically.
 This might appear counter-intuitive, as the aim of the burst detection is to detect recent changes in the volume of discussion around an entity.
 However, our use of multiple window lengths means that our burst detection approach captures information over a wide range of time periods.
-Assuming 7 windows, with the smallest period of 5 minutes, and using only 6 historic values, our shortest window uses data from the past 6 \(\times\) 5 = 30 minutes, whilst our longest window covers a period of 6 \(\times\) 320 = 1920 minutes, or 32 hours.
+
 
 
 \subsection{Clustering}
 \label{detection:sec:simThresholds}
+Table \ref{detection:table:simThresholds} shows how different similarity thresholds affect the performance across a range of event sizes.
+High thresholds make it more difficult to cluster similar tweets, meaning that there tend to be a larger number of smaller clusters, as well as more tweets that belong to no cluster.
+Since our approach only adds clusters above certain sizes to an event (see Table \ref{detection:table:minClusterSize} for details), a decrease in the average size of a clusters means that fewer events are discovered.
+Conversely, a low threshold makes it easier to cluster tweet, resulting in more large clusters.
+This means more clusters can be added to events, and results in more events overall.
+This is reflected by the number of events at varying levels of similarity and across the two minimum event sizes.
 
-\begin{table}[t!]
+\begin{table}[]
 	\centering
 
 	\caption{Effects of minimum similarity thresholds on detection performance.}
@@ -300,12 +272,6 @@ Assuming 7 windows, with the smallest period of 5 minutes, and using only 6 hist
 
 \end{table}
 
-Table \ref{detection:table:simThresholds} shows how different similarity thresholds affect the performance across a range of event sizes.
-High thresholds make it more difficult to cluster similar tweets, meaning that there tend to be a larger number of smaller clusters, as well as more tweets that belong to no cluster.
-Since our approach only adds clusters above certain sizes to an event (see Table \ref{detection:table:minClusterSize} for details), a decrease in the average size of a clusters means that fewer events are discovered.
-Conversely, a low threshold makes it easier to cluster tweet, resulting in more large clusters.
-This means more clusters can be added to events, and results in more events overall.
-This is reflected by the number of events at varying levels of similarity and across the two minimum event sizes.
 
 Table \ref{detection:table:minClusterSize} shows the effect of different minimum cluster sizes on the effectiveness of our approach.
 Clusters are only added to an event if they contain more the minimum number of tweets, so the minimum cluster size has an effect on the overall performance, particularity at lower minimum event sizes.
@@ -377,11 +343,11 @@ Despite this, we feel that results presented here are still interesting and insi
 
 Although F1 scores show only small changes, both precision and recall values seem to be greatly affected by type of terms used for clustering.
 The use of nouns only gives the highest recall but the lowest precision (\(F1 = 0.249\)), whereas using verbs only results in the lowest recall but the highest precision (\(F1 = 0.259\)).
-Using both nouns and verbs seems to take best the characteristic of both, giving the highest overall F1 score (\(F1 = 0.263\).
+Using both nouns and verbs seems to take the best characteristic of both, giving the highest overall F1 score (\(F1 = 0.263\)).
 The high recall associated with nouns fits with our hypothesis that events are about entities, as named entities are proper nouns, and entity classes (i.e. city, person, plant) are common nouns.
 If nouns had not been used to describe these events then we would not have been able to detect them.
 This is again reflected in the low recall when using verbs only, and had we been able to remove the dependency on named entities (i.e. proper nouns) then recall would have been much lower.
-At the highest level, these results seem at agree with our premise that events describe the effect of a verb on a noun (a real-world entity).
+At the highest level, these results seem to agree with our premise that events describe the effect of a verb on a noun (a real-world entity).
 
 The use of Hashtags seems to cause a small reduction in both precision and recall, a somewhat unexpected result, as Hashtags are commonly thought to be very good indicators for the topic of a tweet.
 We hypothesis that this is due to the specificity of named entities, and that by requiring every tweet to contain a named entity we are removing any topical uncertainty and rendering Hashtags redundant as an indicator of topic.
