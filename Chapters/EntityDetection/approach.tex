@@ -52,7 +52,7 @@ We also use a range of term-level filters that remove terms and entities that ar
 As well as stop words and expletives, we remove terms associated with watching television (``watch'', ``film'',``movie'', ``episode'', etc.) or listening to music (``listen'', ``song'', ``play'', etc.).
 This helps to reduce the number of false positives created by large numbers of users watching a television show while using a ``second screen'' to discuss it, as significant, but fictional events in television shows can often cause reactions that appear similar to real-world events.
 We also remove terms and entities associated with traditional news and broadcast agencies, such as ``bbc news'', ``cnn'', ``fox news'' and ``reuters''.
-Tweets from these agencies often contain their own name, which can cause issues with our entity based clustering and merging approaches (described in sections \ref{detection:sec:clustering} and \ref{detection:sec:entityLinking}) as the same entity can appear to be associated with a large number of events simultaneously.
+Tweets from these agencies often contain their own name, which can cause issues with our entity-based clustering and merging approaches (described in sections \ref{detection:sec:clustering} and \ref{detection:sec:entityLinking}) as the same entity can appear to be associated with a large number of events simultaneously.
 Term level filters such as these are likely to require some maintenance as the usage of Twitter continues to evolve and require some domain knowledge to construct, however this small amount of expert work helps to remove vast amounts of noise.
 Finally, terms under 3 characters in length are removed.
 
@@ -106,8 +106,8 @@ Given the role that named entities play in describing real-world events, we beli
 \label{detection:alg:clustering}
 \end{algorithm}
 
-Algorithm \ref{detection:alg:clustering} shows the pseudocode for our entity based cluster approach.
-Using the premise that tweets discussing an event must contain at least one of the named entities involved in the event, we partition tweets based upon the entities they contain, and add a tweet to a cluster for every entity it contains, as show in in Figure \ref{detection:graphic:clustering}.
+Algorithm \ref{detection:alg:clustering} shows the pseudocode for our entity-based clustering approach.
+Using the premise that tweets discussing an event must contain at least one of the named entities involved in the event, we adapt the traditional TDT clustering model by partitioning tweets based upon the entities they contain, and add a tweet to a cluster for every entity it contains, as show in in Figure \ref{detection:graphic:clustering}.
 
 \begin{figure}[h!]
 	\centering
