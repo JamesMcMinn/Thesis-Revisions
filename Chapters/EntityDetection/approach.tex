@@ -1,6 +1,6 @@
 %!TEX root = ../../main.tex
 
-\section{Entity-based Event Detection Approach}
+\section{Entity-based Event Detection}
 \label{detection:sec:approach}
 In this section we describe our entity-based event detection approach.
 The approach comprises of 6 key stages, as shown in Figure \ref{detection:graphic:pipeline}.
@@ -59,7 +59,7 @@ Finally, terms under 3 characters in length are removed.
 \subsection{Entity-based Online Clustering}
 \label{detection:sec:clustering}
 Almost all event detection approaches make use of single pass nearest neighbor clustering to find documents that discuss the same topic or event, similar to those used by the TDT project described in section \ref{background:alg:tdt}.
-As we have already discussed, these approaches get slower as the number of documents grows, eventually causing them to become too slow for high volume streams like \citep{Petrovic10}.
+As we have already discussed, these approaches get slower as the number of documents grows, eventually causing them to become too slow for high volume streams like Twitter \citep{Petrovic10}.
 A number of solutions have been proposed to solve this, including the use of Locality Sensitive Hashing~\citep{Petrovic10}, which we described in section \ref{background:sec:lsh}.
 However, these approaches are general purpose, and do not make use of any domain or task specific information.
 Given the role that named entities play in describing real-world events, we believe it makes sense to use their presence to improve clustering efficiency and effectiveness for the task of event detection.
@@ -145,7 +145,7 @@ A similar approach is used by \cite{Aggarwal12} to determine an minimum similari
 
 	\DontPrintSemicolon
 
-	lengths $\gets$ [5, 10, 20, 40, 80, 160, 320]\\
+	lengths $\gets$ [5m, 10m, 20m, 40m, 80m, 160m, 320m]\\
 	$M_0, M_1, M_2 \gets$ [][], [][], [][] \\
 	$\mu, \sigma \gets$ [][], [][] \\
 	bursting $\gets$ [] \\

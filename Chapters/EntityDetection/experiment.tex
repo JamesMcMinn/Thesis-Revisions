@@ -2,20 +2,30 @@
 
 \section{Experimentation}
 \label{detection:sec:experimentation}
-In order to evaluate our approach, we make use of the Events 2012 collection we created in chapter \ref{chapter:collection}.
+We ran our entity-based approach on the Events 2012 collection we created in chapter \ref{chapter:collection}, treating it as a stream of tweets ordered by creation time.
+Named Entity Recognition and Part of Speech Tagging was performed using the Stanford Core NLP Toolkit\footnote{http://www-nlp.stanford.edu/software/tagger.shtml} (version 3.2.0).
+Unless otherwise stated, all runs were performed using the top 10 IDF-weighted terms per tweet, a maximum of 500 tweets were retrieved per term, and a minimum cosine similarity of 0.5.
+
 Although the collection contains 150,000 relevance judgements for 506 events, we note that it does not cover all events that happened during the 28 days it covers, or even that all tweets relevant to events it does cover have been identified.
 Whilst this does not prevent us from using the collection for comparison purposes, it means that event precision and recall values can only be estimated.
+
 Whilst this is an issue in many IR collections, we note that the effect is more pronounced when dealing with event detection as, unlike most IR tasks, there is no query.
-This makes it likely that we will detect events that are not in the judgements.
+This makes it likely that we will detect events, or parts of events, that are not in the judgements.
 We verify this hypothesis and show that we detect a large number of events which are not in the relevance judgements by performing a crowdsourced evaluation, described in sections \ref{detection:sec:crowd} and \ref{detection:sec:results}.
 
-We ran our entity-based approach on the collection, treating it as a stream of tweets ordered by creation time.
-Named Entities and Part of Speech Tagging was performed using the Stanford POS Tagger\footnote{http://www-nlp.stanford.edu/software/tagger.shtml} 3.2.0.
-Unless otherwise stated, all runs were performed using the top 10 IDF-weighted terms per tweet, a maximum of 500 tweets were retrieved per term, and a minimum cosine similarity of 0.5.
-Evaluations were performed on all events with more than 30 tweets, using a 5\% threshold and/or minimum of 15 matching tweets, with full descriptions of these thresholds and the rationale for their choices described in section \ref{detection:sec:measures}.
-Any variation from these thresholds is noted alongside the results presented in section \ref{detection:sec:results}.
+\subsection{Automatic Evaluations}
+To perform systematic, automatic evaluations, we must make changes to the standard relevance judging process to account for the incomplete relevance judgements.
+Rather than requiring that every tweet matches for a candidate event to be determined a a true-positive, we use a threshold based judgement process.
+The threshold must be both low enough to enable partial matches, but still identity any false-positive events.
+Too high a threshold will make it difficult for an event to found relevant if the system being evaluated operates at a different level of granularity from the relevance judgements or has only detected part of the event.
+For example, a full football match rather than the individual goal, or grouping many small but related events into `super-event', such as Hurricane Sandy causing damage as it moves across the United States.
+Too low a threshold could result in many false-positives and thus misleading results.
 
-We believe that results presented here, when first published in 2015, were the first in-depth and comparable evaluation of an event detection approach for Twitter.
+Empirically, we found that if 5\% or 15 tweets (whatever the smallest is) can be matched from a candidate event to an event in the relevance judgements, then they are almost always correctly labeled as a true-positive.
+While this may seem like a low threshold, empirically, we found that it produces very few false-positives (i.e. non-relevant events being identified as relevant), whilst allowing for a great deal of flexibility in terms of event granularity.
+
+Automatic Evaluations (i.e. any non-crowdsourced results) were performed on all events with more than 30 tweets, using a 5\% threshold and/or minimum of 15 matching tweets.
+Any variation from these thresholds is noted alongside the results presented in section \ref{detection:sec:results}.
 
 \subsection{Crowdsourced Evaluation}
 \label{sec:baseline}
@@ -25,7 +35,20 @@ As we use the results from the crowdsourced evaluation, baseline parameters have
 
 \label{detection:sec:crowd}
 In order to keep the comparison between the baselines and our approach as fair as possible, we use the same methodology here as we did in chapter \ref{chapter:collection} to gather relevance judgements for the baseline approaches.
-5 annotators were used per event, and to keep category classification fair, we used the same 13 categories defined by the Topic Detection and Tracking project \citep{Allan:2002:ITD:772260.772262} as they were used to evaluate events produced by the two baseline approaches in chapter \ref{chapter:collection}.
+5 annotators were used per event, and to keep category classification fair, we used the same 13 categories defined by the Topic Detection and Tracking project \citep{Allan:2002:ITD:772260.772262}, as these were used to evaluate events produced by the two baseline approaches in chapter \ref{chapter:collection}.
 To generate the results that follow, we mapped the TDT categories back to the 8 categories used by the collection.
 A number of spam and quality control measures were used, identical to those described in chapter \ref{chapter:collection}.
+
+\subsection{Crowdsourced Evaluation Limitations}
 Since resources were limited, and our approach generates a large number of candidate events, we use a random sample of 250 events from the 1210 candidate events identified by our approach.
+However, this introduces some limitations on how the results can be used.
+Calculating recall for the crowdsourced evaluation poses a number of issues.
+Even though our entity-based approach has discovered new events, leading to a much higher precision score, we cannot be certain how many of these are truly new events or if they are sub-events of events already in the relevance judgements.
+This is a particular problem for large events that may have many thousands, or in some cases, millions of tweets discussing them.
+For example, we cannot expect to ever have full relevance judgements for even a fraction of the millions of tweets that were posted about the US Presidential debates in 2012\footnote{\texttt{http://www.nbcnews.com/technology/presidential-debate-sets-twitter\\-record-6281796}}.
+
+One possible solution is to use a clustering approach similar to that used in chapter \ref{chapter:collection}, and expand the relevance judgements to include both new events, and new tweets for existing events.
+However, this would require a crowdsourced evaluation of all candidate events for every run, a prohibitively costly and time intensive task.
+Due to time and resource constraints, we evaluated only 250 of the 1210 candidate events using crowdsourcing, however even evaluating this smaller set of events was a time consuming task, despite having all the tools and infrastructure already in place.
+Whilst this does allow us to estimate precision across all 1210 events, it only tells us which of the 250 crowdsourced events are true events, it does not tell us which of the remaining 960 are.
+Without first removing all false events, we cannot accurately use the clustering technique to merge events and determine how many new events have been detected, meaning that an accurate recall measurement is impossible without a crowdsourced evaluation of all events.

@@ -24,6 +24,8 @@
 
 \end{table}
 
+We believe that results presented here, when first published in 2015, were the first in-depth and comparable evaluation of an event detection approach for Twitter.
+
 \label{sec:results}
 Table \ref{detection:table:bestResults} shows results for the two baseline approaches and our entity-based approach when run and evaluated against the Events 2012 collection.
 We give results for both a crowdsourced (Crowd) evaluation and an automatic (Auto) evaluation for our entity-based approach.
@@ -70,7 +72,7 @@ The low recall for science and technology events can be somewhat explained by a 
 This lack of named entities makes miscellaneous very difficult to detect for our approach, and the effect is examined in detail in section \ref{detection:sec:entitiesEval}.
 Low recall entertainment events could be explained by our removal of tweets that contain terms related to television, such as `watch', as many of the events are broadcasts of award shows or the launch of new television shows.
 
-\begin{table}[h!]
+\begin{table}
 	\centering
 
   \caption{Distribution of detected events across the 8 categories defined by the collection. The average entities shows the average number of entities linked to each event for the specific category.}
@@ -153,7 +155,7 @@ This could be caused by the reduced maximum burst length with 6 windows causing 
 \begin{table}
 	\centering
 
-	\caption{Effectiveness of our approach with different numbers of windows.}
+	\caption{Effectiveness of our approach with 6, 7 and 8 windows (160, 320 and 640 minutes, respectively)}
 
 	\begin{tabulary}{\textwidth}{c c c c}
 		\toprule
@@ -280,7 +282,7 @@ The effect on overall performance (F1 score) is less pronounced for larger event
 Increasing the minimum cluster size has an effect on precision at both minimum event sizes.
 There is a distinct jump in precision when the minimum cluster size is increased from 5 to 10 tweets, but with only a very small impact on recall, motivating our use of 10 as the minimum cluster size in all of our evaluations.
 
-\begin{table}[h!]
+\begin{table}
 	\centering
 
 	\caption{Effects of minimum cluster size on detection performance.}
@@ -468,30 +470,7 @@ As we discuss later in this section, there are a number of issues that prevent u
 Table \ref{detection:table:categoriesCrowd} shows the distribution of events between categories, calculated automatically and through crowdsourcing.
 Both the automatic and crowdsourced evaluation give similar distributions (\(r = 0.59\)), suggesting that there is at least moderate positive correlation between the distribution of results returned by both methods of evaluation, despite differences in the absolute values.
 
-\subsection{Evaluation Issues}
-Calculating recall for the crowdsourced evaluation poses a number of issues.
-Even though our entity-based approach has discovered new events, leading to a much higher precision score, we cannot be certain how many of these are truly new events or if they are sub-events of events already in the relevance judgements.
-This is a particular problem for large events that may have many thousands, or in some cases, millions of tweets discussing them.
-For example, we cannot expect to ever have full relevance judgements for even a fraction of the millions of tweets that were posted about the US Presidential debates in 2012\footnote{\texttt{http://www.nbcnews.com/technology/presidential-debate-sets-twitter\\-record-6281796}}.
 
-One possible solution is to use a clustering approach similar to that used in chapter \ref{chapter:collection}, and expand the relevance judgements to include both new events, and new tweets for existing events.
-However, this would require a crowdsourced evaluation of all candidate events for every run, a prohibitively costly and time intensive task.
-Due to time and resource constraints, we evaluated only 250 of the 1210 candidate events using crowdsourcing, however even evaluating this smaller set of events was a time consuming task, despite having all the tools and infrastructure already in place.
-Whilst this does allow us to estimate precision across all 1210 events, it only tells us which of the 250 crowdsourced events are true events, it does not tell us which of the remaining 960 are.
-Without first removing all false events, we cannot accurately use the clustering technique to merge events and determine how many new events have been detected, meaning that an accurate recall measurement is impossible without a crowdsourced evaluation of all events.
-
-\subsubsection{Automatically Determining Relevance}
-Even for events already in the relevance judgements, it can be difficult automatically determine if a candidate event is relevant.
-Different clustering approaches and thresholds mean that two systems are unlikely to ever produce an event containing identical tweets.
-Since we know that the relevance judgements are incomplete in terms of tweets for each event, and that an event detection system is unlikely to correctly identify every tweet for an event, we must allow for inexact matching when determining relevance.
-Rather than requiring that every tweet matches for a candidate to be determined relevant, a threshold must be set that is both low enough to enable partial matches, but still identifies any true-negatives.
-Additionally, because automated methods were used to generate the relevance judgements, each with differing levels of granularity, there are a number of events in the judgements where only part of an event has been detected (for example, a single goal in a football match, rather than the football match itself).
-This means that a high threshold will make it difficult for an event to found  relevant if the system being evaluated operates at a different level of granularity from the relevance judgements. For example, the full football match rather than the individual goal, or grouping many small but related events into `super-event', such as Hurricane Sandy causing damage as it moved across the United States.
-These systems should not have a lower recall than a system which reports each event individually (although some measure of event granularity would be useful).
-
-Empirically, we found if 5\% or 15 tweets (whatever the smallest is) can be matched from a candidate events to an event in the relevance judgements, then they are almost always correctly labelled as relevant.
-While this may seem like a low threshold, empirically, we found that it produce very few false-positives (i.e. non-relevant events being identified as relevant), whilst allowing for a great deal of flexibility in terms of event granularity.
-More work is required to develop a more robust evaluation methodology.
 
 \section{Efficiency and Ensuring Real-Time Processing}
 One of our aims when developing our entity-based approach was to ensure that it was both real-time and efficient. In essence, a real-time algorithm can be seen as having \(O(1)\) complexity. While a real-time approach is often efficient, it does not have to be, and many real-time approaches fail to scale as the volume of information is increased, causing effectiveness to drop. Clearly a real-time system cannot be expected to process an infinite volume of data, however an efficient real-time systems should be able to scale reasonably without a significant loss of effectiveness.
