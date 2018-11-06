@@ -95,7 +95,8 @@ Given the role that named entities play in describing real-world events, we beli
 			\eIf{$c_{max} \geq m$} {
 				add $d$ to clusters[$e$][$n_d$]
 			}{
-				clusters[$e$][$d$] $\gets$ new cluster($d$) \tcp*{Do not assume the cluster is a new event}
+				\tcp{Unlike most approaches, we do not assume a new cluster is a new event}
+				clusters[$e$][$d$] $\gets$ new cluster($d$)
 			}
 
 		}
@@ -155,12 +156,13 @@ A similar approach is used by \cite{Aggarwal12} to determine an minimum similari
 		\ForEach{entity e in d} {
 
 			\If{bursting[$e$] is true and burstUntil[$e$] $< t$}{
-				bursting[$e$] $\gets$ false \tcp*{end event and perform any cleanup}
+				bursting[$e$] $\gets$ false \tcp*{mark the entity as finished bursting}
 				burstUntil[$e$] $\gets$ 0\\
 			}
 
 			\ForEach{window w in lengths} {
 				$c \gets$ number of times entity $e$ has appered in last $w$ seconds \\
+				\tcp{Update window statistics if enough time has passed}
 				\If{seconds since last statistics update for window $\geq$ lengths[$w$]}{
 					$M_0 \gets M_0 + 1$ \\
 					$M_1 \gets M_1$ + $c$ \\
@@ -170,7 +172,7 @@ A similar approach is used by \cite{Aggarwal12} to determine an minimum similari
 				}
 
 				\If{$c > \mu[e][w] + (3 \cdot \sigma[e][w])$}{
-					bursting[$e$] $\gets$ true \\
+					bursting[$e$] $\gets$ true 				\tcp*{mark the entity as bursting}
 					burstUntil[$e$] $\gets t + (w \times 1.5)$ \\
 				}
 			}
@@ -212,23 +214,30 @@ We do not believe that removing older tweets will affect the effectiveness of th
 
 \subsection{Event Creation and Cluster Selection}
 \label{detection:sec:eventCreation}
-Once a burst has been detected, an event is created and associated with the bursting entity for the duration of the burst (we address how an event could be associated with multiple entities in section \ref{detection:sec:entityLinking}).
-However, the event does not yet have any tweets associated with it.
-We cannot simply take all of the tweets posted during the burst as these will contain background topics about an entity, such as discussion about visiting a location or listening to a particular artist's music. To solve this, we propose the use of a number of heuristics to select significant clusters which are the most likely to be related to the event that caused the burst.
+Once a burst has been detected (lines 20-24 in algorithm \ref{detection:alg:updatingEntityValues}), we have potentially detected an event.
+However, we must first identify a set of clusters that discuss the event before reporting it as a new event.
+We cannot simply take all of the tweets posted during the burst as these will contain background topics about the bursting entity, such as discussion about visiting a location or listening to a particular artist's music.
+To solve this, we propose the use of a number of heuristics to select clusters that are the most likely to be related to the event that caused the burst.
 
-We require that the centroid time of a cluster (i.e. the average timestamp associated with all tweets in a cluster) is greater than \(B_e\), where \(B_e\) is the time at which the entity began to burst. This helps to ensure that clusters which discuss background topics are not included as they are likely to have existed for some time before the burst took place. A cluster's centroid time is updated as new tweets are added, ensuring that clusters which initially had a centroid time prior to the burst can still be added to an event. This is important as it allows clusters containing early reports of the event, which often occur before any burst takes places, to be included.
+We require that the centroid time of a cluster (i.e. the average timestamp associated with all tweets in a cluster) is greater than \(B_e\), where \(B_e\) is the time at which the entity began to burst.
+This helps to ensure that clusters which discuss background topics are not included as they are likely to have existed for some time before the burst took place.
+A cluster's centroid time is updated as new tweets are added, ensuring that clusters which initially had a centroid time prior to the burst can still be added to an event.
+This is important as it allows clusters containing early reports of the event, which often occur before any burst takes places, to be included.
 
 We also require that a cluster meets a minimum size threshold, usually between 5 and 20 tweets (10 is used for our evaluations).
-This is to ensure that the cluster covers a significant portion of the event and to prevent small but noisy clusters from being included. The minimum size has an effect on the precision of our approach, and large minimum cluster sizes can give a large increase in precision for a small reduction in recall. We discuss the minimum cluster size in detail in section \ref{detection:sec:simThresholds}.
+This is to ensure that the cluster covers a significant portion of the event and to prevent small but noisy clusters from being included. The minimum size has an effect on the precision of our approach, and large minimum cluster sizes can give a large increase in precision for a small reduction in recall.
+We discuss the minimum cluster size in detail in section \ref{detection:sec:simThresholds}.
 
-An event is kept alive as long as it has at least one bursting entity associated with it. Once all entities associated with an event have stopped bursting, the event is finalized, and no more clusters or tweets can be added to it.
+If at least one cluster meets the time and size requirements outlines above, then it is added to the event for the entity to which it belongs, or, if it is the first cluster to be identified after a burst, then it is added to a new event.
+An event is kept as long as it has at least one bursting entity associated with it.
+Once all entities associated with an event have stopped bursting, the event is finalized, and no more clusters or tweets can be added to it.
 
 \subsection{Event Merging and Entity Linking}
 \label{detection:sec:entityLinking}
 New events are related to only a single entity.
 However, most events involve more than one entity, such as a person and a location, or an interaction between two organizations.
 In additional, events are often discussed using a number of synonyms.
-For example ``Barack Obama'' is often shorted to simply ``Obama''.
+For example ``Barack Obama'' is often shortened to simply ``Obama''.
 These issues mean that there are generally a number of Event objects, each created by separate named entities but of which discuss the same real-world event.
 To solve this, we create links between events which are related to the same real-world event using entity co-occurrence statistics.
 If an entity is mentioned in at least 50\% of tweets in an event, then we say there is a potential link between the event and the entity.
