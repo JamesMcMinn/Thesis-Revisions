@@ -67,7 +67,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Link our clustering approach back to TDT approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/ea981ecca58d9772efa3a36c5845c7f935244139)
 - [X] [Link burst detection approach back to that used by CS approach and clarify](https://github.com/JamesMcMinn/Thesis-Revisions/commit/55211834ea84596e2f184ce94c25d09fae037fea)
 - [X] [Add pseudocode for burst detection](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c11731d32a5533784518e6037884dda32b411ff0)
-- [X] 4.2.4 - Clarify that a burst does not mean we have any clusters / tweets yet
+- [X] [4.2.4 - Clarify that a burst does not mean we have any clusters / tweets yet](https://github.com/JamesMcMinn/Thesis-Revisions/commit/d8896cf95fcf4819f44b18ed35503e5d84b5dd51)
 - [ ] Clarify 4.2.5, in particular:
   - [ ] Disambiguation. Why not use tagme, for example?
   - [ ] Formalize algorithm
