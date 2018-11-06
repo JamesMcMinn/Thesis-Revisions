@@ -232,27 +232,32 @@ If at least one cluster meets the time and size requirements outlines above, the
 An event is kept as long as it has at least one bursting entity associated with it.
 Once all entities associated with an event have stopped bursting, the event is finalized, and no more clusters or tweets can be added to it.
 
-\subsection{Event Merging and Entity Linking}
+\subsection{Entity-Event Linking and Merging}
 \label{detection:sec:entityLinking}
 New events are related to only a single entity.
 However, most events involve more than one entity, such as a person and a location, or an interaction between two organizations.
 In additional, events are often discussed using a number of synonyms.
 For example ``Barack Obama'' is often shortened to simply ``Obama''.
 These issues mean that there are generally a number of events, each created by separate named entities, which discuss the same real-world event.
-Although entity disambiguation tools, such as TagMe, can perform entity disambiguation and may help for in common cases, such as mentions of significant people.
+Entity disambiguation tools, such as TagMe, can perform entity disambiguation and may help for common cases, such as mentions of significant people.
 However, their reliance on existing ontologies such as Wikipedia mean that there will always be a lag between an event occurring and that information being updated \citep{WRN2012:osbornebieber}, which makes them less useful for rapidly developing real-world events.
-Our approach relies on no external sources of information, and is able to generate links between entities in real-time based on the events that discuss them using entity co-occurrence statistics.
-Formally, if an entity is mentioned in at least 50\% of tweets in an event, then we say there is a potential link between the event and the entity.
+Our approach relies on no external sources of information, and is able to generate links between entities and events in real-time based using entity co-occurrence statistics.
 
-If such a potential link is found, a number of checks are performed to ensure that the entity is viable and likely to be related to the event. Firstly, we check that the potential entity is bursting and therefore is already associated with an event. Secondly, we verify that the entity has not already been associated with the event. This requirement prevents long-running events from consuming popular or frequently bursting entities. For example, an event which is associated with both ``Obama'' and ``Romney'' would not automatically be merged with `Romney' should it stop bursting and then burst again before the original event had finished. Instead, the Romney entity would form a new event, which may then link itself to the previous event if Obama occurs in more than 50\% of tweets.
+Formally, if an named entity $n$ is mentioned in at least 50\% of tweets in an event $e$, then we say there is a link between the event $e$ and the entity $n$.
+If entity $n$ is bursting and has an event $e'$, then events $e$ an $e'$ and merged to create event $e''$.
+This process is can be repeated many times, and any entity which is mentioned in event $e''$ by more than 50\% of tweets is said to have a link to event $e''$, and so on until no more links are found.
+This process is repeated as new tweets or clusters are added to the event.
 
-If event $E_{1}$ finds a potential link with entity $e$, and entity $e$ passes both of the above checks, then event $E_1$ is merged with the event belonging to $e$. This merging process can happen any number of times to produce events with many entities, and consisting of all the clusters and tweets from both.
-Entity frequencies are then recalculated and any new semantic links are then followed to merge yet more events.
-
-Once an entity has stopped bursting, it is no longer linked with an Event and no new clusters from that entity are added.
-However, clusters for an entity which have already been added are still updated, and any new tweets are reflected in the entity frequencies for the event.
-Events are kept active until they contain no more active entities and all clusters in the event have become inactive (i.e. all the of the tweets in the cluster have been removed from the inverted index associated with its entity).
+If an entity stops bursting, then any links to an event are ended, and no new clusters from the entity can be added to the event.
+However, tweets added to clusters that are already part of the event are still added to the event.
+An events continues to be updated until all linked entities have stopped bursting and all clusters in the event have become inactive (i.e. all the of the tweets in the event's clusters have been removed from the inverted index associated with its entity).
 This helps to capture more information about the event, even after discussion has died down.
+
+Note that the 50\% requirement is uni-directional, not bi-directional, and only one of the two events needs to meet the 50\% requirement to link the events.
+This allows less frequently mentioned entities to be merged into large events, which often discuss a diverse range of sub-topics, making it difficult for any single entity to be mentioned in 50\% of tweets.
+For example, during one of the U.S. Presidential Debates between `Obama' and `Romney', there were a wide range of topics discussed.
+It is unlikely that any single topic, such as `China', would be mentioned in the majority of tweets, making it impossible to form a link if the 50\% requirement was bi-directional.
+It is however likely that an event for the `China' sub-topic will mention `Obama' or `Romney' in the majority of tweets, allowing it to be merged into the main event for the debate.
 
 \subsubsection{Entity Normalization}
 \label{sec:entityNorm}

@@ -68,7 +68,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Add pseudocode for burst detection](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c11731d32a5533784518e6037884dda32b411ff0)
 - [X] [4.2.4 - Clarify that a burst does not mean we have any clusters / tweets yet](https://github.com/JamesMcMinn/Thesis-Revisions/commit/d8896cf95fcf4819f44b18ed35503e5d84b5dd51)
 - [X] 4.2.5: Disambiguation. Why not use tagme, for example?
-- [ ] 4.2.5: Formalize algorithm
+- [X] 4.2.5: Formalize algorithm
 - [X] [4.3: Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
 - [X] [Remove most of 4.3.1 as it is repetition of Chapter 3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
 - [ ] Define and explain in detail, the automatic evaluation
