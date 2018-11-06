@@ -46,13 +46,13 @@ However, we chose to measure the fastest growing clusters on a hourly basis, rat
 We made this decision due the fact that 100,000 tweet covers only a short period of time in our collection (approximately 30 minutes) due to its high volume.
 Since the LSH approach keeps several hours worth of tweets in memory at all times, this would have generated twice as many candidate events without necessarily increasing the number of real-world events detected, making it prohibitively more expensive to generate judgements.
 Simply taking the list of candidate events every hour would still have yielded a prohibitively high number of clusters (in the hundreds of thousands).
-However by removing clusters outside the optimal entropy range of 3.5 to 4.25~\citep{Petrovic:2010:SFS:1857999.1858020}, and by removing clusters with fewer than 30 tweets (which ensures the cluster contains enough tweets for effective evaluation), we are left with a final set of 1340 candidate events and a run-time of approximately 2 days (using desktop class machine with an Intel i5 2500S and 16Gb RAM).
+However by removing clusters outside the optimal entropy range of 3.5 to 4.25~\citep{Petrovic:2010:SFS:1857999.1858020}, and by removing clusters with fewer than 30 tweets (which ensures the cluster contains enough tweets for effective evaluation), we are left with a final set of 1340 candidate events and a run-time of approximately 2 days (using desktop class machine with an Intel i5 2500S and 16GB RAM).
 
 \subsubsection{Cluster Summarization (CS)}
-We ran the CS approach~\citep{Aggarwal12}, fixing it at 1200 clusters, slightly more than used by \cite{Aggarwal12}, however due to the increased volume of tweets in the collection, we opted to increase the number of clusters so that more topics could kept in memory.
-This gave a reasonable runtime of approximately 4 on the hardware available to us.
+We ran the CS approach with 1200 clusters, slightly more than used by \cite{Aggarwal12}, however due to the increased volume of tweets in the collection, we opted to increase the number of clusters so that more topics could kept in memory.
+This gave a reasonable runtime of approximately 4 days.
 Retweets were not used as input to the algorithm as we found that they tended to cause more spam and noise clusters to form and be identified as events.
-We used a \(\lambda\) value of 0.0 (i.e. full weight was given to text when calculating similarity) as this greatly decreased the runtime whilst having only a small effect on cluster performance~\citep{Aggarwal12}.
+We used a \(\lambda\) value of 0.0 (i.e. full weight was given to text when calculating similarity) as this greatly decreased the runtime whilst having only a small effect on performance~\citep{Aggarwal12}, and meant that follower information did not have to be crawled, as this would have taken several \emph{years} to obtain via the Twitter API due to rate limits and would have introduced future information.
 
 Similarly to the LSH approach, we removed clusters with fewer than 30 tweets, and those with \(\alpha\) values smaller than 12  (i.e. slow growth rates)~\citep{Aggarwal12}.
 Empirically we found that very few clusters with an \(\alpha\) value below 12 discussed events, and by removing these clusters we were able to significantly reduce the number of candidate events to a manageable size of 1097.
@@ -110,20 +110,20 @@ Specifically, as well as objective tweets, we wanted to include subjective tweet
 
 \subsection{Annotating a Candidate Event}
 \label{collection:sec:annotation}
-Before starting their first HIT, annotators were asked to carefully read our definition of `event' and `significant'.
-They were then asked to read 13 tweets (selected at random, however kept constant between annotators) for a single candidate event.
+Before starting their first HIT, annotators were asked to carefully read our definitions of `event' and `significant'.
+Each annotator was shown 13 tweets (selected at random, however kept constant between annotators) for a single candidate event.
 They were then asked Question 1:
 \begin{quote}\emph{``Do the majority of tweets discuss the same real-life topic?''}
 \end{quote}
-If they answered `no' then the evaluation was complete and they were allowed to submit the evaluation as this meant that the candidate event was \textbf{not} a true event.
-However, if they answered `yes', then they were reminded of our definition of event and asked Question 2:
+If they answered `no' then the evaluation was complete and they were allowed to submit as this meant that the candidate was \textbf{not} an event.
+However, if they answered `yes', they were reminded of our definition of `event' and asked Question 2:
 \begin{quote}
 \emph{``Do the tweets discuss an event?''}
 \end{quote}
-Again, annotators who answered `no' were allowed to submit the evaluation as the candidate was not a true event and there was little point gathering any further information.
+Again, annotators who answered `no' were allowed to submit the evaluation as, despite discussing the same topic, the candidate was not an event and there was little point gathering any further information.
 
-Annotators who confirmed that the tweets discussed an event were asked to re-read the tweets and mark that were non-relevant or off-topic.
-Finally, they were then asked to provide a brief describe the event and select the most appropriate category.
+Annotators who confirmed that the tweets discussed an event were asked to re-read the tweets and mark any that were non-relevant or off-topic.
+Finally, they were asked to provide a brief describe the event and select the most appropriate category.
 Rather than ask the annotators to choose between a large number of categories, we chose to use the categories defined and used by the Topic Detection and Tracking (TDT) project~\cite{Allan:2002:ITD:772260.772262}.
 The 13 categories defined cover a wide range of topics, with a Miscellaneous category for topics which do not fit elsewhere.
 The full list of TDT categories are shown in Table~\ref{collection:table:catTable}.
@@ -221,13 +221,13 @@ This indicates that continuing to ask for annotations after our stopping point w
 \subsubsection{Annotating the Event}
 Annotation for the CEP events was considerably more straight forward than for candidate events from the detection approaches.
 For each batch, we asked three annotators to read a description of the event, as taken from the Wikipedia Current Events portal.
-We also supplied a link to a relevant news article they could use a reference for judging relevance.
-They were then asked to enter a short description of the event, which they might use if they were searching for tweets about the event themselves.
-Finally, they were asked to read the tweets, marking any non-relevant tweets as so.
+We also supplied a link to a relevant news article they could use as a reference.
+They were asked to enter a short description of the event that they might use if they were searching for tweets about the event themselves.
+Finally, they were shown 30 tweets and asked to mark any non-relevant tweets as so.
 
 The spam an quality control measures, as described in Section \ref{sec:spam}, we also used here.
 Specifically, a 20 second minimum time limit, and the honey-pot technique to identify low-quality annotators.
-Learning from our the results of the previous evaluations, we recorded the number of bad submissions for each user, and any user that failed to identify the honey-pot tweet 3 times was banned from performing additional evaluations.
+Learning from the results of the previous evaluations, we recorded the number of bad submissions for each user, and any user that failed to identify the honey-pot tweet 3 times was banned from performing further evaluations.
 
 
 \subsection{Annotation Results}

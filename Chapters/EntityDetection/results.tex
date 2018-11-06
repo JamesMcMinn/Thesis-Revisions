@@ -396,7 +396,7 @@ One concerns with our entity-based approach is the use of entities on event and 
 Running the Stanford POS Tagger and NER over tweets from the relevance judgements shows that 47.4\% of relevant tweets contain at least one entity. This is promising, and considerably higher than the 11\% of tweets that contain name entities across the collection as a whole, confirming our hypothesis that there is a relationship between entities and events.
 Our approach achieves a tweet recall of 0.242 across the events it detects, and a recall of 0.511 if we measure only against tweets in the relevance judgements which contain a named entity.
 
-This does highlight one drawback to our entity based approach.
+This does highlight one drawback to our entity-based approach.
 Even if we were to detect every event in the collection, we could never achieve a tweet recall above 0.474.
 Some of this is likely due to the difficulty of NER on Twitter, as noted by \cite{DBLP:conf/sigir/LiWHYDSL12}, and could be improved with better NER models for Twitter. However, it is likely that the majority of tweets simply do not contain any named entities, meaning that we must consider the effect this has on detection effectiveness -- if an event has very few or no tweets with named entities then our approach will be unable to detect them.
 
@@ -528,7 +528,7 @@ While this may seem like a low threshold, empirically, we found that it produce 
 More work is required to develop a more robust evaluation methodology.
 
 \section{Efficiency and Ensuring Real-Time Processing}
-One of our aims when developing our entity based approach was to ensure that it was both real-time and efficient. In essence, a real-time algorithm can be seen as having \(O(1)\) complexity. While a real-time approach is often efficient, it does not have to be, and many real-time approaches fail to scale as the volume of information is increased, causing effectiveness to drop. Clearly a real-time system cannot be expected to process an infinite volume of data, however an efficient real-time systems should be able to scale reasonably without a significant loss of effectiveness.
+One of our aims when developing our entity-based approach was to ensure that it was both real-time and efficient. In essence, a real-time algorithm can be seen as having \(O(1)\) complexity. While a real-time approach is often efficient, it does not have to be, and many real-time approaches fail to scale as the volume of information is increased, causing effectiveness to drop. Clearly a real-time system cannot be expected to process an infinite volume of data, however an efficient real-time systems should be able to scale reasonably without a significant loss of effectiveness.
 
 Our approach is both real-time and efficient, in that we guarantee a maximum time per tweet, and it is able to scale as the volume of data increases.
 The real-time aspect is guaranteed by using only the top 10 IDF-weighted terms in each tweet (a restriction which effects less than 0.02\% of tweets) and by retrieving only the \(N\) most recent documents per term (in our experiments \(N = 500\)), we ensure that in the worst case, no more than \(10N\) comparisons are made per document, giving \(O(1)\) complexity.
