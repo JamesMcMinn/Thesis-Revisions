@@ -140,7 +140,7 @@ We use the Three Sigma Rule as the basis for a light-weight burst detection appr
 A similar approach is used by \cite{Aggarwal12} to determine an minimum similarity threshold for their clustering approach described in section \ref{background:cs}.
 
 \begin{algorithm}[t]
-	\caption{Efficient computation of $\mu$ and $\sigma$ values for multiple windows and entities}
+	\caption{Efficient computation of $\mu$ and $\sigma$ statistics for multiple windows and entities}
 	\label{detection:alg:updatingEntityValues}
 
 	\DontPrintSemicolon
@@ -181,12 +181,12 @@ A similar approach is used by \cite{Aggarwal12} to determine an minimum similari
 	}
 \end{algorithm}
 
-For each window, we maintain mean and standard deviation values, updating them periodically with the current entity frequency.
-It is possible to efficiently compute moving mean (\(\mu\)) and standard deviation (\(\sigma\)) values using a set of three power sums \(M_0\), \(M_1\) and \(M_2\), for vector $E$ containing counts of how frequently entity $e$ is mentioned during each window:
+For each window, we maintain the mean and standard deviation statistics, updating them periodically with the current entity frequency.
+It is possible to efficiently compute the moving mean (\(\mu\)) and standard deviation (\(\sigma\)) using a set of three power sums \(M_0\), \(M_1\) and \(M_2\), for vector $E$ containing counts of how frequently entity $e$ is mentioned during each window:
 \begin{align*}
 	M_0 &= \sum_{i = 0}^{|E|}{E_i^0} & M_1 &= \sum_{i = 0}^{|E|}{E_i^1} & M_2 &= \sum_{i = 0}^{|E|}{E_{i}^2}
 \end{align*}
-The current mean and standard deviation values (\(\mu\) and \(\sigma\) respectively), can then calculated as so:
+The current mean and standard deviation (\(\mu\) and \(\sigma\) respectively), can then calculated as so:
 \begin{equation*}
 	\begin{aligned}[c]
 		\mu = \frac{M_1}{M_0}
@@ -197,7 +197,7 @@ The current mean and standard deviation values (\(\mu\) and \(\sigma\) respectiv
 	\end{aligned}
 \end{equation*}
 
-The \(\mu\) and \(\sigma\) values are computed for each named entity and each window length, requiring $|e| \cdot 7 \cdot 3$ integer values to be stored, where $|e|$ is the number of named entities seen by the system, 7 is the number of windows, and 3 represents the $M_0$, $M_1$ and $M_2$ values.
+We compute \(\mu\) and \(\sigma\) for each named entity and each window length, requiring $|e| \cdot 7 \cdot 3$ integers to be stored, where $|e|$ is the number of named entities seen by the system, 7 is the number of windows, and 3 represents the $M_0$, $M_1$ and $M_2$ values.
 Entity frequencies are updated periodically based upon the length of the window (i.e., a 5 minute window is updated every 5 minutes).
 Algorithm \ref{detection:alg:updatingEntityValues} gives the pseudocode for this approach.
 
