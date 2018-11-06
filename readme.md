@@ -9,7 +9,7 @@ This document outlines a plan for revisions and corrections that are needed in o
   - [ ] Fix algorithm and table captions
 
 ## 0. Front Matter
-- [X] Fix the date
+- [X] [Fix the date](https://github.com/JamesMcMinn/Thesis-Revisions/commit/cd6230ee687e5f58248ff862310680ff25e4b1c8)
 - [ ] Add Acknowledgments
 - [X] Add Dedication
 - [ ] Avoid copying from Introduction for Abstract
@@ -67,8 +67,8 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Link burst detection approach back to that used by CS approach and clarify](https://github.com/JamesMcMinn/Thesis-Revisions/commit/55211834ea84596e2f184ce94c25d09fae037fea)
 - [X] [Add pseudocode for burst detection](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c11731d32a5533784518e6037884dda32b411ff0)
 - [X] [4.2.4 - Clarify that a burst does not mean we have any clusters / tweets yet](https://github.com/JamesMcMinn/Thesis-Revisions/commit/d8896cf95fcf4819f44b18ed35503e5d84b5dd51)
-- [X] 4.2.5: Disambiguation. Why not use tagme, for example?
-- [X] 4.2.5: Formalize algorithm
+- [X] [4.2.5: Disambiguation. Why not use tagme, for example?](https://github.com/JamesMcMinn/Thesis-Revisions/commit/8cd661032867892db761fdf03515346a7a7b6f42)
+- [X] [4.2.5: Formalize algorithm](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1147024e8883e5bc8e32ccf8c0e0ab114915aae8)
 - [X] [4.3: Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
 - [X] [Remove most of 4.3.1 as it is repetition of Chapter 3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
 - [ ] Define and explain in detail, the automatic evaluation
