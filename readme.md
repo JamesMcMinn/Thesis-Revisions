@@ -9,7 +9,7 @@ This document outlines a plan for revisions and corrections that are needed in o
   - [ ] Fix cluster and table captions
 
 ## 0. Front Matter
-- [ ] Fix the date
+- [X] Fix the date
 - [ ] Add Acknowledgments
 - [X] Add Dedication
 - [ ] Avoid copying from Introduction for Abstract
@@ -58,8 +58,8 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Explain and motivate clustering features](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c) - [Amended here](https://github.com/JamesMcMinn/Thesis-Revisions/commit/db029cd018892b255402971a8392a0ce4e271ef6#diff-00ae86d2fc569b2e7406e379e494ea4b)
 - [X] [Explain how features were weighted](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-00ae86d2fc569b2e7406e379e494ea4bR150)
 - [X] [Explain that main focus of clustering is correctness of final dataset - not necessarily creating the best clustering approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-61be0110122c012884c4e5df3433b005R13)
-- [X] Add a range of statistics describing final collection characteristics
-  - [ ] Covert category table to graph
+- [X] [Add a range of statistics describing final collection characteristics](https://github.com/JamesMcMinn/Thesis-Revisions/commit/25789d8c7bd63dc66b87a436e580b484245cef5c)
+- [ ] Covert category table to graph
 
 ## 4. Entity-Based Event Detection
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3c4e24be6f0276d78de61d478c96bfc1f9cabe0f)
@@ -68,10 +68,9 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Link burst detection approach back to that used by CS approach and clarify](https://github.com/JamesMcMinn/Thesis-Revisions/commit/55211834ea84596e2f184ce94c25d09fae037fea)
 - [X] [Add pseudocode for burst detection](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c11731d32a5533784518e6037884dda32b411ff0)
 - [X] [4.2.4 - Clarify that a burst does not mean we have any clusters / tweets yet](https://github.com/JamesMcMinn/Thesis-Revisions/commit/d8896cf95fcf4819f44b18ed35503e5d84b5dd51)
-- [ ] Clarify 4.2.5, in particular:
-  - [ ] Disambiguation. Why not use tagme, for example?
-  - [ ] Formalize algorithm
-- [X] [Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
+- [ ] 4.2.5: Disambiguation. Why not use tagme, for example?
+- [ ] 4.2.5: Formalize algorithm
+- [X] [4.3: Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
 - [X] [Remove most of 4.3.1 as it is repetition of Chapter 3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
 - [ ] Define and explain in detail, the automatic evaluation
 - [ ] Discuss and clarify scaling used for crowdsourced evaluation
