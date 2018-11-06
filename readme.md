@@ -69,9 +69,9 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [4.2.5: Disambiguation. Why not use tagme, for example?](https://github.com/JamesMcMinn/Thesis-Revisions/commit/8cd661032867892db761fdf03515346a7a7b6f42)
 - [X] [4.2.5: Formalize algorithm](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1147024e8883e5bc8e32ccf8c0e0ab114915aae8)
 - [X] [4.3: Make sure description of LSH and CS approaches are removed and included in Chapter 3 instead](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
+- [X] [Move details of the automatic evaluation to section 4.3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/274f95120019d70d84c6834aef935ab0fd598da9)
 - [X] [Remove most of 4.3.1 as it is repetition of Chapter 3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c4207e10cab0272bf62eb31d6f47177ffb572e89)
-- [X] Move details of the automatic evaluation to section 4.3
-- [ ] Move details for crowd scaling to 4.3
+- [X] [Move details for crowd scaling to 4.3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/e5c718832884c21186caf7d25f40baf293486ca8)
 - [X] [Clarify Table 4.4](https://github.com/JamesMcMinn/Thesis-Revisions/commit/7717980c69dfc00de6a4b90e4789dfd5f3f6a6c3)
 - [X] [Remove "significant" where statistical significance not verified](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c8857e4d187173f2005b0aa0524b5d6447e764ba)
 - [ ] Explain 3 classes v single class in Table 4.9 and end of section 4.4.7:
