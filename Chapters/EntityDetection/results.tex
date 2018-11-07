@@ -329,7 +329,7 @@ This is again reflected in the low recall when using verbs only, and had we been
 At the highest level, these results seem to agree with our premise that events describe the effect of a verb on a noun (a real-world entity).
 
 The use of Hashtags seems to cause a small reduction in both precision and recall, a somewhat unexpected result, as Hashtags are commonly thought to be very good indicators for the topic of a tweet.
-We hypothesis that this is due to the specificity of named entities, and that by requiring every tweet to contain a named entity we are removing any topical uncertainty and rendering Hashtags redundant as an indicator of topic.
+We hypothesis that this is due to the specificity of named entities, and by requiring every tweet to contain a named entity we are removing any uncertainty and rendering Hashtags redundant as an indicator of topic.
 
 \subsection{Retweets}
 \label{detection:sec:retweetsEval}
@@ -344,7 +344,6 @@ Our approach achieves a tweet recall of 0.242 across the events it detects, and 
 This does highlight one drawback to our entity-based approach.
 Even if we were to detect every event in the collection, we could never achieve a tweet recall above 0.474.
 Some of this is likely due to the difficulty of NER on Twitter, as noted by \cite{DBLP:conf/sigir/LiWHYDSL12}, and could be improved with better NER models for Twitter. However, it is likely that the majority of tweets simply do not contain any named entities, meaning that we must consider the effect this has on detection effectiveness -- if an event has very few or no tweets with named entities then our approach will be unable to detect them.
-
 Of the 506 events in the relevance judgements, 14 have fewer than 5 associated tweets, 42 have fewer than 15, and 72 have fewer than 30.  In addition, 41 events in the relevance judgements have fewer than 5 tweets with entities, 109 events have fewer than 15, and 163 have fewer than 30. For those 41 events with fewer than 5 tweets containing entities, even if our system was to perform perfectly, we would be unable to detect them -- accounting for just over 8\% of all the events in the collection.
 
 \subsubsection{Entity Classes}
