@@ -28,11 +28,11 @@ Any variation from these thresholds is noted alongside the results presented in 
 
 \subsection{Crowdsourced Evaluation}
 \label{sec:baseline}
+\label{detection:sec:crowd}
 Given that no event detection technique for Twitter has been robustly evaluated against a publicly available Twitter collection, the only options available to us as a baseline are the LSH \citep{Petrovic10} and CS \citep{Aggarwal12} approaches used to generate the collection in chapter \ref{chapter:collection}.
 This means that the results are extremely biased towards these approaches, and only a crowdsourced evaluation will allow for a direct comparison between our entity-based approach and the baselines.
 As we use the results from the crowdsourced evaluation, baseline parameters have not changed from those used in chapter \ref{collection:chapter}.
 
-\label{detection:sec:crowd}
 In order to keep the comparison between the baselines and our approach as fair as possible, we use the same methodology here as we did in chapter \ref{chapter:collection} to gather relevance judgements for the baseline approaches.
 5 annotators were used per event, and to keep category classification fair, we used the same 13 categories defined by the Topic Detection and Tracking project \citep{Allan:2002:ITD:772260.772262}.
 To generate the results that follow, we mapped the TDT categories back to the 8 categories used by the collection.
