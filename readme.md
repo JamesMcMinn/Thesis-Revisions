@@ -56,6 +56,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Explain how features were weighted](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-00ae86d2fc569b2e7406e379e494ea4bR150)
 - [X] [Explain that main focus of clustering is correctness of final dataset - not necessarily creating the best clustering approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-61be0110122c012884c4e5df3433b005R13)
 - [X] [Add a range of statistics describing final collection characteristics](https://github.com/JamesMcMinn/Thesis-Revisions/commit/25789d8c7bd63dc66b87a436e580b484245cef5c)
+- [ ] Discuss completeness and reusability
 - [ ] Covert category table to graph
 
 ## 4. Entity-Based Event Detection
@@ -74,10 +75,9 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Move details for crowd scaling to 4.3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/e5c718832884c21186caf7d25f40baf293486ca8)
 - [X] [Clarify Table 4.4](https://github.com/JamesMcMinn/Thesis-Revisions/commit/7717980c69dfc00de6a4b90e4789dfd5f3f6a6c3)
 - [X] [Remove "significant" where statistical significance not verified](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c8857e4d187173f2005b0aa0524b5d6447e764ba)
-- [ ] Explain 3 classes v single class in Table 4.9 and end of section 4.4.7:
-  - [X] [make it clear that disambiguation is done by Stanford NER in the form of NER classes](https://github.com/JamesMcMinn/Thesis-Revisions/commit/8d5a4ec5e84828324b8e7129f54031e981987740)
-- [ ] Discuss ability to scale wrt. current hardware
-- [ ] Various small clarifications requested in annotated copy
+- [X] [make it clear that disambiguation is done by Stanford NER in the form of NER classes](https://github.com/JamesMcMinn/Thesis-Revisions/commit/8d5a4ec5e84828324b8e7129f54031e981987740)
+- [X] Discuss categories differences between crowd / automatic
+- [X] [Various small clarifications requested in annotated copy](https://github.com/JamesMcMinn/Thesis-Revisions/commit/d69d566fe7695407d424fe1807e7d4d59a8c7339)
 
 ## 5. Newsworthiness
 - [ ] Move background to Chapter 3

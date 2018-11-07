@@ -382,24 +382,16 @@ Table \ref{detection:table:entityTypes} shows the effect of differentiating betw
 
 \section{Event Detection Evaluation Approaches}
 \label{detection:sec:measures}
+In section \ref{detection:sec:experimentation} we discussed evaluation issues and limitations that made the evaluation of event detection approaches difficult.
+Here we examine how our automatic evaluation approach compares to our crowdsourced methodology.
 
-Our work to build the Events 2012 collection remains the only publicly  available twitter corpus with a ground truth for evaluating event detection approaches, and very few detection approaches have been thoroughly evaluated on a publicly available dataset.
-To this end, we discuss a a number of challenges associated with evaluating event detection approaches using the Events 2012 collection, and examine how our automatic evaluation approach compares to our crowdsourced methodology.
-
-It is a infeasible for the collection to contain relevance judgements for all tweets and for every event.
-Even with a concrete definition of event, such as the one we propose in chapter \ref{chapter:collection}, deciding what constitutes an event is a subjective task, and having multiple annotators read all 120 million tweets in the collection to annotate all events and all relevant tweets is an impossible task.
-For that reason, the pooling strategy we employed in chapter \ref{chapter:collection} is likely the best approach for building a large scale collection for event detection.
-However, this raises an number of evaluation issues that need to be examined, and if possible, addressed.
-
-
-\begin{table}[h!]
+\begin{table}[b!]
 	\centering
 
   \caption[Results obtained through crowdsourcing vs automatically.]{Results obtained through crowdsourcing vs automatically at a minimum event size of 30.}
 
 	\label{detection:table:diffResults}
 
-	\small
 
 	\begin{tabulary}{\textwidth}{l c c c }
 		\toprule
@@ -416,10 +408,9 @@ Table \ref{detection:table:diffResults} shows the results of our entity-based ap
 Of the 250 events evaluated using crowdsourcing, 159 were determined to be true events, while 91 were found to be false events, giving a precision of 0.636.
 By scaling these values to all events returned by our approach, we can estimate that 769 of the 1210 events are true events.
 Precision under a crowdsourced evaluation is more than 3 times higher than calculated using the automated approach, indicating as expected, that the Events 2012 collection does not have relevance judgements for all events that occurred during the 28 days it covers.
+As we discussed in section \ref{detection:sec:experimentation}, there are a number of issues that prevent us from accurately calculating recall for the crowdsourced evaluation, so recall is not given in Table \ref{detection:table:diffResults}.
 
-As we discuss later in this section, there are a number of issues that prevent us from accurately calculating recall for the crowdsourced evaluation, so recall is not given in Table \ref{detection:table:diffResults}. The recall value given in Table \ref{detection:table:bestResults} was calculated automatically using existing relevance judgements.
-
-\begin{table}[h!]
+\begin{table}
 	\centering
 	\small
 	\caption{The distribution of events between categories, measured using both the Collection and Crowdsourcing.}
@@ -428,24 +419,32 @@ As we discuss later in this section, there are a number of issues that prevent u
 
 	\begin{tabulary}{\textwidth}{l c c c}
 		\toprule
-		\textbf{Category} & \textbf{Automatic} & \textbf{Crowdsourced} \\
+		\textbf{Category} & \textbf{Automatic} & \textbf{Crowdsourced} & \textbf{\% of Collection} \\
 		\midrule
-		Armed Conflicts \& Attacks  		&  26.3\%  &  3.4\%  \\
-		Arts, Culture \& Entertainment  &  6.2\%  &  9.4\%  \\
-		Business \& Economy  						&  4.6\%  &  1.7\%  \\
-		Disasters \& Accidents  				&  6.7\%  &  3.4\%  \\
-		Law, Politics \& Scandals  			&  27.8\%  &  21.4\%  \\
-		Miscellaneous  									&  2.1\%  &  11.1\%  \\
-		Science \& Technology  					&  2.1\%  &  2.6\%  \\
-		Sports  												&  24.2\%  & 45.3\%  \\
+		Armed Conflicts \& Attacks  		&  26.3\%  &  3.4\% & 19.4\%  \\
+		Arts, Culture \& Entertainment  &  6.2\%  &  9.4\%  & 10.5\% \\
+		Business \& Economy  						&  4.6\%  &  1.7\%  & 4.5\% \\
+		Disasters \& Accidents  				&  6.7\%  &  3.4\%  & 5.7\% \\
+		Law, Politics \& Scandals  			&  27.8\%  &  21.4\% & 27.7\% \\
+		Miscellaneous  									&  2.1\%  &  11.1\%  & 4.2\% \\
+		Science \& Technology  					&  2.1\%  &  2.6\%  & 3.2\% \\
+		Sports  												&  24.2\%  & 45.3\% & 24.9\% \\
 		\bottomrule
 		\end{tabulary}
 
 \end{table}
 
 Table \ref{detection:table:categoriesCrowd} shows the distribution of events between categories, calculated automatically and through crowdsourcing.
-Both the automatic and crowdsourced evaluation give similar distributions (\(r = 0.59\)), suggesting that there is at least moderate positive correlation between the distribution of results returned by both methods of evaluation, despite differences in the absolute values.
+Both the automatic and crowdsourced evaluation give somewhat similar distributions ($R = 0.59$), suggesting that there is a somewhat moderate positive correlation between the distribution of results returned by both methods of evaluation, despite differences in the absolute values.
+However, there are a number of outliers, such as Armed Conflicts and Attacks, and Sports.
 
+The automatic evaluation suggests that Armed Conflicts and Attacks make up 26.3\% of the events detected by our approach, however the crowdsourced evaluation determined this to be only 3.4\%.
+Similarly, the automatic evaluation found 24.2\% of events to be related to Sports, however the crowdsourced evaluation found that 45.3\% discussed a Sports event.
+Closer examination shows that the distribution of events using the automatic evaluation has an almost perfect correlation with the distribution of events in the collection ($R = 0.96$).
+This is not unexpected, and in fact gives some confidence that the automatic approach is doing a reasonable job of matching events being evaluated to events from the collection.
+
+Comparing the crowdsourced results from our entity-based approach to those of the LSH approach (which can be found in Table \ref{table:eventsByCat}), we find that the category correlation is almost perfect ($R = 0.96$).
+This means that our approach and the LSH approach detected very similar types of event (although our approach was able to do it with much higher precision), possibly suggesting that the types of event most commonly discussed on Twitter differ from those covered by the media and and the collection.
 
 
 \section{Efficiency and Ensuring Real-Time Processing}
