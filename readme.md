@@ -4,8 +4,8 @@ This document outlines a plan for revisions and corrections that are needed in o
 
 ## General
 - [ ] Add equation numbers
-- [ ] Convert Tables to Graphs where appropriate
-- [X] [List of algorithms](https://github.com/JamesMcMinn/Thesis-Revisions/commit/28d74ba136a2db3593fa7a318ee905c430cd94b4)
+- [ ] Convert Tables to/Add graphs where appropriate
+- [X] List of algorithms
   - [ ] Fix algorithm and table captions
 
 ## 0. Front Matter
@@ -56,8 +56,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Explain how features were weighted](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-00ae86d2fc569b2e7406e379e494ea4bR150)
 - [X] [Explain that main focus of clustering is correctness of final dataset - not necessarily creating the best clustering approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-61be0110122c012884c4e5df3433b005R13)
 - [X] [Add a range of statistics describing final collection characteristics](https://github.com/JamesMcMinn/Thesis-Revisions/commit/25789d8c7bd63dc66b87a436e580b484245cef5c)
-- [ ] Discuss completeness and reusability
-- [ ] Covert category table to graph
+- [X] Discuss completeness and reusability
 
 ## 4. Entity-Based Event Detection
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3c4e24be6f0276d78de61d478c96bfc1f9cabe0f)
@@ -76,7 +75,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Clarify Table 4.4](https://github.com/JamesMcMinn/Thesis-Revisions/commit/7717980c69dfc00de6a4b90e4789dfd5f3f6a6c3)
 - [X] [Remove "significant" where statistical significance not verified](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c8857e4d187173f2005b0aa0524b5d6447e764ba)
 - [X] [make it clear that disambiguation is done by Stanford NER in the form of NER classes](https://github.com/JamesMcMinn/Thesis-Revisions/commit/8d5a4ec5e84828324b8e7129f54031e981987740)
-- [X] Discuss categories differences between crowd / automatic
+- [X] [Discuss categories differences between crowd / automatic](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3d6e2a473c5d9718a4f549a9e02b998d4b3e3cb6)
 - [X] [Various small clarifications requested in annotated copy](https://github.com/JamesMcMinn/Thesis-Revisions/commit/d69d566fe7695407d424fe1807e7d4d59a8c7339)
 
 ## 5. Newsworthiness

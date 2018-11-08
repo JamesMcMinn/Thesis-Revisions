@@ -85,4 +85,21 @@ This could be due to the volume of discussion associated with each of these topi
 \emph{Law, Politics and Scandals} have very few tweets per event in comparison with Sports, meaning that restricting the detection approaches to clusters with at least 30 tweets may have removed many which were discussing these types of event.
 Since we did not put this restriction in place for the Wikipedia approach, it was not affected by the low volume of discussion, so is able to produce more events of this type.
 
+\subsection{Completeness and Re-usability}
+Since the aim of the test collection is to enable the comparable evaluation of event detection approaches, it is necessary to discuss the completeness and re-usability of the collection.
+It is a infeasible for the collection to contain relevance judgements for all tweets and for every event.
+Even with our definition of event, deciding what constitutes an event is a subjective task, and having multiple annotators read all 120 million tweets in the collection to annotate all events and all relevant tweets is an impossible task.
+For that reason, the pooling strategy we employed is one of the few strategies that are ever likely to be effective for building a large scale collection for event detection.
+However, the lack of completeness raises an number of evaluation that need to be examined, and if possible, addressed when performing evaluations using this collection.
+
+Since we know that the relevance judgements are incomplete in terms of tweets for each event, and that an event detection system is unlikely to correctly identify every tweet for an event, we must consider how this will affect evaluations.
+For example, we cannot expect to ever have full relevance judgements for even a fraction of the millions of tweets that were posted about the US Presidential debates in 2012\footnote{\texttt{http://www.nbcnews.com/technology/presidential-debate-sets-twitter\\-record-6281796}}.
+Additionally, because automated methods were used to generate the relevance judgements, each with differing levels of granularity, there are a number of events in the judgements where only part of an event has been detected (for example, a single goal in a football match, rather than the football match itself).
+This means that any evaluation using the collection must allow for inexact matching when determining relevance, otherwise it will greatly underestimate effectiveness.
+
+It is easy to show that more than 506 events occurred between the dates the collection covers, meaning that there will certainly be events we have no annotations for.
+Any sort of comparative evaluation using this collection must take this into consideration.
+However, the collection should contain enough events and relevance judgements to serve as a representative sample, and should still be useful when performing evaluations.
+Although precision and recall are likely to be underestimated, results should still be comparable, particularity between different runs of the same approach during development and testing.
+A crowdsourced evaluation, using the methodology proposed in this chapter, could then be used to perform a through and more accurate evaluation.
 
