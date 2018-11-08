@@ -56,7 +56,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Explain how features were weighted](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-00ae86d2fc569b2e7406e379e494ea4bR150)
 - [X] [Explain that main focus of clustering is correctness of final dataset - not necessarily creating the best clustering approach](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1beec3158646bd21cdd54fac4280d2138e3e523c#diff-61be0110122c012884c4e5df3433b005R13)
 - [X] [Add a range of statistics describing final collection characteristics](https://github.com/JamesMcMinn/Thesis-Revisions/commit/25789d8c7bd63dc66b87a436e580b484245cef5c)
-- [X] Discuss completeness and reusability
+- [X] [Discuss completeness and reusability](https://github.com/JamesMcMinn/Thesis-Revisions/commit/b9a5477de0f4ea3763a7ea59619ad621731a4357)
 
 ## 4. Entity-Based Event Detection
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3c4e24be6f0276d78de61d478c96bfc1f9cabe0f)
