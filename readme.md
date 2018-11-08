@@ -79,7 +79,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Various small clarifications requested in annotated copy](https://github.com/JamesMcMinn/Thesis-Revisions/commit/d69d566fe7695407d424fe1807e7d4d59a8c7339)
 
 ## 5. Newsworthiness
-- [ ] Move background to Chapter 3
+- [ ] Move background to Chapter 2
 - [ ] Discuss user description terms and subjective nature / drift
 - [ ] Link 5.4.4 back to S_HQ and S_LQ in 5.3.1
 - [ ] Discuss different trends shown table 5.9

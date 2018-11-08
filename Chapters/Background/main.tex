@@ -373,9 +373,9 @@ The change in relative volume of documents represents a change in behavior which
 \cite{Sakaki:2010:EST:1772690.1772777} were concerned with the detection of specific types of event, in particular, earthquakes and typhoons, with the aim of issuing alerts to those in the path of these disasters. Their approach, although simple, is very effective. They specify a set of predefined keywords which are associated with the type of events they are trying to detect (e.g. earthquake, shake, cyclone, typhoon, etc.,). They monitor an incoming stream of tweets for these keywords, and for each tweet found, they classify it using a Support Vector Machine (SVM) as either event-related or not. If they find enough event-related tweets in a short period of time, then their systems decides that the event is real, and issues alerts to those who could be affected. Despite the effectiveness of their approach, there are obvious drawbacks. Firstly, it can only detect specific types of event, and secondly, it requires training data for each of the types of event we want to detect.
 
 \subsection{Natural Language Approaches}
-The use of named entities for event detection has been suggest in the past,  \cite{Kumaran:2004:TCN:1008992.1009044} used named entities to improve First Story Detection performance on Topic Detection and Tracking corpora, however there was concern that its effectiveness would be too low when dealing with the low quality and noisy content found on Twitter. \cite{DBLP:conf/sigir/LiWHYDSL12} examined the performance of current state-of-the-art Named Entity Recognition (NER) software on Twitter, and although they found that it was possible to significantly improve upon current performance, their results show that out-of-the-box solutions, such as the Stanford NER\footnote{http://www-nlp.stanford.edu/software/tagger.shtml}, perform adequately for most tasks.
-
 \cite{Choudhury11extractingsemantic} examined how linguistic features and  background knowledge could be used to detect specific types of sports events with high precision. However their approach requires significant domain knowledge of the sporting events and large amounts of manual labeling to prepare a classifier for each specific type of event, making it difficult and time-consuming to generalize.
+
+The use of named entities for event detection has been suggest in the past,  \cite{Kumaran:2004:TCN:1008992.1009044} used named entities to improve First Story Detection performance on Topic Detection and Tracking corpora, however there was concern that its effectiveness would be too low when dealing with the low quality and noisy content found on Twitter. \cite{DBLP:conf/sigir/LiWHYDSL12} examined the performance of current state-of-the-art Named Entity Recognition (NER) software on Twitter, and although they found that it was possible to significantly improve upon current performance, their results show that out-of-the-box solutions, such as the Stanford NER\footnote{http://www-nlp.stanford.edu/software/tagger.shtml}, perform adequately for most tasks.
 
 \cite{Ritter:2012:ODE:2339530.2339704} used named entities, ``event phrases'' and temporal expressions to extract a calendar of significant events from Twitter.
 However, their approach requires that tweets contain temporal resolution phrases, such as ``tomorrow'' or ``Wednesday'' for their approach to resolve between an entity and a specific time.
@@ -399,8 +399,8 @@ To address the issue of lexical mismatch, \citep{Petrovic:2012:UPI:2382029.23820
 Additionally, since Tweets themselves are very short and tend to discuss only a single moment in time, the use of paraphrasing does not address issues such as topic drift or divergence.
 
 Instead of relying on content-only features for clustering, \cite{Aggarwal12} adapt their approach (described in detail in section \ref{background:cs}) to use the structure of the underlying social network to improve clustering.
-Using the graphical structure of Twitter, where each user is a node in a graph, their followers/followees form the vertices.
-Each cluster contains two summaries: (i) a node-summary, which is a set of users and their frequencies and (ii) a content-summary, which is a set of words and their TF-IDF \citep{Salton:1988:TAA:54259.54260} weighted frequencies.
+Using the graphical structure of Twitter, where each user is a node in a graph and their followers/followees form the vertices, they maintain two summaries
+for each cluster in their detection approach: (i) a node-summary, which is a set of users and their frequencies and (ii) a content-summary, which is a set of words and their TF-IDF \citep{Salton:1988:TAA:54259.54260} weighted frequencies.
 By combining these two summaries, they suggest a novel similarity score which exploits the underlying structure of the social network, and improves upon content-only measures.
 Similarity between tweet $t$ and cluster $c$ is calculated as:
 \begin{displaymath}
@@ -416,25 +416,30 @@ The temporal nature of followers also causes a problem.
 Users follow and unfollow each other on a regular basis, meaning that the underlying network structure changes over time.
 This can cause issues even in the short term if a user emerges as good source of information, spurring many other users to follow them, and poses a particular problem for researchers who may be using a datatset which is several years old as their current follower network is unlikely to bear any resemblance to their network from several years ago.
 
-Indeed, nearest neighbour clustering alone seems inadequate as a method of tracking the discussion of complex or evolving events.
+Indeed, clustering alone appears to be inadequate for effective detection and tracking tracking of complex or evolving events on Twitter.
 The limited length of a tweet restricts discussion to a very narrow topic, however discussion around an ongoing event may quickly jump from one sub-topic to another, making it difficult to find links.
 The use of network structure is a possible solution, but as we have discussed, is unlikely to be feasible unless the network is known in advance.
 
 \subsection{Burst and Trend Analysis}
 \todo{A page or two of content to come}
 
-\section{Differences between Event Detection and other IR Tasks}
-\label{background:sec:diffs}
-Despite being viewed as an IR task, Event Detection has a number of characteristics that differ from more common IR tasks.
-The most obvious of these is the lack of a user-provided query.
-Rather than searching for documents relevant to a specific query, event detection systems first must detect new events and track which documents belong to the same topic.
-This means that the notion of relevance is much more ambiguous, and creates a number of issues with the evaluation of event detection approaches.
+\subsection{Newsworthiness and Credibility}
+The topic of newsworthiness is related to event detection through it's use as a common pre-processing step in credibility assessment and summarization \citep{Noyunsan17, Madhawa15}
 
-\todo{Discussion around some of the evaluation issues to come}
+\cite{Noyunsan16} used cosine similarity to filter out non-newsworthy posts on Facebook by comparing new posts to known non-newsworthy posts.
+They created a groundtruth of 1,005 non-newsworthy Facebook posts, annotated and collected via a browser extension installed by volunteers.
+Their approach compares each new post to every post in the groundtruth, and classifies posts as non-newsworthy (noise) if its similarity to any document in the groundtruth is above a threshold.
+They later examined how the removal of non-newsworthy posts affects credibility assessment and found that by removing non-newsworthy posts they could increase the credibility assessment effectiveness \citep{Noyunsan17}.
+
+\cite{Madhawa15} examined the performance of difference classifiers for labelling tweets as newsworthy or noise as the first step in a pipeline for the summarization of events on Twitter.
+However, \cite{Madhawa15} define newsworthy and noise as `objectivity' and `subjectivity' respectively.
+Although this distinction is true in many cases, and provides a useful distinction for summarization, it does not apply in all cases.
+Subjective comments by noteworthy individuals, such as politicians or public figures, are often a newsworthy event.
+For this reason, we argue that simple objectivity and subjectivity labelling does not capture the true newsworthiness of a post, and instead a more robust newsworthiness \emph{score} is required.
 
 \section{Test Collections}
 \label{background:sec:collections}
-Ir order to fairly and accurately evaluate Information Retrieval systems of any kind, a standard test collection and set of relevance judgements are required.
+In order to fairly and accurately evaluate Information Retrieval systems of any kind, a standard test collection and set of relevance judgements are required.
 The majority of modern test collections are created using a pooling approach, where a set of topics or queries are selected and used to retrieve documents from a number of different systems.
 The union of the top \(n\) documents per topic, taken from each system systems, is then used create a pool of documents for each topic.
 Each document in the pool is then judged to be relevant or non-relevant to the topic, and documents which are not in the pool are assumed to be non-relevant.
@@ -456,7 +461,8 @@ They suggest that pool sizes for each topic should be increased when it is highl
 However, the use of pooling to create a test collection for event detection poses additional challenges which require more substantial changes to the TREC-style pooling methodology than those proposed by \cite{Buckley:2007:BLP:1298708.1298735} and \cite{Zobel:1998:RRL:290941.291014}.
 
 \subsection{The Pooling Approach and Event Detection}
-As discussed in section \ref{background:sec:diffs}, there are no pre-defined topics or queries for event detection systems to use.
+Despite often being viewed as an IR task, Event Detection has a number of characteristics that differ from more common IR tasks.
+The most obvious of these is the lack of pre-defined topics or queries for event detection systems to use.
 Rather, systems aim to automatically \emph{discover} a sub-set all all topics being discussed in the collection that meet the criteria for being an \emph{event} (as we will discuss in Chapter \ref{chapter:collection}, defining these criteria is not straightforward).
 A perfect system would detect all documents for each event being discussed, however in practice, different event detection approaches discover different events.
 This makes it impossible to pool the results from event detection approaches using a TREC-style pooling methodology since it is not obvious what the various topics are or how they should be merged to create the pools for judgment.
