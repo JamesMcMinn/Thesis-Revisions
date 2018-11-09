@@ -9,7 +9,8 @@ First we examine the different heuristic features defined in section \ref{scorin
 We then test a number of different threshold values for labelling tweets as high and low quality, and examine how Newsworthiness Scores are distributed.
 We look at how different event types and categories behave, and examine how different term representations (unigrams, bigrams)  affect performance.
 
-We process the Events 2012 corpus in a sequential manner, simulating a real-time stream of tweets. We filter out retweets and any non-English tweets. URLs are removed, and each tweet is tokenized. Unless otherwise noted,  a unigram representation is used, we perform no stemming or stop word removal, and all tokens are normalized to lowercase.
+We process the Events 2012 corpus in a online manner, simulating a real-time stream of time-ordered tweets.
+We filter out retweets and any non-English tweets. URLs are removed, and each tweet is tokenized. Unless otherwise noted, a unigram representation is used, we perform no stemming or stop word removal, and all tokens are normalized to lowercase.
 
 \subsection{Heuristics}
 In section \ref{scoring:sec:labelling}, we defined a number of heuristic features used to calculate a basic Quality Score that we then use to label tweets as either high or low quality.
@@ -24,7 +25,9 @@ Although our heuristics are all user-based, rather than content-based, we report
 	\label{scoring:graphic:descTerms}
  \end{figure}
 
-Figure \ref{scoring:graphic:descTerms} shows the number of tweets posted by a user whose User Description contains one of our heuristic terms, sorted by raw frequency. Note that the most common phrases  ``follow back/followback'' refer to a common type of spam described in section \ref{scoring:sec:labelling}, where a user promotes the fact that they will follow any user who follows them. This is often used to artificially grow followers and increase the accounts perceived significance.
+Figure \ref{scoring:graphic:descTerms} shows the number of tweets posted by users whose User Description contains one of the terms used for scoring, sorted by raw frequency.
+Note that the most common phrases  ``follow back/followback'' refer to a common type of spam described in section \ref{scoring:sec:labelling}, where a user promotes the fact that they will follow any user who follows them.
+This is often used to artificially grow followers and increase the accounts perceived significance.
 Since we use high numbers of followers as a positive weight, it is important that we are able to detect these accounts appropriately.
 
 Terms relate to news and journalism appear high in the list: `media', `news' and `write' are the most common non-spam related terms, with other news and journalism related terms (`report', `journal', `editor') appearing slightly lower in terms of raw frequency.
@@ -147,7 +150,7 @@ The median score across all tweets is 1.0.
 
 \subsection{Quality Thresholds}
 We examine how different thresholds affect the overall performance of our newsworthiness predictions.
-Since we lack a groundtruth with appropriate Newsworthiness Scores, we instead examine the differences between scores and newsworthiness classifications for tweets known to be relevant to events in the Events 2012 corpus, and those that were not evaluated.
+Since we lack groundtruth with appropriate Newsworthiness Scores, we instead examine the differences between scores and newsworthiness classifications for tweets known to be relevant to events in the Events 2012 corpus, and those that were not evaluated.
 It is important to note that we say `not evaluated', rather than non-relevant, as  we cannot be certain that tweets that were not evaluated are not newsworthy, since only a fraction of the 120 million tweets in the Events 2012 corpus were evaluated to create relevance judgements.
 It is likely that there are a significant number of unevaluated, but newsworthy tweets not included in the relevance judgements.
 This means that making absolute statements is impossible.
@@ -155,10 +158,10 @@ Instead we must assume that the percentage of unevaluated but newsworthy tweets 
 
 \subsubsection{Quality Labels}
 
-Table \ref{scoring:table:qualityLabels} shows the percentage of tweets labelled as High Quality or Low Quality. We divide tweets into two sets: those known to be relevant to an event from the Events 2012 corpus, and all other tweets (denoted `Event' and `Other').
+Table \ref{scoring:table:qualityLabels} shows the percentage of tweets labeled as High Quality or Low Quality. We divide tweets into two sets: those known to be relevant to an event from the Events 2012 corpus ('Event'), and all other tweets (`Other').
 We also include the ratio of Event / Other tweets so that the relative percentages can be more easily compared as Quality Score thresholds are varied.
-The threshold values represent the minimum or maximum scores for a tweet to be labelled as High Quality or Low Quality respectively.
-For example, a tweet with a Quality Score of 2.00 would be labelled High Quality at threshold values of 2.00 and below, but not at threshold values of 4.00 or 8.00.
+The threshold values represent the minimum or maximum scores for a tweet to be labeled as High Quality or Low Quality respectively.
+For example, a tweet with a Quality Score of 2.00 would be labeled High Quality at threshold values of 2.00 and below, but not at threshold values of 4.00 or 8.00.
 Similarly, a tweet with a Quality Score of 0.67 would be classified as Low Quality only if the threshold value was set to 0.67 or above.
 
 \begin{table}[h]
@@ -190,19 +193,19 @@ Similarly, a tweet with a Quality Score of 0.67 would be classified as Low Quali
 
 \end{table}
 
-Ratios greater than 1.0 for High Quality labels suggests that Event tweets are more likely to be labelled as High Quality than a tweet selected at random.
-Conversely, a ratio of less than 1.0 for Low Quality labels means that Event tweets are less likely to be labelled as Low Quality than a tweet selected at random.
+Ratios greater than 1.0 for High Quality labels suggests that Event tweets are more likely to be labeled as High Quality than a tweet selected at random.
+Conversely, a ratio of less than 1.0 for Low Quality labels means that Event tweets are less likely to be labeled as Low Quality than a tweet selected at random.
 
 A clear difference can be seen between Event and Other tweets.
-A much higher percentage of Event tweets are labelled High Quality at each threshold compared to Other tweets, with a general trend suggesting the ratio increases with threshold for High Quality labels:
+A much higher percentage of Event tweets are labeled High Quality at each threshold compared to Other tweets, with a general trend suggesting the ratio increases with threshold for High Quality labels:
 as the High Quality score threshold is increased, the ratio increases from 2.881 at 1.25 to 8.546 at 16.00.
 A similar, but inverse and weaker trend can be seen as the threshold is decreased for Low Quality labels.
 
-This is a good indication that the selected heuristics are reasonable choices, and perform better than random at labelling content, as a random baseline would show ratios close to 1 for both Low and High Quality labels.
+This is a good indication that the selected heuristics are reasonable choices, and perform better than random at labeling content, as a random baseline would show ratios close to 1 for both Low and High Quality labels.
 
-\subsection{Effect of Quality Score Thresholds on Newsworthiness Classification}
+\subsection{Effect of Quality Score $Q_d$ Thresholds on Newsworthiness Classification}
 
-Table \ref{scoring:table:newsworthinessClassifications} gives the percentage of tweets classified as Newsworthy or Noise (i.e. Newsworthiness Scores that are greater or less than 0, respectively), across a range of Quality Score threshold combinations.
+Table \ref{scoring:table:newsworthinessClassifications} gives the percentage of tweets classified as Newsworthy or Noise (i.e. Newsworthiness Scores that are greater or less than 0, respectively), across a range of Quality Score ($Q_D$) threshold combinations.
 At all Quality Score thresholds tested, a higher percentage of Event tweets are classified as Newsworthy and a smaller percentage are classified as Noise, compared with Other tweets.
 Compared to a random baseline, which would give similar classification rates for both Event and Other tweets, our newsworthiness classification appears to perform well.
 Event tweets are classified as Newsworthy at a ratio of approximately 4 to 1 when compared to Other tweets, and classified as Noise only one third as often as Other tweets.
@@ -216,7 +219,7 @@ The deviation from a ratio of 1 suggests that our Newsworthiness Scoring approac
 
 	\begin{tabulary}{\textwidth}{c c c c c c}
 	\toprule
-	\multicolumn{2}{c}{\footnotesize \textbf{Thresholds}} & \multicolumn{2}{c}{\footnotesize \textbf{Newsworthy}} & \multicolumn{2}{c}{\footnotesize \textbf{Noise}} \\
+	\multicolumn{2}{c}{\footnotesize \textbf{$Q_d$ Thresholds}} & \multicolumn{2}{c}{\footnotesize \textbf{Newsworthy}} & \multicolumn{2}{c}{\footnotesize \textbf{Noise}} \\
 	\textbf{HQ} & \textbf{LQ} & \textbf{Event} & \textbf{Other} & \textbf{Event} & \textbf{Other}  \\
 	\midrule
 	\textbf{1.25} & \textbf{0.75} & 49.759\% & 11.146\% & 6.649\% & 19.138\% \\
@@ -225,7 +228,7 @@ The deviation from a ratio of 1 suggests that our Newsworthiness Scoring approac
 	\midrule
 	\textbf{1.50} & \textbf{0.25} & 61.564\% & 13.713\% & 5.738\% & 19.682\% \\
 	\textbf{2.00} & \textbf{0.25} & 64.122\% & 14.370\% & 6.601\% & 22.218\% \\
-	\textbf{4.00} & \textbf{0.25} & 76.504\% & 18.830\% & 14.567\% & 50.133\% \\
+	\textbf{4.00} & \textbf{0.25} & \textbf{76.504\%} & \textbf{18.830\%} & \textbf{14.567\%} & \textbf{50.133\%} \\
 	\textbf{8.00} & \textbf{0.25} & 72.748\% & 17.137\% & 18.834\% & 66.536\% \\
 	\textbf{16.00} & \textbf{0.25} & 65.307\% & 17.232\% & 22.650\% & 67.193\% \\
 	\bottomrule
@@ -304,15 +307,14 @@ These results are encouraging, and follow a reasonable score distribution. The i
 	\label{scoring:table:categories}
 \end{table}
 
-Table \ref{scoring:table:categories} shows the distribution of tweets labelled Newsworthy,  Noise, or Unclassified (i.e., Newsworthiness Scores greater than, less than, or exactly 0 respectively) across the different event categories defined by the Events 2012 corpus.
-Category scores vary considerably around the mean values of 76.504\% for Newsworthy and 18.497\% for Noise (as shown in Table \ref{scoring:table:newsworthinessClassifications}).
+Table \ref{scoring:table:categories} shows the distribution of tweets labeled Newsworthy,  Noise, or Unclassified (i.e., Newsworthiness Scores greater than, less than, or exactly 0 respectively) across the different event categories defined by the Events 2012 corpus.
+Category scores vary considerably around the mean values of 76.504\% for Newsworthy and 18.497\% for Noise (taken from Table \ref{scoring:table:newsworthinessClassifications}).
 Table \ref{scoring:table:categoryScores} shows the average overall Newsworthiness Score across all Event tweets for each category, as well as independently calculated averages for tweets classified as Newsworthy or Noise.
 
-Over 97\% of tweets discussing Armed Conflicts and Attacks events are classified as Newsworthy, whereas only 42.105\% of Arts, Culture \& Entertainment tweets are.
+Table \ref{scoring:table:categories} shows that over 97\% of tweets discussing Armed Conflicts and Attacks events are classified as Newsworthy, whereas only 42.105\% of Arts, Culture \& Entertainment tweets are.
 This disparity can also been seen in the average Newsworthiness Scores for both categories: Armed Conflicts \& Attacks has an average Newsworthiness Score of 3.317, whilst Arts, Culture \& Entertainment has an average of only 0.427, although this difference is reduced when looking at averages for tweet classified as Newsworthy only (3.428 and 2.806, respectively).
 This difference seems intuitive: armed conflicts and attacks, such as bombings, school shootings and assassination attempts are extremely newsworthy events that are likely to make headlines worldwide.
-On the other hand, entertainment events, such as the launch of new television shows, or award ceremonies such as the Black Entertainment Awards, are less likely to make worldwide headlines but will still generate a high volume of subjective and low quality chatter.
-
+On the other hand, entertainment events, such as the launch of new television shows, or award ceremonies such as the Black Entertainment Awards, are less likely to make worldwide headlines but will still generate a high volume of subjective and low quality discussion.
 
 Other categories behave similarly to Armed Conflicts \& Attacks, such as Business \& Economy, where events are generally headline news, but generate a relatively low volume of discussion.
 Sports and Miscellaneous events, such as Felix Baumgartner's record-breaking jump from the edge of space or the start of Daylight savings time in the United States, show similar behaviour to Arts, Culture \& Entertainment.
