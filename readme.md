@@ -80,7 +80,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 
 ## 5. Newsworthiness
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/0ddfbef650b437a06146bfb8f61161fba4c72b2c)
-- [ ] Make it clear that this is done in a streaming manner - not offline
+- [X] [Make it clear that this is done in a streaming manner - not offline](https://github.com/JamesMcMinn/Thesis-Revisions/commit/4661dedefedf9cd9784b16f2433548e14e341f40)
 - [ ] Discuss user description terms and subjective nature / drift
 - [ ] Link 5.4.4 back to S_HQ and S_LQ in 5.3.1
 - [ ] Discuss different trends shown table 5.9
