@@ -12,8 +12,8 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Fix the date](https://github.com/JamesMcMinn/Thesis-Revisions/commit/cd6230ee687e5f58248ff862310680ff25e4b1c8)
 - [ ] Add Acknowledgments
 - [X] Add Dedication
-- [ ] Avoid copying from Introduction for Abstract
-- [ ] Add conclusions to abstract
+- [X] Avoid copying from Introduction for Abstract
+- [X] Add conclusions to abstract
 - [X] [Sort publications chronologically](https://github.com/JamesMcMinn/Thesis-Revisions/commit/86dd56d1416622f636946cfc42a91152f44533f7)
 
 
@@ -83,7 +83,6 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Discuss user description terms and subjective nature / drift](https://github.com/JamesMcMinn/Thesis-Revisions/commit/2e2558174b1860bab957edc58765fcc7f8426477)
 - [X] [5.4.4: Link 5.3.1 back to Q_d to make it clear what it is showing](https://github.com/JamesMcMinn/Thesis-Revisions/commit/088fcdfe50f4d088937f98f3c6134764c02c3ad5)
 - [ ] Convert Table 5.9 to graph, discuss different trends
-- [ ] Discuss if technique could be transferred to other areas
 - [X] [Various small clarifications requested in annotated copy](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3347ee9fead4254d43a3d8b320c297827a9ed005)
 
 ## 6.Conclusion
