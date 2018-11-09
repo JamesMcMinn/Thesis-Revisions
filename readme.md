@@ -6,7 +6,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [ ] Add equation numbers
 - [ ] Convert Tables to/Add graphs where appropriate
 - [X] List of algorithms
-  - [ ] Fix algorithm and table captions
+- [ ] Fix algorithm and table captions
 
 ## 0. Front Matter
 - [X] [Fix the date](https://github.com/JamesMcMinn/Thesis-Revisions/commit/cd6230ee687e5f58248ff862310680ff25e4b1c8)
@@ -21,7 +21,6 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [ ] Verify that research questions are falsifiable hypotheses
   - [X] [Clarify RQ2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1a71367f5092d7747f35deed64964f25f71b790e)
   - [ ] Update to clarify RQ3: Need to be clear what "automatic" evaluation is.
-    - Might be best discussing evaluation briefly earlier in the chapter?
 - [ ] Expand on contribution description relating to definition of event
 - [X] [Remove references to unsupervised](https://github.com/JamesMcMinn/Thesis-Revisions/commit/92b213136746bf2c4b527fad22b7870af5201afb)
 
@@ -81,8 +80,9 @@ This document outlines a plan for revisions and corrections that are needed in o
 ## 5. Newsworthiness
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/0ddfbef650b437a06146bfb8f61161fba4c72b2c)
 - [X] [Make it clear that this is done in a streaming manner - not offline](https://github.com/JamesMcMinn/Thesis-Revisions/commit/4661dedefedf9cd9784b16f2433548e14e341f40)
-- [ ] Discuss user description terms and subjective nature / drift
-- [ ] Link 5.4.4 back to S_HQ and S_LQ in 5.3.1
+- [X] [Discuss user description terms and subjective nature / drift](https://github.com/JamesMcMinn/Thesis-Revisions/commit/2e2558174b1860bab957edc58765fcc7f8426477)
+- [ ] 5.4.3: Explain that quality scores are only filters, they server no other purpose
+- [ ] 5.4.4: Link back to S_HQ and S_LQ in 5.3.1
 - [ ] Discuss different trends shown table 5.9
 - [ ] More example output and scores
 - [ ] Discuss if technique could be transferred to other areas
