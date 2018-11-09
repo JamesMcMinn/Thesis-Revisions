@@ -21,6 +21,7 @@ For example, a full football match rather than an individual goal, or grouping m
 Too low a threshold could result in many false-positives and misleading results.
 
 Empirically, we found that if 5\% or 15 tweets (whatever the smallest is) can be matched from a candidate event to an event in the relevance judgements, then is is almost always correctly labeled as a true-positive.
+Precision and recall can then be calculated on an event basis using the standard precision and recall metrics given in chapter \ref{chapter:background}.
 While this may seem like a low threshold, empirically, we found that it produces very few false-positives (i.e. non-relevant events being identified as relevant), whilst allowing for a great deal of flexibility in terms of event granularity.
 
 Automatic Evaluations were performed on all events with more than 30 tweets, using a 5\% threshold and/or minimum of 15 matching tweets.
