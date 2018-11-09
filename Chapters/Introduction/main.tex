@@ -73,7 +73,7 @@ We then use use these labels to feed tweets into a newsworthiness scoring model.
 We use this model to assign tweets with a Newsworthiness Score that can be positive or negative (Newsworthy or Noise), and can be used for both classification and scoring.
 We evaluate the classification accuracy and score appropriateness using relevance judgements from the Events 2012 corpus.
 We then propose a cluster based newsworthiness score that can be used as a feature for event detection.
-We evaluate the performance of our newsworthiness feature by removing clusters with low newsworthiness scores and find that it performs favourably compared to our entity based approach.
+We evaluate the performance of our newsworthiness feature by removing clusters with low newsworthiness scores and find that it performs favorably compared to our entity based approach.
 A further manual evaluation finds near-perfect precision with as few as 5 tweets (0.950), and perfect precision at 50 tweets.
 
 \section{Research Questions}
@@ -85,7 +85,7 @@ To determine if this hypothesis is true, we pose a number of key research questi
 
 \textbf{RQ2} & Can entities (people, places, organizations) be used to improve real-world event detection in a streaming setting on Twitter? \\
 
-\textbf{RQ3} & How fairly and accurately can automatic evaluation approaches evaluate event detection approaches for Twitter? \\
+\textbf{RQ3} & Can event detection approaches be evaluated in a systematic and fair way? \\
 
 \textbf{RQ4} & Can we determine the newsworthiness of an individual tweet from content alone? \\
 \end{tabulary}
@@ -96,13 +96,13 @@ In summary, the main contributions of this thesis are:
 \begin{itemize}
 	\item The creation of the first large-scale corpus for the evaluation of event detection approaches for Twitter.
 
-	\item A definition of `event' for the purpose of event detection on Twitter.
+	\item A definition of `event' for the purpose of event detection on Twitter that uses a the qualifier `significant' allowing it to be adapted for different use-cases.
 
 	\item A novel, real-time event detection approach that is computationally efficient and scalable, and that outperforms existing state-of-the-art approaches.
 
 	\item The first in-depth and comparable evaluation of an event detection approach for Twitter.
 
-	\item A novel method of scoring tweets to determine newsworthiness, that requires no manually labelled training and that is capable of being integrated into existing event detection approaches, resulting in significant improvements to precision.
+	\item A novel method of scoring tweets to determine newsworthiness, that requires no manually labeled training and that is capable of being integrated into existing event detection approaches, resulting in significant improvements to precision.
 \end{itemize}
 
 \section{Organization of Thesis}
