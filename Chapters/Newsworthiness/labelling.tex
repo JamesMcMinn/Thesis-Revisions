@@ -57,9 +57,14 @@ We manually created a list of keywords and phrases commonly used by news broadca
 
 \end{table}
 
-Positive terms were identified manually based on common terms used by news organizations, journalists, and financial traders on Twitter. The list of spam terms was also created manually based on common types of low quality marketing spam that is often found on Twitter. We note that many of the The `follow back' terms are commonly associated with users who artificially inflate their follower count by `following back' anyone who follows them. We penalise them here to correct for any boost given by the Number of Followers feature described later in this section.
+Positive terms were identified manually based on common terms used by news organizations, journalists, and financial traders on Twitter. The list of spam terms was also created manually based on common types of low quality marketing spam that is often found on Twitter.
+The `follow back' terms are commonly associated with users who artificially inflate their follower count by `following back' anyone who follows them.
+We penalise them here to correct for any boost given by the Number of Followers feature described later in this section.
 
 Rather than match whole words, we match on a prefix basis. For example, `report' matches \emph{report}, as well as \emph{report}er and \emph{report}s. Note that this is similar, but not identical to, matching on stemmed terms. This helps to keep the list of terms short whilst giving high coverage. The overall feature score is a product of weights for any matching terms.
+
+We note that some of the terms used for scoring could be subjective or change over time due to topic drift.
+While these terms work well for the Events 2012 corpus that we use for evaluation, they may require modifications for other datasets, or could potentially be replaced with a supervised classification approach.
 
 \subsubsection{Account Age: \(W_{age}\)}
 Young accounts are generally viewed as less credible than accounts that have been active for longer periods of time \citep{Sikdar13}, so we give accounts created within the last 90 days a lower weight.
