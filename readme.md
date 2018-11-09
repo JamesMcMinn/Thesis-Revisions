@@ -81,10 +81,10 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/0ddfbef650b437a06146bfb8f61161fba4c72b2c)
 - [X] [Make it clear that this is done in a streaming manner - not offline](https://github.com/JamesMcMinn/Thesis-Revisions/commit/4661dedefedf9cd9784b16f2433548e14e341f40)
 - [X] [Discuss user description terms and subjective nature / drift](https://github.com/JamesMcMinn/Thesis-Revisions/commit/2e2558174b1860bab957edc58765fcc7f8426477)
-- [X] 5.4.4: Link 5.3.1 back to Q_d to make it clear what it is showing
-- [ ] Discuss different trends shown table 5.9
+- [X] [5.4.4: Link 5.3.1 back to Q_d to make it clear what it is showing](https://github.com/JamesMcMinn/Thesis-Revisions/commit/088fcdfe50f4d088937f98f3c6134764c02c3ad5)
+- [ ] Convert Table 5.9 to graph, discuss different trends
 - [ ] Discuss if technique could be transferred to other areas
-- [X] Various small clarifications requested in annotated copy
+- [X] [Various small clarifications requested in annotated copy](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3347ee9fead4254d43a3d8b320c297827a9ed005)
 
 ## 6.Conclusion
 - [ ] Describe difficulties, possible future directions
