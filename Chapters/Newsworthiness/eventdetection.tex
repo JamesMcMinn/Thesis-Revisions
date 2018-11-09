@@ -3,11 +3,11 @@
 \section{Newsworthiness as a Feature for Event Detection}
 \label{scoring:sec:detection}
 
-One of the aims of this work is to determine if newsworthiness can be incorporated into an existing event detection approach and whether it can be used as an feature to improve effectiveness.
+One of the aims of this work is to determine if newsworthiness can be incorporated into an existing event detection approach and whether it can be used as a feature to improve effectiveness.
 In this section, we examine how newsworthiness can be combined with a simple entity-based approach and used to filter out noisy clusters or clusters with a low Newsworthiness Score, improving event detection effectiveness.
 
 The entity-based event detection approach described in chapter \ref{detection:chapter} provides a reasonable base approach which can be built upon.
-Since the aim is to evaluate the effectiveness of our Newsworthiness Score as a feature to identify newsworthy content, we ignore all non-clustering features used by the entity-based approach, such as entropy and burst detection.
+Since the aim is to evaluate the effectiveness of our Newsworthiness Score as a feature to identify newsworthy content, we ignore all non-clustering features used by the entity-based approach, such as burst detection.
 Without burst detection there is no way to combine clusters into larger events, so we report each cluster as an individual event.
 
 \subsubsection{Cluster Newsworthiness}
@@ -28,9 +28,8 @@ Clustering is performed in a streaming manner, and individual tweet newsworthine
 However, the aim is to demonstrate that newsworthiness can be used as an effective feature for event detection, rather than to develop a novel real-time event detection technique.
 In practice, calculating the mean Newsworthiness Score for a cluster in real-time is trivial, and any difference in performance is likely to be small, however we note the difference for accuracy.
 
-As we evaluate individual clusters as separate events, precision values reported here are likely to be lower than if temporally and topically similar clusters were combined into larger events as in chapter \ref{detection:chapter}.
-This is due to an increase in the overall number of clusters evaluated, which increases the likelihood that a newsworthy and event-relevant cluster will evaluated as non-relevant.
-This is an unfortunate side-effect of how relevance judgements for the Events 2012 corpus were created, and is difficult to overcome without the use of a crowdsourced or manual evaluation by the authors.
+As we evaluate individual clusters as separate events, precision values reported here are likely to be lower than if similar clusters were combined using either the event merging approach from chapter \ref{chapter:collection} or by grouping using burst detection.
+This is due to an increase in the number of small clusters evaluated, which increases the likelihood that a newsworthy and event-relevant cluster will be evaluated as non-relevant due to the incomplete relevance judgements.
 
 \subsubsection{Results}
 Table \ref{scoring:table:detection} shows Precision and Recall values at for clusters of various minimum Newsworthiness Scores and sizes.
@@ -68,14 +67,14 @@ Instead, we perform a small manual evaluation focused on determining the precisi
 We chose to evaluate clusters using a similar methodology to that used to create the Events 2012 corpus, however used only a single expert rather than 5 crowdsourced workers.
 We selected 2 sets of clusters to evaluate:
 \begin{itemize}
-	\item 100 randomly selected clusters (of 4,270 total) with 5 or more tweets and a cluster Newsworthiness Score ≥ 4.
+	\item 100 randomly selected clusters (from a total of 4,270) with 5 or more tweets and a cluster Newsworthiness Score ≥ 4.
 	\item All 115 clusters with 50 or more tweets and a cluster Newsworthiness score ≥ 4.
 \end{itemize}
 
 Of the 100 randomly selected clusters from 4,270 with 5 or more tweets, 95/100 clusters were marked as a significantly real-world event, giving a precision of 0.950.
-Of the 115 clusters with 50 or more tweets, all 115 were marked as significant real-world events, giving a precision of 1.0.
+Since there were only 115 clusters with 50 or more tweets, we evaluated all 115, rather than take a sample of 100. All 115 were marked as significant real-world events, giving a precision of 1.0.
 Both of these results far exceed the automatically calculated precision values of 0.040 and 0.347 respectively.
 The reasons for this are similar to those described in chapter \ref{detection:chapter}; although the collection has relevance judgements for a relatively large number of events, it does not cover all events during the month long period the collection covers, or even all tweets for the 506 events it has judgements for.
 
-These manually obtained results vastly outperform even the crowdsourced results presented in chapter \ref{detection:chapter} and suggest that Newsworthiness could be used as an extremely effective noise filter, requiring only 5 tweets for extremely high precision, and obtaining perfect precision at only 30 tweets.
+These manually obtained results vastly outperform even the crowdsourced results presented in chapter \ref{detection:chapter} and suggest that Newsworthiness could be used as an extremely effective noise filter, requiring only 5 tweets for extremely high precision, and obtaining perfect precision at only 50 tweets.
 The automatically measured performance values are comparable to that of our entity-based event detection approach, despite being considerably simpler and being disadvantaged due to our use of clusters for evaluation rather than full events, as noted in section \ref{scoring:sec:detectionEval}.

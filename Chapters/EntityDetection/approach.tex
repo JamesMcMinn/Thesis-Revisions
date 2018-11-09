@@ -107,7 +107,7 @@ Given the role that named entities play in describing real-world events, we beli
 \end{algorithm}
 
 Algorithm \ref{detection:alg:clustering} shows the pseudocode for our entity-based clustering approach.
-Using the premise that tweets discussing an event must contain at least one of the named entities involved in the event, we adapt the traditional TDT clustering model by partitioning tweets based upon the entities they contain, and add a tweet to a cluster for every entity it contains, as show in in Figure \ref{detection:graphic:clustering}.
+Using the premise that tweets discussing an event must contain at least one of the named entities involved in the event, we adapt the traditional TDT clustering model by partitioning tweets based upon the entities they contain, and add a tweet to a cluster for every entity it contains, as show in Figure \ref{detection:graphic:clustering}.
 
 \begin{figure}[h!]
 	\centering
@@ -129,7 +129,7 @@ If the maximum score is above a set threshold (usually in the range \(0.4-0.6\) 
 
 At a very high level, our clustering approach has similarities to those used by many TDT approaches, in that it performs single-pass nearest neighbor clustering and makes use of an inverted index.
 However, the similarities end there, and unlike TDT, we do not assume that the formation of a new cluster indicates a new event.
-The remainder of this section describes how our approach decides that a new real-world event has occurred, and how clusters relating to those events are identified.
+The remainder of this section describes how our approach decides that a new real-world event has occurred, and how clusters relating to those real-world events are identified.
 
 \subsection{Identifying Bursty Entities}
 For an effective event detection approach, it is important to have a method of detecting significant events and filtering the mundane.

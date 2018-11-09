@@ -83,9 +83,8 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Discuss user description terms and subjective nature / drift](https://github.com/JamesMcMinn/Thesis-Revisions/commit/2e2558174b1860bab957edc58765fcc7f8426477)
 - [X] 5.4.4: Link 5.3.1 back to Q_d to make it clear what it is showing
 - [ ] Discuss different trends shown table 5.9
-- [ ] More example output and scores
 - [ ] Discuss if technique could be transferred to other areas
-- [ ] Various small clarifications requested in annotated copy
+- [X] Various small clarifications requested in annotated copy
 
 ## 6.Conclusion
 - [ ] Describe difficulties, possible future directions

@@ -350,7 +350,7 @@ The judgements for this event identify 41 tweets thought to be relevant to the e
 Whilst the 36 of the 41 tweets are relevant, our newsworthiness scoring approach correctly identifies a number of spam and non-relevant tweets and scores them appropriately.
 
 Two non-relevant reviews of Lenovo laptops have been given scores of 0.0 and -0.507. By themselves, these tweets are unlikely to be newsworthy, and the scores could be considered appropriate.
-Our approach does give a slightly negative score to one relevant tweet (``John Cusack says Lenovo overtakes HP''), however the tweet is lacking information and without context it would be extremely difficult to infer the newsworthiness of the story from only the tweet text.
+Our approach does give a slightly negative score to one relevant tweet (``John Cusack says Lenovo overtakes HP''), however the tweet is fairly informal in tone, and outwith the context of the other tweets would be difficult to interprate even for a human.
 
 Note that the same text appears twice in Table \ref{scoring:table:tweetsSample}: ``HP, Lenovo battle for top spot in PC market - Computerworld''.
 Although the text is identical, these are distinct tweets, posted by different users at different times, and given different scores (2.177 / 2.070).
@@ -389,8 +389,8 @@ As new tweets are processed, the models are updated in real-time, allowing for n
 
 \subsection{Term Models}
 Although unigram terms are used for all experiments, it is interesting to examine how the use of bigrams affect performance.
- Table \ref{scoring:table:termModels} shows how unigrams and bigrams performed using our standard test thresholds of 4.0 and 0.25 for LQ and HQ models respectively.
-Bigrams consistently underperform compared to the unigram models across all quality threshold scores tested.
+Table \ref{scoring:table:termModels} shows how unigrams and bigrams performed using our standard test thresholds of 4.0 and 0.25 for LQ and HQ models respectively.
+Bigrams consistently underperform compared to the unigram models across all quality threshold scores tested, although the differences are often very small.
 
 \begin{table}[h!]
 	\centering

@@ -93,7 +93,7 @@ Young accounts are generally viewed as less credible than accounts that have bee
 \subsubsection{Number of Followers: \(W_{followers}\)}
 It is often the case that something becomes news not because of what was said, but who said it. A head of state or public figure expressing sympathy for victims of an accident is considerably more newsworthy than the average person doing the same.
 
-The number of followers a users has can infer how influential or newsworthy the user is, and thus how newsworthy the user's tweets are likely to be, and is a commonly used feature used for automatic credibility assessment \citep{Kang12, Sikdar13, Gun14, Madhawa15}.
+The number of followers a users has can infer how influential or newsworthy the user is, and thus how newsworthy the user's tweets are likely to be, and is a commonly used feature for automatic credibility assessment \citep{Kang12, Sikdar13, Gun14, Madhawa15}.
 Given this, we assign higher weights to users with more followers, and a lower weight to users with very few followers, as shown in Table \ref{scoring:table:followersWeight}.
 
 The vast majority of tweets (83.81\%) are posted by users who  have between 50 and 4,999 followers, and are unaffected by this feature. The aim is to affect only the extremes: users with very few, or very many followers.
@@ -141,7 +141,7 @@ The association between the default egg image and low quality accounts has been 
 
 We assign user accounts that have not specified a custom profile image a weight of 0.5.
 
-\subsection{Labelling}
+\subsection{Labeling}
 As described earlier, document \(d\) is assigned an overall Quality Score, \(Q_d\), taken as the product of scores from each feature:
 \begin{displaymath}
 	Q_d = W_{desc} \times W_{age} \times W_{followers} \times W_{verified} \times W_{ppd} \times W_{image}
@@ -149,4 +149,6 @@ As described earlier, document \(d\) is assigned an overall Quality Score, \(Q_d
 For example, a tweet \(d\) with weights 2.0 for \(W_{desc}\), 1.5 for \(W_{followers}\), and 1.0 for the all other features would have an overall Quality Score, \(
 	Q_d =  2.0 \times 1.0 \times 1.5 \times 1.0 \times 1.0  \times 1.0 = 3.0 \).
 
-Cut-off  values are used to determine quality labels from \(Q_s\). We examine how various cut-off values affect performance in section \ref{scoring:sec:eval}, however unless otherwise stated, we label tweets with \(Q_d \geq 4.0\) as High Quality, and \(Q_d \leq 0.25\) as Low Quality. Documents between this range are unlabelled.
+Cut-off  values are used to determine quality labels from \(Q_s\).
+We examine how various cut-off values affect performance in section \ref{scoring:sec:eval}, however unless otherwise stated, we label tweets with \(Q_d \geq 4.0\) as High Quality, and \(Q_d \leq 0.25\) as Low Quality.
+Documents between this range are unlabeled.
