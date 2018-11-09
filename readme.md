@@ -12,8 +12,8 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Fix the date](https://github.com/JamesMcMinn/Thesis-Revisions/commit/cd6230ee687e5f58248ff862310680ff25e4b1c8)
 - [ ] Add Acknowledgments
 - [X] Add Dedication
-- [X] Avoid copying from Introduction for Abstract
-- [X] Add conclusions to abstract
+- [X] [Avoid copying from Introduction for Abstract](https://github.com/JamesMcMinn/Thesis-Revisions/commit/83f40c8ce66fd30637d4f6bb16dad82f10e78d77)
+- [X] [Add conclusions to abstract](https://github.com/JamesMcMinn/Thesis-Revisions/commit/83f40c8ce66fd30637d4f6bb16dad82f10e78d77)
 - [X] [Sort publications chronologically](https://github.com/JamesMcMinn/Thesis-Revisions/commit/86dd56d1416622f636946cfc42a91152f44533f7)
 
 
