@@ -1,24 +1,24 @@
 %!TEX root = ../../main.tex
 
-\section{Heuristic Labelling and Quality Classification}
+\section{Heuristic Labeling and Quality Classification}
 \label{scoring:sec:labelling}
-We propose an automatic labelling approach using a set of heuristics to label high quality (newsworthy) and low quality (noisy) content.
-Content is labelled in streaming fashion to simulate real-world conditions, and is used as training data for our newsworthiness scoring model.
-Note that our labelling approach is specifically designed not to label the majority of content.
+We propose an automatic labeling approach using a set of heuristics to label high quality (newsworthy) and low quality (noisy) content.
+Our labeling approach is specifically designed not to label the majority of content.
 Instead, we want to identify exceptional content which we can compare to the `random' background corpus, allowing the model to learn specific newsworthy and noisy features.
 
-The use of heuristics has a number of advantages over the use of existing datasets and requires only minimal effort in comparison to creating a labelled dataset specifically for this task.
+The use of heuristics has a number of advantages over the use of existing datasets and requires only minimal effort in comparison to creating a labeled dataset specifically for this task.
 Many existing datasets that could be used for newsworthiness prediction are extremely small, or focus on a single large event or topic \citep{Kang12, Madhawa15}, making them useful only for training a newsworthiness classifier for those specific events, and unfeasible for training a broad and event-agnostic newsworthiness classifier.
 
 Even large datasets with relevance judgements, such as the Events 2012 corpus from chapter \ref{chapter:collection}, covering 506 events with more than 100,000 relevance judgements, are not suitable for supervised training.
-Datasets of this size, although useful for evaluation, make no claims of completeness. Despite having relevance judgements  for a large number of events and tweets, the Events 2012 corpus covers only covers a tiny fraction of the many thousands of newsworthy events that take place every day, so training specifically on these events will likely result in over-fitting and decreased effectiveness on other datasets.
+Datasets of this size, although useful for evaluation, make no claims of completeness.
+Despite having relevance judgements  for a large number of events and tweets, the Events 2012 corpus covers only covers a tiny fraction of the many thousands of newsworthy events that take place every day, so training specifically on these events will likely result in over-fitting and decreased effectiveness on other datasets.
 
-The use of heuristic labelling, rather than manual labelling, allows for training data to be label in real-time and fed into the scoring approaches that follow.
+The use of heuristic labeling, rather than manual labeling, allows for training data to be label in real-time and fed into the scoring approaches that follow.
 This allows our approach to learn new features in real-time, as described in section \ref{scoring:sec:scoring}.
 
-\cite{Madhawa15} used heuristic labelling to generate training data for newsworthiness classification.
+\cite{Madhawa15} used heuristic labeling to generate training data for newsworthiness classification.
 They developed a classifier capable of classifying documents as either objective (high quality, newsworthy), or subjective (low quality, noise) as a filtering step before summarization.
-However, their approach used only a small, manually curated lists of accounts as newsworthy sources, and labelled any tweet containing an emoticon or emoji as noise.
+However, their approach used only a small, manually curated lists of accounts as newsworthy sources, and labeled any tweet containing an emoticon or emoji as noise.
 Instead, we use a broader set of heuristics that place fewer restrictions on what constitutes newsworthy and noisy sources, allowing for a broader range of sources and more training data.
 
 As the inclusion of `conversational' or non-newsworthy posts has been shown to have a negative effect on credibility assessments \citep{Noyunsan17,Sikdar13-2}, many credibility assessment approaches use features that attempt to capture the newsworthiness of a post before assessment.
@@ -57,7 +57,7 @@ We manually created a list of keywords and phrases commonly used by news broadca
 
 \end{table}
 
-Positive terms were identified manually based on common terms used by news organizations, journalists, and financial traders on Twitter. The list of spam terms was also created manually based on common types of low quality marketing spam that is often found on Twitter. The `follow back' terms are commonly associated with users who artificially inflate their follower count by `following back' anyone who follows them. We penalise them here to correct for any boost given by the Number of Followers feature described later in this section.
+Positive terms were identified manually based on common terms used by news organizations, journalists, and financial traders on Twitter. The list of spam terms was also created manually based on common types of low quality marketing spam that is often found on Twitter. We note that many of the The `follow back' terms are commonly associated with users who artificially inflate their follower count by `following back' anyone who follows them. We penalise them here to correct for any boost given by the Number of Followers feature described later in this section.
 
 Rather than match whole words, we match on a prefix basis. For example, `report' matches \emph{report}, as well as \emph{report}er and \emph{report}s. Note that this is similar, but not identical to, matching on stemmed terms. This helps to keep the list of terms short whilst giving high coverage. The overall feature score is a product of weights for any matching terms.
 

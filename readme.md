@@ -74,12 +74,13 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Move details for crowd scaling to 4.3](https://github.com/JamesMcMinn/Thesis-Revisions/commit/e5c718832884c21186caf7d25f40baf293486ca8)
 - [X] [Clarify Table 4.4](https://github.com/JamesMcMinn/Thesis-Revisions/commit/7717980c69dfc00de6a4b90e4789dfd5f3f6a6c3)
 - [X] [Remove "significant" where statistical significance not verified](https://github.com/JamesMcMinn/Thesis-Revisions/commit/c8857e4d187173f2005b0aa0524b5d6447e764ba)
-- [X] [make it clear that disambiguation is done by Stanford NER in the form of NER classes](https://github.com/JamesMcMinn/Thesis-Revisions/commit/8d5a4ec5e84828324b8e7129f54031e981987740)
+- [X] [Make it clear that disambiguation is done by Stanford NER in the form of NER classes](https://github.com/JamesMcMinn/Thesis-Revisions/commit/8d5a4ec5e84828324b8e7129f54031e981987740)
 - [X] [Discuss categories differences between crowd / automatic](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3d6e2a473c5d9718a4f549a9e02b998d4b3e3cb6)
 - [X] [Various small clarifications requested in annotated copy](https://github.com/JamesMcMinn/Thesis-Revisions/commit/d69d566fe7695407d424fe1807e7d4d59a8c7339)
 
 ## 5. Newsworthiness
-- [ ] Move background to Chapter 2
+- [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/0ddfbef650b437a06146bfb8f61161fba4c72b2c)
+- [ ] Make it clear that this is done in a streaming manner - not offline
 - [ ] Discuss user description terms and subjective nature / drift
 - [ ] Link 5.4.4 back to S_HQ and S_LQ in 5.3.1
 - [ ] Discuss different trends shown table 5.9
