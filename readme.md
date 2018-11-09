@@ -18,10 +18,10 @@ This document outlines a plan for revisions and corrections that are needed in o
 
 
 ## 1. Introduction
-- [ ] Verify that research questions are falsifiable hypotheses
+- [X] [Verify that research questions are falsifiable hypotheses](https://github.com/JamesMcMinn/Thesis-Revisions/commit/b7cb86bcc88e48739f615f2c0a0fa1d747b664c5)
   - [X] [Clarify RQ2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/1a71367f5092d7747f35deed64964f25f71b790e)
-  - [ ] Update to clarify RQ3: Need to be clear what "automatic" evaluation is.
-- [ ] Expand on contribution description relating to definition of event
+  - [X] [Update to clarify RQ3: Need to be clear what "automatic" evaluation is.](https://github.com/JamesMcMinn/Thesis-Revisions/commit/b7cb86bcc88e48739f615f2c0a0fa1d747b664c5)
+- [X] [Expand on contribution description relating to definition of event](https://github.com/JamesMcMinn/Thesis-Revisions/commit/b7cb86bcc88e48739f615f2c0a0fa1d747b664c5)
 - [X] [Remove references to unsupervised](https://github.com/JamesMcMinn/Thesis-Revisions/commit/92b213136746bf2c4b527fad22b7870af5201afb)
 
 ## 2. Background
