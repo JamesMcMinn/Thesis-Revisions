@@ -7,11 +7,11 @@ Our labeling approach is specifically designed not to label the majority of cont
 Instead, we want to identify exceptional content which we can compare to the `random' background corpus, allowing the model to learn specific newsworthy and noisy features.
 
 The use of heuristics has a number of advantages over the use of existing datasets and requires only minimal effort in comparison to creating a labeled dataset specifically for this task.
-Many existing datasets that could be used for newsworthiness prediction are extremely small, or focus on a single large event or topic \citep{Kang12, Madhawa15}, making them useful only for training a newsworthiness classifier for those specific events, and unfeasible for training a broad and event-agnostic newsworthiness classifier.
+Many existing datasets that could be used for newsworthiness prediction are extremely small, or focus on a single large event or topic \citep{Kang12, Madhawa15}, making them less generalizable for training a newsworthiness classifier, and less likely to perform well across a broad range of events and event types.
 
-Even large datasets with relevance judgements, such as the Events 2012 corpus from chapter \ref{chapter:collection}, covering 506 events with more than 100,000 relevance judgements, are not suitable for supervised training.
+Even large datasets with relevance judgements, such as the Events 2012 corpus from chapter \ref{chapter:collection}, covering 506 events with more than 100,000 relevance judgements, are unlikely to be suitable for supervised training.
 Datasets of this size, although useful for evaluation, make no claims of completeness.
-Despite having relevance judgements  for a large number of events and tweets, the Events 2012 corpus covers only covers a tiny fraction of the many thousands of newsworthy events that take place every day, so training specifically on these events will likely result in over-fitting and decreased effectiveness on other datasets.
+Despite having relevance judgements  for a large number of events and tweets, the Events 2012 corpus covers only covers a tiny fraction of the many thousands of newsworthy events that take place every day, so training specifically on these events could result in over-fitting and decreased effectiveness on other datasets.
 
 The use of heuristic labeling, rather than manual labeling, allows for training data to be label in real-time and fed into the scoring approaches that follow.
 This allows our approach to learn new features in real-time, as described in section \ref{scoring:sec:scoring}.

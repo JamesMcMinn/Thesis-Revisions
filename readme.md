@@ -79,6 +79,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 
 ## 5. Newsworthiness
 - [X] [Move background to Chapter 2](https://github.com/JamesMcMinn/Thesis-Revisions/commit/0ddfbef650b437a06146bfb8f61161fba4c72b2c)
+- [ ] Less strong claims about
 - [X] [Make it clear that this is done in a streaming manner - not offline](https://github.com/JamesMcMinn/Thesis-Revisions/commit/4661dedefedf9cd9784b16f2433548e14e341f40)
 - [X] [Discuss user description terms and subjective nature / drift](https://github.com/JamesMcMinn/Thesis-Revisions/commit/2e2558174b1860bab957edc58765fcc7f8426477)
 - [X] [5.4.4: Link 5.3.1 back to Q_d to make it clear what it is showing](https://github.com/JamesMcMinn/Thesis-Revisions/commit/088fcdfe50f4d088937f98f3c6134764c02c3ad5)
