@@ -301,6 +301,8 @@ Shannon entropy, $H$, is measured as:
 \end{displaymath}
 where $n_i$ is the number of occurrences of term $i$ in a cluster,	and $N = \sum_i{n_i}$ is the total number of all term occurrences in the cluster.
 Clusters with a low entropy, defined as $H < 3.5$ by Petrović et al., are moved to the bottom of the ranking -- effectively marking them as noise.
+The same approach is used by \cite{benhardus2013streaming} to remove spam and noisy topics when performing trend detection.
+
 This entropy based approach to removing noise and spam works because it helps to filter out automated ``bot'' content, where the same message is published by many different accounts in an automated manner.
 Clusters where the content shows very little or no variation will have a relatively low entropy (information content), whereas clusters that show more variation (due to having different sources and authors) will have a higher entropy and contain more information.
 By combining both the unique user counts and entropy based filters, \cite{Petrovic:2010:SFS:1857999.1858020} are effectively requiring a topic to be discussed by a broad range of users for it to be considered an event.
@@ -363,7 +365,7 @@ For use as a minimum threshold for similarity, only the lower bound is used:
 \end{displaymath}
 where $\mu$ is the mean and $\sigma$ is the standard deviation of all similarity measures that have been seen before.
 
-To compute the $\mu$ and $\sigma$ values efficiently, \cite{Aggarwal12} use the first 3 moments of the set of highest similarity scores $S$ (i.e., the set of  similarity score of each document to its nearest neighbour cluster):
+To compute the $\mu$ and $\sigma$ values efficiently, \cite{Aggarwal12} use the first 3 moments of the set of highest similarity scores $S$ (i.e., the set of  similarity scores for each document to its nearest neighbour cluster):
 \begin{align*}
 	M_0 &= \sum_{i = 0}^{|S|}{S_i^0} & M_1 &= \sum_{i = 0}^{|S|}{S_i^1} & M_2 &= \sum_{i = 0}^{|S|}{S_{i}^2}
 \end{align*}
@@ -404,7 +406,7 @@ Due to the short length of tweets, lexical mismatch is a common issue, where use
 Topic drift is yet another issue.
 As events develop and new sub-topics emerge, it can cause a rapid change in discussion that, to a cluster-based event detection system, can appear as if a new real-world event has occurred.
 
-To address the issue of lexical mismatch, \citep{Petrovic:2012:UPI:2382029.2382072} suggest a method of integrating paraphrasing with their LSH-based approach, which shows improvements when applied to TDT datasets, but fails to show any significant improvement on Twitter data (in fact, it often performs worse).
+To address the issue of lexical mismatch, \cite{Petrovic:2012:UPI:2382029.2382072} suggest a method of integrating paraphrasing with their LSH-based approach, which shows improvements when applied to TDT datasets, but fails to show any significant improvement on Twitter data (in fact, it often performs worse).
 Additionally, since Tweets themselves are very short and tend to discuss only a single moment in time, the use of paraphrasing does not address issues such as topic drift or divergence.
 
 Instead of relying on content-only features for clustering, \cite{Aggarwal12} adapt their approach (described in detail in section \ref{background:cs}) to use the structure of the underlying social network to improve clustering.
@@ -431,11 +433,39 @@ The use of network structure is a possible solution, but as we have discussed, i
 More recent advances in areas such as word embedding may provide a solution to these issues, however at the time of writing, much work remains to be done in this regard.
 
 \subsection{Burst and Trend Analysis}
-\todo{A page or two of content to come}
+Although document-based event detection is the most common approach, another common approach involves the use of burst or trend detection to identify individual terms (or clusters of terms) that describe real-world events.
+The aim of these approaches is to produce a set of terms that can either be interpreted by users to give them some understating of the event that occurred, or as query terms that can then be used to retrieve relevant tweets from the period that that burst or trend occurred.
+For example, \cite{Li:2012:TSE:2396761.2396785} developed an event detection system called `Twevent' which produced the following cluster of terms describing the South Korea vs. Greece match for the 2010 FIFA World Cup: ``south korea, greece, korea vs greece, korea won, korea''.
+
+Their approach extracts word segments (phrases that could be named entities or other semantically meaningful units) from tweets, and using statistical information from the Microsoft Web N-Gram Service\footnote{https://www.microsoft.com/en-us/research/project/web-n-gram-services/} and Wikipedia.
+Bursty event segments are found by identifying any segment that has unexpectedly high usage, defined by it appearing in more than $\mu + (2 \cdot \sigma)$ tweets during a time period, where $\mu$ is the expected number of tweets containing the segment during a time period, and $\sigma$ is the standard deviation.
+However, they found that this approach produced an extremely high number of bursts relative to the number of tweets being processed.
+Rather than take all bursts, they instead weight each burst using the number of unique users who posted a tweet using the segment, and take the top-$K$ bursty segments from each time period, where $K$ is the square root of the total number of tweets posted during the time period.
+They then use a variant of the Jarvis-Patrick \citep{jarvis1973clustering} clustering algorithm to cluster related segments into events using the content of tweets containing the segments and the segment frequency correlation.
+Finally, the events are filtered based on their newsworthiness, which is calculated using Wikipedia as a knowledge-base, and requires the segment to appear in the anchor text linking Wikipedia articles.
+
+Twevent outperforms their baselines approach \citep{weng2011event}, however relies heavily on both Wikipedia and Microsoft's Web N-Gram service, which means it is likely biased by these services.
+Additionally, since it has already been shown that Twitter is often ahead of Wikipedia by more than 2 hours \citep{WRN2012:osbornebieber}, the use of Wikipedia as a knowledge base and its reliance on anchor text for filtering means that it is likely to miss novel events if they have not already been reported on Wikipedia.
+
+TwitInfo \citep{marcus2011twitinfo} allows users to track an event based on a set of keywords, providing a visualization and summary of the event.
+Part of this involves providing sub-event detection within the stream, alerting the user when a significant sub-event or change in topic occurs.
+TwitInfo identifies term peaks by creating a histogram of tweet frequencies, allowing users to adjust bin sizes from minutes to days in length depending on the specific event.
+Peaks are identified by using TCP's congestion control mechanism, which must determine whether a packet is taking unusually long to be acknowledged and is thus an outlier.
+This approach uses the weighted moving average and the variance in tweet frequency do detect outliers.
+An outlier is said to have occurred when the current frequency is more than 2 mean deviations from the current mean, and the frequency is increasing (i.e., it is higher than the previous value).
+The top ranking TF-IDF weighted terms used during the outlier period is then used to provide a set of meaningful labels for the sub-event.
+
+\cite{weng2011event} developed a system called EDCoW (Event Detection with Clustering of Wavelet-based Signals) that builds signals for individual words by applying wavelet analysis on the frequency-based raw signals of the worlds.
+They then use signal auto-correlation to identify and filter out trivial words.
+The remaining words are then clustered into events by performing a modularity-based graph partitioning technique using signal cross-correlation.
+They evaluate their approach on 3.2 million tweets posted by users based in Singapore, starting with a list of the top 1000 users with the most followers, and then expanding the graph by following their friends and followers 2-hops, giving them 19,256 unique users.
+Their approach can be tuned to given high precision ($P = 0.76$), however discovers only 21 events over a month long period, the majority of which correspond to matches taking place for the 2010 World Cup.
+Due to the high computation costs of the cross-correlation and graph partitioning steps, this approach is unable to run in real-time, and struggles with event small datasets.
+
+% \cite{benhardus2013streaming}
 
 \subsection{Newsworthiness and Credibility}
-The topic of newsworthiness is related to event detection through it's use as a common pre-processing step in credibility assessment and summarization \citep{Noyunsan17, Madhawa15}
-
+The topic of newsworthiness is related to event detection through it's use as a common pre-processing step in credibility assessment and summarization of events after detection.
 \cite{Noyunsan16} used cosine similarity to filter out non-newsworthy posts on Facebook by comparing new posts to known non-newsworthy posts.
 They created a groundtruth of 1,005 non-newsworthy Facebook posts, annotated and collected via a browser extension installed by volunteers.
 Their approach compares each new post to every post in the groundtruth, and classifies posts as non-newsworthy (noise) if its similarity to any document in the groundtruth is above a threshold.
@@ -538,7 +568,7 @@ A reasonable sized Twitter corpus will contain tens of millions of documents -- 
 To overcome this,~\citeauthor{Petrovic:2012:UPI:2382029.2382072} used a procedure similar to NIST, where expert annotators (primarily the authors of the paper) read the description of an event and used keywords to search for relevant documents.
 However, this approach means that events (i) must be carefully identified in advance (potentially introducing bias) (ii) annotation requires expensive and slow experts, and (iii) it does not scale well past a certain size (\citeauthor{Petrovic:2012:UPI:2382029.2382072} were only able to create judgements for 27 events).
 
-\subsection{A New Approach}
+\subsection{A Corpus for Event Detection}
 Issues with both TREC-style pooling and crowdsourcing, as well as the lack of an unbiased and comparable test collections for event detection, highlights the need for a new methodology that can be used for the creation of large-scale test collections for event detection on Twitter.
 A new pooling approach is needed to cope with the lack of predefined topics and document ranking, whilst new crowdsourcing techniques are needed which maintain the fast turnarounds and low-cost associated with crowdsourcing, but ensure high-quality results.
 
