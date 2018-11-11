@@ -11,7 +11,7 @@ Similarly to how many event detection approaches define tweet similarity, we def
 \begin{displaymath}
 	S_t = cos(e_t, e'_t)
 \end{displaymath}
-where the vectors $e_t$ and $e'_t$ contain counts for the top 10 most frequent terms (after stemming and stop word removal) for all tweets in the target and candidate events respectively.
+where vectors $e_t$ and $e'_t$ contain counts for the top 10 most frequent terms (after stemming and stop word removal) for all tweets in the target and candidate events respectively.
 
 We note that in certain cases, a target and candidate event may have very low content similarity despite discussing the same real-world event.
 This is particularity common for events from the same detection approach, where the tweet text has already been used to perform clustering.

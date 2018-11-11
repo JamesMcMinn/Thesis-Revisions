@@ -220,27 +220,40 @@ Analysis of social media has received a lot of attention from the research commu
 However, much of this work focused on blog and email streams  \citep{Zhao:2007:TIF:1619797.1619886,Jurgens:2009:EDB:1859650.1859652,Becker:2010:LSM:1718487.1718524,Nguyen:2011:ERR:2186701.2186707}, using datasets such as the Enron email dataset \citep{citeulike:7616867} or the BlogLines dataset \citep{Sia:2008:ECP:1401890.1401967}.
 More recently, the focus has moved towards Twitter due to its popularity with individuals and organizations as a method of real-time broadcast communication, making it interesting to study as a source of information about ongoing real-world events.
 
-\cite{Hu:2012:BNT:2208636.2208672} demonstrated the effectiveness of Twitter as a medium for breaking news by examining how the news of Osama bin Laden's death broke on Twitter. They found that Twitter had broken the news, and as a result, millions already knew of his death before the official announcement.
+\cite{Hu:2012:BNT:2208636.2208672} demonstrated the effectiveness of Twitter as a medium for breaking news by examining how the news of Osama bin Laden's death broke on Twitter.
+They found that Twitter had broken the news, and as a result, millions already knew of his death before the official announcement.
+\cite{Kwak:2010:TSN:1772690.1772751} analyzed the top trending topics to show that the majority of topics (over 85\%) are related to headline news or persistent news.
+They also found that once a tweet is retweeted, it can be expected to reach an average of 1,000 users.
 
-\cite{Kwak:2010:TSN:1772690.1772751} analyzed the top trending topics to show that the majority of topics (over 85\%) are related to headline news or persistent news. They also found that once a tweet is retweeted, it can be expected to reach an average of 1,000 users.
-
-\cite{WRN2012:osbornebieber} measured the delay between a new event appearing on Twitter, and the time taken for the same event to be updated on Wikipedia. Their results show that Twitter appears to be around 2 hours ahead of Wikipedia. They suggest that Wikipedia could be used as a filter, decreasing the number of spurious events, however at the cost of greatly increased latency. They demonstrate its effectiveness as a filter for their First Story Detection approach \citep{Petrovic:2010:SFS:1857999.1858020}, significantly decreasing the number of spurious events.
+\cite{WRN2012:osbornebieber} measured the delay between a new event appearing on Twitter, and the time taken for the same event to be updated on Wikipedia. Their results show that Twitter appears to be around 2 hours ahead of Wikipedia.
+They suggest that Wikipedia could be used as a filter, decreasing the number of spurious events, however at the cost of greatly increased latency. They demonstrate its effectiveness as a filter for their First Story Detection approach \citep{Petrovic:2010:SFS:1857999.1858020}, significantly decreasing the number of spurious events.
+\cite{ICWSM136066} also analyzed how minor and major events are covered by newswire providers and on Twitter. They found that Twitter broadly reports the same events as newswire providers, however found that Twitter tends to provide better coverage of sports, the unpredictable, and other high-impact events.
 
 \section{Event Detection on Twitter}
 A number of excellent survey papers covering Event Detection on Twitter have been published in recent years, including \cite{Hasan17}, \cite{Goswami2016}, and \cite{Atefeh2015}. Rather than replicate their work here, we invite interested readers to refer to these papers for a full survey all event detection approaches for Twitter.
 Instead, we survey only the most novel and relevant work in this section.
 
-\cite{sankaranarayanan2009twitterstand} proposed one of the first systems which aimed to detect breaking news and events from tweets. In conjunction with the Twitter garden-hose, they utilize a set of 2,000 handpicked \emph{seeds} -- twitter accounts who primarily post news-related tweets -- that they used as a trusted source of news.
-An initial layer of filtering is performed on all incoming tweets, excluding those from the seeds, using naive Bayes classifier trained on a corpus of news and ``junk'' tweets. Next they use an online clustering approach that maintains a list of active clusters, along with an associated TF-IDF \citep{Salton:1988:TAA:54259.54260} feature-vector of the terms used by tweets in the cluster. An incoming tweet is added to a cluster if its similarity with the cluster's feature-vector is above a set threshold, measured using a time-decayed cosine similarity function. An inverted index is maintained so that only active clusters which contain at least some of the terms from the incoming tweet are used for comparison, and clusters with a time centroid greater than 3 days old are marked as inactive and removed from the index.
+\cite{sankaranarayanan2009twitterstand} proposed one of the first systems which aimed to detect breaking news and events from tweets.
+In conjunction with the Twitter gardenhose, they utilize a set of 2,000 handpicked \emph{seeds} -- twitter accounts who primarily post news-related tweets -- that they used as a trusted source of news.
+An initial layer of filtering is performed on all incoming tweets, excluding those from the seeds, using naive Bayes classifier trained on a corpus of news and ``junk'' tweets.
+Next they use an online clustering approach that maintains a list of active clusters, along with an associated TF-IDF \citep{Salton:1988:TAA:54259.54260} feature-vector of the terms used by tweets in the cluster.
+An incoming tweet is added to a cluster if its similarity with the cluster's feature-vector is above a set threshold, measured using a time-decayed cosine similarity function.
+An inverted index is maintained so that only active clusters which contain at least some of the terms from the incoming tweet are used for comparison, and clusters with a time centroid greater than 3 days old are marked as inactive and removed from the index.
 To further reduce the number of noisy clusters, \cite{sankaranarayanan2009twitterstand} impose an interesting restriction, in that for a cluster to remain active after \(k\) tweets have been added, one of the tweets must come from a seed account.
-Despite a number of efficiency optimizations, their approach is unable to scale, or produce results in real-time. Unfortunately, no attempt is made to evaluate the effectiveness of their system other than a small number of empirical observations.
+Despite a number of efficiency optimizations, their approach is unable to scale, or produce results in real-time.
+Unfortunately, no attempt is made to evaluate the effectiveness of their system other than a small number of empirical observations.
 
 \cite{becker2011beyond} use the clustering approach proposed by \cite{Yang98} as part of the TDT project, and a filtering layer similar to \cite{sankaranarayanan2009twitterstand}.
 However, filtering is performed after clustering has taken place, and they attempt to identify likely event clusters, rather than event tweets.
-They use a number of features, such as top terms, and number of retweets, to classify clusters as either event or non-event.
-Although evaluation of their approach seems to show that it is very effective, it is still based on a model designed for much lower volume streams, and is simply too slow to scale past very small corpora.
+They use a number of features, such as top terms and number of retweets to classify clusters as either event or non-event.
+Although evaluation of their approach seems to show that it is very effective, it is still based on a TDT model designed for much lower volume streams, and is simply too slow to scale past very small corpora.
 
-
+\cite{Sakaki:2010:EST:1772690.1772777} were concerned with the detection of specific types of event, in particular, earthquakes and typhoons, with the aim of issuing alerts to those in the path of these disasters.
+Their approach, although simple, is very effective.
+They specify a set of predefined keywords which are associated with the type of events they are trying to detect (e.g. earthquake, shake, cyclone, typhoon, etc.,).
+They monitor an incoming stream of tweets for these keywords, and for each tweet found, they classify it using a Support Vector Machine (SVM) as either event-related or not.
+If they find enough event-related tweets in a short period of time, then their systems decides that the event is real, and issues alerts to those who could be affected.
+Despite the effectiveness of their approach, there are obvious drawbacks. Firstly, it can only detect specific types of event, and secondly, it requires training data for each of the types of event we want to detect.
 
 \subsection{Locality Sensitive Hashing (LSH) using Random Hyperplanes}
 \label{background:sec:lsh}
@@ -369,9 +382,6 @@ where $F$ gives the fraction of all documents during time $t$ that were added to
 Evolution events are necessary to capture real-world events that are similar enough to an existing cluster that they do not cause a new cluster to be created.
 The change in relative volume of documents represents a change in behavior which can be seen as an indicator of a new event.
 
-\subsection{Supervised Approaches to Event Detection}
-\cite{Sakaki:2010:EST:1772690.1772777} were concerned with the detection of specific types of event, in particular, earthquakes and typhoons, with the aim of issuing alerts to those in the path of these disasters. Their approach, although simple, is very effective. They specify a set of predefined keywords which are associated with the type of events they are trying to detect (e.g. earthquake, shake, cyclone, typhoon, etc.,). They monitor an incoming stream of tweets for these keywords, and for each tweet found, they classify it using a Support Vector Machine (SVM) as either event-related or not. If they find enough event-related tweets in a short period of time, then their systems decides that the event is real, and issues alerts to those who could be affected. Despite the effectiveness of their approach, there are obvious drawbacks. Firstly, it can only detect specific types of event, and secondly, it requires training data for each of the types of event we want to detect.
-
 \subsection{Natural Language Approaches}
 \cite{Choudhury11extractingsemantic} examined how linguistic features and  background knowledge could be used to detect specific types of sports events with high precision. However their approach requires significant domain knowledge of the sporting events and large amounts of manual labeling to prepare a classifier for each specific type of event, making it difficult and time-consuming to generalize.
 
@@ -379,18 +389,17 @@ The use of named entities for event detection has been suggest in the past,  \ci
 
 \cite{Ritter:2012:ODE:2339530.2339704} used named entities, ``event phrases'' and temporal expressions to extract a calendar of significant events from Twitter.
 However, their approach requires that tweets contain temporal resolution phrases, such as ``tomorrow'' or ``Wednesday'' for their approach to resolve between an entity and a specific time.
-This means that smaller events, which do no generate much discussion before they happen, are unlikely to be detected. Additionally unexpected events, which are often the events which are of most interest, are unlikely to be detected as they will be discussed as they happen, and without any temporal resolution phrases.
+This means that smaller events, which do not generate much discussion before they happen, are unlikely to be detected.
+Additionally, unexpected events, which are often the events which are of most interest, are unlikely to be detected as they will only be discussed as they are happen, and without any temporal resolution phrases.
 
 Most similar to our work is that of \cite{Reuters2017}, who use a partitioning technique to efficiently cluster documents by splitting the tweet term space into groups they call `semantic categories', such as named entities, mentions, hashtags, nouns and verbs.
 To ensure that only novel events are reported, they compare each new event to old events, filtering out any events that have already been reported.
 They merge events by comparing the top 20\% of entity terms, based on term frequency, which reduces event fragmentation.
 They evaluate their approach using the Events 2012 corpus we create in chapter \ref{chapter:collection}, finding that their approach outperforms the LSH approach when measured using NMI and B-Cubed cluster performance metrics.
-Although this approach outperforms their baseline approach, the LSH approach of \cite{Petrovic:2010:SFS:1857999.1858020} using their chosen evaluation metrics, they do not report precision or recall values, making it difficult to compare directly.
-
-Although some these approaches have been evaluated, none of them have been evaluated in-depth on a large-scale, publicity available, test collection for Twitter. This makes comparing different event detection approaches very difficult. In this paper, we hope to provide the first in-depth evaluation of an event detection approach on Twitter using a publicity available test collection.
+Although this approach outperforms their baseline approach (the LSH approach of \cite{Petrovic:2010:SFS:1857999.1858020}) they do not report precision or recall values at an event level, making it difficult to compare to other approaches.
 
 \subsection{Clustering Issues for Event Detection on Twitter}
-Volume is only part of what makes Event Detection, more specifically, clustering, a difficult task on Twitter data.
+Volume is only part of what makes Event Detection a difficult task on Twitter data.
 Due to the short length of tweets, lexical mismatch is a common issue, where users may describe an event using semantically similar yet different words, such as `bomb' and `explosion' or `crashed' and `rammed'.
 Topic drift is yet another issue.
 As events develop and new sub-topics emerge, it can cause a rapid change in discussion that, to a cluster-based event detection system, can appear as if a new real-world event has occurred.
@@ -414,11 +423,12 @@ Since Twitter do not include full followers information in a standard tweet payl
 This makes it extremely time-consuming to retrieve large volumes of follower information for network structure calculations.
 The temporal nature of followers also causes a problem.
 Users follow and unfollow each other on a regular basis, meaning that the underlying network structure changes over time.
-This can cause issues even in the short term if a user emerges as good source of information, spurring many other users to follow them, and poses a particular problem for researchers who may be using a datatset which is several years old as their current follower network is unlikely to bear any resemblance to their network from several years ago.
+This can cause issues even in the short term if a user emerges as good source of information, spurring many other users to follow them, and poses a particular problem for researchers using a datatset which is several years old as their current follower network is unlikely to bear any resemblance to their network from several years ago.
 
 Indeed, clustering alone appears to be inadequate for effective detection and tracking tracking of complex or evolving events on Twitter.
 The limited length of a tweet restricts discussion to a very narrow topic, however discussion around an ongoing event may quickly jump from one sub-topic to another, making it difficult to find links.
 The use of network structure is a possible solution, but as we have discussed, is unlikely to be feasible unless the network is known in advance.
+More recent advances in areas such as word embedding may provide a solution to these issues, however at the time of writing, much work remains to be done in this regard.
 
 \subsection{Burst and Trend Analysis}
 \todo{A page or two of content to come}
