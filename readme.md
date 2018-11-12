@@ -5,8 +5,8 @@ This document outlines a plan for revisions and corrections that are needed in o
 ## General
 - [ ] Add equation numbers
 - [ ] Convert Tables to/Add graphs where appropriate
-- [X] List of algorithms
-- [X] Fix algorithm and table captions
+- [X] [List of algorithms](https://github.com/JamesMcMinn/Thesis-Revisions/commit/28d74ba136a2db3593fa7a318ee905c430cd94b4)
+- [X] [Fix algorithm and table captions](https://github.com/JamesMcMinn/Thesis-Revisions/commit/93a63b029b4d1ce79a8046f82fec51dc13bfc142)
 
 ## 0. Front Matter
 - [X] [Fix the date](https://github.com/JamesMcMinn/Thesis-Revisions/commit/cd6230ee687e5f58248ff862310680ff25e4b1c8)
