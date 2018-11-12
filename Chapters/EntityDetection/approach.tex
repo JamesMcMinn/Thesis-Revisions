@@ -10,7 +10,7 @@ Tweets are processed in order using a pipelines architecture that allows for par
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=11cm,trim=1.5cm 1cm 1.5cm 0.8cm]{Chapters/EntityDetection/images/system.pdf}
-	\caption{The pipeline architecture and components of our entity-based approach.}
+	\caption{The pipeline architecture and components of our entity-based approach}
 	\label{detection:graphic:pipeline}
 \end{figure}
 
@@ -102,7 +102,7 @@ Given the role that named entities play in describing real-world events, we beli
 		}
 	}
 
-\caption{Entity-based method of clustering}
+\caption{Pseudocode for our entity-based method of clustering}
 \label{detection:alg:clustering}
 \end{algorithm}
 
@@ -112,7 +112,7 @@ Using the premise that tweets discussing an event must contain at least one of t
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=8cm,trim=0cm 1.5cm 0cm 0cm]{Chapters/EntityDetection/images/clustering.pdf}
-	\caption[Entity-based clustering]{Tweets are added to a cluster for each entity they contain. The example shows how a tweet containing both `Obama' and `Romney' would be put into two clusters, one for the entity `Obama' and one for the entity `Romney'.}
+	\caption[How tweets are clustered based on the entities the contain]{Tweets are added to a cluster for each entity they contain. The example shows how a tweet containing both `Obama' and `Romney' would be put into two clusters, one for the entity `Obama' and one for the entity `Romney'.}
 	\label{detection:graphic:clustering}
 \end{figure}
 

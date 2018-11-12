@@ -205,7 +205,7 @@ This means that as we progress further down the rankings, the tweets are less li
 Rather than annotate all 2000 tweets for each event from the CEP, we chose to use an incremental approach, inspired by the methodology used by the TDT project, where annotation is stopped once it is unlikely that more relevant tweets will be found.
 
 The ranked list of tweets for each event are split into batches of 30.
-Once all annotations are obtained for single batch, an automatic decision is made based upon the number of tweets annotated as relevant by the majority of annotator.
+Once all annotations are obtained for single batch, a decision is made based upon the number of tweets annotated as relevant by the majority of annotator.
 If a batch contains at least 50\% relevant tweets, then the next batch of 30 is submitted for annotation.
 On the other hand, if a batch contains less than 50\% relevant tweets, then annotation is stopped for that event and it is marked as complete.
 This process is repeated until all events have been marked as complete or all 2000 tweets have been annotated.

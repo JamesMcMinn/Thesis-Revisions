@@ -2,10 +2,7 @@
 
 \subsection{Clustering Features}
 \label{collection:clustering}
-There are a number of features which could be used for the clustering of events.
-This section describes the features and the possible issues surrounding their use.
 
-\subsubsection{Content-based Features}
 The content similarity between a target and candidate event is a potentially very useful feature for merging events that discuss the same real-world event.
 Similarly to how many event detection approaches define tweet similarity, we define event content similarity as the cosine of the angle between the term frequency vectors for the target event and candidate event:
 \begin{displaymath}
@@ -51,7 +48,7 @@ Similarly, the Wikipedia Current Events Portal assigns a category to each event,
 
 \begin{table}
 	\centering
-	\caption{Combined categories with their corresponding TDT and Wikipedia categories.}
+	\caption{Combined categories with their corresponding TDT and Wikipedia categories}
 	\label{collection:table:catTable}
 
 	\footnotesize
@@ -107,7 +104,7 @@ Rather, we use it as a filter, and say that events which are more than $T$ hours
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./Chapters/Collection/images/times}
-	\caption{The distribution of times between matched events, based upon the number of hours between the centroid times of the events.}
+	\caption{The distribution of times between matched events, based upon the number of hours between the centroid times of the events}
 	\label{fig:dif_diff}
 \end{figure}
 
@@ -143,7 +140,7 @@ $clustered$ = $\emptyset$\;
 		}
 	}
 }
-\caption{Event Clustering Approach}
+\caption{Pseudocode for our event clustering approach}
 \label{alg:clustering}
 \end{algorithm}
 

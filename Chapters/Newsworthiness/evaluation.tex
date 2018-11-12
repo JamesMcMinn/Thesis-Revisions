@@ -43,7 +43,8 @@ As mentioned in section \ref{scoring:sec:labelling}, the vast majority (83.81\%)
 This means that for the majority of tweets, this feature has no effect on the Quality Score since this range is given a weight of 1.0.
 However, for tweets posted by users with fewer than 50 followers, which make up 13.78\% of tweets in the collection, this feature has a negative effect on the Quality Score. Very few tweets come from users with more than 1 million followers, a total of only 9,457 tweets, or 0.01\% of tweets in the collection, however this relatively small number of tweets will receive a significant boost in their Quality Score (\(W_{followers}\) = 3.0).
 
-\begin{table}[h!]
+\begin{table}[t!]
+	\small
 	\centering
 	\caption{Follower ranges and and the number of tweets posted by users (excluding retweets) within the given range of followers.}
 	\begin{tabulary}{\textwidth}{l r r}
@@ -61,13 +62,13 @@ However, for tweets posted by users with fewer than 50 followers, which make up 
 \label{scoring:table:followersDist}
 \end{table}
 
-
+\vspace{-.025cm}
 \subsubsection{Posts Per Day}
 Table \ref{scoring:table:postsPerDayDist} shows the number of tweets posted by users who post the specified numbers of tweets per day on average since creating their account. We can see that although the vast majority of tweets are posted by users who tweet less than 50 times per day on average, 12.4\% of tweets come from users who post more than 50 timer per day on average, meaning that these tweets will receive a Quality Score penalty under our heuristic scoring approach.
 
-\begin{table}[h!]
+\begin{table}[b]
 	\centering
-
+	\small
 	\caption{The number of tweets in the collection (excluding retweets) from users who post various volumes of tweets per day, on average.}
 
 	\begin{tabulary}{\textwidth}{l r r}
@@ -93,7 +94,7 @@ A surprisingly large number of tweets, over 1\%, come from accounts created in t
 
 \begin{table}[h!]
 	\centering
-
+	\small
 	\caption{The number of tweets in the collection (excluding retweets) from users who post various volumes of tweets per day, on average.}
 
 	\begin{tabulary}{\textwidth}{l r r}
@@ -144,7 +145,7 @@ The median score across all tweets is 1.0.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{Chapters/Newsworthiness/data/positivescores.pdf}
-	\caption{Cumulative percentage of tweets with Quality Scores \(Q_d\) higher than the value on the x-axis. The x-axis uses a \(log_2\) scale as the distribution is heavily skewed towards 1.}
+	\caption[Cumulative percentage of tweets with Quality Scores \(Q_d\) higher than the value on the x-axis]{Cumulative percentage of tweets with Quality Scores \(Q_d\) higher than the value on the x-axis. The x-axis uses a \(log_2\) scale as the distribution is heavily skewed towards 1.}
 	\label{scoring:graphic:highQualityScores}
 \end{figure}
 
@@ -166,7 +167,7 @@ Similarly, a tweet with a Quality Score of 0.67 would be classified as Low Quali
 
 \begin{table}[h]
 	\centering
-
+	\small
 	\caption{Percentages of Event and Other tweets given High Quality and Low Quality labels at a range of Quality Score thresholds.}
 	\label{scoring:table:qualityLabels}
 
@@ -213,7 +214,7 @@ The deviation from a ratio of 1 suggests that our Newsworthiness Scoring approac
 
 \begin{table}[b!]
 	\centering
-
+	\small
 	\caption{Percentages of tweets classified as either Newsworthy or Noise for Event and Other tweets, across a range of Quality Score threshold values.}
 	\label{scoring:table:newsworthinessClassifications}
 
@@ -252,6 +253,7 @@ As overall classification ratios seem to reach a maximum around 4.0 and 0.25 for
 \subsection{Newsworthiness Scores}
 \begin{table}[b!]
 	\centering
+	\small
 	\caption{Percentages of tweets classified as either Newsworthy or Noise for Event and Other tweets, across a range of Newsworthiness Score threshold values.}
 	\begin{tabulary}{\textwidth}{l c c c | l c c c}
 		\toprule
@@ -287,6 +289,7 @@ These results are encouraging, and follow a reasonable score distribution. The i
 
 \begin{table}[b!]
 	\centering
+	\small
 	\caption{The raw counts and percentages per category of tweets classified as Newsworthy or Noise.}
 
 	\small
@@ -317,12 +320,12 @@ This difference seems intuitive: armed conflicts and attacks, such as bombings, 
 On the other hand, entertainment events, such as the launch of new television shows, or award ceremonies such as the Black Entertainment Awards, are less likely to make worldwide headlines but will still generate a high volume of subjective and low quality discussion.
 
 Other categories behave similarly to Armed Conflicts \& Attacks, such as Business \& Economy, where events are generally headline news, but generate a relatively low volume of discussion.
-Sports and Miscellaneous events, such as Felix Baumgartner's record-breaking jump from the edge of space or the start of Daylight savings time in the United States, show similar behaviour to Arts, Culture \& Entertainment.
+Sports and Miscellaneous events, such as Felix Baumgartner's record-breaking jump from the edge of space or the start of Daylight savings time in the United States, show similar behavior to Arts, Culture \& Entertainment.
 These types of events generate a high volume of low quality chatter, resulting in a lower percentage of tweets classified as Newsworthy and lower average Newsworthiness Scores.
 
 \begin{table}[]
 	\centering
-
+	\small
 	\caption{Average Newsworthiness Scores for each event category, calculated for all tweets, only tweets classified as Newsworthy, and only tweets classified as Noise.}
 
 	\begin{tabulary}{\textwidth}{l c c c}
@@ -359,7 +362,7 @@ As new tweets are processed, the models are updated in real-time, allowing for n
 
 \label{scoring:sec:exampleTweets}
 \begin{table}[]
-
+	\small
 	\caption{A sample of tweets and their Newsworthiness Scores from Event \#81 of the Events 2012 corpus, sorted by Newsworthiness Score from highest to lowest.}
 
 	\centering
@@ -394,6 +397,7 @@ Bigrams consistently underperform compared to the unigram models across all qual
 
 \begin{table}[h!]
 	\centering
+	\small
 	\caption{Newsworthiness classifications for Event and Other tweets using Unigram and Bigram term models.}
 	\begin{tabulary}{\textwidth}{l c c c c}
 		\toprule

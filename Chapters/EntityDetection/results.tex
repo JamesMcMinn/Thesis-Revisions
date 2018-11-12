@@ -7,7 +7,7 @@
 \begin{table}[t!]
 	\centering
 
-  \caption[Results for 2 baseline approaches and our entity-based event detection approach.]{Results for 2 baseline approaches (LSH \& CS) compared to our entity-based approach using the Events 2012 collection.}
+  \caption[Results for 2 baseline approaches and our entity-based event detection approach]{Results for 2 baseline approaches (LSH \& CS) compared to our entity-based approach using the Events 2012 collection.}
 
 	\label{detection:table:bestResults}
 
@@ -49,7 +49,7 @@ Recall for the crowdsourced run was calculated automatically using events with 3
 \begin{table}
 	\centering
 	\small
-	\caption{Effectiveness of our entity-based approach at varies minimum event sizes.}
+	\caption{Effectiveness of our entity-based approach at varies minimum event sizes}
 	\label{detection:table:eventSize}
 
 	\begin{tabulary}{\textwidth}{l c c c }
@@ -87,7 +87,7 @@ Low recall entertainment events could be explained by our removal of tweets that
 \begin{table}
 	\centering
 	\small
-  \caption{Distribution of detected events across the 8 categories defined by the collection. The average entities shows the average number of entities linked to each event for the specific category.}
+  \caption[Distribution of detected events across the 8 categories defined by the collection]{Distribution of detected events across the 8 categories defined by the collection. The average entities shows the average number of entities linked to each event for the specific category.}
 
 	\label{detection:table:categories}
 
@@ -173,7 +173,7 @@ This could be caused by the reduced maximum burst length with 6 windows causing 
 \begin{table}[b!]
 	\centering
 	\small
-	\caption{The effect of using only data from the last N updates when calculating mean and standard deviation values.}
+	\caption{The effect of using only data from the last N updates when calculating mean and standard deviation values}
   \label{detection:table:signalLength}
 
 	\begin{tabulary}{\textwidth}{l c c c}
@@ -219,7 +219,7 @@ However, our use of multiple window lengths means that our burst detection appro
 \begin{table}[b!]
 	\centering
 	\small
-	\caption{Effects of minimum similarity thresholds on detection performance.}
+	\caption{Effects of minimum similarity thresholds on detection performance}
   \label{detection:table:simThresholds}
 
 	\begin{tabulary}{\textwidth}{c c c c}
@@ -262,7 +262,7 @@ There is a distinct jump in precision when the minimum cluster size is increased
 \begin{table}[h!]
 	\centering
 	\small
-	\caption{Effects of minimum cluster size on detection performance.}
+	\caption{Effects of minimum cluster size on detection performance}
   \label{detection:table:minClusterSize}
 
 	\begin{tabulary}{\textwidth}{l c c c}
@@ -296,7 +296,7 @@ Despite this, we feel that results presented here are still interesting and insi
 \begin{table}[b!]
 	\centering
 	\small
-	\caption{The effect of using different combinations of nouns (NN), verbs (VB) and hashtags (HT) as terms for clustering on events with at least 30 and 100 tweets.}
+	\caption{The effect of using different combinations of nouns (NN), verbs (VB) and hashtags (HT) as terms for clustering on events with at least 30 and 100 tweets}
 	\label{detection:table:posTypes}
 
 	\begin{tabulary}{\textwidth}{l c c c}
@@ -352,7 +352,7 @@ Of the 506 events in the relevance judgements, 14 have fewer than 5 associated t
 \begin{table}[b!]
 	\centering
 	\small
-	\caption{Precision and recall differences between using no entity classes and 3 classes (person, location, organization).}
+	\caption{Precision and recall differences between using no entity classes and 3 classes (person, location, organization)}
 	\label{detection:table:entityTypes}
 
 	\begin{tabulary}{\textwidth}{l c c c }
@@ -388,7 +388,7 @@ Here we examine how our automatic evaluation approach compares to our crowdsourc
 \begin{table}[b!]
 	\centering
 
-  \caption[Results obtained through crowdsourcing vs automatically.]{Results obtained through crowdsourcing vs automatically at a minimum event size of 30.}
+  \caption[Results obtained through crowdsourcing vs automatically.]{Results obtained through crowdsourcing vs automatically at a minimum event size of 30}
 
 	\label{detection:table:diffResults}
 
@@ -413,7 +413,7 @@ As we discussed in section \ref{detection:sec:experimentation}, there are a numb
 \begin{table}
 	\centering
 	\small
-	\caption{The distribution of events between categories, measured using both the Collection and Crowdsourcing.}
+	\caption{The distribution of events between categories, measured using both the Collection and Crowdsourcing}
 
 	\label{detection:table:categoriesCrowd}
 
@@ -469,7 +469,7 @@ Finally, our pipeline architecture allows for each component to work independent
 \begin{table}[h]
 	\centering
 	\small
-  \caption[Complexity, theoretical worst case, and average comparisons for different event detection approaches.]{Different complexity aspects of our detection approach and the 2 baselines approaches. The average complexity for LSH was calculated without the use of a variance reduction technique which would push the average higher. }
+  \caption[Complexity, theoretical worst case, and average comparisons for different event detection approaches]{Different complexity aspects of our detection approach and the 2 baselines approaches. The average complexity for LSH was calculated without the use of a variance reduction technique which would push the average higher. }
   \label{detection:table:efficiency}
 
 	\begin{tabulary}{\textwidth}{l c c c }
