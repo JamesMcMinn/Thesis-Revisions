@@ -3,7 +3,6 @@
 This document outlines a plan for revisions and corrections that are needed in order to bring my PhD thesis, titled Real-Time Event Detection using Twitter, to a state acceptable for final submissions to the University of Glasgow library.
 
 ## General
-- [ ] Convert Tables to/Add graphs where appropriate
 - [X] [List of algorithms](https://github.com/JamesMcMinn/Thesis-Revisions/commit/28d74ba136a2db3593fa7a318ee905c430cd94b4)
 - [X] [Fix algorithm and table captions](https://github.com/JamesMcMinn/Thesis-Revisions/commit/93a63b029b4d1ce79a8046f82fec51dc13bfc142)
 
@@ -81,7 +80,7 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Make it clear that this is done in a streaming manner - not offline](https://github.com/JamesMcMinn/Thesis-Revisions/commit/4661dedefedf9cd9784b16f2433548e14e341f40)
 - [X] [Discuss user description terms and subjective nature / drift](https://github.com/JamesMcMinn/Thesis-Revisions/commit/2e2558174b1860bab957edc58765fcc7f8426477)
 - [X] [5.4.4: Link 5.3.1 back to Q_d to make it clear what it is showing](https://github.com/JamesMcMinn/Thesis-Revisions/commit/088fcdfe50f4d088937f98f3c6134764c02c3ad5)
-- [X] Convert Table 5.9 to graph, discuss different trends
+- [X] [Convert Table 5.9 to graph, discuss different trends](https://github.com/JamesMcMinn/Thesis-Revisions/commit/de4ad3809b25b44766583f8d698c1e22c0bc5973)
 - [X] [Various small clarifications requested in annotated copy](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3347ee9fead4254d43a3d8b320c297827a9ed005)
 
 ## 6.Conclusion
