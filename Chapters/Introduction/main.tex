@@ -20,7 +20,7 @@ For almost 10 years, the Twitter account for `Breaking News' (\texttt{@breakingn
 The ability to automatically detect and track on-going real-world events would clearly be useful, however it has been shown to be an extremely difficult task, even on newswire documents \citep{Allan:2000:FSD:354756.354843}.
 Twitter poses a number of challenges over and above those found in newswire documents.
 Despite Twitter's reputation for news, the majority of tweets discuss trivial or mundane events.
-Even today, it is not uncommon for a user to only posts about the food they have eaten or the music they are listening to.
+Even today, it is not uncommon for a user to only post about the food they have eaten or the music they are listening to.
 The relatively low quality of tweets poses further issues.
 Due to the limited message length on Twitter (tweets were originally limited to 140 characters, however this was increased to 280 in 2017), spelling and grammar errors are very common, as is the use of abbreviations and acronyms.
 Twitter has over 500 million users who, combined, post thousands of tweets every second\footnote{\texttt{https://blog.twitter.com/marketing/en\_us/a/2015/testing-promoted-\\tweets-on-our-logged-out-experience.html}}.
@@ -42,7 +42,7 @@ Based on this, we define a number of characteristics that we believe are importa
 
 	\item \textbf{No manual labels:} A reliance on manually labeled training data or interaction by a user would introduce a number of restrictions on the types of event that can be detected, and be vulnerable to any changes that Twitter make (such as increasing the character limit). \\
 
-	\item \textbf{Comparable:} Without an effective method of comparing different approaches, it is impossible to say if improvements are being made. A robust and  evaluation methodology and standard data set are important for progress to be made.  \\
+	\item \textbf{Comparable:} Without an effective method of comparing different approaches, it is impossible to say if improvements are being made. A robust  evaluation methodology and standard data set are important for progress to be made.  \\
 
 \end{itemize}
 
@@ -51,9 +51,8 @@ We refine the definition of `event' for detection on Twitter after surveying exi
 We then reduce a set of over 1 billion tweets to a more manageable 120 million covering a continuous 28 day period to provide a standard set of tweets that event detection approaches can use to emulate a high-volume Twitter stream.
 We implement two existing event detection approaches: the Locality Sensitive Hashing (LSH) approach proposed by \cite{Petrovic10}, and the Cluster Summarization (CS) approach proposed by \cite{Aggarwal12}, and extract candidate events from the corpus by running both approaches over it.
 We perform a crowdsourced evaluation to annotate each of the candidate events as either a true event or noise, and gather relevance judgements for the tweets of each true event.
-We supplement these events by using Wikipedia's Current Events Portal to identify a number of events that occurred during the period covered by the event, and use another crowdsourced evaluation to gather annotations for these events.
-We then use a clustering approach to merge any duplicate events, and create a final set of relevance judgements that can be used to evaluate event detection approaches.
-We run an additional crowdsourced evaluation to examine the quality of merging approach, and find that it performs well at merging duplicate events from multiple sources.
+We supplement these events by using Wikipedia's Current Events Portal to identify a number of events that occurred during the period covered by the collection, and use another crowdsourced evaluation to gather annotations for these events.
+We then use a crowdsourced evaluation and a clustering approach to merge any duplicate or overlapping events, and create a final set of relevance judgements that can be used to evaluate event detection approaches.
 
 One of the biggest challenges for real-time event detection on Twitter is efficiently clustering the huge volume of tweets in real-time.
 Previous work has used approaches such as Locality Sensitive Hashing (LSH) \citep{Petrovic10} to reduce the number of comparisons that need to be made in order to efficiently cluster tweets.
@@ -63,7 +62,7 @@ This allows us to efficiently cluster tweets in real-time, then using a light-we
 We then use a number of heuristic features to identify interesting clusters that are likely to be related to events.
 We solve event fragmentation, a common problem for event detection approaches on Twitter where a single seminal event is split into multiple parts, by combining events with high entity concurrence.
 We evaluate our entity-based approach using the Events 2012 corpus, and find that it significant outperforms the LSH and CS approach that we use as baselines.
-A crowdsourced evaluation finds that the precision of our approach is more than 3 times better than suggested using an automatic evaluation approach, and we discuss some of the issues arising from the automatic evaluation of event detection approaches in situations where there are no queries and the relevance judgements are incomplete.
+A crowdsourced evaluation finds that the precision of our approach is more than 3 times better than suggested using annotations from the collection to evaluate, and we discuss some of the issues arising from the evaluation of event detection approaches in situations where there are no queries and the relevance judgements are incomplete.
 
 Generally, event detection approaches use the volume of tweets as an indication that something significant has happened, either by measuring the size of a cluster, or the frequency of a term over time.
 This often requires 10s of tweets before events can be detected with reasonable precision.
@@ -83,7 +82,7 @@ To determine if this hypothesis is true, we pose a number of key research questi
 \begin{tabulary}{\textwidth}{l L}
 \textbf{RQ1} & Can we develop a methodology that allows us to build a test collection for the evaluation of event detection approaches on Twitter? \\
 
-\textbf{RQ2} & Can entities (people, places, organizations) be used to improve real-world event detection in a streaming setting on Twitter? \\
+\textbf{RQ2} & Can entities (people, places, and organizations) be used to improve real-world event detection in a streaming setting on Twitter? \\
 
 \textbf{RQ3} & Can event detection approaches be evaluated in a systematic and fair way? \\
 
@@ -105,31 +104,29 @@ In summary, the main contributions of this thesis are:
 	\item A novel method of scoring tweets to determine newsworthiness, that requires no manually labeled training and that is capable of being integrated into existing event detection approaches, resulting in significant improvements to precision.
 \end{itemize}
 
+\newpage
 \section{Organization of Thesis}
 
 The remainder of this thesis is organized as follows:
 
-\vspace{-0.5cm}
-\paragraph{Chapter \ref{chapter:background}} gives background information that is needed to understand the rest of this thesis. We first describe the role of the Topic Detection and Tracking project in developing early event detection approaches for newswire documents, and how these approaches relate to modern event detection approaches for social media. We then discuss various high-level strategies used by event detection approaches for social media, and review related work with a focus on novel approaches of event detection on Twitter.
+\paragraph{Chapter \ref{chapter:background}} gives the background information that is needed to understand the rest of this thesis.
+We give a brief overview of Information Retrieval and describe some common evaluation measures.
+We then describe the role of the Topic Detection and Tracking project in developing early event detection approaches for newswire documents, and how these approaches relate to modern event detection approaches for social media. We then discuss various high-level strategies used by event detection approaches for social media, and review related work with a focus on novel approaches of event detection on Twitter.
+Finally, we survey existing event detection corpora for Twitter and definitions of `event' and examine their suitable for the evaluation of event detection approaches.
 
-\vspace{-0.5cm}
-\paragraph{Chapter \ref{chapter:collection}} describes the creation of the Events 2012 corpus for the evaluation of event detection approaches on Twitter. We first survey existing event detection corpora for Twitter and find that none are suitable for the evaluation of event detection on Twitter.
-We examine various definitions of `event' and find that no existing definition suitably captures the nuances of events and event detection on social media, so propose a new definition.
+\paragraph{Chapter \ref{chapter:collection}} describes the creation of the Events 2012 corpus for the evaluation of event detection approaches on Twitter. We propose a new definition of `event' using the qualifier `significant' to make it adaptable to different uses-cases.
 We then use a combination of existing event detection approaches and Wikipedia to create a set of candidate events, which we annotate through a crowdsourced evaluation, to create the first large-scale corpus for the evaluation of event detection on Twitter. Parts of this work were first presented in \cite{McMinn2013}.
 
-\vspace{-0.5cm}
 \paragraph{Chapter \ref{chapter:detection}} examines the role of named entities in events and proposes a new entity-based event detection approach.
 Our approach uses named entities to efficiently cluster tweets in real-time, and a light-weight burst detection technique to identify clusters that are likely to be related to real-world events.
 We evaluate the approach using the Events 2012 corpus created in chapter \ref{chapter:collection} and find that our approach out-performs two state-of-the-art baselines.
 We compare automatic evaluation approaches to a crowdsourced approach and find that although automatic evaluation of event detection on Twitter is effective, there remain a number of challenges.
 Parts of this work were first presented in \cite{McMinn14} and \cite{McMinn15}.
 
-\vspace{-0.5cm}
 \paragraph{Chapter \ref{chapter:newsworthiness}} describes a novel newsworthiness scoring approach that uses heuristics to label tweets as high or low quality, and trains a number of models in real-time that we then use to estimate newsworthiness scores for tweets.
 We evaluate the performance of our approach as both a classification and scoring task using the Events 2012 corpus and find that it is convincingly able to classify tweets as either newsworthy or noise.
 We examine how our newsworthiness score can be used as a feature for event detection, find that it can be used to significantly increase precision.
 
-\vspace{-0.5cm}
 \paragraph{Chapter \ref{chapter:Conclusion}} summarizes the main contributions of this thesis, and examines remaining issues for event detection on Twitter, describing possible directions for future work.
 
 
