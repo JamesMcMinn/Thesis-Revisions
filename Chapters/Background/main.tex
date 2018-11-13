@@ -48,8 +48,8 @@ where \(\mathbf{d_1} \cdot \mathbf{d_2}\) is the dot product of term weighted ve
 \end{displaymath}
 
 \subsection{Evaluation Measures}
-Throughout this thesis, we use a number of IR standard evaluation metrics, commonly used in IR evaluations.
-These measures as based on the concept of relevance.
+Throughout this thesis, we use a number of evaluation metrics that are commonly used in IR evaluations.
+These measures are based on the concept of relevance.
 In IR, relevance is determined based on some information need, usually represented as a textual query.
 In event detection, there is no query.
 Instead, relevance is defined in relation to an event, either by subjectively evaluating if a cluster of tweets meets some definition of `event', or by matching tweets in the cluster to a pre-determined event in the relevance judgements (represented by a set of tweets).
@@ -78,7 +78,7 @@ Individually, precision and recall show only one aspect of performance.
 Perfect recall can be achieved by returning every document in the collection,
 whilst perfect precision can be achieved by returning none of them.
 
-F-measure takes both precision and recall into consideration, and combines them into a single score. F-measure ranges between 1 at best (a perfect systems) and 0 at worst. Although it is possible to weight F-measure to prefer precision or recall, the most commonly used F-measure gives equal weight to both, and is the harmonic mean of precision and recall. This is usually called F1 score, and is used throughout this thesis:
+F-measure takes both precision and recall into consideration, and combines them into a single score. F-measure ranges between 1 at best (a perfect systems) and 0 at worst. Although it is possible to weight F-measure to prefer precision or recall, the most commonly used F-measure gives equal weight to both, and is the harmonic mean of precision and recall. This is usually called F1 score:
 
 \begin{displaymath}
 	F_1 = 2 \cdot \frac{1}{\tfrac{1}{\mathrm{recall}} + \tfrac{1}{\mathrm{precision}}} = 2 \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{\mathrm{precision} + \mathrm{recall}}
@@ -120,7 +120,7 @@ The project was split into five distinct subtasks \citep{Allan:2002:ITD:772260.7
 \end{itemize}
 
 With the exception of Story Segmentation, the tasks focus on various aspects of document clustering, with the main difference between each task being how it is evaluated.
-Of the 5 tasks, First Story Detection (FSD, although often called New Event Detection, NED) was considered the most difficult \citep{Allan:2000:FSD:354756.354843} as an effective FSD system must be effective across all of the tasks to perform well.
+Of the 5 tasks, First Story Detection (FSD, although often called New Event Detection, NED) was considered the most difficult \citep{Allan:2000:FSD:354756.354843} as an effective FSD system must be effective across all of the TDT tasks.
 
 Story Segmentation differs in nature from the others as it pertains specifically to a pre-processing step that must be performed before the other tasks can be carried out.
 All other tasks work with stories, however the aim of the Story Segmentation task is to detect boundaries between stories automatically using transcripts from the spoken audio of broadcast news shows.
@@ -131,7 +131,7 @@ Of all the tasks of the TDT project, Story Segmentation is the least relevant to
 
 At a high level, almost all of the approaches proposed by the TDT project follow the same nearest-neighbour clustering approach shown in algorithm \ref{background:alg:tdt}.
 As documents appear in the stream, they are compared to every document that has been seen before (or, if an inverted index is used, then all documents they share a term with), and the similarity between the new document and every other document in the Corpus is calculated.
-If one or more similar documents is found (based on some pre-defined threshold), add the new document to cluster containing the closest match, signaling that they discuss the same event.
+If one or more similar documents is found (based on some pre-defined threshold), the new document is added to the cluster containing it closest match, signaling that they discuss the same event.
 If no similar documents are found, then a new event has been detected, and a new cluster is formed~\citep{Allan:2000:FSD:354756.354843}.
 
 \begin{algorithm}
@@ -259,7 +259,7 @@ Despite the effectiveness of their approach, there are obvious drawbacks. Firstl
 \label{background:sec:lsh}
 Earlier we discussed how the basic TDT approach as described in Section \ref{background:sec:tdt} could not scale to extremely high volume streams (even with the aid of an inverted index), making it infeasible to use for event detection on Twitter.
 \cite{Petrovic:2010:SFS:1857999.1858020} proposed a solution to this using a technique called Locality Sensitive Hashing (LSH).
-LSH uses a special hash functions that produce the same hash for documents that are similar, but not necessarily completely identical, allowing documents that are close in vector space to be placed into the same bucket.
+LSH uses special hash functions that produce the same hash for documents that are similar, but not necessarily completely identical, allowing documents that are close in vector space to be placed into the same bucket.
 Using a set of random hyperplanes and a family of hash functions proposed by \cite{Charikar2002}, the buckets are defined by the subspaces between hyperplanes, such that the probability of similar documents being placed into the same bucket of a hash table is proportional to their similarity.
 
 By using multiple hash tables, each with independently chosen random hyperplanes, the probability of the true nearest neighbour colliding in at least one table can be increased to any desired probability (at the cost of additional computations).
@@ -267,8 +267,18 @@ The number of hash tables $L$ needed to give the desired probability of \emph{mi
 \begin{displaymath}
 	L = log_{1-P^k_{coll}} \delta
 \end{displaymath}
-where $k$ is the number the number of hyperplanes, $P_{coll} = 1-\frac{\theta(x,y)}{\pi}$ where $\theta(x,y)$ is the expected angle between similar documents $x$ and $y$.
+where $k$ is the number the number of hyperplanes. $P_{coll}$ is computed as $1-\frac{\theta(x,y)}{\pi}$ where $\theta(x,y)$ is the expected angle between similar documents $x$ and $y$.
 Petrivic et al. use values of $k = 13$, $\theta(x,y) = 0.2$ and $\delta = 0.025$ to compute $L$, values which we also use when replicating their work in Chapter \ref{chapter:collection}.
+
+\subsubsection{Efficiency Enhancements}
+Since the number of buckets is limited, in a streaming scenario where the number of documents in unbounded, the number of documents in each bucket will continue to grow as new documents are processed.
+This would require an unbounded amount of space and the number of comparisons made would also grow for each new document, eventually making even the LSH approach infeasible.
+To overcome this, \cite{Petrovic:2010:SFS:1857999.1858020} limit the number of documents in a bucket to a fixed number based on the expected number of collisions, which can be computed as $n/2^k$ where $n$ is the total number of documents and $k$ is the number of hyperplanes used.
+When a bucket is full, the oldest document in the bucket is removed from that bucket (and only that bucket) to make room for new documents.
+Due to the use of multiple independent hash tables, the removal of the document from a bucket does not prevent it from being retrieved from other hash tables, although eventually all documents are removed from all hash tables.
+
+Rather than compare each new document to every document that has been seen before, similarity comparisons are performed for at most $3L$ documents (where $L$ is the number of hash tables).
+The documents are selected by counting the number of times a document collides across the $L$ hash tables, and taking the top $3L$ documents with the most collisions.
 
 \subsubsection{Variance Reduction}
 Although the use of LSH improves computational efficiency, it proves to be considerably less effective than the standard TDT approach.
@@ -278,16 +288,6 @@ To overcome this, \cite{Petrovic:2010:SFS:1857999.1858020} use a `variance reduc
 In these instances, the approach falls back the traditional TDT model, and uses an inverted index to retrieve a list of documents to search for a nearest neighbour.
 However, unlike the basic TDT model, a limit is placed on the number of documents searched, and only the most recent 2000 documents returned from the inverted index are compared.
 This helps to improve the effectiveness, and brings it inline with that of the basic model, whilst still being considerably more efficient.
-
-\subsubsection{Additional Efficiency Enhancements}
-Since the number of buckets is limited, in a streaming scenario where the number of documents in unbounded, the number of documents in each bucket will continue to grow as new documents are processed.
-This would require an unbounded amount of space and the number of comparisons made would also grow for each new document, eventually making even the LSH approach infeasible.
-To overcome this, \cite{Petrovic:2010:SFS:1857999.1858020} limit the number of documents in a bucket to a fixed number based on the expected number of collisions, which can be computed as $n/2^k$ where $n$ is the total number of documents and $k$ is the number of hyperplanes used.
-When a bucket is full, the oldest document in the bucket is removed from that bucket (and only that bucket) to make room for new documents.
-Due to the use of multiple independent hash tables, the removal of the document from a bucket does not prevent it from being retrieved from other hash tables, although eventually all documents are removed from all hash tables.
-
-To keep the number of comparisons per document fixed, similarity comparisons are performed for at most $3L$ documents (where $L$ is the number of hash tables).
-The documents are selected by counting the number of times a document collides across the $L$ hash tables, and taking the top $3L$ documents with the most collisions.
 
 \subsubsection{Cluster Ranking}
 Although the use of LSH improves computational efficiency and allows the application of a TDT approaches on Twitter-scale data, it does not address the issue of noise and spam, which is found in excess on Twitter but is not present in the TDT datasets.
@@ -369,7 +369,7 @@ To compute the $\mu$ and $\sigma$ values efficiently, \cite{Aggarwal12} use the 
 \begin{align*}
 	M_0 &= \sum_{i = 0}^{|S|}{S_i^0} & M_1 &= \sum_{i = 0}^{|S|}{S_i^1} & M_2 &= \sum_{i = 0}^{|S|}{S_{i}^2}
 \end{align*}
-These values can be updated as each new document is clustered, and used to calculate the $\mu$ and $\sigma$ as show in Algorithm \ref{background:alg:sbs}.
+These values can be updated as each new document is clustered, and used to calculate $\mu$ and $\sigma$ as show in Algorithm \ref{background:alg:sbs}.
 
 If a document has a highest similarity score below $\mu - 3 \cdot \sigma$ then a new cluster is created and the document is added to it.
 Since this approach requires a constant number of clusters for linear time complexity, the creation of a new cluster requires the removal of an existing cluster.
@@ -421,11 +421,11 @@ where $SimS$ and $SimC$ are the structural and content based similarities respec
 $\lambda$ can be adjusted to give more or less weigh to the structural similarity.
 
 Although \cite{Aggarwal12} found that is was possible to improve both precision and recall of their detection approach by combining network structure with content similarity, the use of network structure poses a problem when applied to Twitter data.
-Since Twitter do not include full followers information in a standard tweet payload, researchers must instead query Twitter's API separately, which is rate-limited to only a few hundred requests per hour.
+Since Twitter does not include full followers information in a standard tweet payload, researchers must instead query Twitter's API separately, which is rate-limited to only a few hundred requests per hour.
 This makes it extremely time-consuming to retrieve large volumes of follower information for network structure calculations.
 The temporal nature of followers also causes a problem.
 Users follow and unfollow each other on a regular basis, meaning that the underlying network structure changes over time.
-This can cause issues even in the short term if a user emerges as good source of information, spurring many other users to follow them, and poses a particular problem for researchers using a datatset which is several years old as their current follower network is unlikely to bear any resemblance to their network from several years ago.
+This can cause issues even in the short term if a user emerges as good source of information, spurring many other users to follow them, and poses a particular problem for researchers using a datatset which is several years old as a users current follower network is unlikely to bear any resemblance to their network from several years ago.
 
 Indeed, clustering alone appears to be inadequate for effective detection and tracking tracking of complex or evolving events on Twitter.
 The limited length of a tweet restricts discussion to a very narrow topic, however discussion around an ongoing event may quickly jump from one sub-topic to another, making it difficult to find links.
@@ -448,16 +448,16 @@ Twevent outperforms their baselines approach \citep{weng2011event}, however reli
 Additionally, since it has already been shown that Twitter is often ahead of Wikipedia by more than 2 hours \citep{WRN2012:osbornebieber}, the use of Wikipedia as a knowledge base and its reliance on anchor text for filtering means that it is likely to miss novel events if they have not already been reported on Wikipedia.
 
 TwitInfo \citep{marcus2011twitinfo} allows users to track an event based on a set of keywords, providing a visualization and summary of the event.
-Part of this involves providing sub-event detection within the stream, alerting the user when a significant sub-event or change in topic occurs.
-TwitInfo identifies term peaks by creating a histogram of tweet frequencies, allowing users to adjust bin sizes from minutes to days in length depending on the specific event.
-Peaks are identified by using TCP's congestion control mechanism, which must determine whether a packet is taking unusually long to be acknowledged and is thus an outlier.
+Part of this involves providing sub-event detection within the stream, using burst (or peak) detection to alert users when a significant sub-event or change in topic occurs.
+TwitInfo identifies term peaks by creating a histogram of tweet frequencies
+and applying TCP's congestion control mechanism (which determines whether a packet is taking unusually long to be acknowledged and is thus an outlier).
 This approach uses the weighted moving average and the variance in tweet frequency do detect outliers.
 An outlier is said to have occurred when the current frequency is more than 2 mean deviations from the current mean, and the frequency is increasing (i.e., it is higher than the previous value).
-The top ranking TF-IDF weighted terms used during the outlier period is then used to provide a set of meaningful labels for the sub-event.
+The top ranking TF-IDF weighted terms used during the outlier period are then used to provide a set of meaningful labels for the sub-event.
 
 \cite{weng2011event} developed a system called EDCoW (Event Detection with Clustering of Wavelet-based Signals) that builds signals for individual words by applying wavelet analysis on the frequency-based raw signals of the worlds.
-They then use signal auto-correlation to identify and filter out trivial words.
-The remaining words are then clustered into events by performing a modularity-based graph partitioning technique using signal cross-correlation.
+They then use signal auto-correlation (i.e. it's correlation with itself) to identify and filter out trivial words.
+The remaining words are clustered into events by performing a modularity-based graph partitioning technique using signal cross-correlation.
 They evaluate their approach on 3.2 million tweets posted by users based in Singapore, starting with a list of the top 1000 users with the most followers, and then expanding the graph by following their friends and followers 2-hops, giving them 19,256 unique users.
 Their approach can be tuned to given high precision ($P = 0.76$), however discovers only 21 events over a month long period, the majority of which correspond to matches taking place for the 2010 World Cup.
 Due to the high computation costs of the cross-correlation and graph partitioning steps, this approach is unable to run in real-time, and struggles with event small datasets.
@@ -503,7 +503,7 @@ However, the use of pooling to create a test collection for event detection pose
 \subsection{The Pooling Approach and Event Detection}
 Despite often being viewed as an IR task, Event Detection has a number of characteristics that differ from more common IR tasks.
 The most obvious of these is the lack of pre-defined topics or queries for event detection systems to use.
-Rather, systems aim to automatically \emph{discover} a sub-set all all topics being discussed in the collection that meet the criteria for being an \emph{event} (as we will discuss in Chapter \ref{chapter:collection}, defining these criteria is not straightforward).
+Rather, systems aim to automatically \emph{discover} a sub-set of all topics being discussed in the collection that meet the criteria for being an \emph{event} (as we will discuss in Chapter \ref{chapter:collection}, defining these criteria is not straightforward).
 A perfect system would detect all documents for each event being discussed, however in practice, different event detection approaches discover different events.
 This makes it impossible to pool the results from event detection approaches using a TREC-style pooling methodology since it is not obvious what the various topics are or how they should be merged to create the pools for judgment.
 
