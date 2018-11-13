@@ -138,7 +138,7 @@ Note that only 3,230,830 (4.30\%) of tweets are assigned scores greater than 1.0
 The average high Quality Score is 2.46, however this is warped by a small number of outliers with extremely high Quality Scores (19 tweets have the maximum score of 224).
 The median high Quality Score is 2.0.
 
-A total of 47,233,095 (62.83\%) tweets are assigned a Quality Score of exactly 1.0, meaning that they were either assigned weights of 1.0 for all heuristic quality features, or assigned scores that cancelled.
+A total of 47,233,095 (62.83\%) tweets are assigned a Quality Score of exactly 1.0, meaning that they were either assigned weights of 1.0 for all heuristic quality features, or assigned scores that canceled.
 The median score across all tweets is 1.0.
 
 
@@ -258,7 +258,7 @@ As overall classification ratios seem to reach a maximum around 4.0 and 0.25 for
 	\begin{tabulary}{\textwidth}{l c c c | l c c c}
 		\toprule
 		\multicolumn{4}{c|}{\footnotesize \textbf{Newsworthy}} &	\multicolumn{4}{c}{\footnotesize \textbf{Noise}} \\
-		\textbf{Score} & \textbf{Event} &  \textbf{Other} & \textbf{Ratio} & \textbf{Score} & \textbf{Event} &  \textbf{Other} & \textbf{Ratio} \\
+		\textbf{$N_d$} & \textbf{Event} &  \textbf{Other} & \textbf{Ratio} & \textbf{$N_d$} & \textbf{Event} &  \textbf{Other} & \textbf{Ratio} \\
 		\midrule
 		\textbf{> 0.0} & 76.504\% & 18.830\% & 4.063 & \textbf{< 0.0} & 14.567\% & 50.133\% & 0.291 \\
 		\textbf{≥ 1.0} & 71.109\% & 16.223\% & 4.383 & \textbf{≤ -1.0} & 10.262\% & 47.076\% & 0.218 \\
@@ -273,15 +273,29 @@ As overall classification ratios seem to reach a maximum around 4.0 and 0.25 for
 	\label{scoring:table:newsworthinessScores}
 \end{table}
 
-Table \ref{scoring:table:newsworthinessScores} shows the percentage of tweets classified as Newsworthy or Noise across a range of Newsworthiness Scores.
+Table \ref{scoring:table:newsworthinessScores} shows the percentage of tweets classified as Newsworthy or Noise across a range of Newsworthiness Scores thresholds.
 For Newsworthy tweets, we can see that as the minimum Newsworthiness Score increases towards 4.0, the ratio of Event to Other tweets increases from 4.063 to 10.207;
 whilst 11.707\% of Event tweets have a Newsworthiness Score of 4.0 or greater, only 1.147\% of Other tweets do.
-
 Similarly, for Noise tweets, the ratio of Event to Other tweets decreases as we decrease the maximum Newsworthiness Score.
 The smaller ratio in this case means that Event tweets are less likely to be classified as Noise than Other tweets.
 We stop at -7.0 as no Event tweet had Newsworthiness Score of -8.0 or lower.
+These trends can be seen in Figures \ref{scoring:graphic:newsworthy} and \ref{scoring:graphic:newsworthy}.
 
 These results are encouraging, and follow a reasonable score distribution. The increasing and decreasing ratios for Newsworthy and Noise tweets respectively suggests that Newsworthiness Scores do incorporate some notion of newsworthiness magnitude, something we examine more closely in sections \ref{scoring:sec:categories} and \ref{scoring:sec:exampleTweets}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{Chapters/Newsworthiness/data/table59.pdf}
+	\caption{Event/Other Ratios for increasing $N_d$ thresholds above 0}
+	\label{scoring:graphic:newsworthy}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{Chapters/Newsworthiness/data/table59-noise.pdf}
+	\caption{Event/Other Ratios from decreasing $N_d$ thresholds below 0}
+	\label{scoring:graphic:newsworth-noise}
+\end{figure}
 
 
 \subsection{Event Categories}
