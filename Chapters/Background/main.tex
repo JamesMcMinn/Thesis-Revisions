@@ -456,7 +456,7 @@ An outlier is said to have occurred when the current frequency is more than 2 me
 The top ranking TF-IDF weighted terms used during the outlier period are then used to provide a set of meaningful labels for the sub-event.
 
 \cite{weng2011event} developed a system called EDCoW (Event Detection with Clustering of Wavelet-based Signals) that builds signals for individual words by applying wavelet analysis on the frequency-based raw signals of the worlds.
-They then use signal auto-correlation (i.e. it's correlation with itself) to identify and filter out trivial words.
+They then use signal auto-correlation (i.e. its correlation with itself) to identify and filter out trivial words.
 The remaining words are clustered into events by performing a modularity-based graph partitioning technique using signal cross-correlation.
 They evaluate their approach on 3.2 million tweets posted by users based in Singapore, starting with a list of the top 1000 users with the most followers, and then expanding the graph by following their friends and followers 2-hops, giving them 19,256 unique users.
 Their approach can be tuned to given high precision ($P = 0.76$), however discovers only 21 events over a month long period, the majority of which correspond to matches taking place for the 2010 World Cup.
