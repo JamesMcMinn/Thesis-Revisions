@@ -18,7 +18,7 @@ This means that we cannot rely only on tweet content features when performing ev
 
 Fortunately, for both Event Detection and Wikipedia events, we also have the  descriptions given by annotators for each of the events.
 Since the descriptions are often (but not always) higher level than the tweets, they are more likely to provide useful information for linking two events.
-Thus, we define the description similarity, $S_d$, as the cosine of the angle between the term frequency vectors for the descriptions for the target and candidate events:
+Thus, we define the description similarity, $S_d$, as the cosine of the angle between the term frequency vectors of the descriptions for the target and candidate events:
 \begin{displaymath}
 	S_d = cos(e_d, e'_d)
 \end{displaymath}
@@ -28,9 +28,9 @@ Manual inspection of the descriptions shows that the vast majority contain at le
 We also note that, in cases where the descriptions describe different aspects of the same real-world event, often the only constant is the mention of a named entity or named entities.
 Of the 20 or so events that discuss Felix Baumgartner's record-breaking space jump, many of the descriptions  focus on particular moments before, during or after the jump. For example, one description given for tweets discussing his ascent reads: ``Felix Baumgartner is ready to jump from a height that no one has ever done'', while one given for tweets discussing his successful landing: ``felix baumgartner breaks world record free fall''.
 Although both describe the same real-world event, they are different moments in time, and the descriptions given contain no overlapping terms other than the name of the person involved.
-This is a repeating pattern for events that were followed in real-time, particularity broadcast events watched by many users with many different sub-topics.
+This is a common occurrence for events that were followed in real-time, particularity broadcast events watched by many users with many different sub-topics.
 This can make it difficult to use annotator descriptions to measure event similarity, as although they may describe the same real-world event, the descriptions can be quite dissimilar depending on the granularity of the events.
-To solve this, rather than rely purely on description similarity, we also calculated the named entity similarity $S_n$, and taken the maximum value for either $S_n$ or $S_d$ as the annotation similarity, $S_a$:
+To solve this, rather than rely purely on description similarity, we also calculated the named entity similarity $S_n$, and take the maximum value for either $S_n$ or $S_d$ as the annotation similarity, $S_a$:
 \begin{align*}
 	S_n &= cos(e_n, e'_n) & S_a &= max(S_n, S_d)
 \end{align*}
@@ -77,7 +77,7 @@ Similarly, the Wikipedia Current Events Portal assigns a category to each event,
 \end{table}
 
 Before we can use the TDT and Wikipedia categories as a feature for clustering, we must create a mapping between them.
-However, simply creating a direct mapping between TDT categories and Wikipedia categories would solve the mapping problem but not increase agreement between the annotations from the event detection approaches.
+Simply creating a direct mapping between TDT categories and Wikipedia categories would solve the mapping problem but not increase agreement between the annotations from the event detection approaches.
 Thus, we created a new set of categories, each of which covers a much broader range than either the TDT or Wikipedia categories.
 Table~\ref{collection:table:catTable} shows the new categories and the corresponding categories from the TDT project and Wikipedia.
 Re-computing annotator agreement for the event detection event annotation after mapping the TDT categories to the combined categories shows an improvement from  $k = 0.76$ to $k = 0.81$.
@@ -147,4 +147,4 @@ $clustered$ = $\emptyset$\;
 Parameter weights were optimized by varying between 0.0 and 1.0 in steps of 0.1, such that the sum of all weights was 1.0.
 The weights given in equation \ref{eq:simcluster} gave the highest BCubed precision (0.92) and recall (0.86) values (F1 = 0.86).
 The maximum time difference, $T$, was set to 6 hours  as only a 3.4\% of events were matched outside of a 6 hour window, as show in Figure~\ref{fig:dif_diff}.
-This allows for a reasonably lag between the 2 events, whilst still giving a reasonable guarantee that the events generated will fit our definition of event as there is unlikely to be a significant gap between the merged events.
+This allows for a reasonably lag between events, whilst still giving a reasonable guarantee that the events generated will fit our definition of event.

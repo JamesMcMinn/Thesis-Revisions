@@ -123,8 +123,8 @@ However, if they answered `yes', they were reminded of our definition of `event'
 Again, annotators who answered `no' were allowed to submit the evaluation as, despite discussing the same topic, the candidate was not an event and there was little point gathering any further information.
 
 Annotators who confirmed that the tweets discussed an event were asked to re-read the tweets and mark any that were non-relevant or off-topic.
-Finally, they were asked to provide a brief describe the event and select the most appropriate category.
-Rather than ask the annotators to choose between a large number of categories, we chose to use the categories defined and used by the Topic Detection and Tracking (TDT) project~\cite{Allan:2002:ITD:772260.772262}.
+Finally, they were asked to provide a brief description of the event and select the most appropriate category.
+Rather than ask the annotators to choose between a large number of categories, we chose to use the categories defined and used by the Topic Detection and Tracking (TDT) project~\citep{Allan:2002:ITD:772260.772262}.
 The 13 categories defined cover a wide range of topics, with a Miscellaneous category for topics which do not fit elsewhere.
 The full list of TDT categories are shown in Table~\ref{collection:table:catTable}.
 
@@ -147,7 +147,7 @@ We employed a honey-pot technique to detect users who were not correctly classif
 We insert a tweet from a pre-selected set of spam tweets which we know do not discuss an event.
 Since the user has already indicated that the tweets they are annotating do discuss an event, we can be sure that a spam tweet is non-relevant.
 If the user does not identify this tweet as being non-relevant then their evaluation is marked as being spoiled and we re-run the evaluation with another user.
-Of those evaluations submitted as events, only 1000 (4.5\% of the 22,114 total evaluations, 286 for the Detection approaches, and 714 for the Wikipedia approach) were marked as being spoiled (i.e., the worker failed to identify the honey-pot tweet), which is a good indication that workers were doing a  reasonable job of judging relevance.
+Of those evaluations submitted as events, only 286 were marked as being spoiled (i.e., the worker failed to identify the honey-pot tweet), which is a good indication that workers were doing a reasonable job of judging relevance.
 
 \subsection{Annotation Results}
 Each candidate event was considered to be a true event if more than 50\% of annotators marked it as so, and greater than 90\% of judged tweets for the event were found to be relevant by a majority of annotators.
@@ -158,7 +158,7 @@ Event agreement increases slightly when 5 annotators are used as opposed to 3 (\
 Although this suggests that perhaps 3 annotators would have been sufficient for the evaluation of the detection approaches, it would have resulted in many cases where fewer than 3 annotators judged the tweets for a candidate event, breaking the requirements we outlined in section~\ref{sec:numAnnotators}.
 
 \section{The Wikipedia Current Events Portal (CEP)}
-Although the use of two different event detection approaches should give us a reasonable sample of events, using events from those systems alone would result in a biased towards easily detectable events.
+Although the use of two different event detection approaches should give us a reasonable sample of events, using events from those systems alone would result in a biase towards easily detectable events.
 Wikipedia maintains a Current Events Portal\footnote{http://en.wikipedia.org/wiki/Portal:Current\_events}, which offers a curated set of significant and noteworthy events from the around the world.
 The use of Wikipedia offers a number of advantages over the use of additional detection approaches.
 Firstly, each of the events listed on the current events portal is substantiated by a link to a news article from a reputable news source.
@@ -211,9 +211,9 @@ On the other hand, if a batch contains less than 50\% relevant tweets, then anno
 This process is repeated until all events have been marked as complete or all 2000 tweets have been annotated.
 
 In order to determine if our stopping point was effective, we created a pilot study where annotators were shown tweets from after the automatic stopping point (i.e. where there were very few or no relevant tweets).
-Interesting, the number of tweets marked as relevant by annotators was generally very high, often above 50\%.
-We believe that the majority of annotators actually were confused by the lack of relevant tweets, and created their own pseudo-topic based upon the tweets being shown to them.
-For example, where the event described a mass shooting in Nigeria, all 3 annotators seemed to switch to another event, leaving only tweets discussing a bombing at a church in Nigeria as relevant.
+Surprisingly, the number of tweets marked as relevant by annotators was generally very high, often above 50\%.
+We believe that the majority of annotators were confused by the lack of relevant tweets, and created their own pseudo-topic based upon the tweets being shown to them.
+For example, where the event described a mass shooting in Nigeria, all 3 annotators seemed to switch to another event, annotating only tweets discussing a bombing at a church in Nigeria as relevant.
 Although these events share a similar location, the events themselves are very distinct.
 Unfortunately, because of the short length of each tweet, it is easy for a single term to dominate the rankings -- in this case, the only common term between both events was \emph{Nigeria}.
 This indicates that continuing to ask for annotations after our stopping point would actually harm the accuracy of results, rather than improve them.
@@ -226,13 +226,13 @@ They were asked to enter a short description of the event that they might use if
 Finally, they were shown 30 tweets and asked to mark any non-relevant tweets as so.
 
 The spam an quality control measures, as described in Section \ref{sec:spam}, we also used here.
-Specifically, a 20 second minimum time limit, and the honey-pot technique to identify low-quality annotators.
+Specifically, a 20 second minimum time limit, and the honey-pot technique to identify low-quality annotators, resulting in 714 being removed (just 4.5\% of the 22,114 total evaluations between both the Wikipedia and Event Detection annotations).
 Learning from the results of the previous evaluations, we recorded the number of bad submissions for each user, and any user that failed to identify the honey-pot tweet 3 times was banned from performing further evaluations.
 
 
 \subsection{Annotation Results}
-Of the 368 events, relevant tweets were found for 361.
-In total, 39,980 tweets were found to be relevant to at least one of the 361 events by more than 50\% of annotators.
+Of the 368 events listed on Wikipedia, relevant tweets were found for 361.
+In total, 39,980 tweets were annotated as relevant to at least one of the 361 events by more than 50\% of annotators.
 Annotator agreement was very high at 0.72, although this is lower than tweet-level agreement for the candidate events generated using the event detection approaches.
 It is difficult to say why the agreement is lower for the Wikipedia approach in comparison.
 However, we hypothesizes that the majority of low quality annotators simply took the easy option for the detection approaches (i.e. answer `no' to either of the first two questions), so never had to judge tweets.
