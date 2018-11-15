@@ -4,7 +4,7 @@
 \label{detection:sec:approach}
 In this section we describe our entity-based event detection approach.
 The approach comprises of 6 key stages, as shown in Figure \ref{detection:graphic:pipeline}.
-Tweets are processed in order using a pipelines architecture that allows for parallel processing, with each component relying only on the output of the previous component to complete its task.
+Tweets are processed as stream, ordered by creation time, using a pipelines architecture that allows for parallel processing, with each component relying only on the output of the previous component to complete its task.
 
 \vspace{0.5cm}
 \begin{figure}[h!]
@@ -20,9 +20,9 @@ This helps to filter out unwanted tweets, such as common types of spam, and atte
 
 \subsubsection{Parsing \& Tagging}
 \label{detection:sec:parsing}
-We use the Stanford CoreNLP Natural Language Toolkit to perform Part of Speech (POS) tagging and Named Entity Recognition (NER) on the text of each tweet.
+We use the Stanford CoreNLP Toolkit to perform Part of Speech (POS) tagging and Named Entity Recognition (NER) on the text of each tweet.
 We  use the GATE Twitter POS model~\citep{TwitterPOS} for Part of Speech tagging, and the Stanford 3 class model for Named Entity Recognition.
-The GATE Twitter POS model is a Part-of-speech models trained specifically on tweets and tends to provide much high accuracy ($>$ 90\%) that part-of-speech models trained on non-twitter corpora.
+The GATE Twitter POS model is a Part-of-speech tagger trained specifically on tweets, and tends to provide much high accuracy ($>$ 90\%) that part-of-speech models trained on non-twitter corpora.
 
 We extract all nouns, verbs and named entities from each tweet.
 Nouns and verbs are lemmatized, and entities are kept in their longest form to ensure that names are as distinguishing as possible  (i.e. ``Paul Ryan'' rather than ``Paul'' and ``Ryan'').
@@ -208,7 +208,7 @@ In order to smooth and reduce noise, statistics are not updated while a window i
 For example, an entity which is marked as bursty in the 80 minute window would remain bursting for 120 minutes after the 80 minute window stops bursting.
 The extra time allows for fluctuations in frequency as an event develops, and helps prevent a state of flux where an entity rapidly switches between bursting and normal states, particularly in the early stages of an event where the overall volume of discussion may still be quite low.
 
-When a tweet which is no longer covered by the largest window it is removed from all inverted indexes.
+When a tweet is no longer covered by the largest window (i.e., it is older than 320 minutes) it is removed from all inverted indexes.
 This helps to reduce the number of comparisons required when calculating the nearest neighbour, and allows resources to be freed for incoming tweets.
 We do not believe that removing older tweets will affect the effectiveness of the algorithm due to the real-time nature of Twitter, as tweets which are more than a few hours old are unlikely to b relevant to any ongoing real-world events, and those which are will hopefully have already been marked as so by the algorithm, ensuring that they are recorded elsewhere.
 
@@ -228,7 +228,7 @@ We also require that a cluster meets a minimum size threshold, usually between 5
 This is to ensure that the cluster covers a significant portion of the event and to prevent small but noisy clusters from being included. The minimum size has an effect on the precision of our approach, and large minimum cluster sizes can give a large increase in precision for a small reduction in recall.
 We discuss the minimum cluster size in detail in section \ref{detection:sec:simThresholds}.
 
-If at least one cluster meets the time and size requirements outlines above, then it is added to the event for the entity to which it belongs, or, if it is the first cluster to be identified after a burst, then it is added to a new event.
+If at least one cluster meets the time and size requirements outlined above, then it is added to the event for the entity to which it belongs, or, if it is the first cluster to be identified after a burst, then it is added to a new event.
 An event is kept as long as it has at least one bursting entity associated with it.
 Once all entities associated with an event have stopped bursting, the event is finalized, and no more clusters or tweets can be added to it.
 
@@ -267,5 +267,5 @@ Using our previous example, it is unlikely that single tweet will mention both `
 
 To solve this, we perform a naive entity normalization technique.
 When measuring the frequency of entity mentions within an event, we perform a normalization step, which counts the last term of people and organization names as a separate entity.
-For example, for event mention of `barack obama', we also increase the count of `obama'.
+For example, for every mention of `barack obama', we also increase the count of `obama'.
 Note that we only do this for People and Organizations, but not Locations, as locations tend to lose much of their meaning when split (e.g. United Kingdom $\rightarrow$ Kingdom).
