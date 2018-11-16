@@ -3,14 +3,14 @@
 \section{Evaluation}
 \label{scoring:sec:eval}
 
-Since there is no existing collection specifically for the evaluation of newsworthiness, and our overall aim is to develop a score that can be used to improve real-time event detect techniques, we evaluate our newsworthiness scoring approach on the Events 2012 corpus created and described in chapter \ref{chapter:collection}, a corpus created specifically for the evaluation of event detection approaches.
+Since there is no existing collection specifically for the evaluation of newsworthiness, and our overall aim is to develop a score that can be used to improve real-time event detect techniques, we evaluate our newsworthiness scoring approach on the Events 2012 corpus since it was created specifically for the evaluation of event detection approaches.
 
 First we examine the different heuristic features defined in section \ref{scoring:sec:labelling} in the context of the Events 2012 corpus.
-We then test a number of different threshold values for labelling tweets as high and low quality, and examine how Newsworthiness Scores are distributed.
+We then test a number of different threshold values for labeling tweets as high and low quality, and examine how Newsworthiness Scores are distributed.
 We look at how different event types and categories behave, and examine how different term representations (unigrams, bigrams)  affect performance.
 
 We process the Events 2012 corpus in a online manner, simulating a real-time stream of time-ordered tweets.
-We filter out retweets and any non-English tweets. URLs are removed, and each tweet is tokenized. Unless otherwise noted, a unigram representation is used, we perform no stemming or stop word removal, and all tokens are normalized to lowercase.
+We filter out retweets, URLs are removed for tweets, and each tweet is tokenized. Unless otherwise noted, a unigram representation is used, we perform no stemming or stop word removal, and all tokens are transformed to lowercase.
 
 \subsection{Heuristics}
 In section \ref{scoring:sec:labelling}, we defined a number of heuristic features used to calculate a basic Quality Score that we then use to label tweets as either high or low quality.
@@ -30,7 +30,7 @@ Note that the most common phrases  ``follow back/followback'' refer to a common 
 This is often used to artificially grow followers and increase the accounts perceived significance.
 Since we use high numbers of followers as a positive weight, it is important that we are able to detect these accounts appropriately.
 
-Terms relate to news and journalism appear high in the list: `media', `news' and `write' are the most common non-spam related terms, with other news and journalism related terms (`report', `journal', `editor') appearing slightly lower in terms of raw frequency.
+Terms related to news and journalism appear high in the list: `media', `news' and `write' are the most common non-spam related terms, with other news and journalism related terms (`report', `journal', `editor') appearing slightly lower in terms of raw frequency.
 These are extremely strong indicators that the user is either a news broadcaster or a journalist.
 
 Finance related terms appear less frequently, with the exception of `market'. However, the bulk of this is due to the term `market' also matching `marketing', which is the next most common term.
@@ -38,7 +38,7 @@ Although `market' has a weight of 2.0, tweets by users whose description contain
 Despite the overall low frequency of financially related terms, we feel that their inclusion is important to capture discussion of financial news which may be discussed less broadly than other types of news.
 
 \subsubsection{Followers}
-Table \ref{scoring:table:followersDist} shows the number of tweets from users with particular follower ranges, and percentage of total tweets being posted by each group.
+Table \ref{scoring:table:followersDist} shows the number of tweets from users with particular follower ranges, and the percentage of tweets being posted by each group.
 As mentioned in section \ref{scoring:sec:labelling}, the vast majority (83.81\%) of tweets are posted by users with between 50 and 4,999 followers.
 This means that for the majority of tweets, this feature has no effect on the Quality Score since this range is given a weight of 1.0.
 However, for tweets posted by users with fewer than 50 followers, which make up 13.78\% of tweets in the collection, this feature has a negative effect on the Quality Score. Very few tweets come from users with more than 1 million followers, a total of only 9,457 tweets, or 0.01\% of tweets in the collection, however this relatively small number of tweets will receive a significant boost in their Quality Score (\(W_{followers}\) = 3.0).
@@ -64,7 +64,7 @@ However, for tweets posted by users with fewer than 50 followers, which make up 
 
 \vspace{-.025cm}
 \subsubsection{Posts Per Day}
-Table \ref{scoring:table:postsPerDayDist} shows the number of tweets posted by users who post the specified numbers of tweets per day on average since creating their account. We can see that although the vast majority of tweets are posted by users who tweet less than 50 times per day on average, 12.4\% of tweets come from users who post more than 50 timer per day on average, meaning that these tweets will receive a Quality Score penalty under our heuristic scoring approach.
+Table \ref{scoring:table:postsPerDayDist} shows the number of tweets posted by users who post the specified average number of tweets per day since creating their account. We can see that although the vast majority of tweets are posted by users who tweet less than 50 times per day, 12.4\% of tweets come from users who post more than 50 timer per day, meaning that these tweets will receive a Quality Score penalty under our heuristic scoring approach.
 
 \begin{table}[b]
 	\centering
@@ -92,7 +92,7 @@ Over 90\% of tweets are posted from accounts older than 90 days, however a not-i
 A surprisingly large number of tweets, over 1\%, come from accounts created in the past 24 hours, and 9.23\% from accounts created in the past 90 days.
 
 
-\begin{table}[h!]
+\begin{table}[t!]
 	\centering
 	\small
 	\caption{The number of tweets in the collection (excluding retweets) from users who post various volumes of tweets per day, on average.}
@@ -133,21 +133,21 @@ The average low Quality Score is 0.29, with a median of 0.25.
 	\label{scoring:graphic:lowQualityScores}
 \end{figure}
 
-Similarly, Figure \ref{scoring:graphic:highQualityScores} shows the percentage of tweets assigned `high' Quality Scores (i.e. \(Q_d > 1.0\)).
-Note that only 3,230,830 (4.30\%) of tweets are assigned scores greater than 1.0, significantly fewer than assigned a score of less than 1.0.
-The average high Quality Score is 2.46, however this is warped by a small number of outliers with extremely high Quality Scores (19 tweets have the maximum score of 224).
-The median high Quality Score is 2.0.
-
-A total of 47,233,095 (62.83\%) tweets are assigned a Quality Score of exactly 1.0, meaning that they were either assigned weights of 1.0 for all heuristic quality features, or assigned scores that canceled.
-The median score across all tweets is 1.0.
-
-
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{Chapters/Newsworthiness/data/positivescores.pdf}
 	\caption[Cumulative percentage of tweets with Quality Scores \(Q_d\) higher than the value on the x-axis]{Cumulative percentage of tweets with Quality Scores \(Q_d\) higher than the value on the x-axis. The x-axis uses a \(log_2\) scale as the distribution is heavily skewed towards 1.}
 	\label{scoring:graphic:highQualityScores}
 \end{figure}
+
+Similarly, Figure \ref{scoring:graphic:highQualityScores} shows the percentage of tweets assigned `high' Quality Scores (i.e. \(Q_d > 1.0\)).
+Note that only 3,230,830 (4.30\%) of tweets are assigned scores greater than 1.0, significantly fewer than assigned a score of less than 1.0.
+
+The average high Quality Score is 2.46, however this is warped by a small number of outliers with extremely high Quality Scores (19 tweets have the maximum score of 224).
+The median high Quality Score is 2.0.
+
+A total of 47,233,095 (62.83\%) tweets are assigned a Quality Score of exactly 1.0, meaning that they were either assigned weights of 1.0 for all heuristic quality features, or assigned scores that canceled.
+The median score across all tweets is 1.0.
 
 \subsection{Quality Thresholds}
 We examine how different thresholds affect the overall performance of our newsworthiness predictions.
@@ -206,13 +206,13 @@ This is a good indication that the selected heuristics are reasonable choices, a
 
 \subsection{Effect of Quality Score $Q_d$ Thresholds on Newsworthiness Classification}
 
-Table \ref{scoring:table:newsworthinessClassifications} gives the percentage of tweets classified as Newsworthy or Noise (i.e. Newsworthiness Scores that are greater or less than 0, respectively), across a range of Quality Score ($Q_D$) threshold combinations.
+Table \ref{scoring:table:newsworthinessClassifications} gives the percentage of tweets classified as Newsworthy or Noise (i.e. Newsworthiness Scores that are greater than 0 or less than 0, respectively), across a range of Quality Score ($Q_D$) threshold combinations.
 At all Quality Score thresholds tested, a higher percentage of Event tweets are classified as Newsworthy and a smaller percentage are classified as Noise, compared with Other tweets.
 Compared to a random baseline, which would give similar classification rates for both Event and Other tweets, our newsworthiness classification appears to perform well.
 Event tweets are classified as Newsworthy at a ratio of approximately 4 to 1 when compared to Other tweets, and classified as Noise only one third as often as Other tweets.
 The deviation from a ratio of 1 suggests that our Newsworthiness Scoring approach is effective at separating newsworthy content from noise.
 
-\begin{table}[b!]
+\begin{table}[t!]
 	\centering
 	\small
 	\caption{Percentages of tweets classified as either Newsworthy or Noise for Event and Other tweets, across a range of Quality Score threshold values.}
@@ -246,7 +246,7 @@ Despite this, 76.504\% of Event tweets are classified as newsworthy, but only 18
 As the HQ threshold increases, the average tweet quality also increases, but decreases the volume of tweets added to the model.
 This has the effect of reducing noise, and seems to benefit our newsworthiness scoring approach by increasing the proportional probability of newsworthy terms.
 However, increasing the HQ threshold offers improvements only to a point, as the percentage of Event tweets given positive Newsworthiness Scores decreases as we increase the HQ threshold above 4.0.
-The is likely due to the volume of tweets added to the HQ model drops sharply to less than 1\% of Event tweets above a Quality Score of 4.0, causing the model to miss important and useful information.
+The is likely due to the volume of tweets added to the HQ model drops sharply to less than 1\% of Event tweets, causing the model to miss important and useful information.
 
 As overall classification ratios seem to reach a maximum around 4.0 and 0.25 for HQ and LQ thresholds, we use these thresholds for all experiments that follow.
 

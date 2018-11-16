@@ -13,7 +13,7 @@ Even large datasets with relevance judgements, such as the Events 2012 corpus fr
 Datasets of this size, although useful for evaluation, make no claims of completeness.
 Despite having relevance judgements  for a large number of events and tweets, the Events 2012 corpus covers only covers a tiny fraction of the many thousands of newsworthy events that take place every day, so training specifically on these events could result in over-fitting and decreased effectiveness on other datasets.
 
-The use of heuristic labeling, rather than manual labeling, allows for training data to be label in real-time and fed into the scoring approaches that follow.
+The use of heuristic labeling, rather than manual labeling, allows training data to be labeled in real-time and fed into the scoring approaches that follow.
 This allows our approach to learn new features in real-time, as described in section \ref{scoring:sec:scoring}.
 
 \cite{Madhawa15} used heuristic labeling to generate training data for newsworthiness classification.
@@ -130,7 +130,7 @@ At the time of writing, approximately 290,000 accounts have been verified by Twi
 Quality and quantity often have an inverse correlation, especially on social media.
 Accounts which produce an extremely high volume of posts are often automated accounts repeating content from other sources with the aim of acquiring followers, advertising a product or service, and more recently, for the purpose of propaganda and misinformation \citep{Forelle15, Howard16}.
 
-Accounts that post more than 50 times per day are often considered to be heavily automated \citep{Howard16}. For this reason, we penalize any account that posts more than 50 times per day on average (weight of 0.5), and apply a more severe penalty for accounts which more than 100 times per day on average (weight of 0.25).
+Accounts that post more than 50 times per day are often considered to be heavily automated \citep{Howard16}. For this reason, we penalize any account that posts more than 50 times per day on average (weight of 0.5), and apply a more severe penalty for accounts which tweet more than 100 times per day on average (weight of 0.25).
 
 We note, however, that many heavily automated accounts are in fact prominent news and media organizations. To prevent these legitimate accounts from being penalized, we do no apply any penalty to Verified accounts.
 

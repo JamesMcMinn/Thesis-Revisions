@@ -43,7 +43,7 @@ We used the entity-based clustering approach proposed in chapter \ref{chapter:de
 
 \section{Future Work}
 This thesis makes a number of contributions to the topic of event detection on Twitter.
-We have build upon decades of previous work and made a number of proposals that improve upon existing approaches, enabling the creation of a test collection and improvements to event detection approaches for Twitter.
+We have built upon decades of previous work and made a number of proposals that improve upon existing approaches, enabling the creation of a test collection and improvements to event detection approaches for Twitter.
 During this, we have identified a number of key areas where we believe future research could be focused and taken further.
 
 \subsubsection{An Updated Collection} There are a number of opportunities to improve  test collections for the evaluation of event detection.
@@ -53,7 +53,7 @@ Although we believe it may always be necessary to use crowdsourced evaluations t
 
 \subsubsection{New Collections}
 The Events 2012 corpus is now over 6 years old.
-Twitter has changed considerably in that time: its userbase has grown, and the length of tweets has increased from 140 to 280 characters.
+Twitter has changed considerably in that time: the userbase has grown and changed, and the length of tweets has increased from 140 to 280 characters.
 We have proposed a methodology and demonstrated that it can be used to (relatively) quickly and easily build a test collection for Twitter.
 The creation of new test collections would allow us to better understand how changes to Twitter have affected the performance of event detection approaches, and would enable a more throughout evaluation by comparing performance across 2 or more datasets.
 
@@ -63,7 +63,7 @@ In chapter \ref{chapter:detection}, we argue that named entities play a strong r
 We also rely heavily on them for event merging in chapter \ref{chapter:collection}.
 However, named entity recognition on tweets is still a difficult task, and although performance of standard toolkits like the Stanford NER is adequate, there is much room for improved recognition, which could then feed improvements
 in entity-based event detection approaches.
-In this vein, a detailed analysis of how NER performance affects detection performance would be an interesting area of research that could give insight into the limits of entity-based event detection performance and a dependence on entities for detection limits detection approaches in areas such as First Story Detection.
+In this vein, a detailed analysis of how NER performance affects detection performance would be an interesting area of research that could give insight into the limits of entity-based event detection approaches.
 
 \subsubsection{Entity Linking and Disambiguation}
 The application of Entity Linking and more robust disambiguation techniques could improve performance in a number of ways, particularly for event detection approaches such as ours that rely heavily on named entities.
@@ -74,13 +74,13 @@ The use of an ontology to automatically link entities could offer improvements i
 If this information was known in advance, then links could be found between events even without explicit mentions.
 
 \subsubsection{Supervised Learning}
-Deep learning and other related topics could offer vast improvements to event detection approaches and have yet to be explored in depth.
+Supervised learning could offer vast improvements to event detection approaches and have yet to be explored in depth.
 Word Embeddings, such as word2vec \citep{mikolov2013distributed} or GloVe \citep{pennington2014glove}, offer potential improvements  to clustering performance through improved similarity measurements and could offer a solution to issues such as lexical mismatch and the use of slang or abbreviations.
 
 User classification, for example to identify good and reliable information sources, could help to improve the detection of smaller events by reducing the volume of tweets required before a decision can be made.
 It would be interesting to examine how different types of user could be leveraged to improve detection.
 Journalists, for example, may be useful for the detection of political or business news, however for unexpected events, it may be necessary to quickly identify reliable eye-witnesses and sources who are physically close to the event as they are likely to have the most up-to-date and correct information.
-A supervised approach may prove to be effective here at discovering these users quickly.
+A supervised approach may prove to be effective at discovering these users quickly.
 
 Supervised approaches could also prove useful for identifying things such as fake news, or the manipulation of news by state actors -- something that is becoming an increasingly important as social media plays a more important role in people's voting decisions.
 
@@ -99,7 +99,7 @@ Determining the performance of an event detection approach is difficult without 
 Precision and Recall will be underestimated using the Events 2012 annotations due to incomplete relevance judgements and event coverage, however it is not yet clear if this underestimation will apply evenly to all event detection approaches or if it will affect some more than others.
 An investigation into this would prove invaluable  and could pave a path forward.
 As it stands, it is not clear if work should focus on increasing annotation coverage, developing a more robust evaluation methodology and set of metrics, or developing an entirely novel evaluation framework.
-It is likely that modest improvements can be made simply by tweaking the methodology used by this work, with perhaps a new set of metrics to measure various different aspects of event detection, similar to the different evaluation methodologies used by the TDT project.
+It is likely that modest improvements can be made simply by tweaking the methodology used by this work, with perhaps a new set of metrics to measure  different aspects of event detection, similar to the different evaluation methodologies used by the TDT project.
 The development of an entirely new evaluation framework, whilst the most radical solution, is also likely to be the most successful.
 A number of approaches could be taken, from automatically matching candidate events to news articles, to a fully crowdsourced evaluation methodology where only the differences between runs are evaluated.
 

@@ -3,8 +3,8 @@
 \section{Newsworthiness Scoring}
 \label{scoring:sec:scoring}
 
-As documents are processed in order, they are added to a background model containing all documents.
-In addition, documents labelled either High or Low Quality are also added to corresponding quality specific models: documents labelled High Quality are added to the HQ model, and documents labelled Low Quality are added to the LQ model.
+As documents are processed in temporal order, they are added to a background model containing all documents.
+In addition, documents labeled either High or Low Quality are also added to corresponding quality specific models: documents labeled High Quality are added to the HQ model, and documents labeled Low Quality are added to the LQ model.
 
 The background model serves as a `random' distribution that we can compare against to identify terms that are more likely to appear in newsworthy content than at random, and conversely, terms that are more likely to appear in noise than at random.
 This concept is somewhat similar to the intuition behind the Divergence From Randomness (DFR) Framework and its associated models \citep{Amati02}: where the more a term's frequency within the HQ or LQ models differs from the term frequency of the collection as a whole, the more weight a term carries.
@@ -102,7 +102,7 @@ We calculate the overall Newsworthiness Score \(N_d\) of a document \(d\) as fol
 where \(t\) refers to a term in document \(d\) which contains \(D\) number of terms. As \(D\) is constant, it can be ignored, simplifying the calculation.
 
 We calculate the average term score \(S(t)\) (as described earlier) against both the high and low quality models.
-By taking the ratio of these scores, we can estimate how newsworthy the terms used in the document are overall.
+By taking the ratio of these scores, we can estimate how newsworthy the terms used in the document are.
 Documents where the average high quality term score is greater than that of low quality terms (i.e. \( \sum_{t \in d}{S_{HQ}(t)} > \sum_{t \in d}{S_{LQ}(t)} \)) are considered newsworthy, whilst documents where the average low quality term score is greater are considered noise.
 
 We add 1 to both the numerator and denominator which has a number of benefits.
