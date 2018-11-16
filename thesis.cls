@@ -50,6 +50,8 @@ right=30mm
 \usepackage{amsfonts}
 \usepackage{csquotes}
 
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
 \usepackage[linesnumbered,lined,ruled]{algorithm2e}
 \renewcommand{\algorithmcfname}{ALGORITHM}
 \SetAlFnt{\small}

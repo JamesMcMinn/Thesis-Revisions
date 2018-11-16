@@ -32,7 +32,7 @@ This is a common occurrence for events that were followed in real-time, particul
 This can make it difficult to use annotator descriptions to measure event similarity, as although they may describe the same real-world event, the descriptions can be quite dissimilar depending on the granularity of the events.
 To solve this, rather than rely purely on description similarity, we also calculated the named entity similarity $S_n$, and take the maximum value for either $S_n$ or $S_d$ as the annotation similarity, $S_a$:
 \begin{align*}
-	S_n &= cos(e_n, e'_n) & S_a &= max(S_n, S_d)
+	S_n &= cos(e_n, e'_n) & S_a &= max(S_n, S_d) \numberthis
 \end{align*}
 where $e_n$ ad $e'_n$ are the entity frequency vectors containing counts for each named entity mentioned in the annotator descriptions (extracted using the NLTK Python library) for target event $e$ and candidate event $e'$.
 Taking the maximum similarity of the two allows us to optimize for the two cases: (i) when the descriptions describe an event at the same level of granularity (often the case for events from different sources) the full description can be used, however when events are described at different levels of granularity or at different moments in time, entity similarity can be used.

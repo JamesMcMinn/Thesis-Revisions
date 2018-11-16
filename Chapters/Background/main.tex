@@ -367,7 +367,7 @@ where $\mu$ is the mean and $\sigma$ is the standard deviation of all similarity
 
 To compute the $\mu$ and $\sigma$ values efficiently, \cite{Aggarwal12} use the first 3 moments of the set of highest similarity scores $S$ (i.e., the set of  similarity scores for each document to its nearest neighbour cluster):
 \begin{align*}
-	M_0 &= \sum_{i = 0}^{|S|}{S_i^0} & M_1 &= \sum_{i = 0}^{|S|}{S_i^1} & M_2 &= \sum_{i = 0}^{|S|}{S_{i}^2}
+	M_0 &= \sum_{i = 0}^{|S|}{S_i^0} & M_1 &= \sum_{i = 0}^{|S|}{S_i^1} & M_2 &= \sum_{i = 0}^{|S|}{S_{i}^2} \numberthis
 \end{align*}
 These values can be updated as each new document is clustered, and used to calculate $\mu$ and $\sigma$ as show in Algorithm \ref{background:alg:sbs}.
 

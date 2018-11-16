@@ -184,7 +184,7 @@ A similar approach is used by \cite{Aggarwal12} to determine an minimum similari
 For each window, we maintain the mean and standard deviation statistics, updating them periodically with the current entity frequency.
 It is possible to efficiently compute the moving mean (\(\mu\)) and standard deviation (\(\sigma\)) using a set of three power sums \(M_0\), \(M_1\) and \(M_2\), for vector $E$ containing counts of how frequently entity $e$ is mentioned during each window:
 \begin{align*}
-	M_0 &= \sum_{i = 0}^{|E|}{E_i^0} & M_1 &= \sum_{i = 0}^{|E|}{E_i^1} & M_2 &= \sum_{i = 0}^{|E|}{E_{i}^2}
+	M_0 &= \sum_{i = 0}^{|E|}{E_i^0} & M_1 &= \sum_{i = 0}^{|E|}{E_i^1} & M_2 &= \sum_{i = 0}^{|E|}{E_{i}^2} \numberthis
 \end{align*}
 The current mean and standard deviation (\(\mu\) and \(\sigma\) respectively), can then calculated as so:
 \begin{equation*}
@@ -195,6 +195,7 @@ The current mean and standard deviation (\(\mu\) and \(\sigma\) respectively), c
 	\begin{aligned}[c]
 		\sigma = \sqrt{\frac{M_0 M_2 - M_1^2}{M_0}}
 	\end{aligned}
+	\numberthis
 \end{equation*}
 
 We compute \(\mu\) and \(\sigma\) for each named entity and each window length, requiring $|e| \cdot 7 \cdot 3$ integers to be stored, where $|e|$ is the number of named entities seen by the system, 7 is the number of windows, and 3 represents the $M_0$, $M_1$ and $M_2$ values.
