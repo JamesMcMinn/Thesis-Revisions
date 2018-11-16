@@ -5,9 +5,9 @@
 
 The content similarity between a target and candidate event is a potentially very useful feature for merging events that discuss the same real-world event.
 Similarly to how many event detection approaches define tweet similarity, we define event content similarity as the cosine of the angle between the term frequency vectors for the target event and candidate event:
-\begin{displaymath}
+\begin{equation}
 	S_t = cos(e_t, e'_t)
-\end{displaymath}
+\end{equation}
 where vectors $e_t$ and $e'_t$ contain counts for the top 10 most frequent terms (after stemming and stop word removal) for all tweets in the target and candidate events respectively.
 
 We note that in certain cases, a target and candidate event may have very low content similarity despite discussing the same real-world event.
@@ -19,9 +19,9 @@ This means that we cannot rely only on tweet content features when performing ev
 Fortunately, for both Event Detection and Wikipedia events, we also have the  descriptions given by annotators for each of the events.
 Since the descriptions are often (but not always) higher level than the tweets, they are more likely to provide useful information for linking two events.
 Thus, we define the description similarity, $S_d$, as the cosine of the angle between the term frequency vectors of the descriptions for the target and candidate events:
-\begin{displaymath}
+\begin{equation}
 	S_d = cos(e_d, e'_d)
-\end{displaymath}
+\end{equation}
 where the vectors $e_d$ and $e'_d$ contain term counts (after stemming and stop word removal) for all descriptions given by annotators for the target and candidate events respectively.
 
 Manual inspection of the descriptions shows that the vast majority contain at least one named entity (such as a person, location or organization), and many descriptions contain only a name entity with no other descriptive terms.
@@ -84,9 +84,9 @@ Re-computing annotator agreement for the event detection event annotation after 
 This is a good indication that our combined categories improve categorization and should help to make categories a more effective feature for clustering.
 
 We compute the category similarity $S_c$ between events $e$ and $e'$ as as the cosine of the angle in vector space between their category frequency vectors ($e_c$ and $e'_c$ respectively):
-\begin{displaymath}
+\begin{equation}
 	S_c = cos(e_c, e'_c)
-\end{displaymath}
+\end{equation}
 Category frequency vectors $e_c$ and $e'_c$ are counts of how frequently a category was selected by annotators for a given event (after mapping to combined categories). For events from Wikipedia, the vector simply contained a 1 for the category given by Wikipedia (after mapping to the combined categories).
 Since cosine is already length normalized, it is not necessary to perform any sort of length or weight adjustments to the vectors.
 

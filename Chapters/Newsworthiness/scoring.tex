@@ -16,7 +16,7 @@ A likelihood ratio greater than 1.0 means that the term is more common in the mo
 We believe that this can be used to identify terms that indicate newsworthiness (or lack thereof).
 
 The likelihood ratio for a term is calculated for both the High Quality (\(R_{HQ}(t)\)) and Low Quality (\(R_{LQ}(t)\)) models as:
-\begin{displaymath}
+\begin{equation}
 	R_{HQ}(t) =
 	\frac{
 		P(t|HQ)
@@ -33,8 +33,8 @@ The likelihood ratio for a term is calculated for both the High Quality (\(R_{HQ
 	} {
 		tf_{t,BG} \times F_{HQ}
 	}
-\end{displaymath}
-\begin{displaymath}
+\end{equation}
+\begin{equation}
 	R_{LQ}(t) =
 	\frac{
 		P(t|LQ)
@@ -51,7 +51,7 @@ The likelihood ratio for a term is calculated for both the High Quality (\(R_{HQ
 	} {
 		tf_{t,BG} \times F_{LQ}
 	}
-\end{displaymath}
+\end{equation}
 where \(HQ\), \(LQ\) and \(BG\) correspond to the High Quality, Low Quality and Background models respectively. \(tf_t\) is the raw frequency of term  \(t\) in the given model, and F is the raw frequency of all terms in the model (i.e.  \(F = \sum{f_t}\)). Since documents are added to each model as they are labelled, but before scoring, we can guarantee that division by 0 will never happen.
 
 For each term \(t\), we define an score \(S_t\) for each of the High and Low quality models. The aim is to use the HQ likelihood ratio to boost scores for documents containing terms associated with newsworthy content, and the LQ likelihood ratio to dampen scores for documents containing terms associated with noise.
@@ -59,25 +59,25 @@ Note that we do not assign scores for every term.
 Instead, we only use the likelihood ratio for terms with ratios of at least 2.0 in one of the two models, and instead assign a score of 0 where the term has a ratio of less than 2.0 for both the HQ and LQ models.
 This prevents terms which have no clear association with either high or low quality content from affecting the overall score of a document.
 
-\begin{displaymath}
+\begin{equation}
 	S_{HQ}(t) =
 	\begin{cases}
     R_{HQ}(t) ,& \text{if } R_{HQ}(t) \text{ or } R_{LQ}(t) \geq 2.0\\
     0,              & \text{otherwise}
 	\end{cases}
-\end{displaymath}
+\end{equation}
 
-\begin{displaymath}
+\begin{equation}
 	S_{LQ}(t) =
 	\begin{cases}
     R_{LQ}(t),& \text{if } R_{HQ}(t) \text{ or } R_{LQ}(t) \geq 2.0\\
     0,              & \text{otherwise}
 	\end{cases}
-\end{displaymath}
+\end{equation}
 
 \subsubsection{Combining Terms Scores}
 We calculate the overall Newsworthiness Score \(N_d\) of a document \(d\) as follows:
-\begin{displaymath}
+\begin{equation}
 	N_d =
 	\log_2\Bigg({\frac{
 		\frac{
@@ -98,7 +98,7 @@ We calculate the overall Newsworthiness Score \(N_d\) of a document \(d\) as fol
 	}{
 		1 + \sum_{t \in d}{S_{LQ}(t)}
 	}}\bigg)
-\end{displaymath}
+\end{equation}
 where \(t\) refers to a term in document \(d\) which contains \(D\) number of terms. As \(D\) is constant, it can be ignored, simplifying the calculation.
 
 We calculate the average term score \(S(t)\) (as described earlier) against both the high and low quality models.

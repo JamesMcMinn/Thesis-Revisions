@@ -143,9 +143,9 @@ We assign user accounts that have not specified a custom profile image a weight 
 
 \subsection{Labeling}
 As described earlier, document \(d\) is assigned an overall Quality Score, \(Q_d\), taken as the product of scores from each feature:
-\begin{displaymath}
+\begin{equation}
 	Q_d = W_{desc} \times W_{age} \times W_{followers} \times W_{verified} \times W_{ppd} \times W_{image}
-\end{displaymath}
+\end{equation}
 For example, a tweet \(d\) with weights 2.0 for \(W_{desc}\), 1.5 for \(W_{followers}\), and 1.0 for the all other features would have an overall Quality Score, \(
 	Q_d =  2.0 \times 1.0 \times 1.5 \times 1.0 \times 1.0  \times 1.0 = 3.0 \).
 

@@ -29,9 +29,9 @@ The TF component is concerned with the weight of the term in relation to the doc
 The IDF component, on the other hand, is concerned with the weight of the term in relation to the corpus as a whole.
 The IDF component attempts to estimate the amount of information that a term carries on the basis that rare terms should be given more weight as their presence in a document is more likely to be an indication of topic, whilst common terms should be given less weight as they are less topically specific.
 TF-IDF is calculated as so:
-\begin{displaymath}
+\begin{equation}
 	w_{t,d} = \mathrm{tf}_{t,d} \cdot \log{\frac{|D|}{|\{d' \in D \, | \, t \in d'\}|}}
-\end{displaymath}
+\end{equation}
 where \(\mathrm{tf}_{t,d}\) is the term frequency of term \(t\) in document \(d\), \(|D|\) is the total number of documents in the collection, and \(|\{d' \in D \, | \, t \in d'\}|\) is the number of documents contain term \(t\).
 Note that for retrieval tasks on Twitter, the TF component is often ignored as tweets are very short, and generally do not contain repeated terms.
 
@@ -39,13 +39,13 @@ Note that for retrieval tasks on Twitter, the TF component is often ignored as t
 
 Many IR tasks, including event detection, are concerned with the the notion of similarity.
 One such similarity measure is cosine similarity, which measures the cosine of the angle between two documents in vector space:
-\begin{displaymath}
+\begin{equation}
 	\cos{\theta} = \frac{\mathbf{d_1} \cdot \mathbf{d_2}}{\left\| \mathbf{d_1} \right\| \left \| \mathbf{d_2} \right\|}
-\end{displaymath}
+\end{equation}
 where \(\mathbf{d_1} \cdot \mathbf{d_2}\) is the dot product of term weighted vectors for the documents, and the norm for vector \(\mathbf{d}\) is calculated as such:
-\begin{displaymath}
+\begin{equation}
 	\left\| \mathbf{d} \right\| = \sqrt{\sum_{i=1}^n d_i^2}
-\end{displaymath}
+\end{equation}
 
 \subsection{Evaluation Measures}
 Throughout this thesis, we use a number of evaluation metrics that are commonly used in IR evaluations.
@@ -59,9 +59,9 @@ We discuss this further is chapter \ref{chapter:detection}.
 
 Recall is measured as the fraction of relevant documents that at retrieved from all possible relevant documents. Recall is give as:
 
-\begin{displaymath}
+\begin{equation}
 	\text{recall}=\frac{|\{\text{relevant documents}\}\cap\{\text{retrieved documents}\}|}{|\{\text{relevant documents}\}|}
-\end{displaymath}
+\end{equation}
 
 \subsubsection{Precision}
 In a traditional IR setting, precision is measured as the fraction of retrieved documents that are relevant to a given query.
@@ -69,9 +69,9 @@ For the purpose of evaluating event detection approaches, the lack of a query me
 How this is done is examined in chapters \ref{chapter:collection} and \ref{chapter:detection}.
 
 In a standard IR setting, precision is given as:
-\begin{displaymath}
+\begin{equation}
 	\text{precision}=\frac{|\{\text{relevant documents}\}\cap\{\text{retrieved documents}\}|}{|\{\text{retrieved documents}\}|}
-\end{displaymath}
+\end{equation}
 
 \subsubsection{F-measure}
 Individually, precision and recall show only one aspect of performance.
@@ -80,9 +80,9 @@ whilst perfect precision can be achieved by returning none of them.
 
 F-measure takes both precision and recall into consideration, and combines them into a single score. F-measure ranges between 1 at best (a perfect systems) and 0 at worst. Although it is possible to weight F-measure to prefer precision or recall, the most commonly used F-measure gives equal weight to both, and is the harmonic mean of precision and recall. This is usually called F1 score:
 
-\begin{displaymath}
+\begin{equation}
 	F_1 = 2 \cdot \frac{1}{\tfrac{1}{\mathrm{recall}} + \tfrac{1}{\mathrm{precision}}} = 2 \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{\mathrm{precision} + \mathrm{recall}}
-\end{displaymath}
+\end{equation}
 
 \subsubsection{BCubed}
 \label{background:bcubed}
@@ -264,9 +264,9 @@ Using a set of random hyperplanes and a family of hash functions proposed by \ci
 
 By using multiple hash tables, each with independently chosen random hyperplanes, the probability of the true nearest neighbour colliding in at least one table can be increased to any desired probability (at the cost of additional computations).
 The number of hash tables $L$ needed to give the desired probability of \emph{missing} a nearest neighbour $\delta$ can be computed as:
-\begin{displaymath}
+\begin{equation}
 	L = log_{1-P^k_{coll}} \delta
-\end{displaymath}
+\end{equation}
 where $k$ is the number the number of hyperplanes. $P_{coll}$ is computed as $1-\frac{\theta(x,y)}{\pi}$ where $\theta(x,y)$ is the expected angle between similar documents $x$ and $y$.
 Petrivic et al. use values of $k = 13$, $\theta(x,y) = 0.2$ and $\delta = 0.025$ to compute $L$, values which we also use when replicating their work in Chapter \ref{chapter:collection}.
 
@@ -296,9 +296,9 @@ Although the use of LSH improves computational efficiency and allows the applica
 They found that ranking clusters by the number unique users was more effective than the raw number of tweets.
 They also found that the amount of information contained in the thread, measured using Shannon entropy \citep{Shannon:2001:MTC:584091.584093}, was a good indicator of quality.
 Shannon entropy, $H$, is measured as:
-\begin{displaymath}
+\begin{equation}
 	H = -\sum_i{\frac{n_i}{N} \log \frac{n_i}{N}}
-\end{displaymath}
+\end{equation}
 where $n_i$ is the number of occurrences of term $i$ in a cluster,	and $N = \sum_i{n_i}$ is the total number of all term occurrences in the cluster.
 Clusters with a low entropy, defined as $H < 3.5$ by Petrović et al., are moved to the bottom of the ranking -- effectively marking them as noise.
 The same approach is used by \cite{benhardus2013streaming} to remove spam and noisy topics when performing trend detection.
@@ -360,9 +360,9 @@ An overview of their clustering approach is given in Algorithm \ref{background:a
 New clusters (\emph{novel} events) are created when a nearest neighbour cluster cannot be found among the existing clusters.
 Unlike most event detection and TDT systems, \cite{Aggarwal12} use an adaptive similarity threshold based on the Three Sigma rule \citep{Pukelsheim94}, which states that the expected similarity value should be within 3 standard deviations of the mean similarity across all previously seem documents.
 For use as a minimum threshold for similarity, only the lower bound is used:
-\begin{displaymath}
+\begin{equation}
 	threshold = \mu - 3 \cdot \sigma
-\end{displaymath}
+\end{equation}
 where $\mu$ is the mean and $\sigma$ is the standard deviation of all similarity measures that have been seen before.
 
 To compute the $\mu$ and $\sigma$ values efficiently, \cite{Aggarwal12} use the first 3 moments of the set of highest similarity scores $S$ (i.e., the set of  similarity scores for each document to its nearest neighbour cluster):
@@ -377,9 +377,9 @@ Since this approach requires a constant number of clusters for linear time compl
 
 An \emph{evolution} event is said to have occurred when the fraction of documents added to a cluster during time $t_{i}$ is greater than the fraction added during period $t_{i-1}$ by a factor of $\alpha$.
 For a cluster $c$, during time periods $t_i$ and $t_{i-1}$, an evolution event occurs if:
-\begin{displaymath}
+\begin{equation}
 	\frac{F(c, t_i)}{F(c, t_{i-1})} \geq \alpha
-\end{displaymath}
+\end{equation}
 where $F$ gives the fraction of all documents during time $t$ that were added to cluster $c$.
 Evolution events are necessary to capture real-world events that are similar enough to an existing cluster that they do not cause a new cluster to be created.
 The change in relative volume of documents represents a change in behavior which can be seen as an indicator of a new event.
@@ -414,9 +414,9 @@ Using the graphical structure of Twitter, where each user is a node in a graph a
 for each cluster in their detection approach: (i) a node-summary, which is a set of users and their frequencies and (ii) a content-summary, which is a set of words and their TF-IDF \citep{Salton:1988:TAA:54259.54260} weighted frequencies.
 By combining these two summaries, they suggest a novel similarity score which exploits the underlying structure of the social network, and improves upon content-only measures.
 Similarity between tweet $t$ and cluster $c$ is calculated as:
-\begin{displaymath}
+\begin{equation}
 	Sim(t, c) = \lambda \cdot SimS(t, c) + (1 - \lambda) \cdot SimC(t, c)
-\end{displaymath}
+\end{equation}
 where $SimS$ and $SimC$ are the structural and content based similarities respectively.
 $\lambda$ can be adjusted to give more or less weigh to the structural similarity.
 
