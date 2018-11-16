@@ -84,5 +84,5 @@ This document outlines a plan for revisions and corrections that are needed in o
 - [X] [Various small clarifications requested in annotated copy](https://github.com/JamesMcMinn/Thesis-Revisions/commit/3347ee9fead4254d43a3d8b320c297827a9ed005)
 
 ## 6.Conclusion
-- [ ] Describe difficulties, possible future directions
-- [ ] Generally, make it more philosophical
+- [X] Describe difficulties, possible future directions
+- [X] Generally, make it more philosophical
