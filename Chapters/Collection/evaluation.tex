@@ -19,9 +19,9 @@ However, we first gather a sample of relevance judgements that we can use to opt
 \label{collection:sec:eval}
 Since our event clustering approach is unlikely to be perfect and affects the number of events in our relevance judgements, an evaluation of its effectiveness is important.
 \cite{Amigo:2009:CEC:1555682.1555686} define a number of constraints which need to be met in order for different aspects of cluster quality to be measured.
-They compared a number of metrics and conclude that only BCubed ~\citep{Bagga:1998:ECC:980845.980859} satisfies all of their constrains.
-As described in Chapter \ref{chapter:background}, BCubed measures the precision and recall associated with individual items in a distribution, with Recall representing how many items from the same category appear in the target's cluster, and Precision representing how many items in the cluster belong to the same category~\citep{Amigo:2009:CEC:1555682.1555686}.
-Since BCubed averages are calculated over items rather than clusters, this means that we can gather relevance judgements for a subset of the items, rather than the full 796 events, whilst still being able to accurately estimate the overall quality and optimize feature weights.
+They compared a number of metrics and conclude that only B-Cubed ~\citep{Bagga:1998:ECC:980845.980859} satisfies all of their constrains.
+As described in Chapter \ref{chapter:background}, B-Cubed measures the precision and recall associated with individual items in a distribution, with Recall representing how many items from the same category appear in the target's cluster, and Precision representing how many items in the cluster belong to the same category~\citep{Amigo:2009:CEC:1555682.1555686}.
+Since B-Cubed averages are calculated over items rather than clusters, this means that we can gather relevance judgements for a subset of the items, rather than the full 796 events, whilst still being able to accurately estimate the overall quality and optimize feature weights.
 Additionally, this means that it is not necessary to apply any weighting due to cluster or category size~\citep{Amigo:2009:CEC:1555682.1555686}.
 
 We took a random sample of 100 events (12.5\% of the total), which we refer to as \emph{targets}.

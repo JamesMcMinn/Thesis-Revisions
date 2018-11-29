@@ -84,22 +84,22 @@ F-measure takes both precision and recall into consideration, and combines them 
 	F_1 = 2 \cdot \frac{1}{\tfrac{1}{\mathrm{recall}} + \tfrac{1}{\mathrm{precision}}} = 2 \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{\mathrm{precision} + \mathrm{recall}}
 \end{equation}
 
-\subsubsection{BCubed}
+\subsubsection{B-Cubed}
 \label{background:bcubed}
-BCubed Precision and BCubed Recall are similar in theory to the Precision and Recall measures given previously, however BCubed Precision and Recall are calculated for each document or item in the collection, rather than for each category or topic, and are most commonly used for the evaluation of clustering algorithms.
-For a given item $e$, BCubed Precision is the proportion of items in the same cluster as $e$ that have the same category as $e$, whilst BCubed Recall represents the proportion of items in the same category as $e$ are in the same cluster as $e$.
+B-Cubed Precision and B-Cubed Recall are similar in theory to the Precision and Recall measures given previously, however B-Cubed Precision and Recall are calculated for each document or item in the collection, rather than for each category or topic, and are most commonly used for the evaluation of clustering algorithms.
+For a given item $e$, B-Cubed Precision is the proportion of items in the same cluster as $e$ that have the same category as $e$, whilst B-Cubed Recall represents the proportion of items in the same category as $e$ are in the same cluster as $e$.
 Figure \ref{background:graphic:bcubed} illustrates how Precision and Recall for one item, $e$, is computed.
 
 \vspace{0.5cm}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=11cm]{Chapters/Background/bcubed.pdf}
-	\caption{An illustration of how BCubed Precision and Recall are computed}
+	\caption{An illustration of how B-Cubed Precision and Recall are computed}
 	\label{background:graphic:bcubed}
 \end{figure}
 
-Since BCubed Precision and Recall are computed on a per-item basis, the overall Precision and Recall values are taken as the average Precision and Recall values computed over all items.
-This is often combined into a single BCubed score using the same F-measure equation as given previously.
+Since B-Cubed Precision and Recall are computed on a per-item basis, the overall Precision and Recall values are taken as the average Precision and Recall values computed over all items.
+This is often combined into a single B-Cubed score using the same F-measure equation as given previously.
 
 \section{Topic Detection and Tracking}
 The Topic Detection and Tracking (TDT) project began in 1997, and was a body of research and an evaluation paradigm that addressed the event-based organization of broadcast news \citep{Allan:2002:ITD:772260.772262}.
