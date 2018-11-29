@@ -78,7 +78,7 @@ Individually, precision and recall show only one aspect of performance.
 Perfect recall can be achieved by returning every document in the collection,
 whilst perfect precision can be achieved by returning none of them.
 
-F-measure takes both precision and recall into consideration, and combines them into a single score. F-measure ranges between 1 at best (a perfect systems) and 0 at worst. Although it is possible to weight F-measure to prefer precision or recall, the most commonly used F-measure gives equal weight to both, and is the harmonic mean of precision and recall. This is usually called F1 score:
+F-measure takes both precision and recall into consideration, and combines them into a single score. F-measure ranges between 0 at worst and 1 at best (a perfect systems). Although it is possible to weight F-measure to prefer precision or recall, the most commonly used F-measure gives equal weight to both, and is the harmonic mean of precision and recall. This is usually called F1 score:
 
 \begin{equation}
 	F_1 = 2 \cdot \frac{1}{\tfrac{1}{\mathrm{recall}} + \tfrac{1}{\mathrm{precision}}} = 2 \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{\mathrm{precision} + \mathrm{recall}}
