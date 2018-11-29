@@ -76,7 +76,7 @@ We evaluate the performance of our newsworthiness feature by removing clusters w
 A further manual evaluation finds near-perfect precision with as few as 5 tweets (0.950), and perfect precision at 50 tweets.
 
 \section{Research Questions}
-The hypothesis of this thesis is that we can automatically identify real-world events, in real time, from posts on social media, with a particular focus on Twitter.
+The hypothesis of this thesis is that we can automatically identify real-world events, in real-time, from posts on social media, with a particular focus on Twitter.
 To determine if this hypothesis is true, we pose a number of key research questions that we aim to answer and that determine the scope of this thesis:
 
 \begin{tabulary}{\textwidth}{l L}
@@ -111,7 +111,7 @@ The remainder of this thesis is organized as follows:
 
 \paragraph{Chapter \ref{chapter:background}} gives the background information that is needed to understand the rest of this thesis.
 We give a brief overview of Information Retrieval and describe some common evaluation measures.
-We then describe the role of the Topic Detection and Tracking project in developing early event detection approaches for newswire documents, and how these approaches relate to modern event detection approaches for social media. We then discuss various high-level strategies used by event detection approaches for social media, and review related work with a focus on novel approaches of event detection on Twitter.
+We then describe the role of the Topic Detection and Tracking project in developing early event detection approaches for newswire documents, and how these approaches relate to modern event detection approaches for social media. We then discuss various strategies used by event detection approaches for social media, and review related work with a focus on novel approaches of event detection on Twitter.
 Finally, we survey existing event detection corpora for Twitter and definitions of `event' and examine their suitable for the evaluation of event detection approaches.
 
 \paragraph{Chapter \ref{chapter:collection}} describes the creation of the Events 2012 corpus for the evaluation of event detection approaches on Twitter. We propose a new definition of `event' using the qualifier `significant' to make it adaptable to different uses-cases.
@@ -125,7 +125,7 @@ Parts of this work were first presented in \cite{McMinn14} and \cite{McMinn15}.
 
 \paragraph{Chapter \ref{chapter:newsworthiness}} describes a novel newsworthiness scoring approach that uses heuristics to label tweets as high or low quality, and trains a number of models in real-time that we then use to estimate newsworthiness scores for tweets.
 We evaluate the performance of our approach as both a classification and scoring task using the Events 2012 corpus and find that it is convincingly able to classify tweets as either newsworthy or noise.
-We examine how our newsworthiness score can be used as a feature for event detection, find that it can be used to significantly increase precision.
+We examine how our newsworthiness score can be used as a feature for event detection, find that it can be used to greatly increase precision.
 
 \paragraph{Chapter \ref{chapter:Conclusion}} summarizes the main contributions of this thesis, and examines remaining issues for event detection on Twitter, describing possible directions for future work.
 
