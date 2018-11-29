@@ -58,10 +58,10 @@ One of the biggest challenges for real-time event detection on Twitter is effici
 Previous work has used approaches such as Locality Sensitive Hashing (LSH) \citep{Petrovic10} to reduce the number of comparisons that need to be made in order to efficiently cluster tweets.
 We examine the structure of events at a high level, and find that named entities play a key role in describing events.
 We exploit this to improve clustering efficiency by partitioning tweets using the named entities they contain, and only compare tweets that have at least one overlapping named entity.
-This allows us to efficiently cluster tweets in real-time, then using a light-weight burst detection approach, we monitor tweet usage over time to determine when entity mentions burst, suggesting a possible event.
+This allows us to efficiently cluster tweets in real-time, then using a lightweight burst detection approach, we monitor tweet usage over time to determine when entity mentions burst, suggesting a possible event.
 We then use a number of heuristic features to identify interesting clusters that are likely to be related to events.
 We solve event fragmentation, a common problem for event detection approaches on Twitter where a single seminal event is split into multiple parts, by combining events with high entity concurrence.
-We evaluate our entity-based approach using the Events 2012 corpus, and find that it significant outperforms the LSH and CS approach that we use as baselines.
+We evaluate our entity-based approach using the Events 2012 corpus, and find that it outperforms the LSH and CS approach that we use as baselines.
 A crowdsourced evaluation finds that the precision of our approach is more than 3 times better than suggested using annotations from the collection to evaluate, and we discuss some of the issues arising from the evaluation of event detection approaches in situations where there are no queries and the relevance judgements are incomplete.
 
 Generally, event detection approaches use the volume of tweets as an indication that something significant has happened, either by measuring the size of a cluster, or the frequency of a term over time.
@@ -118,7 +118,7 @@ Finally, we survey existing event detection corpora for Twitter and definitions 
 We then use a combination of existing event detection approaches and Wikipedia to create a set of candidate events, which we annotate through a crowdsourced evaluation, to create the first large-scale corpus for the evaluation of event detection on Twitter. Parts of this work were first presented in \cite{McMinn2013}.
 
 \paragraph{Chapter \ref{chapter:detection}} examines the role of named entities in events and proposes a new entity-based event detection approach.
-Our approach uses named entities to efficiently cluster tweets in real-time, and a light-weight burst detection technique to identify clusters that are likely to be related to real-world events.
+Our approach uses named entities to efficiently cluster tweets in real-time, and a lightweight burst detection technique to identify clusters that are likely to be related to real-world events.
 We evaluate the approach using the Events 2012 corpus created in chapter \ref{chapter:collection} and find that our approach out-performs two state-of-the-art baselines.
 We compare automatic evaluation approaches to a crowdsourced approach and find that although automatic evaluation of event detection on Twitter is effective, there remain a number of challenges.
 Parts of this work were first presented in \cite{McMinn14} and \cite{McMinn15}.

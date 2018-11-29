@@ -136,7 +136,7 @@ For an effective event detection approach, it is important to have a method of d
 We do this by looking for temporal bursts in the frequency of an entity, which can occur over periods ranging from a few minutes to several hours.
 To model this, we use a set of windows for each entity to capture their frequency over time, starting at 5 minutes, and doubling in length up to 320 minutes (i.e. 5, 10, 20, \ldots, 320).
 
-We use the Three Sigma Rule as the basis for a light-weight burst detection approach, which states that a value is considered to be statistically unlikely if it is further than 3 standard deviations from the expected value \citep{Pukelsheim94}.
+We use the Three Sigma Rule as the basis for a lightweight burst detection approach, which states that a value is considered to be statistically unlikely if it is further than 3 standard deviations from the expected value \citep{Pukelsheim94}.
 A similar approach is used by \cite{Aggarwal12} to determine an minimum similarity threshold for their clustering approach described in section \ref{background:cs}.
 
 \begin{algorithm}[t]
