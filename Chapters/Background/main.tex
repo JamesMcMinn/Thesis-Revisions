@@ -129,7 +129,7 @@ Of all the tasks of the TDT project, Story Segmentation is the least relevant to
 \subsection{Approaches to TDT}
 \label{background:sec:tdt}
 
-At a high level, almost all of the approaches proposed by the TDT project follow the same nearest-neighbour clustering approach shown in algorithm \ref{background:alg:tdt}.
+At a high level, almost all of the approaches proposed by the TDT project follow the same nearest-neighbour clustering approach shown in Algorithm \ref{background:alg:tdt}.
 As documents appear in the stream, they are compared to every document that has been seen before (or, if an inverted index is used, then all documents they share a term with), and the similarity between the new document and every other document in the Corpus is calculated.
 If one or more similar documents is found (based on some pre-defined threshold), the new document is added to the cluster containing it closest match, signaling that they discuss the same event.
 If no similar documents are found, then a new event has been detected, and a new cluster is formed~\citep{Allan:2000:FSD:354756.354843}.

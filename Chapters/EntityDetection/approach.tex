@@ -215,7 +215,7 @@ We do not believe that removing older tweets will affect the effectiveness of th
 
 \subsection{Event Creation and Cluster Selection}
 \label{detection:sec:eventCreation}
-Once a burst has been detected (lines 20-24 in algorithm \ref{detection:alg:updatingEntityValues}), we have potentially detected an event.
+Once a burst has been detected (lines 20-24 in Algorithm \ref{detection:alg:updatingEntityValues}), we have potentially detected an event.
 However, we must first identify a set of clusters that discuss the event before reporting it as a new event.
 We cannot simply take all clusters containing tweets posted during the burst as these will contain background topics about the bursting entity, such as discussion about visiting a location or listening to a particular artist's music.
 To solve this, we propose the use of a number of heuristics to select clusters that are the most likely to be related to the event that caused the burst.
