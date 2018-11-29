@@ -28,7 +28,7 @@ Manual inspection of the descriptions shows that the vast majority contain at le
 We also note that, in cases where the descriptions describe different aspects of the same real-world event, often the only constant is the mention of a named entity or named entities.
 Of the 20 or so events that discuss Felix Baumgartner's record-breaking space jump, many of the descriptions  focus on particular moments before, during or after the jump. For example, one description given for tweets discussing his ascent reads: ``Felix Baumgartner is ready to jump from a height that no one has ever done'', while one given for tweets discussing his successful landing: ``felix baumgartner breaks world record free fall''.
 Although both describe the same real-world event, they are different moments in time, and the descriptions given contain no overlapping terms other than the name of the person involved.
-This is a common occurrence for events that were followed in real-time, particularity broadcast events watched by many users with many different sub-topics.
+This is a common occurrence for events that were followed in real-time, particularity broadcast events watched by many users with many different subtopics.
 This can make it difficult to use annotator descriptions to measure event similarity, as although they may describe the same real-world event, the descriptions can be quite dissimilar depending on the granularity of the events.
 To solve this, rather than rely purely on description similarity, we also calculated the named entity similarity $S_n$, and take the maximum value for either $S_n$ or $S_d$ as the annotation similarity, $S_a$:
 \begin{align*}
@@ -40,10 +40,10 @@ Taking the maximum similarity of the two allows us to optimize for the two cases
 \subsubsection{Categories}
 As described in Section \ref{collection:sec:annotation}, for each event, we asked annotators to select the category that best fit the event from the 13 categories used by the TDT project.
 Annotator agreement across categories was substantial (\(k = 0.76\)), however closer examination of the annotations raises a number of potential issues that could effect the usefulness of categories for clustering.
-Using the third U.S. Presidential Debate as an example of a large event with many different sub-topics, we note that the LSH approach produced over 40 clusters discussing various sub-events and topics within the debate.
+Using the third U.S. Presidential Debate as an example of a large event with many different subtopics, we note that the LSH approach produced over 40 clusters discussing various sub-events and topics within the debate.
 Many of the subjects of the debate were related to economics, business and international relations.
 This is an issue because annotators often categorized events using only the topic of discussion (e.g. New Laws, Political or Diplomatic Meetings), rather than the the specific real world event, in this case, the debate as part of the U.S Presidential Election (which would fall under the TDT category Elections).
-Despite it being clear at a high level that the debate should be categorized as Election, it is not as clear when looking at the specific sub-topics within the debate --- the categorization changes as the level of granularity is changed.
+Despite it being clear at a high level that the debate should be categorized as Election, it is not as clear when looking at the specific subtopics within the debate --- the categorization changes as the level of granularity is changed.
 Similarly, the Wikipedia Current Events Portal assigns a category to each event, however these categories are often very low-level and specific, such as `History', `Literature', and `Spirituality'.
 
 \begin{table}

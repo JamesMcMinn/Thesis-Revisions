@@ -235,7 +235,7 @@ Instead, we survey only the most novel and relevant work in this section.
 
 \cite{sankaranarayanan2009twitterstand} proposed one of the first systems which aimed to detect breaking news and events from tweets.
 In conjunction with the Twitter gardenhose, they utilize a set of 2,000 handpicked \emph{seeds} -- twitter accounts who primarily post news-related tweets -- that they used as a trusted source of news.
-An initial layer of filtering is performed on all incoming tweets, excluding those from the seeds, using naive Bayes classifier trained on a corpus of news and ``junk'' tweets.
+An initial layer of filtering is performed on all incoming tweets, excluding those from the seeds, using Naive-Bayes classifier trained on a corpus of news and ``junk'' tweets.
 Next they use an online clustering approach that maintains a list of active clusters, along with an associated TF-IDF \citep{Salton:1988:TAA:54259.54260} feature-vector of the terms used by tweets in the cluster.
 An incoming tweet is added to a cluster if its similarity with the cluster's feature-vector is above a set threshold, measured using a time-decayed cosine similarity function.
 An inverted index is maintained so that only active clusters which contain at least some of the terms from the incoming tweet are used for comparison, and clusters with a time centroid greater than 3 days old are marked as inactive and removed from the index.
@@ -246,7 +246,7 @@ Unfortunately, no attempt is made to evaluate the effectiveness of their system 
 \cite{becker2011beyond} use the clustering approach proposed by \cite{Yang98} as part of the TDT project, and a filtering layer similar to \cite{sankaranarayanan2009twitterstand}.
 However, filtering is performed after clustering has taken place, and they attempt to identify likely event clusters, rather than event tweets.
 They use a number of features, such as top terms and number of retweets to classify clusters as either event or non-event.
-Although evaluation of their approach seems to show that it is very effective, it is still based on a TDT model designed for much lower volume streams, and is simply too slow to scale past very small corpora.
+Although evaluation of their approach seems to show that it is very effective, it is still based on a TDT model designed for much lower volume streams, and is simply too slow to scale past very small corpora due to the clustering approach used, and
 
 \cite{Sakaki:2010:EST:1772690.1772777} were concerned with the detection of specific types of event, in particular, earthquakes and typhoons, with the aim of issuing alerts to those in the path of these disasters.
 Their approach, although simple, is very effective.
@@ -358,18 +358,18 @@ An overview of their clustering approach is given in Algorithm \ref{background:a
 \end{itemize}
 
 New clusters (\emph{novel} events) are created when a nearest neighbour cluster cannot be found among the existing clusters.
-Unlike most event detection and TDT systems, \cite{Aggarwal12} use an adaptive similarity threshold based on the Three Sigma rule \citep{Pukelsheim94}, which states that the expected similarity value should be within 3 standard deviations of the mean similarity across all previously seem documents.
+Unlike most event detection and TDT systems, \cite{Aggarwal12} use an adaptive similarity threshold based on the Three Sigma rule \citep{Pukelsheim94}, which states that the expected similarity value should be within 3 standard deviations of the mean similarity across all previously seen documents.
 For use as a minimum threshold for similarity, only the lower bound is used:
 \begin{equation}
 	threshold = \mu - 3 \cdot \sigma
 \end{equation}
 where $\mu$ is the mean and $\sigma$ is the standard deviation of all similarity measures that have been seen before.
 
-To compute the $\mu$ and $\sigma$ values efficiently, \cite{Aggarwal12} use the first 3 moments of the set of highest similarity scores $S$ (i.e., the set of  similarity scores for each document to its nearest neighbour cluster):
+To compute the $\mu$ and $\sigma$ values efficiently, \cite{Aggarwal12} use the first three moments of the set of highest similarity scores $S$ (i.e., the set of  similarity scores for each document to its nearest neighbour cluster):
 \begin{align*}
 	M_0 &= \sum_{i = 0}^{|S|}{S_i^0} & M_1 &= \sum_{i = 0}^{|S|}{S_i^1} & M_2 &= \sum_{i = 0}^{|S|}{S_{i}^2} \numberthis
 \end{align*}
-These values can be updated as each new document is clustered, and used to calculate $\mu$ and $\sigma$ as show in Algorithm \ref{background:alg:sbs}.
+These values can be updated as each new document is clustered, and used to calculate $\mu$ and $\sigma$ as shown in Algorithm \ref{background:alg:sbs}.
 
 If a document has a highest similarity score below $\mu - 3 \cdot \sigma$ then a new cluster is created and the document is added to it.
 Since this approach requires a constant number of clusters for linear time complexity, the creation of a new cluster requires the removal of an existing cluster.
@@ -387,7 +387,7 @@ The change in relative volume of documents represents a change in behavior which
 \subsection{Natural Language Approaches}
 \cite{Choudhury11extractingsemantic} examined how linguistic features and  background knowledge could be used to detect specific types of sports events with high precision. However their approach requires significant domain knowledge of the sporting events and large amounts of manual labeling to prepare a classifier for each specific type of event, making it difficult and time-consuming to generalize.
 
-The use of named entities for event detection has been suggest in the past,  \cite{Kumaran:2004:TCN:1008992.1009044} used named entities to improve First Story Detection performance on Topic Detection and Tracking corpora, however there was concern that its effectiveness would be too low when dealing with the low quality and noisy content found on Twitter. \cite{DBLP:conf/sigir/LiWHYDSL12} examined the performance of current state-of-the-art Named Entity Recognition (NER) software on Twitter, and although they found that it was possible to significantly improve upon current performance, their results show that out-of-the-box solutions, such as the Stanford NER\footnote{http://www-nlp.stanford.edu/software/tagger.shtml}, perform adequately for most tasks.
+The use of named entities for event detection has been suggested in the past,  \cite{Kumaran:2004:TCN:1008992.1009044} used named entities to improve First Story Detection performance on Topic Detection and Tracking corpora, however there was concern that its effectiveness would be too low when dealing with the low quality and noisy content found on Twitter. \cite{DBLP:conf/sigir/LiWHYDSL12} examined the performance of current state-of-the-art Named Entity Recognition (NER) software on Twitter, and although they found that it was possible to significantly improve upon current performance, their results show that out-of-the-box solutions, such as the Stanford NER\footnote{http://www-nlp.stanford.edu/software/tagger.shtml}, perform adequately for most tasks.
 
 \cite{Ritter:2012:ODE:2339530.2339704} used named entities, ``event phrases'' and temporal expressions to extract a calendar of significant events from Twitter.
 However, their approach requires that tweets contain temporal resolution phrases, such as ``tomorrow'' or ``Wednesday'' for their approach to resolve between an entity and a specific time.
@@ -404,7 +404,7 @@ Although this approach outperforms their baseline approach (the LSH approach of 
 Volume is only part of what makes Event Detection a difficult task on Twitter data.
 Due to the short length of tweets, lexical mismatch is a common issue, where users may describe an event using semantically similar yet different words, such as `bomb' and `explosion' or `crashed' and `rammed'.
 Topic drift is yet another issue.
-As events develop and new sub-topics emerge, it can cause a rapid change in discussion that, to a cluster-based event detection system, can appear as if a new real-world event has occurred.
+As events develop and new subtopics emerge, it can cause a rapid change in discussion that, to a cluster-based event detection system, can appear as if a new real-world event has occurred.
 
 To address the issue of lexical mismatch, \cite{Petrovic:2012:UPI:2382029.2382072} suggest a method of integrating paraphrasing with their LSH-based approach, which shows improvements when applied to TDT datasets, but fails to show any significant improvement on Twitter data (in fact, it often performs worse).
 Additionally, since Tweets themselves are very short and tend to discuss only a single moment in time, the use of paraphrasing does not address issues such as topic drift or divergence.
@@ -428,7 +428,7 @@ Users follow and unfollow each other on a regular basis, meaning that the underl
 This can cause issues even in the short term if a user emerges as good source of information, spurring many other users to follow them, and poses a particular problem for researchers using a datatset which is several years old as a users current follower network is unlikely to bear any resemblance to their network from several years ago.
 
 Indeed, clustering alone appears to be inadequate for effective detection and tracking tracking of complex or evolving events on Twitter.
-The limited length of a tweet restricts discussion to a very narrow topic, however discussion around an ongoing event may quickly jump from one sub-topic to another, making it difficult to find links.
+The limited length of a tweet restricts discussion to a very narrow topic, however discussion around an ongoing event may quickly jump from one subtopic to another, making it difficult to find links.
 The use of network structure is a possible solution, but as we have discussed, is unlikely to be feasible unless the network is known in advance.
 More recent advances in areas such as word embedding may provide a solution to these issues, however at the time of writing, much work remains to be done in this regard.
 
