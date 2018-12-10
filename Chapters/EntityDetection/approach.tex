@@ -49,7 +49,7 @@ Retweets require little effort to produce, meaning that they are often associate
 We examine the effect of removing retweets in section \ref{detection:sec:retweetsEval}, and show that their removal improves precision.
 
 We also use a range of term-level filters that remove terms and entities that are unlikely to be related to an event or that are known to be associated with spam and noise.
-As well as stop words and expletives, we remove terms associated with watching television (``watch'', ``film'',``movie'', ``episode'', etc.) or listening to music (``listen'', ``song'', ``play'', etc.).
+As well as stopwords and expletives, we remove terms associated with watching television (``watch'', ``film'',``movie'', ``episode'', etc.) or listening to music (``listen'', ``song'', ``play'', etc.).
 This helps to reduce the number of false positives created by large numbers of users watching a television show while using a ``second screen'' to discuss it, as significant, but fictional events in television shows can often cause reactions that appear similar to real-world events.
 We also remove terms and entities associated with traditional news and broadcast agencies, such as ``bbc news'', ``cnn'', ``fox news'' and ``reuters''.
 Tweets from these agencies often contain their own name, which can cause issues with our entity-based clustering and merging approaches (described in sections \ref{detection:sec:clustering} and \ref{detection:sec:entityLinking}) as the same entity can appear to be associated with a large number of events simultaneously.
@@ -244,7 +244,7 @@ Entity disambiguation tools, such as TagMe, can perform entity disambiguation an
 However, their reliance on existing ontologies such as Wikipedia mean that there will always be a lag between an event occurring and that information being updated \citep{WRN2012:osbornebieber}, which makes them less useful for rapidly developing real-world events.
 Our approach relies on no external sources of information, and is able to generate links between entities and events in real-time based using entity co-occurrence statistics.
 
-Formally, if an named entity $n$ is mentioned in at least 50\% of tweets in an event $e$, then we say there is a link between the event $e$ and the entity $n$.
+Formally, if an named entity $n$ is mentioned in the majority (i.e. $< 50\%$)  of tweets in an event $e$, then we say there is a link between the event $e$ and the entity $n$.
 If entity $n$ is bursting and has an event $e'$, then events $e$ an $e'$ and merged to create event $e''$.
 This process is can be repeated many times, and any entity which is mentioned in event $e''$ by more than 50\% of tweets is said to have a link to event $e''$, and so on until no more links are found.
 This process is repeated as new tweets or clusters are added to the event.

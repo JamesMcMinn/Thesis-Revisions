@@ -16,18 +16,11 @@ This motivates the need for a new methodology to create large-scale test collect
 In this chapter, we propose a new, Twitter centric, definition of event which we believe better fits how users perceive events and how events are discussed on Twitter.
 Then, using this new definition, we propose a new methodology for creating a set of relevance judgements for the evaluation of event detection approaches on Twitter.
 
-To do so, we create a collection of 120 million tweets, and by implement two existing event detection approaches, we extract a set of candidate events and their associated tweets.
+To do so, we create a collection of 120 million tweets, and by implementing two existing event detection approaches, we extract a set of candidate events and their associated tweets.
 We use crowdsourcing to evaluate each candidate event using our definition of event, and gather tweet-level relevance judgements for each event.
 We also extract a list of significant events from Wikipedia's Current Events Portal, and for each event, extract potentially relevant tweets and use crowdsourcing to gather relevance judgements.
 We then use a clustering approach to merge events from each approach so that each event discusses the same real-world event.
-We make this corpus available for other researchers to use at \texttt{http://mir.dcs.gla.ac.uk/resources/}.
-
-% To do so, we use two existing event detection approaches and the Wikipedia Current Events Portal to generate a set of candidate events and associated tweets.
-% We then use crowdsourcing to evaluate if a candidate event fits our definition of event, and create relevance judgements for each of the events.
-% We then merge events from each of the sources which discuss the same real-world event, and extending our original work \citep{McMinn2013}, examine the quality of the clustering.
-% Finally, we make the corpus and judgements available for research and further development.
-
-This chapter has a number of novel contributions:
+We make this corpus available for other researchers to use at \texttt{http://mir.dcs.gla.ac.uk/resources/}. This chapter has a number of novel contributions:
 \begin{itemize}
 \item We create the first test collection of this scale for event detection on Twitter
 \item We propose a new and robust definition of `event' that deals with the nuances of events on Twitter

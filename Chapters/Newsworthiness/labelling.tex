@@ -2,7 +2,7 @@
 
 \section{Heuristic Labeling and Quality Classification}
 \label{scoring:sec:labelling}
-We propose an automatic labeling approach using a set of heuristics to label high quality (newsworthy) and low quality (noisy) content.
+We propose a semi-automatic labeling approach using a set of heuristics to label high quality (newsworthy) and low quality (noisy) content.
 Our labeling approach is specifically designed not to label the majority of content.
 Instead, we want to identify exceptional content which we can compare to the `random' background corpus, allowing the model to learn specific newsworthy and noisy features.
 
@@ -28,7 +28,7 @@ We base many of the heuristics that follow on those shown to be effective for cr
 % This also allows the model to react and reflect Newsworthiness Scores based on events as they happen, something that would be impossible using a pre-trained model.
 % This prevents over-fitting and should allow the approach to be considerably more generalisable -- often the rarest events are the most newsworthy, and the use of manually labelled training data would likely prevent these rarest from being scored appropriately unless an extraordinary volume of training data was used.
 
-Although these heuristics form an important part of this work, as we demonstrate in section \ref{scoring:sec:eval}, the exact choice of features and weights is almost inconsequential, as we use a very simple score cut-off to determine quality. As long as the heuristics can be used to provide a reasonable level of accuracy, the performance of the Newsworthiness Scorer is only mildly affected by changes to the heuristics or their weights.
+Although these heuristics form an important part of this work, as we demonstrate in section \ref{scoring:sec:eval}, the exact choice of features and weights is less important than it may initially appear, as we use a very simple score cutoff to determine quality. As long as the heuristics give a reasonable level of accuracy when selecting training data, the performance of the Newsworthiness Scorer is only mildly affected by changes to the heuristics or their weights.
 
 \subsection{Features}
 We define a number of weighted heuristics designed to identify exceptionally high or low quality content. Weights are multiplicative, and we take the product of the weights from each feature as the overall Quality Score, \(Q_d\).
@@ -149,6 +149,6 @@ As described earlier, document \(d\) is assigned an overall Quality Score, \(Q_d
 For example, a tweet \(d\) with weights 2.0 for \(W_{desc}\), 1.5 for \(W_{followers}\), and 1.0 for the all other features would have an overall Quality Score, \(
 	Q_d =  2.0 \times 1.0 \times 1.5 \times 1.0 \times 1.0  \times 1.0 = 3.0 \).
 
-Cut-off  values are used to determine quality labels from \(Q_s\).
-We examine how various cut-off values affect performance in section \ref{scoring:sec:eval}, however unless otherwise stated, we label tweets with \(Q_d \geq 4.0\) as High Quality, and \(Q_d \leq 0.25\) as Low Quality.
+Cutoff values are used to determine quality labels from \(Q_s\).
+We examine how various cutoff values affect performance in section \ref{scoring:sec:eval}, however unless otherwise stated, we label tweets with \(Q_d \geq 4.0\) as High Quality, and \(Q_d \leq 0.25\) as Low Quality, as these give the best classification rates for the Events2012 corpus.
 Documents between this range are unlabeled.

@@ -5,7 +5,7 @@ The unpredictable nature of news, combined with the limited length and unstructu
 Classifying tweets as newsworthy or noise is a common step in credibility scoring, where the aim is to determine if a tweet is newsworthy, and then to decide how credible information contained in the tweet is.
 However, the newsworthiness of an individual tweets is often ignored in event detection, where clusters of documents or terms are examined, rather than individual tweets.
 
-In this chapter, we examine how newsworthiness can be predicated at a more fine-grained tweet level, and attempt to predict the newsworthiness of individual tweets, which we then use as feature for event detection.
+In this chapter, we examine how newsworthiness can be predicated at a more fine-grained tweet level, and attempt to predict the newsworthiness of individual tweets, which we then use as a feature for event detection.
 The aim of this work is to enable event detection approaches to more easily separate signal (newsworthy tweets) from noise (general discussion and chatter), and to demonstrate that event detection approaches can move away from existing cluster or graph based significance measures, such as the volume of tweets mentioning a specific term or the size of a cluster.
 We aim to show that event detection approaches can instead rely on latent features that allow for the higher precision while requiring fewer tweets.
 
@@ -24,9 +24,10 @@ Given the above, we define 3 key characteristics that we want our Newsworthiness
 	\item \textbf{Adaptive:} it should be possible to update the model in an online manner and incorporate new information as it is found. For example, as an event detection system discovers new events or tweets related to ongoing events, it should be able incorporate this new information into the scoring model, allowing subsequent tweets to be more accurately scored.
 \end{itemize}
 
-To meet these characteristics, we propose a novel newsworthiness scoring approach which boosts or reduces a tweet's Newsworthiness Score based on the likelihood ratio of a term with regards to term distributions across different tweet qualities.
-This approach requires no manually annotated training data and instead relies on a small set of heuristics to identify training data in real-time. We can then bolster the models by feeding exceptional tweets, identified either through event detection or using their Newsworthiness Score, back into the models.
-This allows the scoring model to quickly adapt to new events and information in real-time and in an online manner, giving it a significant advantage over approaches which use only manually labeled training data.
+To meet these characteristics, we propose a newsworthiness scoring approach which boosts or reduces a tweet's Newsworthiness Score based on the likelihood ratio of a term with regards to term distributions across different tweet qualities.
+Rather than using manually annotated training data, we instead use a form of distant supervision where training data is identified in real-time using a small set of heuristics.
+We can then bolster the models by feeding exceptional tweets, identified either through event detection or using their Newsworthiness Score, back into the models.
+This approach allows the scoring model to quickly adapt to new events and information in real-time and in an online manner, giving it a significant advantage over approaches which use only manually labeled training data.
 
 The intuition here is that by identifying high and low quality tweets, we can compare term usage statistics to the corpus as a whole, giving us an insight into which terms are newsworthy, or which add noise.
 By identifying terms (or groups of terms) that appear more commonly in newsworthy tweets when compared to the background corpus, and measuring their significance using likelihood ratios, we can assign a Newsworthiness Scores to a tweet by combining individual term scores.

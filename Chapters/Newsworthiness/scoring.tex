@@ -27,11 +27,6 @@ The likelihood ratio for a term is calculated for both the High Quality (\(R_{HQ
 		\frac{tf_{t,HQ}}{F_{HQ}}
 	}{
 		\frac{tf_{t,BG}}{F_{BG}}
-	} =
-	\frac{
-		tf_{t,HQ} \times F_{BG}
-	} {
-		tf_{t,BG} \times F_{HQ}
 	}
 \end{equation}
 \begin{equation}
@@ -45,11 +40,6 @@ The likelihood ratio for a term is calculated for both the High Quality (\(R_{HQ
 		\frac{tf_{t,LQ}}{F_{LQ}}
 	}{
 		\frac{tf_{t,BG}}{F_{BG}}
-	} =
-	\frac{
-		tf_{t,LQ} \times F_{BG}
-	} {
-		tf_{t,BG} \times F_{LQ}
 	}
 \end{equation}
 where \(HQ\), \(LQ\) and \(BG\) correspond to the High Quality, Low Quality and Background models respectively. \(tf_t\) is the raw frequency of term  \(t\) in the given model, and F is the raw frequency of all terms in the model (i.e.  \(F = \sum{f_t}\)). Since documents are added to each model as they are labelled, but before scoring, we can guarantee that division by 0 will never happen.
@@ -66,7 +56,6 @@ This prevents terms which have no clear association with either high or low qual
     0,              & \text{otherwise}
 	\end{cases}
 \end{equation}
-
 \begin{equation}
 	S_{LQ}(t) =
 	\begin{cases}
@@ -74,7 +63,7 @@ This prevents terms which have no clear association with either high or low qual
     0,              & \text{otherwise}
 	\end{cases}
 \end{equation}
-
+\vspace{-1cm}
 \subsubsection{Combining Terms Scores}
 We calculate the overall Newsworthiness Score \(N_d\) of a document \(d\) as follows:
 \begin{equation}
@@ -106,12 +95,10 @@ By taking the ratio of these scores, we can estimate how newsworthy the terms us
 Documents where the average high quality term score is greater than that of low quality terms (i.e. \( \sum_{t \in d}{S_{HQ}(t)} > \sum_{t \in d}{S_{LQ}(t)} \)) are considered newsworthy, whilst documents where the average low quality term score is greater are considered noise.
 
 We add 1 to both the numerator and denominator which has a number of benefits.
-Firstly, it smooths the value, dampening the effect of high or low quality terms.
-This has a larger effect when the number of terms is small (i.e. when there is less evidence), and a smaller effect when there are more terms (i.e. more evidence).
+Firstly, it reduced the effect of high or low quality terms when the number of terms is small (i.e. when there is little evidence), but has a smaller effect when there are more terms (i.e. more evidence).
 Secondly, it prevents division by 0 and \(log(0)\), both of which are undefined.
 In cases where there was no evidence for or against newsworthiness (i.e. no high or low quality terms are found), this ensures that the score \(N_d\) is \(log(1) = 0 \).
 
-Finally, we take \(log_2\) of the score ratio.
-This ensures that scores are smoothed, dampening the effect of outliers.
+Finally, we take \(log_2\) of the score ratio, decreasing the effect of outliers.
 Using \(log\) ensures that scores are centred around 0: tweets with a ratio greater than 1 are given a positive score, whilst tweets with a ratio less than 1 are given a negative score.
 Although it may seem counter intuitive for a tweet to have a negative Newsworthiness Score, a negative score helps to better represent that the tweet is both non-newsworthy, and is likely to be of very low quality or spam. In other-words, it highlights that the tweet is noise.

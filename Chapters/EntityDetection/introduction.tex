@@ -1,8 +1,10 @@
 %!TEX root = ../../main.tex
 
-Named entities are the building blocks of events; the people, places and organizations involved are crucial in describing an event. For example, given the event ``\textit{\textbf{Hilary Mantel} wins the 2012 \textbf{Man Booker Prize} for her novel \textbf{Bring Up the Bodies}}'', it is clear that named entities (highlighted in bold) play a crucial role in describing an event, and are often enough to decipher what happened. \cite{Kumaran:2004:TCN:1008992.1009044, Kumaran2005} showed that the use of named entities can give significant improvements to the performance of event detection techniques on newswire documents as part of the TDT project.
-However, as their approach was created as part of the TDT project, it does not implement any sort of noise filtering, and uses an $O(n^2)$ clustering algorithm,  so is unlikely to scale or cope with the noise found in a Twitter-sized corpora.
+Named entities are the building blocks of events; the people, places and organizations involved are crucial in describing an event.
+For example, given the event ``\textit{\textbf{Hilary Mantel} wins the 2012 \textbf{Man Booker Prize} for her novel \textbf{Bring Up the Bodies}}'', it is clear that named entities (highlighted in bold) play a crucial role in describing an event, and are often enough to decipher what happened.
 
+\cite{Kumaran:2004:TCN:1008992.1009044, Kumaran2005} showed that the use of named entities can give significant improvements to the performance of event detection techniques on newswire documents as part of the TDT project.
+However, as their approach was created as part of the TDT project, it does not implement any sort of noise filtering, and uses an $O(n^2)$ clustering algorithm,  so is unlikely to scale or cope with the noise found in a Twitter-sized corpora.
 In this chapter, we propose a novel event detection approach which exploits the role that named entities play in describing events.
 Our approach identifies bursty named entities and performs semantic linking to identify other entities also involved in the same real-world event.
 We evaluate our approach using the collection and relevance judgements created in chapter \ref{chapter:collection}, and show that our approach improves detection precision and recall over current state-of-the-art approaches whilst maintaining real-time performance.

@@ -35,14 +35,14 @@ Each target and candidate pair was evaluated by a minimum of 3 workers to ensure
 Event descriptions for were taken as the longest (by number of characters) description given by users as part of the original crowdsourced evaluations, which we empirically found to be of a high quality.
 Figure \ref{fig:clusteringscreenshot} shows a screenshot from the evaluation interface that was used by workers.
 
+\begin{figure}[t]
+	{\includegraphics[width=\textwidth]{./Chapters/Collection/images/cluster_eval}}
+	\caption{A screenshot of the cluster quality evaluation interface used by Mechanical Turk workers}
+	\label{fig:clusteringscreenshot}
+\end{figure}
+
 In order to reduce spam, we again used a honey-pot technique, where a known relevant and a known non-relevant candidate was inserted into the evaluation, for a maximum of 30 candidates per evaluation (28 real candidates, 2 honey-pots).
 To generate the known-relevant candidate event, workers were simply shown the target event with a different description (the second longest description) and different set of tweets.
 For the known non-relevant candidate, the worker was shown a candidate which had occurred outside of the candidate window (i.e. more than 12 hours before or after the target event).
 Once again, users who submitted more than 3 bad evaluations (i.e. marking the known relevant candidate as non-relevant or vice versa) were banned for performing more evaluations.
 Candidates were considered relevant when more than 50\% of workers identified them as so, which resulted in 235 of the 790 candidates being matched to at least 1 target, giving 589 relevance relationships in total.
-
-\begin{figure}[]
-	{\includegraphics[width=\textwidth]{./Chapters/Collection/images/cluster_eval}}
-	\caption{A screenshot of the cluster quality evaluation interface used by Mechanical Turk workers}
-	\label{fig:clusteringscreenshot}
-\end{figure}

@@ -8,7 +8,7 @@ Similarly to how many event detection approaches define tweet similarity, we def
 \begin{equation}
 	S_t = cos(e_t, e'_t)
 \end{equation}
-where vectors $e_t$ and $e'_t$ contain counts for the top 10 most frequent terms (after stemming and stop word removal) for all tweets in the target and candidate events respectively.
+where vectors $e_t$ and $e'_t$ contain counts for the top 10 most frequent terms (after stemming and stopword removal) for all tweets in the target and candidate events respectively.
 
 We note that in certain cases, a target and candidate event may have very low content similarity despite discussing the same real-world event.
 This is particularity common for events from the same detection approach, where the tweet text has already been used to perform clustering.
@@ -22,7 +22,7 @@ Thus, we define the description similarity, $S_d$, as the cosine of the angle be
 \begin{equation}
 	S_d = cos(e_d, e'_d)
 \end{equation}
-where the vectors $e_d$ and $e'_d$ contain term counts (after stemming and stop word removal) for all descriptions given by annotators for the target and candidate events respectively.
+where the vectors $e_d$ and $e'_d$ contain term counts (after stemming and stopword removal) for all descriptions given by annotators for the target and candidate events respectively.
 
 Manual inspection of the descriptions shows that the vast majority contain at least one named entity (such as a person, location or organization), and many descriptions contain only a name entity with no other descriptive terms.
 We also note that, in cases where the descriptions describe different aspects of the same real-world event, often the only constant is the mention of a named entity or named entities.
@@ -34,7 +34,7 @@ To solve this, rather than rely purely on description similarity, we also calcul
 \begin{align*}
 	S_n &= cos(e_n, e'_n) & S_a &= max(S_n, S_d) \numberthis
 \end{align*}
-where $e_n$ ad $e'_n$ are the entity frequency vectors containing counts for each named entity mentioned in the annotator descriptions (extracted using the NLTK Python library) for target event $e$ and candidate event $e'$.
+where $e_n$ ad $e'_n$ are the entity frequency vectors containing counts for each named entity mentioned in the annotator descriptions (extracted using the NLTK 2.0.5 Python library with default English models) for target event $e$ and candidate event $e'$.
 Taking the maximum similarity of the two allows us to optimize for the two cases: (i) when the descriptions describe an event at the same level of granularity (often the case for events from different sources) the full description can be used, however when events are described at different levels of granularity or at different moments in time, entity similarity can be used.
 
 \subsubsection{Categories}
@@ -147,4 +147,4 @@ $clustered$ = $\emptyset$\;
 Parameter weights were optimized by varying between 0.0 and 1.0 in steps of 0.1, such that the sum of all weights was 1.0.
 The weights given in equation \ref{eq:simcluster} gave the highest B-Cubed precision (0.92) and recall (0.86) values (F1 = 0.86).
 The maximum time difference, $T$, was set to 6 hours  as only a 3.4\% of events were matched outside of a 6 hour window, as show in Figure~\ref{fig:dif_diff}.
-This allows for a reasonably lag between events, whilst still giving a reasonable guarantee that the events generated will fit our definition of event.
+This allows for lag between events, whilst still giving a reasonable guarantee that the events generated will fit our definition of event.

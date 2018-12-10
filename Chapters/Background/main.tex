@@ -421,7 +421,7 @@ where $SimS$ and $SimC$ are the structural and content based similarities respec
 $\lambda$ can be adjusted to give more or less weigh to the structural similarity.
 
 Although \cite{Aggarwal12} found that is was possible to improve both precision and recall of their detection approach by combining network structure with content similarity, the use of network structure poses a problem when applied to Twitter data.
-Since Twitter does not include full followers information in a standard tweet payload, researchers must instead query Twitter's API separately, which is rate-limited to only a few hundred requests per hour.
+Since Twitter does not include full follower information in a standard tweet payload, researchers must instead query Twitter's API separately, which is rate-limited to only a few hundred requests per hour.
 This makes it extremely time-consuming to retrieve large volumes of follower information for network structure calculations.
 The temporal nature of followers also causes a problem.
 Users follow and unfollow each other on a regular basis, meaning that the underlying network structure changes over time.
@@ -484,7 +484,7 @@ The majority of modern test collections are created using a pooling approach, wh
 The union of the top \(n\) documents per topic, taken from each system systems, is then used create a pool of documents for each topic.
 Each document in the pool is then judged to be relevant or non-relevant to the topic, and documents which are not in the pool are assumed to be non-relevant.
 
-This pooling  approach is commonly used to generate relevance judgements for collections provided to researchers participating in conferences such as the Text REtrieval Conference (TREC), which is sponsored by the National Institute of Stands and Technology (NIST) in the United States.
+This pooling approach is commonly (but not exclusively) used to generate relevance judgements for collections provided to researchers participating in conferences such as the Text REtrieval Conference (TREC), which is sponsored by the National Institute of Stands and Technology (NIST) in the United States.
 Researchers are first given the test collections with a set of pre-selected topics, and are asked to submit the results from their retrieval systems to experts who then perform the pooling and annotate the documents.
 Given the scale of modern test collections, this can be a slow and expensive undertaking, which restricts the number of ``tracks'' (a set of tasks focused on some facet of a retrieval problem) that can be run each year, and thus limits how many test collections and relevance judgments can be created this way.
 
