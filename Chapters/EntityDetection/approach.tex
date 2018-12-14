@@ -3,7 +3,7 @@
 \section{Entity-based Event Detection}
 \label{detection:sec:approach}
 In this section we describe our entity-based event detection approach.
-The approach comprises of 6 key stages, as shown in Figure \ref{detection:graphic:pipeline}.
+The approach comprises of six key stages, as shown in Figure \ref{detection:graphic:pipeline}.
 Tweets are processed as stream, ordered by creation time, using a pipelines architecture that allows for parallel processing, with each component relying only on the output of the previous component to complete its task.
 
 \vspace{0.5cm}
@@ -20,14 +20,14 @@ This helps to filter out unwanted tweets, such as common types of spam, and atte
 
 \subsubsection{Parsing \& Tagging}
 \label{detection:sec:parsing}
-We use the Stanford CoreNLP Toolkit to perform Part of Speech (POS) tagging and Named Entity Recognition (NER) on the text of each tweet.
-We  use the GATE Twitter POS model~\citep{TwitterPOS} for Part of Speech tagging, and the Stanford 3 class model for Named Entity Recognition.
-The GATE Twitter POS model is a Part-of-speech tagger trained specifically on tweets, and tends to provide much high accuracy ($>$ 90\%) that part-of-speech models trained on non-twitter corpora.
+We use the Stanford CoreNLP Toolkit to perform Part-of-Speech (POS) tagging and Named Entity Recognition (NER) on the text of each tweet.
+We  use the GATE Twitter POS model~\citep{TwitterPOS} for Part-of-Speech tagging, and the Stanford three class model for Named Entity Recognition.
+The GATE Twitter POS model is a Part-of-Speech tagger trained specifically on tweets, and tends to provide much high accuracy ($>$ 90\%) that part-of-speech models trained on non-Twitter corpora.
 
 We extract all nouns, verbs and named entities from each tweet.
 Nouns and verbs are lemmatized, and entities are kept in their longest form to ensure that names are as distinguishing as possible  (i.e. ``Paul Ryan'' rather than ``Paul'' and ``Ryan'').
 
-The Stanford 3 class NER model is able to perform automatic class-based disambiguation such that entity mentions are also give a class (person, location, or organization).
+The Stanford three class NER model is able to perform automatic class-based disambiguation such that entity mentions are also give a class (person, location, or organization).
 We use this class information and consider named entities of different classes to be distinct, even if the name itself is identical.
 For example, the entity ``Spain'' in the context of the football team (an \emph{organization} consisting on many people that play football) is conceptually different from ``Spain'' the (the landmass, a \emph{location}), as this helps to retain as much distinguishing power as possible.
 We evaluate and give reasoning for this choice in section \ref{detection:sec:entityTypes}.
@@ -58,7 +58,7 @@ Finally, terms under 3 characters in length are removed.
 
 \subsection{Entity-based Online Clustering}
 \label{detection:sec:clustering}
-Almost all event detection approaches make use of single pass nearest neighbor clustering to find documents that discuss the same topic or event, similar to those used by the TDT project described in section \ref{background:alg:tdt}.
+Almost all event detection approaches make use of single pass nearest neighbor clustering to find documents that discuss the same topic or event, similar to those used by the TDT project described in section \ref{background:sec:tdt}.
 As we have already discussed, these approaches get slower as the number of documents grows, eventually causing them to become too slow for high volume streams like Twitter \citep{Petrovic10}.
 A number of solutions have been proposed to solve this, including the use of Locality Sensitive Hashing~\citep{Petrovic10}, which we described in section \ref{background:sec:lsh}.
 However, these approaches are general purpose, and do not make use of any domain or task specific information.
@@ -107,7 +107,7 @@ Given the role that named entities play in describing real-world events, we beli
 \end{algorithm}
 
 Algorithm \ref{detection:alg:clustering} shows the pseudocode for our entity-based clustering approach.
-Using the premise that tweets discussing an event must contain at least one of the named entities involved in the event, we adapt the traditional TDT clustering model by partitioning tweets based upon the entities they contain, and add a tweet to a cluster for every entity it contains, as show in Figure \ref{detection:graphic:clustering}.
+Using the premise that tweets discussing an event must contain at least one of the named entities involved in the event, we adapt the traditional TDT clustering model by partitioning tweets based upon the entities they contain, and add a tweet to a cluster for every entity it contains, as shown in Figure \ref{detection:graphic:clustering}.
 
 \begin{figure}[h!]
 	\centering
@@ -211,7 +211,7 @@ The extra time allows for fluctuations in frequency as an event develops, and he
 
 When a tweet is no longer covered by the largest window (i.e., it is older than 320 minutes) it is removed from all inverted indexes.
 This helps to reduce the number of comparisons required when calculating the nearest neighbour, and allows resources to be freed for incoming tweets.
-We do not believe that removing older tweets will affect the effectiveness of the algorithm due to the real-time nature of Twitter, as tweets which are more than a few hours old are unlikely to b relevant to any ongoing real-world events, and those which are will hopefully have already been marked as so by the algorithm, ensuring that they are recorded elsewhere.
+We do not believe that removing older tweets will affect the effectiveness of the algorithm due to the real-time nature of Twitter, as tweets which are more than a few hours old are unlikely to be relevant to any ongoing real-world events, and those which will hopefully have already been marked as so by the algorithm, ensuring that they are recorded elsewhere.
 
 \subsection{Event Creation and Cluster Selection}
 \label{detection:sec:eventCreation}

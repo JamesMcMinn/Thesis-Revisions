@@ -41,7 +41,7 @@ Despite the overall low frequency of financially related terms, we feel that the
 Table \ref{scoring:table:followersDist} shows the number of tweets from users with particular follower ranges, and the percentage of tweets being posted by each group.
 As mentioned in section \ref{scoring:sec:labelling}, the vast majority (83.81\%) of tweets are posted by users with between 50 and 4,999 followers.
 This means that for the majority of tweets, this feature has no effect on the Quality Score since this range is given a weight of 1.0.
-However, for tweets posted by users with fewer than 50 followers, which make up 13.78\% of tweets in the collection, this feature has a negative effect on the Quality Score. Very few tweets come from users with more than 1 million followers, a total of only 9,457 tweets, or 0.01\% of tweets in the collection, however this relatively small number of tweets will receive a significant boost in their Quality Score (\(W_{followers}\) = 3.0).
+However, for tweets posted by users with fewer than 50 followers, which make up 13.78\% of tweets in the collection, this feature has a negative effect on the Quality Score. Very few tweets come from users with more than one million followers, a total of only 9,457 tweets, or 0.01\% of tweets in the collection, however this relatively small number of tweets will receive a significant boost in their Quality Score (\(W_{followers}\) = 3.0).
 
 \begin{table}[t!]
 	\small
@@ -153,13 +153,13 @@ The median score across all tweets is 1.0.
 We examine how different thresholds affect the overall performance of our newsworthiness predictions.
 Since we lack groundtruth with appropriate Newsworthiness Scores, we instead examine the differences between scores and newsworthiness classifications for tweets known to be relevant to events in the Events 2012 corpus, and those that were not evaluated.
 It is important to note that we say `not evaluated', rather than non-relevant, as  we cannot be certain that tweets that were not evaluated are not newsworthy, since only a fraction of the 120 million tweets in the Events 2012 corpus were evaluated to create relevance judgements.
-It is likely that there are a significant number of unevaluated, but newsworthy tweets not included in the relevance judgements.
+It is likely that there are a significant number of unevaluated but newsworthy tweets not included in the relevance judgements.
 This means that making absolute statements is impossible.
 Instead we must assume that the percentage of unevaluated but newsworthy tweets is low enough not to mask any differences in classification rates or scores.
 
 \subsubsection{Quality Labels}
 
-Table \ref{scoring:table:qualityLabels} shows the percentage of tweets labeled as High Quality or Low Quality. We divide tweets into two sets: those known to be relevant to an event from the Events 2012 corpus ('Event'), and all other tweets (`Other').
+Table \ref{scoring:table:qualityLabels} shows the percentage of tweets labeled as High Quality or Low Quality. We divide tweets into two sets: those known to be relevant to an event from the Events 2012 corpus (`Event'), and all other tweets (`Other').
 We also include the ratio of Event / Other tweets so that the relative percentages can be more easily compared as Quality Score thresholds are varied.
 The threshold values represent the minimum or maximum scores for a tweet to be labeled as High Quality or Low Quality respectively.
 For example, a tweet with a Quality Score of 2.00 would be labeled High Quality at threshold values of 2.00 and below, but not at threshold values of 4.00 or 8.00.
@@ -251,7 +251,7 @@ The is likely due to the volume of tweets added to the HQ model drops sharply to
 As overall classification ratios seem to reach a maximum around 4.0 and 0.25 for HQ and LQ thresholds, we use these thresholds for all experiments that follow.
 
 \subsection{Newsworthiness Scores}
-\begin{table}[b!]
+\begin{table}[t!]
 	\centering
 	\small
 	\caption{Percentages of tweets classified as either Newsworthy or Noise for Event and Other tweets, across a range of Newsworthiness Score threshold values.}
@@ -279,21 +279,17 @@ whilst 11.707\% of Event tweets have a Newsworthiness Score of 4.0 or greater, o
 Similarly, for Noise tweets, the ratio of Event to Other tweets decreases as we decrease the maximum Newsworthiness Score.
 The smaller ratio in this case means that Event tweets are less likely to be classified as Noise than Other tweets.
 We stop at -7.0 as no Event tweet had Newsworthiness Score of -8.0 or lower.
-These trends can be seen in Figures \ref{scoring:graphic:newsworthy} and \ref{scoring:graphic:newsworthy}.
+These trends can be seen in Figure \ref{scoring:graphic:newsworth-noise}.
 
 These results are encouraging, and follow a reasonable score distribution. The increasing and decreasing ratios for Newsworthy and Noise tweets respectively suggests that Newsworthiness Scores do incorporate some notion of newsworthiness magnitude, something we examine more closely in sections \ref{scoring:sec:categories} and \ref{scoring:sec:exampleTweets}.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{Chapters/Newsworthiness/data/table59.pdf}
-	\caption{Event/Other Ratios for increasing $N_d$ thresholds above 0}
 	\label{scoring:graphic:newsworthy}
-\end{figure}
-
-\begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{Chapters/Newsworthiness/data/table59-noise.pdf}
-	\caption{Event/Other Ratios from decreasing $N_d$ thresholds below 0}
+	\caption{Event/Other Ratios as $N_d$ is increased (top) and decreased (bottom).}
 	\label{scoring:graphic:newsworth-noise}
 \end{figure}
 
@@ -301,7 +297,7 @@ These results are encouraging, and follow a reasonable score distribution. The i
 \subsection{Event Categories}
 \label{scoring:sec:categories}
 
-\begin{table}[b!]
+\begin{table}[t!]
 	\centering
 	\small
 	\caption{The raw counts and percentages per category of tweets classified as Newsworthy or Noise.}
@@ -328,16 +324,7 @@ Table \ref{scoring:table:categories} shows the distribution of tweets labeled Ne
 Category scores vary considerably around the mean values of 76.504\% for Newsworthy and 18.497\% for Noise (taken from Table \ref{scoring:table:newsworthinessClassifications}).
 Table \ref{scoring:table:categoryScores} shows the average overall Newsworthiness Score across all Event tweets for each category, as well as independently calculated averages for tweets classified as Newsworthy or Noise.
 
-Table \ref{scoring:table:categories} shows that over 97\% of tweets discussing Armed Conflicts and Attacks events are classified as Newsworthy, whereas only 42.105\% of Arts, Culture \& Entertainment tweets are.
-This disparity can also been seen in the average Newsworthiness Scores for both categories: Armed Conflicts \& Attacks has an average Newsworthiness Score of 3.317, whilst Arts, Culture \& Entertainment has an average of only 0.427, although this difference is reduced when looking at averages for tweet classified as Newsworthy only (3.428 and 2.806, respectively).
-This difference seems intuitive: armed conflicts and attacks, such as bombings, school shootings and assassination attempts are extremely newsworthy events that are likely to make headlines worldwide.
-On the other hand, entertainment events, such as the launch of new television shows, or award ceremonies such as the Black Entertainment Awards, are less likely to make worldwide headlines but will still generate a high volume of subjective and low quality discussion.
-
-Other categories behave similarly to Armed Conflicts \& Attacks, such as Business \& Economy, where events are generally headline news, but generate a relatively low volume of discussion.
-Sports and Miscellaneous events, such as Felix Baumgartner's record-breaking jump from the edge of space or the start of Daylight savings time in the United States, show similar behavior to Arts, Culture \& Entertainment.
-These types of events generate a high volume of low quality chatter, resulting in a lower percentage of tweets classified as Newsworthy and lower average Newsworthiness Scores.
-
-\begin{table}[]
+\begin{table}[b!]
 	\centering
 	\small
 	\caption{Average Newsworthiness Scores for each event category, calculated for all tweets, only tweets classified as Newsworthy, and only tweets classified as Noise.}
@@ -360,22 +347,23 @@ These types of events generate a high volume of low quality chatter, resulting i
 	\label{scoring:table:categoryScores}
 \end{table}
 
+
+Table \ref{scoring:table:categories} shows that over 97\% of tweets discussing \emph{Armed Conflicts \& Attacks} events are classified as Newsworthy, whereas only 42.105\% of \emph{Arts, Culture \& Entertainment} tweets are.
+This disparity can also been seen in the average Newsworthiness Scores for both categories: \emph{Armed Conflicts \& Attacks} has an average Newsworthiness Score of 3.317, whilst \emph{Arts, Culture \& Entertainment} has an average of only 0.427, although this difference is reduced when looking at averages for tweet classified as Newsworthy only (3.428 and 2.806, respectively).
+This difference seems intuitive: armed conflicts and attacks, such as bombings, school shootings and assassination attempts are extremely newsworthy events that are likely to make headlines worldwide.
+On the other hand, entertainment events, such as the launch of new television shows, or award ceremonies such as the Black Entertainment Awards, are less likely to make worldwide headlines but will still generate a high volume of subjective and low quality discussion.
+Other categories behave similarly to \emph{Armed Conflicts \& Attacks}, such as \emph{Business \& Economy}, where events are generally headline news, but generate a relatively low volume of discussion.
+\emph{Sports} and \emph{Miscellaneous} events, such as Felix Baumgartner's record-breaking jump from the edge of space or the start of Daylight savings time in the United States, show similar behavior to Arts, Culture \& Entertainment.
+These types of events generate a high volume of low quality chatter, resulting in a lower percentage of tweets classified as Newsworthy and lower average Newsworthiness Scores.
+
 \subsection{Example Event: Lenovo overtakes HP}
 Table \ref{scoring:table:tweetsSample} gives a sample of tweets from Event \#81 of the Events 2012 corpus, sorted by Newsworthiness Score from highest to lowest.
 The event describes how Lenovo, a Chinese computer manufacturer, has taken the top spot from HP in terms of number of PCs sold worldwide.
 The judgements for this event identify 41 tweets thought to be relevant to the event.
 Whilst the 36 of the 41 tweets are relevant, our newsworthiness scoring approach correctly identifies a number of spam and non-relevant tweets and scores them appropriately.
 
-Two non-relevant reviews of Lenovo laptops have been given scores of 0.0 and -0.507. By themselves, these tweets are unlikely to be newsworthy, and the scores could be considered appropriate.
-Our approach does give a slightly negative score to one relevant tweet (``John Cusack says Lenovo overtakes HP''), however the tweet is fairly informal in tone, and outwith the context of the other tweets would be difficult to interprate even for a human.
-
-Note that the same text appears twice in Table \ref{scoring:table:tweetsSample}: ``HP, Lenovo battle for top spot in PC market - Computerworld''.
-Although the text is identical, these are distinct tweets, posted by different users at different times, and given different scores (2.177 / 2.070).
-The difference in scores is due to the adaptive nature of our newsworthiness scoring approach.
-As new tweets are processed, the models are updated in real-time, allowing for new information to be incorporated and used to score subsequent tweets, resulting in the score difference.
-
 \label{scoring:sec:exampleTweets}
-\begin{table}[]
+\begin{table}[t!]
 	\small
 	\caption{A sample of tweets and their Newsworthiness Scores from Event \#81 of the Events 2012 corpus, sorted by Newsworthiness Score from highest to lowest.}
 
@@ -403,6 +391,14 @@ As new tweets are processed, the models are updated in real-time, allowing for n
 	\label{scoring:table:tweetsSample}
 
 \end{table}
+
+Two non-relevant reviews of Lenovo laptops have been given scores of 0.0 and -0.507. By themselves, these tweets are unlikely to be newsworthy, and the scores could be considered appropriate.
+Our approach does give a slightly negative score to one relevant tweet (``John Cusack says Lenovo overtakes HP''), however the tweet is fairly informal in tone, and outwith the context of the other tweets would be difficult to interprate even for a human.
+
+Note that the same text appears twice in Table \ref{scoring:table:tweetsSample}: ``HP, Lenovo battle for top spot in PC market - Computerworld''.
+Although the text is identical, these are distinct tweets, posted by different users at different times, and given different scores (2.177 / 2.070).
+The difference in scores is due to the adaptive nature of our newsworthiness scoring approach.
+As new tweets are processed, the models are updated in real-time, allowing for new information to be incorporated and used to score subsequent tweets, resulting in the score difference.
 
 \subsection{Term Models}
 Although unigram terms are used for all experiments, it is interesting to examine how the use of bigrams affect performance.

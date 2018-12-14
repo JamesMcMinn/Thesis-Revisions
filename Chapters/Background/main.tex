@@ -6,7 +6,7 @@
 
 In this chapter, we review the background information required to understand the remainder of this thesis.
 We draw on several areas of research, such as Information Retrieval (IR) and Natural Language Processing (NLP), and describe how documents are represented and compared, and detail a number of IR measures.
-We then give a brief overview of the Topic Detection and Tracking project, and how it related to modern approaches for event detection on Twitter.
+We then give a brief overview of the Topic Detection and Tracking project, and how it relates to modern approaches for event detection on Twitter.
 Finally, we give a survey of related work in the area of event detection Twitter and describe how it relates to the work presented in this thesis.
 
 
@@ -17,7 +17,7 @@ In the remainder of this section, we examine some of the basic techniques used t
 
 \subsection{Document Representation}
 
-One of the most commonly used document and query representations is the Vector Space model \citep{salton1975vector}. The Vector Space Model represents both queries and documents as a vector, where each term in the document corresponds to a dimension in the vector.
+One of the most commonly used document and query representations is the Vector Space Model \citep{salton1975vector}. The Vector Space Model represents both queries and documents as a vector, where each term in the document corresponds to a dimension in the vector.
 Terms that occur in a document will have a non-zero value in the vector, while terms that do not appear will have a value of 0.
 The Vector Space Model is used throughout this thesis to represent documents (tweets).
 
@@ -53,11 +53,11 @@ These measures are based on the concept of relevance.
 In IR, relevance is determined based on some information need, usually represented as a textual query.
 In event detection, there is no query.
 Instead, relevance is defined in relation to an event, either by subjectively evaluating if a cluster of tweets meets some definition of `event', or by matching tweets in the cluster to a pre-determined event in the relevance judgements (represented by a set of tweets).
-We discuss this further is chapter \ref{chapter:detection}.
+We discuss this further in chapter \ref{chapter:detection}.
 
 \subsubsection{Recall}
 
-Recall is measured as the fraction of relevant documents that at retrieved from all possible relevant documents. Recall is give as:
+Recall is measured as the fraction of relevant documents that are retrieved from all possible relevant documents. Recall is given as:
 
 \begin{equation}
 	\text{recall}=\frac{|\{\text{relevant documents}\}\cap\{\text{retrieved documents}\}|}{|\{\text{relevant documents}\}|}
@@ -78,7 +78,7 @@ Individually, precision and recall show only one aspect of performance.
 Perfect recall can be achieved by returning every document in the collection,
 whilst perfect precision can be achieved by returning none of them.
 
-F-measure takes both precision and recall into consideration, and combines them into a single score. F-measure ranges between 0 at worst and 1 at best (a perfect systems). Although it is possible to weight F-measure to prefer precision or recall, the most commonly used F-measure gives equal weight to both, and is the harmonic mean of precision and recall. This is usually called F1 score:
+F-measure takes both precision and recall into consideration, and combines them into a single score. F-measure ranges between 0 at worst and 1 at best (a perfect system). Although it is possible to weight F-measure to prefer precision or recall, the most commonly used F-measure gives equal weight to both, and is the harmonic mean of precision and recall. This is usually called F1 score:
 
 \begin{equation}
 	F_1 = 2 \cdot \frac{1}{\tfrac{1}{\mathrm{recall}} + \tfrac{1}{\mathrm{precision}}} = 2 \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{\mathrm{precision} + \mathrm{recall}}
@@ -99,7 +99,7 @@ Figure \ref{background:graphic:bcubed} illustrates how Precision and Recall for 
 \end{figure}
 
 Since B-Cubed Precision and Recall are computed on a per-item basis, the overall Precision and Recall values are taken as the average Precision and Recall values computed over all items.
-This is often combined into a single B-Cubed score using the same F-measure equation as given previously.
+This is often combined into a single B-Cubed score using the same F-measure equation as given in Equation 2.6.
 
 \section{Topic Detection and Tracking}
 The Topic Detection and Tracking (TDT) project began in 1997, and was a body of research and an evaluation paradigm that addressed the event-based organization of broadcast news \citep{Allan:2002:ITD:772260.772262}.
@@ -120,7 +120,7 @@ The project was split into five distinct subtasks \citep{Allan:2002:ITD:772260.7
 \end{itemize}
 
 With the exception of Story Segmentation, the tasks focus on various aspects of document clustering, with the main difference between each task being how it is evaluated.
-Of the 5 tasks, First Story Detection (FSD, although often called New Event Detection, NED) was considered the most difficult \citep{Allan:2000:FSD:354756.354843} as an effective FSD system must be effective across all of the TDT tasks.
+Of the five tasks, First Story Detection (FSD, although often called New Event Detection, NED) was considered the most difficult \citep{Allan:2000:FSD:354756.354843} as an effective FSD system must be effective across all of the TDT tasks.
 
 Story Segmentation differs in nature from the others as it pertains specifically to a pre-processing step that must be performed before the other tasks can be carried out.
 All other tasks work with stories, however the aim of the Story Segmentation task is to detect boundaries between stories automatically using transcripts from the spoken audio of broadcast news shows.
@@ -212,7 +212,7 @@ Whilst~\cite{Aggarwal12} and the TDT definition~\citep{Allan:2002:ITD:772260.772
 This makes comparisons very difficult; one definition may break an election into many events, while another could consider the election as a single event, or not as an event at all.
 Issues are also caused by the subjective nature of what is considered newsworthy.
 For example, the definitions used by \cite{weng2011event} and \cite{Becker_beyondtrending} require a substantial number of tweets to discuss a topic before that topic can be considered an event.
-This limits the types of topic that can be considered an event to those that generate a substantial volume of tweets, creating a bias towards larger events at the expense of smaller events or those that generate less discussion, such as business or financial news. In Chapter \ref{DefiningEvent} we propose a new definition for `event' that tries to overcome some of these issues.
+This limits the types of topic that can be considered an event to those that generate a substantial volume of tweets, creating a bias towards larger events at the expense of smaller events or those that generate less discussion, such as business or financial news. In chapter \ref{DefiningEvent} we propose a new definition for `event' that tries to overcome some of these issues.
 
 \section{Event Detection on Social Media}
 
@@ -225,7 +225,7 @@ They found that Twitter had broken the news, and as a result, millions already k
 \cite{Kwak:2010:TSN:1772690.1772751} analyzed the top trending topics to show that the majority of topics (over 85\%) are related to headline news or persistent news.
 They also found that once a tweet is retweeted, it can be expected to reach an average of 1,000 users.
 
-\cite{WRN2012:osbornebieber} measured the delay between a new event appearing on Twitter, and the time taken for the same event to be updated on Wikipedia. Their results show that Twitter appears to be around 2 hours ahead of Wikipedia.
+\cite{WRN2012:osbornebieber} measured the delay between a new event appearing on Twitter, and the time taken for the same event to be updated on Wikipedia. Their results show that Twitter appears to be around two hours ahead of Wikipedia.
 They suggest that Wikipedia could be used as a filter, decreasing the number of spurious events, however at the cost of greatly increased latency. They demonstrate its effectiveness as a filter for their First Story Detection approach \citep{Petrovic:2010:SFS:1857999.1858020}, significantly decreasing the number of spurious events.
 \cite{ICWSM136066} also analyzed how minor and major events are covered by newswire providers and on Twitter. They found that Twitter broadly reports the same events as newswire providers, however found that Twitter tends to provide better coverage of sports, the unpredictable, and other high-impact events.
 
@@ -234,7 +234,7 @@ A number of excellent survey papers covering Event Detection on Twitter have bee
 Instead, we survey only the most novel and relevant work in this section.
 
 \cite{sankaranarayanan2009twitterstand} proposed one of the first systems which aimed to detect breaking news and events from tweets.
-In conjunction with the Twitter gardenhose, they utilize a set of 2,000 handpicked \emph{seeds} -- twitter accounts who primarily post news-related tweets -- that they used as a trusted source of news.
+In conjunction with the Twitter gardenhose, they utilize a set of 2,000 handpicked \emph{seeds} -- Twitter accounts who primarily post news-related tweets -- that they used as a trusted source of news.
 An initial layer of filtering is performed on all incoming tweets, excluding those from the seeds, using Naive-Bayes classifier trained on a corpus of news and ``junk'' tweets.
 Next they use an online clustering approach that maintains a list of active clusters, along with an associated TF-IDF \citep{Salton:1988:TAA:54259.54260} feature-vector of the terms used by tweets in the cluster.
 An incoming tweet is added to a cluster if its similarity with the cluster's feature-vector is above a set threshold, measured using a time-decayed cosine similarity function.
@@ -246,7 +246,7 @@ Unfortunately, no attempt is made to evaluate the effectiveness of their system 
 \cite{becker2011beyond} use the clustering approach proposed by \cite{Yang98} as part of the TDT project, and a filtering layer similar to \cite{sankaranarayanan2009twitterstand}.
 However, filtering is performed after clustering has taken place, and they attempt to identify likely event clusters, rather than event tweets.
 They use a number of features, such as top terms and number of retweets to classify clusters as either event or non-event.
-Although evaluation of their approach seems to show that it is very effective, it is still based on a TDT model designed for much lower volume streams, and is simply too slow to scale past very small corpora due to the clustering approach used, and
+Although evaluation of their approach seems to show that it is very effective, it is still based on a TDT model designed for much lower volume streams, and is simply too slow to scale past very small corpora due to the clustering approach used.
 
 \cite{Sakaki:2010:EST:1772690.1772777} were concerned with the detection of specific types of event, in particular, earthquakes and typhoons, with the aim of issuing alerts to those in the path of these disasters.
 Their approach, although simple, is very effective.
@@ -257,7 +257,7 @@ Despite the effectiveness of their approach, there are obvious drawbacks. Firstl
 
 \subsection{Locality Sensitive Hashing (LSH) using Random Hyperplanes}
 \label{background:sec:lsh}
-Earlier we discussed how the basic TDT approach as described in Section \ref{background:sec:tdt} could not scale to extremely high volume streams (even with the aid of an inverted index), making it infeasible to use for event detection on Twitter.
+Earlier we discussed how the basic TDT approach as described in section \ref{background:sec:tdt} could not scale to extremely high volume streams (even with the aid of an inverted index), making it infeasible to use for event detection on Twitter.
 \cite{Petrovic:2010:SFS:1857999.1858020} proposed a solution to this using a technique called Locality Sensitive Hashing (LSH).
 LSH uses special hash functions that produce the same hash for documents that are similar, but not necessarily completely identical, allowing documents that are close in vector space to be placed into the same bucket.
 Using a set of random hyperplanes and a family of hash functions proposed by \cite{Charikar2002}, the buckets are defined by the subspaces between hyperplanes, such that the probability of similar documents being placed into the same bucket of a hash table is proportional to their similarity.
@@ -268,10 +268,10 @@ The number of hash tables $L$ needed to give the desired probability of \emph{mi
 	L = log_{1-P^k_{coll}} \delta
 \end{equation}
 where $k$ is the number the number of hyperplanes. $P_{coll}$ is computed as $1-\frac{\theta(x,y)}{\pi}$ where $\theta(x,y)$ is the expected angle between similar documents $x$ and $y$.
-Petrivic et al. use values of $k = 13$, $\theta(x,y) = 0.2$ and $\delta = 0.025$ to compute $L$, values which we also use when replicating their work in Chapter \ref{chapter:collection}.
+\cite{Petrovic:2010:SFS:1857999.1858020} use values of $k = 13$, $\theta(x,y) = 0.2$ and $\delta = 0.025$ to compute $L$, values which we also use when replicating their work in chapter \ref{chapter:collection}.
 
 \subsubsection{Efficiency Enhancements}
-Since the number of buckets is limited, in a streaming scenario where the number of documents in unbounded, the number of documents in each bucket will continue to grow as new documents are processed.
+Since the number of buckets is limited, in a streaming scenario where the number of documents is unbounded, the number of documents in each bucket will continue to grow as new documents are processed.
 This would require an unbounded amount of space and the number of comparisons made would also grow for each new document, eventually making even the LSH approach infeasible.
 To overcome this, \cite{Petrovic:2010:SFS:1857999.1858020} limit the number of documents in a bucket to a fixed number based on the expected number of collisions, which can be computed as $n/2^k$ where $n$ is the total number of documents and $k$ is the number of hyperplanes used.
 When a bucket is full, the oldest document in the bucket is removed from that bucket (and only that bucket) to make room for new documents.
@@ -286,7 +286,7 @@ This is because LSH is most effective when the true nearest neighbour is very cl
 If the nearest neighbour is far from the query document, then LSH often fails to find it.
 To overcome this, \cite{Petrovic:2010:SFS:1857999.1858020} use a `variance reduction' strategy when a nearest neighbour is not found using LSH.
 In these instances, the approach falls back the traditional TDT model, and uses an inverted index to retrieve a list of documents to search for a nearest neighbour.
-However, unlike the basic TDT model, a limit is placed on the number of documents searched, and only the most recent 2000 documents returned from the inverted index are compared.
+However, unlike the basic TDT model, a limit is placed on the number of documents searched, and only the 200 most recent documents returned from the inverted index are compared.
 This helps to improve the effectiveness, and brings it inline with that of the basic model, whilst still being considerably more efficient.
 
 \subsubsection{Cluster Ranking}
@@ -318,7 +318,7 @@ Since the number of clusters will always be smaller than the number of documents
 This approach was used by \cite{Aggarwal12}, with the additional constraint that the number of clusters (usually several hundred) is kept constant, ensuring linear complexity (i.e., the time taken to process each new document is a constant).
 An overview of their clustering approach is given in Algorithm \ref{background:alg:sbs}.
 
-\begin{algorithm}
+\begin{algorithm}[b!]
 	\DontPrintSemicolon
 	\KwIn{Number of clusters $k$}
 	clusters $\gets$ [$k$] \\
@@ -445,7 +445,7 @@ They then use a variant of the Jarvis-Patrick \citep{jarvis1973clustering} clust
 Finally, the events are filtered based on their newsworthiness, which is calculated using Wikipedia as a knowledge-base, and requires the segment to appear in the anchor text linking Wikipedia articles.
 
 Twevent outperforms their baselines approach \citep{weng2011event}, however relies heavily on both Wikipedia and Microsoft's Web N-Gram service, which means it is likely biased by these services.
-Additionally, since it has already been shown that Twitter is often ahead of Wikipedia by more than 2 hours \citep{WRN2012:osbornebieber}, the use of Wikipedia as a knowledge base and its reliance on anchor text for filtering means that it is likely to miss novel events if they have not already been reported on Wikipedia.
+Additionally, since it has already been shown that Twitter is often ahead of Wikipedia by more than two hours \citep{WRN2012:osbornebieber}, the use of Wikipedia as a knowledge base and its reliance on anchor text for filtering means that it is likely to miss novel events if they have not already been reported on Wikipedia.
 
 TwitInfo \citep{marcus2011twitinfo} allows users to track an event based on a set of keywords, providing a visualization and summary of the event.
 Part of this involves providing sub-event detection within the stream, using burst (or peak) detection to alert users when a significant sub-event or change in topic occurs.
@@ -484,11 +484,11 @@ The majority of modern test collections are created using a pooling approach, wh
 The union of the top \(n\) documents per topic, taken from each system systems, is then used create a pool of documents for each topic.
 Each document in the pool is then judged to be relevant or non-relevant to the topic, and documents which are not in the pool are assumed to be non-relevant.
 
-This pooling approach is commonly (but not exclusively) used to generate relevance judgements for collections provided to researchers participating in conferences such as the Text REtrieval Conference (TREC), which is sponsored by the National Institute of Stands and Technology (NIST) in the United States.
+This pooling approach is commonly (but not exclusively) used to generate relevance judgements for collections provided to researchers participating in conferences such as the Text REtrieval Conference (TREC), which is sponsored by the National Institute of Standards and Technology (NIST) in the United States.
 Researchers are first given the test collections with a set of pre-selected topics, and are asked to submit the results from their retrieval systems to experts who then perform the pooling and annotate the documents.
 Given the scale of modern test collections, this can be a slow and expensive undertaking, which restricts the number of ``tracks'' (a set of tasks focused on some facet of a retrieval problem) that can be run each year, and thus limits how many test collections and relevance judgments can be created this way.
 
-More recently, crowdsourcing has become a popular method of cheaply and quickly generating relevance judgements since it does not rely on the timing of particular conferences or and does not require experts to gather relevance judgements.
+More recently, crowdsourcing has become a popular method of cheaply and quickly generating relevance judgements since it does not rely on the timing of particular conferences and does not require experts to gather relevance judgements.
 \cite{Alonso:2008:CRE:1480506.1480508} describe how crowdsourcing can be used to gather relevance judgements and discuss their crowdsourcing methodology called `TERC', which they find provides fast turnarounds whilst being low cost and producing high quality results.
 However, they also describe some of the issues and limitations which need to be addressed, such as the need for strict quality control and the `artificiality' of the task.
 Whilst they propose some solutions to these issues, they recognize that many of the solutions are domain specific, and not applicable in all situations.
@@ -503,7 +503,7 @@ However, the use of pooling to create a test collection for event detection pose
 \subsection{The Pooling Approach and Event Detection}
 Despite often being viewed as an IR task, Event Detection has a number of characteristics that differ from more common IR tasks.
 The most obvious of these is the lack of pre-defined topics or queries for event detection systems to use.
-Rather, systems aim to automatically \emph{discover} a sub-set of all topics being discussed in the collection that meet the criteria for being an \emph{event} (as we will discuss in Chapter \ref{chapter:collection}, defining these criteria is not straightforward).
+Rather, systems aim to automatically \emph{discover} a sub-set of all topics being discussed in the collection that meet the criteria for being an \emph{event} (as we will discuss in chapter \ref{chapter:collection}, defining these criteria is not straightforward).
 A perfect system would detect all documents for each event being discussed, however in practice, different event detection approaches discover different events.
 This makes it impossible to pool the results from event detection approaches using a TREC-style pooling methodology since it is not obvious what the various topics are or how they should be merged to create the pools for judgment.
 
@@ -529,7 +529,7 @@ Since this does not infer any sort of quality or usefulness score from the syste
 	\cite{McCreadie:2012:BRT:2348283.2348495} & 14 days & 16M & No & - & - \\
 	\cite{Becker:2012:ICP:2124295.2124360} & 28 days* & 2.6M & Yes & ? & No \\
 	\cite{Petrovic:2012:UPI:2382029.2382072} & 75 days* & 50M & Yes & 27 & No \\
-	\textbf{This Work} 	& 28 days & 120M & Yes & 506 & Yes \\
+	\textbf{Events 2012 (This Work)} 	& 28 days & 120M & Yes & 506 & Yes \\
 
 	\bottomrule
 	\end{tabulary}
@@ -538,13 +538,13 @@ Since this does not infer any sort of quality or usefulness score from the syste
 
 A broad range of Twitter collections have been created for various tasks, however the majority of these lack relevance judgements or are simply collections of tweets that contain specific words or hashtags.
 There have been very few attempts to create large-scale, robust test collections containing a wide range of topics with relevance judgments.
-Table \ref{table:collectionsCompared} shows the most noteworthy and relevant Twitter corpora, compared to the collection we describe the creation of in Chapter \ref{chapter:collection}.
+Table \ref{table:collectionsCompared} shows the most noteworthy and relevant Twitter corpora, compared to the collection we describe the creation of in chapter \ref{chapter:collection}.
 
 TREC utilized the pooling approach to gather relevance judgements in 2011 and 2012 as part of the Microblog Track.
 An ad-hoc retrieval task was used both years on the Tweets2011 \citep{McCreadie:2012:BRT:2348283.2348495} collection, across 100 queries (50 each year).
-The collection was the first publicly available, large-scale, Twitter corpus, consisting of a random sample of 16 million tweets collected over a period of 2 weeks in 2011.
+The collection was the first publicly available, large-scale, Twitter corpus, consisting of a random sample of 16 million tweets collected over a period of two weeks in 2011.
 
-The Tweets2011 corpus contains tweets in all languages, however queries and judgements were only made using English language tweets, of which there are approximately only 4 million in the corpus.
+The Tweets2011 corpus contains tweets in all languages, however queries and judgements were only made using English language tweets, of which there are approximately only four million in the corpus.
 Furthermore, the topics and relevance judgments  were designed specifically for ad-hoc retrieval (one example query being `fishing guidebooks'), meaning that the relevance judgements are unsuitable for event-based analysis.
 The TREC Microblog Track also ran in 2013, however the track moved to an experimental track-as-a-service approach, where the corpus was hosted by TREC and participants had to be queried using an API.
 The only way to obtain tweets from the collection was to query the API for specific keywords, making it impossible to process the corpus as a time-ordered stream.

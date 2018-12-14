@@ -38,7 +38,7 @@ where $e_n$ ad $e'_n$ are the entity frequency vectors containing counts for eac
 Taking the maximum similarity of the two allows us to optimize for the two cases: (i) when the descriptions describe an event at the same level of granularity (often the case for events from different sources) the full description can be used, however when events are described at different levels of granularity or at different moments in time, entity similarity can be used.
 
 \subsubsection{Categories}
-As described in Section \ref{collection:sec:annotation}, for each event, we asked annotators to select the category that best fit the event from the 13 categories used by the TDT project.
+As described in section \ref{collection:sec:annotation}, for each event, we asked annotators to select the category that best fit the event from the 13 categories used by the TDT project.
 Annotator agreement across categories was substantial (\(k = 0.76\)), however closer examination of the annotations raises a number of potential issues that could effect the usefulness of categories for clustering.
 Using the third U.S. Presidential Debate as an example of a large event with many different subtopics, we note that the LSH approach produced over 40 clusters discussing various sub-events and topics within the debate.
 Many of the subjects of the debate were related to economics, business and international relations.
@@ -102,12 +102,6 @@ These share the same category, will have similar content, and overlap in time, m
 Taking this into consideration, we chose not to use temporal proximity as a measure of similarity.
 Rather, we use it as a filter, and say that events which are more than $T$ hours apart cannot be merged.
 
-\begin{figure}
-	\includegraphics[width=\textwidth]{./Chapters/Collection/images/times}
-	\caption{The distribution of times between matched events, based upon the number of hours between the centroid times of the events}
-	\label{fig:dif_diff}
-\end{figure}
-
 \subsection{Clustering Algorithm}
 \label{sec:clusteringalg}
 For each event \(e\), our algorithm calculates its similarity $S_f$ against every candidate event \(e'\) within a time window of 6 hours.
@@ -119,7 +113,7 @@ If two events are found to have an \(S_{f}\) value above 0.5 then they are clust
 If both \(e\) and \(e'\) already have clusters then the two clusters are merged.
 The pseudo-code for our clustering approach is shown in Algorithm~\ref{alg:clustering}.
 
-\begin{algorithm}
+\begin{algorithm}[t!]
 $clustered$ = $\emptyset$\;
 \ForEach{event e in targets} {
 	add $e$ to $clustered$\;
@@ -148,3 +142,9 @@ Parameter weights were optimized by varying between 0.0 and 1.0 in steps of 0.1,
 The weights given in equation \ref{eq:simcluster} gave the highest B-Cubed precision (0.92) and recall (0.86) values (F1 = 0.86).
 The maximum time difference, $T$, was set to 6 hours  as only a 3.4\% of events were matched outside of a 6 hour window, as show in Figure~\ref{fig:dif_diff}.
 This allows for lag between events, whilst still giving a reasonable guarantee that the events generated will fit our definition of event.
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{./Chapters/Collection/images/times}
+	\caption{The distribution of times between matched events, based upon the number of hours between the centroid times of the events}
+	\label{fig:dif_diff}
+\end{figure}

@@ -4,7 +4,7 @@
 \section{Collecting Tweets for the Corpus}
 \label{sec:methodology}
 \label{collection:sec:methodology}
-We collected approximately 1 billion tweets using the Twitter Streaming API\footnote{https://dev.twitter.com/docs/streaming-apis} over a period of 28 days, starting on the 10th of October 2012 and ending on the 7th of November.
+We collected approximately one billion tweets using the Twitter Streaming API\footnote{https://dev.twitter.com/docs/streaming-apis} over a period of 28 days, starting on the 10th of October 2012 and ending on the 7th of November.
 This period was chosen specifically because it covers a number of interesting and significant events, including natural disasters such as Hurricane Sandy, and large-scale political events such as the U.S. Presidential Elections.
 
 Since Twitter only allow datasets to be distributed as a list of tweet IDs and requires researchers to crawl the tweets using the Twitter REST API (a time consuming process due to rate limits), we opted to perform a number of basic filters on the corpus to reduce its overall size.
@@ -30,7 +30,7 @@ This allows event detection approaches that make use of retweets to use the coll
 % Furthermore, microblog posts tend to be very noisy, of very limited length\footnote{Tweets were restricted to 140 characters at the time the collection was created. Twitter have since increased the limit to 280 characters.} and frequently contain spelling or grammar errors.
 % These differences mean that approaches developed for the TDT program tend to be too slow for real-time application, and extremely vulnerable to the noise found in microblog streams.
 
-To generate a set of candidate events for judgment, we choose to use two state-of-the-art detection approaches (at the time of this work was carried out), which were designed specifically for Twitter, namely the Locality Sensitive Hashing approach proposed by~\cite{Petrovic:2010:SFS:1857999.1858020} and the Cluster Summarization approach proposed by~\cite{Aggarwal12}, both of which are described in detail in Chapter \ref{chapter:background}.
+To generate a set of candidate events for judgment, we choose to use two state-of-the-art detection approaches (at the time of this work was carried out), which were designed specifically for Twitter, namely the Locality Sensitive Hashing approach proposed by~\cite{Petrovic:2010:SFS:1857999.1858020} and the Cluster Summarization approach proposed by~\cite{Aggarwal12}, both of which are described in detail in chapter \ref{chapter:background}.
 These were chosen based upon a number of desirable characteristics.
 Firstly, both approaches produce clusters of tweets, rather than clusters of terms.
 Many event detection approaches for Twitter attempt to reduce the problem by clustering terms rather than documents.
@@ -46,11 +46,11 @@ However, we chose to measure the fastest growing clusters on a hourly basis, rat
 We made this decision due the fact that 100,000 tweet covers only a short period of time in our collection (approximately 30 minutes) due to its high volume.
 Since the LSH approach keeps several hours worth of tweets in memory at all times, this would have generated twice as many candidate events without necessarily increasing the number of real-world events detected, making it prohibitively more expensive to generate judgements.
 Simply taking the list of candidate events every hour would still have yielded a prohibitively high number of clusters (in the hundreds of thousands).
-However by removing clusters outside the optimal entropy range of 3.5 to 4.25~\citep{Petrovic:2010:SFS:1857999.1858020}, and by removing clusters with fewer than 30 tweets (which ensures the cluster contains enough tweets for effective evaluation), we are left with a final set of 1340 candidate events and a run-time of approximately 2 days (using desktop class machine with an Intel i5 2500S and 16GB RAM).
+However by removing clusters outside the optimal entropy range of 3.5 to 4.25~\citep{Petrovic:2010:SFS:1857999.1858020}, and by removing clusters with fewer than 30 tweets (which ensures the cluster contains enough tweets for effective evaluation), we are left with a final set of 1340 candidate events and a run-time of approximately two days (using desktop class machine with an Intel i5 2500S and 16GB RAM).
 
 \subsubsection{Cluster Summarization (CS)}
-We ran the CS approach with 1200 clusters, slightly more than used by \cite{Aggarwal12}, however due to the increased volume of tweets in the collection, we opted to increase the number of clusters so that more topics could kept in memory.
-This gave a reasonable runtime of approximately 4 days.
+We ran the CS approach with 1200 clusters, slightly more than used by \cite{Aggarwal12}, however due to the increased volume of tweets in the collection, we opted to increase the number of clusters so that more topics could be kept in memory.
+This gave a reasonable runtime of approximately four days.
 Retweets were not used as input to the algorithm as we found that they tended to cause more spam and noise clusters to form and be identified as events.
 We used a \(\lambda\) value of 0.0 (i.e. full weight was given to text when calculating similarity) as this greatly decreased the runtime whilst having only a small effect on performance~\citep{Aggarwal12}, and meant that follower information did not have to be crawled, as this would have taken several \emph{years} to obtain via the Twitter API due to rate limits and would have introduced future information.
 
@@ -67,7 +67,7 @@ The remainder of this section describes the challenges associated with the gathe
 \subsection{Selecting the Number of Annotators}
 \label{sec:numAnnotators}
 In order to ensure that noise and spam have minimum impact on the evaluations, multiple annotators need to be used for each evaluation.
-To help us choose a number of annotators, we ran a pilot using 20 carefully selected candidate events covering a range of categories and with varying degrees of perceived difficult or ambiguity.
+To help us choose the number of annotators, we ran a pilot using 20 carefully selected candidate events covering a range of categories and with varying degrees of perceived difficulty or ambiguity.
 Several candidate events were selected specifically because they were either difficult to judge or fell between event and non-event (i.e. they were very subjective), while other candidates were selected because they contained a mix of relevant and non-relevant tweets, making them more difficult to judge.
 Each candidate was annotated by 10 different workers, resulting in 16 of the 20 candidates being identified as an event by a majority (\(k = 0.66\), using Free-marginal multirater kappa~\citep{Randolph}).
 
@@ -87,13 +87,13 @@ We decided to try and limit the time taken to perform an individual evaluation t
 This meant that we could ask only a limited number of questions in each evaluation, and the number of tweets which we could have annotated in each evaluation was also very limited.
 In addition to the time taken to answer questions, we also have to consider how much time is required to read the tweets and make a decision about the candidate event (i.e. does the candidate fit our definition of event?), further reducing the amount of questions we could ask in our desired time limit.
 
-Initially, we chose to use 30 tweets, however this caused the time taken to read the tweets and make a judgement about the candidate to be considerably over 1 minute.
-So solve this, we ran empirical evaluations to measure how many tweets we could read in 20 seconds, leaving 40 seconds to answer questions and annotate the tweets.
+Initially, we chose to use 30 tweets, however this caused the time taken to read the tweets and make a judgement about the candidate to be considerably over a minute.
+To solve this, we ran empirical evaluations to measure how many tweets we could read in 20 seconds, leaving 40 seconds to answer questions and annotate the tweets.
 We found that we were able to carefully read around 13 tweets in a 20 second window, and so used that number for pilots and the evaluation of the detection approaches.
 
 \subsection{Annotating Tweets}
 We ran a number of small pilots to test the best method of gathering judgements (i.e. mark relevant, mark non-relevant, or select relevant / non-relevant for each tweet).
-Empirically we found that all 3 options gave similar results, but that selecting relevant / non-relevant for each tweet seemed to give very slightly more accurate results when compared to our own annotations, although these differences were mostly found when annotating subjective tweets.
+Empirically we found that all three options gave similar results, but that selecting relevant / non-relevant for each tweet seemed to give very slightly more accurate results when compared to our own annotations, although these differences were mostly found when annotating subjective tweets.
 However, selecting relevant/non-relevant for each tweet is significantly more work than selecting the relevant or non-relevant tweets only, and fatigues annotators much faster than the other methods.
 Of the two remaining methods (i.e. selecting only relevant or only non-relevant), we chose to use the selection of non-relevant tweets only as it allows us to more easily use a number of spam detection techniques (described in section~\ref{sec:spam}).
 
@@ -195,7 +195,7 @@ Note that words surrounded by [[ and ]] are links to other Wikipedia pages.
 Unlike the event detection approaches, we already know that each of the events is a true event, however we still need to identify tweets that discuss each of the events.
 First, we must identify a list of candidate tweets.
 To do this, we indexed the corpus using Lucene 4.2\footnote{http://lucene.apache.org/}.
-stopword removal was performed, Porter stemming was applied, and prefixes (\#, @ characters) were remove from hashtags and mentions.
+Stopword removal was performed, Porter stemming was applied, and prefixes (\#, @ characters) were remove from hashtags and mentions.
 
 We then use the description from each of the Wikipedia events as an initial query to retrieve tweets from the Lucene index.
 Query expansion is performed to decrease lexical mismatch, and has been shown to give some of best retrieval performance as part of the TREC Microblog track in 2011~\citep{gambosi2011fub,ferguson2011clarity,li2011pris} and 2012~\citep{kimovercoming,younosFreq,hanhit}.
@@ -206,7 +206,7 @@ Divergence from Randomness using Inverse Document Frequency as the basic randomn
 For each of the 367 events on the Wikipedia Current Events Portal listed between the dates covered by the corpus, we retrieved the top 2000 tweets from a window of 72 hours, centred around the day of the event (i.e. for an event on the 16th of October, retrieval was restricted to tweets posted between the 15th and 17th of October inclusively).
 The window was used to reduce the probability that tweets discussing similar events would be retrieved, whilst still being long enough to capture any run-up to the event, and at least 24 hours worth of discussion after the event.
 
-Since we only need to gather relevance judgements for tweets, we are able to have more tweets annotated within our desired 1 minute time limit, allowing us to have each worker annotate 30 tweets per HIT.
+Since we only need to gather relevance judgements for tweets, we are able to have more tweets annotated within our desired one minute time limit, allowing us to have each worker annotate 30 tweets per HIT.
 Additionally, since we know that every worker will annotate the tweets, we can reduce the number of workers per event from 5 to 3, incurring additional savings.
 
 \subsubsection{Choosing a stopping point}
@@ -235,7 +235,7 @@ We also supplied a link to a relevant news article they could use as a reference
 They were asked to enter a short description of the event that they might use if they were searching for tweets about the event themselves.
 Finally, they were shown 30 tweets and asked to mark any non-relevant tweets as so.
 
-The spam and quality control measures, as described in Section \ref{sec:spam}, we also used here.
+The spam and quality control measures, as described in section \ref{sec:spam}, we also used here.
 Specifically, a 20 second minimum time limit, and the honey-pot technique to identify low-quality annotators, resulting in 714 being removed (just 4.5\% of the 22,114 total evaluations between both the Wikipedia and Event Detection annotations).
 Learning from the results of the previous evaluations, we recorded the number of bad submissions for each user, and any user that failed to identify the honey-pot tweet 3 times was banned from performing further evaluations.
 

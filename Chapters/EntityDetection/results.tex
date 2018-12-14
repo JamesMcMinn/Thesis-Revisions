@@ -7,7 +7,7 @@
 \begin{table}[t!]
 	\centering
 
-  \caption[Results for 2 baseline approaches and our entity-based event detection approach]{Results for 2 baseline approaches (LSH \& CS) compared to our entity-based approach using the Events 2012 collection.}
+  \caption[Results for two baseline approaches and our entity-based event detection approach]{Results for two baseline approaches (LSH \& CS) compared to our entity-based approach using the Events 2012 collection.}
 
 	\label{detection:table:bestResults}
 
@@ -30,7 +30,7 @@ Table~\ref{detection:table:bestResults} shows results for the two baseline appro
 We give results for both a crowdsourced (Crowd) evaluation and an automatic (Auto) evaluation for our entity-based approach.
 We present results for our best performing automatic evaluation, which filtered out events with fewer than 100 tweets but used otherwise default parameters as described in section \ref{detection:sec:approach}.
 
-Automatic evaluation gives our entity-based approach an estimated Precision of 0.348 and recall of 0.292 for events with 100 or more tweets.
+Automatic evaluation gives our entity-based approach an estimated precision of 0.348 and recall of 0.292 for events with 100 or more tweets.
 This gives the highest F1 measure (0.318) across all automatic runs tested.
 Precision beats that of the LSH baseline, despite being disadvantaged due to the partial relevance judgements.
 Recall is slightly lower than that of the LSH approach, although by only a small margin (0.016).
@@ -70,24 +70,24 @@ Recall for the crowdsourced run was calculated automatically using events with 3
 \subsection{Category Performance}
 Table \ref{detection:table:categories} shows recall across the eight categories defined by the Events 2012 collection using a minimum event size of 30 tweets.
 There is a large variation in recall across the categories.
-Our approach seems to be most effective at detecting events categorized as  `Armed Conflicts \& Attacks' ($R=0.520$) and `Disasters \& Accidents' ($R=0.448$).
+Our approach seems to be most effective at detecting events categorized as  \emph{Armed Conflicts \& Attacks} ($R=0.520$) and \emph{Disasters \& Accidents} ($R=0.448$).
 This is extremely promising as these are the types of event that are most likely to benefit from eye-witness accounts and the use of social media as the event unfolds.
 The ability to find information about these types of event in real-time can be useful for law enforcement and emergency services, and serves as one of main motivations for event detection and tracking on Twitter.
 
-Our approach also appears to be effective at detecting events in the `Business \& Economy' ($R=0.391$), `Sports' ($R=0.373$), and `Law, Politics \& Scandals' ($R=0.386$) categories.
-Law, Politics \& Scandals, as well as the Sports events make up over 50\% of the total events in the collection, so given our approach's overall high recall, it is not surprising to find that it performs well on events in these categories.
+Our approach also appears to be effective at detecting events in the \emph{Business \& Economy} ($R=0.391$), \emph{Sports} ($R=0.373$), and \emph{Law, Politics \& Scandals} ($R=0.386$) categories.
+\emph{Law, Politics \& Scandals}, as well as the \emph{Sports} events make up over 50\% of the total events in the collection, so given our approach's overall high recall, it is not surprising to find that it performs well on events in these categories.
 This is most likely due to a number of factors. Firstly, these types of event tend to focus on a small number of easily identified entities, such as sports teams, politicians, or company names.
 Secondly, these types of event are of interest to a large number of people, making them more likely to burst and be detectable, with sports events in particular being well suited to discussion on social media, something we examine later in this section.
 
-Our approach performs worst on `Miscellaneous' ($R=0.190$), `Arts, Culture \& Entertainment' ($R=0.226$), and `Science \& Technology' ($R=0.250$) events.
-The low recall for science and technology events can be somewhat explained by a lack of easily detectable named entities, particularity for science events, such as ``Astronomers detect what appears to be light from the first stars in the universe''. Of the 21 Miscellaneous events, 10 of them have fewer than 15 tweets in the relevance judgements which contain named entities.
-This lack of named entities makes miscellaneous very difficult to detect for our approach, and the effect is examined in detail in section \ref{detection:sec:entitiesEval}.
+Our approach performs worst on \emph{Miscellaneous} ($R=0.190$), \emph{Arts, Culture \& Entertainment} ($R=0.226$), and \emph{Science \& Technology} ($R=0.250$) events.
+The low recall for science and technology events can be somewhat explained by a lack of easily detectable named entities, particularity for science events, such as ``Astronomers detect what appears to be light from the first stars in the universe''. Of the 22 \emph{Miscellaneous} events, 10 of them have fewer than 15 tweets in the relevance judgements which contain named entities.
+This lack of named entities makes \emph{Miscellaneous} very difficult to detect for our approach, and the effect is examined in detail in section \ref{detection:sec:entitiesEval}.
 Low recall for Entertainment events could be explained by our removal of tweets that contain terms related to television, such as `watch', as many of the events are broadcasts of award shows or the launch of new television shows.
 
 \begin{table}
 	\centering
 	\small
-  \caption[Distribution of detected events across the 8 categories defined by the collection]{Distribution of detected events across the 8 categories defined by the collection. The average entities shows the average number of entities linked to each event for the specific category.}
+  \caption[Distribution of detected events across the eight categories defined by the collection]{Distribution of detected events across the eight categories defined by the collection. The average entities shows the average number of entities linked to each event for the specific category.}
 
 	\label{detection:table:categories}
 
@@ -249,12 +249,12 @@ However, our use of multiple window lengths means that our burst detection appro
 Table \ref{detection:table:simThresholds} shows how different similarity thresholds affect the performance across a range of event sizes.
 High thresholds make it more difficult to cluster similar tweets, meaning that there tends to be a larger number of smaller clusters, as well as more tweets that belong to no cluster.
 Since our approach only adds clusters above certain sizes to an event (see Table \ref{detection:table:minClusterSize} for details), a decrease in the average size of a clusters means that fewer events are discovered.
-Inversely, a low threshold makes it easier to cluster tweet, resulting in more large clusters.
+Inversely, a low threshold makes it easier to cluster tweets, resulting in more large clusters.
 This means more clusters can be added to events, and results in more events overall.
 This is reflected by the number of events at varying levels of similarity and across the two minimum event sizes.
 
 Table \ref{detection:table:minClusterSize} shows the effect of different minimum cluster sizes on the effectiveness of our approach.
-Clusters are only added to an event if they contain more the minimum number of tweets, so the minimum cluster size has an effect on the overall performance, particularity at lower minimum event sizes.
+Clusters are only added to an event if they contain more than the minimum number of tweets, so the minimum cluster size has an effect on the overall performance, particularity at lower minimum event sizes.
 The effect on overall performance (F1 score) is less pronounced for larger events as these events have much higher volumes of discussion, so the number of large clusters that can to be added to the event is much higher.
 Increasing the minimum cluster size has an effect on precision at both minimum event sizes.
 There is a distinct jump in precision when the minimum cluster size is increased from 5 to 10 tweets, but with only a very small impact on recall, motivating our use of 10 as the minimum cluster size in all of our evaluations.
@@ -339,10 +339,10 @@ The use of retweets has a large impact, reducing precision from 0.200 to 0.063. 
 \label{detection:sec:entitiesEval}
 One concerns with our entity-based approach is the use of entities on event and tweet recall, since we rely on entities to cluster tweets and detect events.
 Running the Stanford POS Tagger and NER over tweets from the relevance judgements shows that 47.4\% of relevant tweets contain at least one entity. This is promising, and considerably higher than the 11\% of tweets that contain name entities across the collection as a whole, confirming our hypothesis that there is a relationship between entities and events.
-Our approach achieves a tweet recall of 0.242 across the events it detects, and a recall of 0.511 if we measure only against tweets in the relevance judgements which contain a named entity.
+Our approach achieves a tweet Recall of 0.242 across the events it detects, and a Recall of 0.511 if we measure only against tweets in the relevance judgements which contain a named entity.
 
 This does highlight one drawback to our entity-based approach.
-Even if we were to detect every event in the collection, we could never achieve a tweet recall above 0.474.
+Even if we were to detect every event in the collection, we could never achieve a tweet Recall above 0.474.
 Some of this is likely due to the difficulty of NER on Twitter, as noted by \cite{DBLP:conf/sigir/LiWHYDSL12}, and could be improved with better NER models for Twitter. However, it is likely that the majority of tweets simply do not contain any named entities, meaning that we must consider the effect this has on detection effectiveness -- if an event has very few or no tweets with named entities then our approach will be unable to detect them.
 Of the 506 events in the relevance judgements, 14 have fewer than 5 associated tweets, 42 have fewer than 15, and 72 have fewer than 30.
 In addition, 41 events in the relevance judgements have fewer than 5 tweets with entities, 109 events have fewer than 15, and 163 have fewer than 30. For those 41 events with fewer than 5 tweets containing entities, even if our system was to perform perfectly, we would be unable to detect them -- accounting for just over 8\% of all the events in the collection.
@@ -353,7 +353,7 @@ In addition, 41 events in the relevance judgements have fewer than 5 tweets with
 \begin{table}[b!]
 	\centering
 	\small
-	\caption{Precision and recall differences between using no entity classes and 3 classes (person, location, organization)}
+	\caption{Precision and recall differences between using no entity classes and three classes (person, location, organization)}
 	\label{detection:table:entityTypes}
 
 	\begin{tabulary}{\textwidth}{l c c c }
@@ -379,7 +379,7 @@ In addition, 41 events in the relevance judgements have fewer than 5 tweets with
 \end{table}
 
 There are a number of cases where entities with the same name, such as Spain the football team and Spain the land mass are different classes of entity. In this case, Spain can be both an Organization (the football team) and a location (Spain the land mass).
-Table \ref{detection:table:entityTypes} shows the effect of differentiating between classes, and ignoring classes. Using a single class seems to give a small increase in recall at the cost of a small decrease in precision when compared to using multiple classes. However, when measured using F1, multiple entity classes has a small performance advantage up to events containing at least 100 tweets, whereas the single entity class seems to perform slight better on larger events. This increase in recall using a single class could be caused by the burst detection having more data to work with per entity -- rather than tweets being partitioned into 3 separate types, they are left as one, making bursts easier to detect. However, closer inspection of the events detected shows that is unlikely to be the only cause. We find that using a single class tends to merge events which are about different entities with the same name. For example, a football match between Spain and France takes place at the same time as the captain of the Liberian-owned Prestige oil tanker goes on trial in Spain. Because the single entity class is unable to differentiate between the Spanish football team and Spain the location, then the 2 events cannot be distinguished from each other, producing a single large event with an effective recall of 2 events. Despite the fact that only a small percentage of the tweets are about the trail, they still cover over 65\% (25/38) of the tweets in the relevant judgements for the trail, so it is difficult to simply say that these small events have not been detected, even when merged with other larger events. There are a number of examples where similar errors are made, and this appears to be the main cause for the increase in recall and the higher number of of large events (193 with at least 300 tweets in comparison with only 178 when using multiple classes).
+Table \ref{detection:table:entityTypes} shows the effect of differentiating between classes, and ignoring classes. Using a single class seems to give a small increase in recall at the cost of a small decrease in precision when compared to using multiple classes. However, when measured using F1, multiple entity classes has a small performance advantage up to events containing at least 100 tweets, whereas the single entity class seems to perform slight better on larger events. This increase in recall using a single class could be caused by the burst detection having more data to work with per entity -- rather than tweets being partitioned into three separate classes, they are left as one, making bursts easier to detect. However, closer inspection of the events detected shows that is unlikely to be the only cause. We find that using a single class tends to merge events which are about different entities with the same name. For example, a football match between Spain and France takes place at the same time as the captain of the Liberian-owned Prestige oil tanker goes on trial in Spain. Because the single entity class is unable to differentiate between the Spanish football team and Spain the location, then the two events cannot be distinguished from each other, producing a single large event with an effective recall of two events. Despite the fact that only a small percentage of the tweets are about the trial, they still cover over 65\% (25/38) of the tweets in the relevant judgements for the trial, so it is difficult to simply say that these small events have not been detected, even when merged with other larger events. There are a number of examples where similar errors are made, and this appears to be the main cause for the increase in recall and the higher number of of large events (193 with at least 300 tweets in comparison with only 178 when using multiple classes).
 
 \section{Event Detection Evaluation Approaches}
 \label{detection:sec:measures}
@@ -408,7 +408,7 @@ Here we examine how our automatic evaluation approach compares to our crowdsourc
 Table \ref{detection:table:diffResults} shows the results of our entity-based approach evaluated against the Events 2012 collection using both automated and crowdsourced evaluation methodologies.
 Of the 250 events evaluated using crowdsourcing, 159 were determined to be true events, while 91 were found to be false events, giving a precision of 0.636.
 By scaling these values to all events returned by our approach, we can estimate that 769 of the 1210 events are true events.
-Precision under a crowdsourced evaluation is more than 3 times higher than calculated using the automated approach, indicating as expected, that the Events 2012 collection does not have relevance judgements for all events that occurred during the 28 days it covers.
+Precision under a crowdsourced evaluation is more than three times higher than calculated using the automated approach, indicating as expected, that the Events 2012 collection does not have relevance judgements for all events that occurred during the 28 days it covers.
 As we discussed in section \ref{detection:sec:experimentation}, there are a number of issues that prevent us from accurately calculating recall for the crowdsourced evaluation, so recall is not given in Table \ref{detection:table:diffResults}.
 
 \begin{table}
@@ -437,10 +437,10 @@ As we discussed in section \ref{detection:sec:experimentation}, there are a numb
 
 Table \ref{detection:table:categoriesCrowd} shows the distribution of events between categories, calculated automatically and through crowdsourcing.
 Both the automatic and crowdsourced evaluation give somewhat similar distributions ($R = 0.59$), suggesting that there is a somewhat moderate positive correlation between the distribution of results returned by both methods of evaluation, despite differences in the absolute values.
-However, there are a number of outliers, such as Armed Conflicts and Attacks, and Sports.
+However, there are a number of outliers, such as \emph{Armed Conflicts and Attacks}, and \emph{Sports}.
 
-The automatic evaluation suggests that Armed Conflicts and Attacks make up 26.3\% of the events detected by our approach, however the crowdsourced evaluation determined this to be only 3.4\%.
-Similarly, the automatic evaluation found 24.2\% of events to be related to Sports, however the crowdsourced evaluation found that 45.3\% discussed a Sports event.
+The automatic evaluation suggests that \emph{Armed Conflicts and Attacks} make up 26.3\% of the events detected by our approach, however the crowdsourced evaluation determined this to be only 3.4\%.
+Similarly, the automatic evaluation found 24.2\% of events to be related to \emph{Sports}, however the crowdsourced evaluation found that 45.3\% discussed a \emph{Sports} event.
 Closer examination shows that the distribution of events using the automatic evaluation has an almost perfect correlation with the distribution of events in the collection ($R = 0.96$).
 This is not unexpected, and in fact gives some confidence that the automatic approach is doing a reasonable job of matching events being evaluated to events from the collection.
 
@@ -453,7 +453,7 @@ This is in line with the findings of \cite{ICWSM136066}, where they found that T
 One of our aims when developing our entity-based approach was to ensure that it was both real-time and efficient. In essence, a real-time algorithm can be seen as having \(O(1)\) complexity. While a real-time approach is often efficient, it does not have to be, and many real-time approaches fail to scale as the volume of information is increased, causing effectiveness to drop. Clearly a real-time system cannot be expected to process an infinite volume of data, however an efficient real-time systems should be able to scale reasonably without a significant loss of effectiveness.
 
 Our approach is both real-time and efficient, in that we guarantee a maximum time per tweet, and it is able to scale as the volume of data increases.
-The real-time aspect is guaranteed by using only the top 10 IDF-weighted terms in each tweet (a restriction which effects less than 0.02\% of tweets) and by retrieving only the \(N\) most recent documents per term (in our experiments \(N = 500\)), we ensure that in the worst case, no more than \(10N\) comparisons are made per document, giving \(O(1)\) complexity.
+The real-time aspect is guaranteed by using only the top 10 IDF-weighted terms in each tweet (a restriction which affects less than 0.02\% of tweets) and by retrieving only the \(N\) most recent documents per term (in our experiments \(N = 500\)), we ensure that in the worst case, no more than \(10N\) comparisons are made per document, giving \(O(1)\) complexity.
 
 The efficiency of our approach comes from a number of aspects.
 Firstly, as discussed in section \ref{detection:sec:approach}, our approach only uses tweets which contain named entities.
@@ -471,7 +471,7 @@ Finally, our pipeline architecture allows for each component to work independent
 \begin{table}[h]
 	\centering
 	\small
-  \caption[Complexity, theoretical worst case, and average comparisons for different event detection approaches]{Different complexity aspects of our detection approach and the 2 baselines approaches. The average complexity for LSH was calculated without the use of a variance reduction technique which would push the average higher. }
+  \caption[Complexity, theoretical worst case, and average comparisons for different event detection approaches]{Different complexity aspects of our detection approach and the two baselines approaches. The average complexity for LSH was calculated without the use of a variance reduction technique which would push the average higher. }
   \label{detection:table:efficiency}
 
 	\begin{tabulary}{\textwidth}{l c c c }

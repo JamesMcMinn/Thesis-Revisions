@@ -11,13 +11,13 @@ We aim to show that event detection approaches can instead rely on latent featur
 
 For the purpose of this work, we say that a tweet is newsworthy if it discusses a topic that is of interest to the news media.
 For example, a tweet describing an apartment fire would be considered newsworthy, whereas a tweet describing a user's breakfast would not.
-Note that the concept of newsworthiness with regards to an individual tweet is very similar to the definition of \emph{significant} in the context of events, defined in chapter \ref{DefiningEvent}, however applied at a tweet level rather than over an event as a whole.
+Note that the concept of newsworthiness with regards to an individual tweet is very similar to the definition of \emph{significant} in the context of events, defined in section \ref{DefiningEvent}, however applied at a tweet level rather than over an event as a whole.
 Although still subjective, a topic is either considered significant enough to be an event, or it is not.
 Newsworthiness, on the other hand, can be measured on a scale.
 Whilst a tweet asking others to ``pray for those involved'' in the aforementioned apartment fire is relevant to a newsworthy event because it mentions the apartment fire, it is considerably less newsworthy than a tweet providing information about the fire or the people involved.
 The aim of this work is to determine whether an individual tweet is newsworthy (its \emph{direction}), and assign a relative score (its \emph{magnitude}).
 
-Given the above, we define 3 key characteristics that we want our Newsworthiness Scorer to satisfy:
+Given the above, we define three key characteristics that we want our Newsworthiness Scorer to satisfy:
 \begin{itemize}
 	\item \textbf{Generalizability:} as specified in chapter \ref{chapter:introduction}, the scoring system should be able to score a tweet about any event or event type, even if it has never encountered a similar event before. It should not, for example, only be able to score tweets about sports events or earthquakes, rather it should be general enough to accurately score tweets about anything that could be reported by the media (i.e., anything \emph{significant}).
 	\item \textbf{Real-time:} also specified in chapter \ref{chapter:introduction}, the real-time characteristic means that tweets should be scored as soon as received, and there should be no delay to wait for new information (i.e., no batch processing). This ensures that the scoring is useful for real-time event detection systems.

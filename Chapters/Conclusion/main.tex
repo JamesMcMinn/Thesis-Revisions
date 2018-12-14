@@ -15,7 +15,7 @@ The collection and relevance judgments represent the first large-scale test coll
 
 In chapter \ref{chapter:detection} we proposed a novel entity-based event detection approach for Twitter, that uses named entities to partition and efficiently cluster tweets, and a burst detection method to identify clusters related to real-world events.
 We performed an in-depth evaluation of the detection approach using the Events 2012 corpus, which we believe was the first of its kind, and compared automated evaluation approaches with a crowdsourced evaluation.
-Our approach outperforms existing approaches with large improvements to both Precision and Recall.
+Our approach outperforms existing approaches with large improvements to both precision and recall.
 We described some of the issues that remain to be solved before automated evaluation can full replace crowdsourced evaluations of event detection approaches.
 
 Finally, in chapter \ref{chapter:newsworthiness}, we proposed a method of scoring tweets based on their Newsworthiness.
@@ -32,7 +32,7 @@ We used the collection we developed to evaluate our entity-based event detection
 \textbf{RQ2: Can entities (people, places, organizations) be used to improve real-world event detection in a streaming setting on Twitter?} \\
 Chapter \ref{chapter:detection} describes our entity-based, real-time event detection approach for Twitter.
 Our entity-based approach partitions tweets based on the entities they contain to perform real-time clustering in an efficient manner, and uses a lightweight burst detection approach to identify unusual volumes of discussion around entities.
-We found that it is possible to use entities to detect real-world event in a streaming setting on Twitter, and by evaluating this approach using the Events 2012 corpus, we found that it out-performed two state-of-the-art baselines in both Precision (0.636 vs 0.285) and Recall (0.383 vs 0.308).
+We found that it is possible to use entities to detect real-world event in a streaming setting on Twitter, and by evaluating this approach using the Events 2012 corpus, we found that it out-performed two state-of-the-art baselines in both precision (0.636 vs 0.285) and recall (0.383 vs 0.308).
 
 \textbf{RQ3: Can event detection approaches be evaluated in a systematic and fair way?} \\
 In chapter \ref{chapter:detection}, we used an automated evaluation methodology to evaluate our proposed event detection approach, and examined how these results compare to a crowdsourced evaluation.
@@ -56,10 +56,10 @@ Whilst we do not believe these issues can ever be fully solved, improvements cou
 Although we believe it may always be necessary to use crowdsourced evaluations to fully measure the effectiveness of an event detection approach, improvements to annotation coverage could help to improve performance estimates using the Events 2012 corpus.
 
 \subsubsection{New Collections}
-The Events 2012 corpus is now over 6 years old.
+The Events 2012 corpus is now over six years old.
 Twitter has changed considerably in that time: the userbase has grown and changed, and the length of tweets has increased from 140 to 280 characters.
 We have proposed a methodology and demonstrated that it can be used to (relatively) quickly and easily build a test collection for Twitter.
-The creation of new test collections would allow us to better understand how changes to Twitter have affected the performance of event detection approaches, and would enable a more throughout evaluation by comparing performance across 2 or more datasets.
+The creation of new test collections would allow us to better understand how changes to Twitter have affected the performance of event detection approaches, and would enable a more thorough evaluation by comparing performance across two or more datasets.
 
 
 \subsubsection{Name Entity Recognition}
@@ -71,7 +71,7 @@ In this vein, a detailed analysis of how NER performance affects detection perfo
 
 \subsubsection{Entity Linking and Disambiguation}
 The application of Entity Linking and more robust disambiguation techniques could improve performance in a number of ways, particularly for event detection approaches such as ours that rely heavily on named entities.
-We found that using 3 entity classes (person, location or organization) offers some improvements over using a single entity class, and it is likely that better disambiguation techniques would yield even better results.
+We found that using three entity classes (person, location or organization) offers some improvements over using a single entity class, and it is likely that better disambiguation techniques would yield even better results.
 Improvements to entity linking could help in a number of areas.
 Although the co-occurrence method we used worked reasonably well, there are clearly improvements that could be made.
 The use of an ontology to automatically link entities could offer improvements in a number of areas, for example, by linking a CEO to a company, or a politician to their country.

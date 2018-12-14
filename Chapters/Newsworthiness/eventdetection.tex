@@ -60,12 +60,12 @@ The top row, marked Any, shows baseline figures without any restrictions on clus
 
 A clear trend can be see as both the minimum cluster size and minimum cluster Newsworthiness Score are increased; recall drops, but precision increases. With a minimum cluster size of 5, a maximum recall of 0.755 is achieved, however measured precision is very low at only 0.010.
 As we increase the minimum cluster Newsworthiness Score, recall drops off, however precision increases significantly.
-Although F1 scores are not shown, increasing the minimum Newsworthiness score towards 3 increases the F1 measure for all cluster sizes, however after 3, overall F1 score begins to decrease.
+Although F1 scores are not shown, increasing the minimum Newsworthiness score towards three increases the F1 measure for all cluster sizes, however after 3, overall F1 score begins to decrease.
 
 Although a fully crowdsourced evaluation would provide a detailed picture of how our Newsworthiness Scoring approach performs when used as a feature for event detection, it goes beyond the scope of this chapter.
 Instead, we perform a small manual evaluation focused on determining the precision of our Newsworthiness Scoring approach.
 We chose to evaluate clusters using a similar methodology to that used to create the Events 2012 corpus, however used only a single expert rather than 5 crowdsourced workers.
-We selected 2 sets of clusters to evaluate:
+We selected two sets of clusters to evaluate:
 \begin{itemize}
 	\item 100 randomly selected clusters (from a total of 4,270) with 5 or more tweets and a cluster Newsworthiness Score ≥ 4.
 	\item All 115 clusters with 50 or more tweets and a cluster Newsworthiness score ≥ 4.

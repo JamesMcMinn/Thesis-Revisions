@@ -1,7 +1,7 @@
 \section{Corpus Statistics}
 Candidates from the detection approaches are considered to be an event if more than 50\% of annotators marked it as so and greater than 90\% of judged tweets were marked as relevant.
 This resulted in 382 events for the LSH approach, and 53 for the CS approach.
-Candidates from the Wikipedia approach are considered an event if they produced at least 1 relevant tweet, resulting in 361 events and 7 non-events (i.e. candidates where no tweets were marked as relevant).
+Candidates from the Wikipedia approach are considered an event if they produced at least one relevant tweet, resulting in 361 events and 7 non-events (i.e. candidates where no tweets were marked as relevant).
 In total, this resulted in 796 events \emph{before} merging.
 
 Individual tweets are regarded as relevant if more than 50\% of annotators agreed.
@@ -43,7 +43,7 @@ This is presumably because of the different types of event identified by each of
 While the detection approaches rely on the volume of tweets to identify events, the Wikipedia approach does not, meaning that it was able to product a much larger set of small events.
 
 It is interesting to note that, although we could have used the number of shared tweets as a feature for clustering, it would have made no difference to the resulting clusters.
-Out of 41 cases where events share more than 10 tweets, there is only a single case where they do not have a similarity score above our threshold, and the events are subsequently merged through shared similarity to a 3rd event.
+Out of 41 cases where events share more than 10 tweets, there is only a single case where they do not have a similarity score above our threshold, and the events are subsequently merged through shared similarity to a third event.
 This helps to demonstrate the effectiveness and robustness of our event merging approach.
 
 The combination of the two approaches allows their different characteristics to complement each other, producing a much more robust corpus than would have been produced had a single approach been used.
@@ -53,7 +53,7 @@ The use of both Event Detection approaches and Wikipedia  better reflects the di
 \begin{table}[b!]
 	\centering
 
-	\caption[The distribution of events across the 8 different categories, broken down by method used]{The distribution of events across the 8 different categories, broken down by method used. The LSH, CS and Wiki columns show numbers of events \emph{before} clustering, while the Clustered column shows the number of events \emph{after} clustering has been performed. }
+	\caption[The distribution of events across the eight different categories, broken down by method used]{The distribution of events across the eight different categories, broken down by method used. The LSH, CS and Wiki columns show numbers of events \emph{before} clustering, while the Clustered column shows the number of events \emph{after} clustering has been performed. }
 	\label{table:eventsByCat}
 
 	\begin{tabulary}{\textwidth}{l c c c c}
@@ -82,17 +82,17 @@ In cases where there was a tie between the categories, an author was used to giv
 
 Table~\ref{table:eventsByCat} gives a breakdown of the number of events per category before and after merging.
 Both the detection approaches and the Wikipedia approach produced very different category distributions, however seem to complement each other, and the combined results show much less variation than if only one approach had been used.
-As expected, the detection approaches (LSH and CS) seems to closely reflect to the types of events most commonly discussed on Twitter~\cite{zhao2011empirical}, while the Wikipedia approach gives a more realistic representation of real-world events and news.
+As expected, the detection approaches (LSH and CS) seems to closely reflect to the types of events most commonly discussed on Twitter~\citep{zhao2011empirical}, while the Wikipedia approach gives a more realistic representation of real-world events and news.
 
 For example, the detection approach contributes a large number of \emph{Sports} events, something which is lacking from the Wikipedia approach.
 Likewise, the Wikipedia approach contributes a large number of events from \emph{Armed Conflicts and Attacks}, and \emph{Business and Economy}, both categories where the detection approach produces less results.
 This could be due to the volume of discussion associated with each of these categories.
-\emph{Law, Politics and Scandals} have very few tweets per event in comparison with Sports, meaning that restricting the detection approaches to clusters with at least 30 tweets may have removed many which were discussing these types of event.
+\emph{Law, Politics and Scandals} have very few tweets per event in comparison with \emph{Sports}, meaning that restricting the detection approaches to clusters with at least 30 tweets may have removed many which were discussing these types of event.
 Since we did not put this restriction in place for the Wikipedia approach, it was not affected by the low volume of discussion, so is able to produce more events of this type.
 
 \subsection{Completeness and Re-usability}
 Since the aim of the test collection is to enable the comparable evaluation of event detection approaches, it is necessary to discuss the completeness and re-usability of the collection.
-It is a infeasible for the collection to contain relevance judgements for all tweets and for every event.
+It is infeasible for the collection to contain relevance judgements for all tweets and for every event.
 Even with our definition of event, deciding what constitutes an event is a subjective task, and having multiple annotators read all 120 million tweets in the collection to annotate all events and all relevant tweets is an impossible task.
 For that reason, the pooling strategy we employed is one of the few strategies that are ever likely to be effective for building a large scale collection for event detection.
 However, the lack of completeness raises a number of issues that need to be examined, and if possible, addressed when performing evaluations using this collection.
@@ -105,6 +105,6 @@ This means that any evaluation using the collection must allow for inexact match
 It is easy to show that more than 506 events occurred between the dates the collection covers, meaning that there will certainly be events we have no annotations for.
 Any sort of comparative evaluation using this collection must take this into consideration.
 However, the collection should contain enough events and relevance judgements to serve as a representative sample, and should still be useful when performing evaluations.
-Although precision and recall are likely to be underestimated, results should still be comparable, particularity between different runs of the same approach during development and testing.
-A crowdsourced evaluation, using the methodology proposed in this chapter, could then be used to perform a throughout and more accurate evaluation.
+Although precision and recall are likely to be underestimated, results should still be comparable, particularly between different runs of the same approach during development and testing.
+A crowdsourced evaluation, using the methodology proposed in this chapter, could then be used to perform a thorough and more accurate evaluation.
 
